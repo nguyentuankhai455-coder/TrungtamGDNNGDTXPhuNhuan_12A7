@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard - Quản trị Blog 12A7</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f0f2f5;
+            color: #222;
+            line-height: 1.7;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        ul {
+            list-style: none;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+        .btn-primary {
+            background: #0a2f5e;
+            color: #fff;
+        }
+        .btn-primary:hover {
+            background: #1b4f8a;
+        }
+        .btn-success {
+            background: #28a745;
+            color: #fff;
+        }
+        .btn-success:hover {
+            background: #218838;
+        }
+        .btn-warning {
+            background: #fdb813;
+            color: #0a2f5e;
+        }
+        .btn-warning:hover {
+            background: #fccf4a;
+        }
+        .btn-danger {
+            background: #dc3545;
+            color: #fff;
+        }
+        .btn-danger:hover {
+            background: #c82333;
+        }
+        .btn-outline {
+            background: transparent;
+            color: #0a2f5e;
+            border: 2px solid #0a2f5e;
+        }
+        .btn-outline:hover {
+            background: #0a2f5e;
+            color: #fff;
+        }
+        .btn-sm {
+            padding: 4px 12px;
+            font-size: 12px;
+        }
+
+        /* ===== LOGIN SCREEN ===== */
+        .login-screen {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0a2f5e, #1b4f8a);
+        }
+        .login-box {
+            background: #fff;
+            padding: 40px 35px;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 400px;
+        }
+        .login-box .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .login-box .logo i {
+            font-size: 48px;
+            color: #fdb813;
+        }
+        .login-box .logo h2 {
+            color: #0a2f5e;
+            margin-top: 8px;
+            font-size: 22px;
+        }
+        .login-box .logo p {
+            color: #888;
+            font-size: 13px;
+        }
+        .login-box .form-group {
+            margin-bottom: 18px;
+        }
+        .login-box label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #0a2f5e;
+            font-size: 14px;
+        }
+        .login-box input[type="text"],
+        .login-box input[type="password"] {
+            width: 100%;
+            padding: 10px 14px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+        .login-box input:focus {
+            outline: none;
+            border-color: #0a2f5e;
+        }
+        .login-box .btn-login {
+            width: 100%;
+            padding: 12px;
+            background: #0a2f5e;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .login-box .btn-login:hover {
+            background: #1b4f8a;
+        }
+        .login-box .error-msg {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 10px 14px;
+            border-radius: 6px;
+            margin-bottom: 16px;
+            font-size: 14px;
+            display: none;
+        }
+        .login-box .success-msg {
+            background: #d4edda;
+            color: #155724;
+            padding: 10px 14px;
+            border-radius: 6px;
+            margin-bottom: 16px;
+            font-size: 14px;
+            display: none;
+        }
+
+        /* ===== ADMIN DASHBOARD ===== */
+        .admin-header {
+            background: #0a2f5e;
+            color: #fff;
+            padding: 12px 0;
+            border-bottom: 4px solid #fdb813;
+        }
+        .admin-header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .admin-header .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .admin-header .brand i {
+            font-size: 28px;
+            color: #fdb813;
+        }
+        .admin-header .brand h1 {
+            font-size: 20px;
+            font-weight: 700;
+        }
+        .admin-header .brand span {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+        .admin-header .user-info {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .admin-header .user-info .avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #fdb813;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #0a2f5e;
+            font-weight: 700;
+        }
+        .admin-header .user-info .logout-btn {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 6px 18px;
+            border-radius: 20px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: background 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .admin-header .user-info .logout-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .admin-dashboard {
+            display: none;
+        }
+
+        .dashboard-wrapper {
+            display: grid;
+            grid-template-columns: 240px 1fr;
+            gap: 30px;
+            margin: 30px 0;
+        }
+        .admin-sidebar {
+            background: #fff;
+            border-radius: 14px;
+            padding: 20px 0;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+        }
+        .admin-sidebar .admin-user {
+            padding: 0 20px 18px;
+            border-bottom: 2px solid #f0f2f5;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+        .admin-sidebar .admin-user .avatar-lg {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: #fdb813;
+            margin: 0 auto 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            color: #0a2f5e;
+            font-weight: 700;
+        }
+        .admin-sidebar .admin-user h4 {
+            color: #0a2f5e;
+        }
+        .admin-sidebar .admin-user .role-label {
+            font-size: 12px;
+            color: #888;
+            background: #f0f2f5;
+            padding: 2px 14px;
+            border-radius: 20px;
+            display: inline-block;
+        }
+        .admin-sidebar .menu-item {
+            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            color: #555;
+            font-weight: 500;
+            transition: all 0.3s;
+            border-left: 4px solid transparent;
+            cursor: pointer;
+        }
+        .admin-sidebar .menu-item:hover {
+            background: #f8f9fa;
+            color: #0a2f5e;
+        }
+        .admin-sidebar .menu-item.active {
+            background: #f0f4ff;
+            color: #0a2f5e;
+            border-left-color: #fdb813;
+        }
+        .admin-sidebar .menu-item i {
+            width: 20px;
+            text-align: center;
+            color: #fdb813;
+        }
+
+        .admin-content {
+            background: #fff;
+            border-radius: 14px;
+            padding: 28px 30px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+        }
+        .admin-content .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid #f0f2f5;
+        }
+        .admin-content .page-header h2 {
+            font-size: 22px;
+            color: #0a2f5e;
+        }
+
+        /* Form */
+        .post-form .form-group {
+            margin-bottom: 20px;
+        }
+        .post-form label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: #0a2f5e;
+            font-size: 14px;
+        }
+        .post-form label .required {
+            color: #dc3545;
+        }
+        .post-form input[type="text"],
+        .post-form select,
+        .post-form textarea {
+            width: 100%;
+            padding: 10px 14px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+            font-family: inherit;
+        }
+        .post-form input[type="text"]:focus,
+        .post-form select:focus,
+        .post-form textarea:focus {
+            outline: none;
+            border-color: #0a2f5e;
+        }
+        .post-form textarea {
+            resize: vertical;
+            min-height: 180px;
+        }
+        .post-form .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .post-form .form-actions {
+            display: flex;
+            gap: 14px;
+            margin-top: 10px;
+            padding-top: 20px;
+            border-top: 2px solid #f0f2f5;
+            flex-wrap: wrap;
+        }
+
+        /* Table */
+        .table-wrapper {
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+        table th {
+            background: #f8f9fa;
+            color: #0a2f5e;
+            font-weight: 600;
+            text-align: left;
+            padding: 12px 14px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        table td {
+            padding: 12px 14px;
+            border-bottom: 1px solid #f0f2f5;
+            vertical-align: middle;
+        }
+        table tr:hover {
+            background: #fafbfc;
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 2px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .status-published {
+            background: #d4edda;
+            color: #155724;
+        }
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+        .status-draft {
+            background: #e2e3e5;
+            color: #383d41;
+        }
+
+        /* Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 16px;
+            margin-bottom: 30px;
+        }
+        .stat-card {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 18px 20px;
+            border-left: 4px solid #fdb813;
+        }
+        .stat-card .stat-number {
+            font-size: 28px;
+            font-weight: 700;
+            color: #0a2f5e;
+        }
+        .stat-card .stat-label {
+            font-size: 13px;
+            color: #888;
+        }
+
+        /* Notification */
+        .notification {
+            padding: 12px 18px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-left: 4px solid #28a745;
+            background: #f0fff4;
+        }
+        .notification i {
+            font-size: 20px;
+        }
+
+        /* Tabs */
+        .tab-pane {
+            display: none;
+        }
+        .tab-pane.active {
+            display: block;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 992px) {
+            .dashboard-wrapper {
+                grid-template-columns: 1fr;
+            }
+            .admin-sidebar {
+                position: relative;
+                top: 0;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 4px;
+                padding: 12px;
+            }
+            .admin-sidebar .admin-user {
+                display: none;
+            }
+            .admin-sidebar .menu-item {
+                padding: 8px 16px;
+                border-left: none;
+                border-radius: 6px;
+                font-size: 13px;
+            }
+            .admin-sidebar .menu-item.active {
+                background: #fdb813;
+                color: #0a2f5e;
+            }
+        }
+        @media (max-width: 600px) {
+            .post-form .form-row {
+                grid-template-columns: 1fr;
+            }
+            .admin-content {
+                padding: 16px;
+            }
+            .admin-content .page-header {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 12px;
+            }
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .login-box {
+                padding: 25px 20px;
+                margin: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== LOGIN SCREEN ===== -->
+    <div class="login-screen" id="loginScreen">
+        <div class="login-box">
+            <div class="logo">
+                <i class="fas fa-shield-alt"></i>
+                <h2>Quản trị Blog 12A7</h2>
+                <p>Đăng nhập để quản lý nội dung</p>
+            </div>
+
+            <div class="error-msg" id="errorMsg"><i class="fas fa-exclamation-circle"></i> <span id="errorText">Sai tên đăng nhập hoặc mật khẩu!</span></div>
+            <div class="success-msg" id="successMsg"><i class="fas fa-check-circle"></i> <span>Đăng nhập thành công!</span></div>
+
+            <form id="loginForm" onsubmit="return handleLogin(event)">
+                <div class="form-group">
+                    <label><i class="fas fa-user"></i> Tên đăng nhập</label>
+                    <input type="text" id="username" placeholder="Nhập username..." value="admin" required />
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-lock"></i> Mật khẩu</label>
+                    <input type="password" id="password" placeholder="Nhập mật khẩu..." value="123456" required />
+                </div>
+                <button type="submit" class="btn-login"><i class="fas fa-sign-in-alt"></i> Đăng nhập</button>
+                <div style="text-align:center; margin-top:14px; font-size:13px; color:#999;">
+                    <i class="fas fa-info-circle"></i> Demo: admin / 123456
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ===== ADMIN DASHBOARD ===== -->
+    <div class="admin-dashboard" id="adminDashboard">
+
+        <!-- Admin Header -->
+        <div class="admin-header">
+            <div class="container">
+                <div class="brand">
+                    <i class="fas fa-shield-alt"></i>
+                    <div>
+                        <h1>Dashboard 12A7</h1>
+                        <span>Hệ thống quản trị nội dung</span>
+                    </div>
+                </div>
+                <div class="user-info">
+                    <span id="adminNameDisplay">Nguyễn Văn A</span>
+                    <span style="font-size:12px; background:rgba(255,255,255,0.15); padding:2px 12px; border-radius:20px;">
+                        <i class="fas fa-crown"></i> Admin
+                    </span>
+                    <div class="avatar" id="adminAvatar">A</div>
+                    <span class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Đăng xuất</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="dashboard-wrapper">
+
+                <!-- Sidebar -->
+                <aside class="admin-sidebar">
+                    <div class="admin-user">
+                        <div class="avatar-lg" id="adminAvatarLg">A</div>
+                        <h4 id="adminFullName">Nguyễn Văn A</h4>
+                        <span class="role-label"><i class="fas fa-crown"></i> Admin</span>
+                    </div>
+                    <div class="menu-item active" data-tab="tab-new-post">
+                        <i class="fas fa-pen-fancy"></i> <span>Viết bài mới</span>
+                    </div>
+                    <div class="menu-item" data-tab="tab-all-posts">
+                        <i class="fas fa-list-ul"></i> <span>Quản lý bài viết</span>
+                    </div>
+                    <div class="menu-item" data-tab="tab-categories">
+                        <i class="fas fa-folder-open"></i> <span>Chuyên mục</span>
+                    </div>
+                    <div style="padding:20px 24px 0; border-top:2px solid #f0f2f5; margin-top:12px;">
+                        <span style="font-size:12px; color:#999;">
+                            <i class="fas fa-shield-alt" style="color:#fdb813;"></i> Quyền: <strong>Toàn quyền</strong>
+                        </span>
+                    </div>
+                </aside>
+
+                <!-- Content -->
+                <main class="admin-content">
+
+                    <!-- TAB: Viết bài mới -->
+                    <div id="tab-new-post" class="tab-pane active">
+                        <div class="page-header">
+                            <h2><i class="fas fa-feather-alt"></i> Đăng bài viết mới</h2>
+                            <div class="header-actions">
+                                <button class="btn btn-outline btn-sm" onclick="saveDraft()"><i class="fas fa-save"></i> Lưu nháp</button>
+                            </div>
+                        </div>
+
+                        <div class="notification success" id="postNotification">
+                            <i class="fas fa-check-circle"></i>
+                            <span><strong>Quyền hạn:</strong> Admin - Toàn quyền quản trị nội dung.</span>
+                        </div>
+
+                        <form class="post-form" id="postForm">
+                            <div class="form-group">
+                                <label>Tiêu đề bài viết <span class="required">*</span></label>
+                                <input type="text" id="postTitle" placeholder="Nhập tiêu đề bài viết..." />
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Chuyên mục <span class="required">*</span></label>
+                                    <select id="postCategory">
+                                        <option value="Sự kiện">Sự kiện</option>
+                                        <option value="Thành tích">Thành tích</option>
+                                        <option value="Kỷ niệm">Kỷ niệm</option>
+                                        <option value="Văn hóa">Văn hóa</option>
+                                        <option value="Thể thao">Thể thao</option>
+                                        <option value="Tình nguyện">Tình nguyện</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Trạng thái</label>
+                                    <select id="postStatus">
+                                        <option value="published">Xuất bản ngay</option>
+                                        <option value="draft">Lưu nháp</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Hình ảnh (URL)</label>
+                                <input type="text" id="postImage" placeholder="https://example.com/image.jpg" />
+                            </div>
+
+                            <div class="form-group">
+                                <label>Nội dung <span class="required">*</span></label>
+                                <textarea id="postContent" placeholder="Viết nội dung bài viết tại đây..."></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Tác giả</label>
+                                <input type="text" id="postAuthor" placeholder="Tên tác giả..." />
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="button" class="btn btn-success" onclick="publishPost()"><i class="fas fa-paper-plane"></i> Đăng bài</button>
+                                <button type="button" class="btn btn-warning" onclick="saveDraft()"><i class="fas fa-save"></i> Lưu nháp</button>
+                                <button type="reset" class="btn btn-outline"><i class="fas fa-undo"></i> Làm mới</button>
+                                <span style="margin-left:auto; font-size:13px; color:#999;">
+                                    <i class="fas fa-info-circle"></i> Bài viết sẽ xuất hiện trên Blog ngay lập tức
+                                </span>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- TAB: Quản lý bài viết -->
+                    <div id="tab-all-posts" class="tab-pane">
+                        <div class="page-header">
+                            <h2><i class="fas fa-list-ul"></i> Quản lý bài viết</h2>
+                        </div>
+
+                        <div class="stats-grid" id="statsGrid">
+                            <div class="stat-card"><div class="stat-number" id="totalPosts">0</div><div class="stat-label">Tổng bài viết</div></div>
+                            <div class="stat-card" style="border-left-color:#28a745;"><div class="stat-number" id="publishedPosts">0</div><div class="stat-label">Đã xuất bản</div></div>
+                            <div class="stat-card" style="border-left-color:#fdb813;"><div class="stat-number" id="draftPosts">0</div><div class="stat-label">Bản nháp</div></div>
+                        </div>
+
+                        <div class="table-wrapper">
+                            <table id="postsTable">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Tiêu đề</th>
+                                        <th>Chuyên mục</th>
+                                        <th>Trạng thái</th>
+                                        <th>Tác giả</th>
+                                        <th>Ngày đăng</th>
+                                        <th>Thao tác</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="postsTableBody">
+                                    <!-- Render bằng JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- TAB: Chuyên mục -->
+                    <div id="tab-categories" class="tab-pane">
+                        <div class="page-header">
+                            <h2><i class="fas fa-folder-open"></i> Quản lý chuyên mục</h2>
+                            <button class="btn btn-primary btn-sm" onclick="alert('Chức năng đang phát triển')"><i class="fas fa-plus"></i> Thêm</button>
+                        </div>
+                        <div class="table-wrapper">
+                            <table>
+                                <thead><tr><th>#</th><th>Tên chuyên mục</th><th>Số bài</th><th>Thao tác</th></tr></thead>
+                                <tbody>
+                                    <tr><td>1</td><td>Sự kiện</td><td>0</td><td><button class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></button> <button class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button></td></tr>
+                                    <tr><td>2</td><td>Thành tích</td><td>0</td><td><button class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></button> <button class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button></td></tr>
+                                    <tr><td>3</td><td>Kỷ niệm</td><td>0</td><td><button class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></button> <button class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button></td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </main>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+        // ===== DATA =====
+        let posts = [];
+        let nextId = 1;
+        const STORAGE_KEY = 'blog12a7_posts';
+
+        // ===== LOAD FROM LOCAL STORAGE =====
+        function loadPosts() {
+            const stored = localStorage.getItem(STORAGE_KEY);
+            if (stored) {
+                try {
+                    posts = JSON.parse(stored);
+                    nextId = posts.length > 0 ? Math.max(...posts.map(p => p.id)) + 1 : 1;
+                } catch (e) {
+                    posts = [];
+                }
+            }
+            // Nếu chưa có dữ liệu, tạo bài viết mẫu
+            if (posts.length === 0) {
+                posts = [{
+                    id: 1,
+                    title: 'Hành trình 30 năm – Lớp 12A7',
+                    category: 'Sự kiện',
+                    status: 'published',
+                    author: 'Ban Biên tập',
+                    date: '18/08/2026',
+                    content: 'Nhân dịp kỷ niệm 30 năm thành lập lớp, chúng ta cùng nhau ôn lại những kỷ niệm đẹp, những bài học quý giá và tình bạn bền chặt. Đây là câu chuyện của chúng ta – những thế hệ học sinh 12A7.'
+                }, {
+                    id: 2,
+                    title: 'Giải Nhất HSG Toán cấp trường',
+                    category: 'Thành tích',
+                    status: 'published',
+                    author: 'Quang Huy',
+                    date: '10/08/2026',
+                    content: 'Lớp 12A7 xuất sắc giành 2 giải Nhất và 3 giải Nhì trong kỳ thi học sinh giỏi năm học 2025-2026. Đây là thành tích đáng tự hào của tập thể lớp.'
+                }, {
+                    id: 3,
+                    title: 'Chuyến đi thực tế Khu di tích lịch sử',
+                    category: 'Kỷ niệm',
+                    status: 'published',
+                    author: 'Thu Trang',
+                    date: '05/08/2026',
+                    content: 'Những khoảnh khắc đáng nhớ của lớp trong chuyến hành trình về nguồn tại các địa danh lịch sử. Chuyến đi đã để lại nhiều bài học quý giá.'
+                }];
+                nextId = 4;
+                savePosts();
+            }
+        }
+
+        function savePosts() {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(posts));
+            // Cập nhật localStorage cho index.html (dùng cùng key)
+            // index.html sẽ đọc từ localStorage khi tải
+        }
+
+        // ===== RENDER ADMIN TABLE =====
+        function renderAdminTable() {
+            const tbody = document.getElementById('postsTableBody');
+            if (!tbody) return;
+
+            tbody.innerHTML = posts.map((post, index) => {
+                const statusClass = post.status === 'published' ? 'status-published' : 'status-draft';
+                const statusLabel = post.status === 'published' ? 'Đã xuất bản' : 'Bản nháp';
+
+                return `
+                            <tr>
+                                <td>${index + 1}</td>
+                                <td><strong>${post.title}</strong></td>
+                                <td>${post.category}</td>
+                                <td><span class="status-badge ${statusClass}">${statusLabel}</span></td>
+                                <td>${post.author || 'Admin'}</td>
+                                <td>${post.date || '—'}</td>
+                                <td>
+                                    <div style="display:flex; gap:4px; flex-wrap:wrap;">
+                                        <button class="btn btn-primary btn-sm" onclick="editPost(${post.id})"><i class="fas fa-edit"></i></button>
+                                        <button class="btn btn-danger btn-sm" onclick="deletePost(${post.id})"><i class="fas fa-trash"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                        `;
+            }).join('');
+
+            // Update stats
+            const total = posts.length;
+            const published = posts.filter(p => p.status === 'published').length;
+            const draft = posts.filter(p => p.status === 'draft').length;
+
+            document.getElementById('totalPosts').textContent = total;
+            document.getElementById('publishedPosts').textContent = published;
+            document.getElementById('draftPosts').textContent = draft;
+        }
+
+        // ===== CRUD FUNCTIONS =====
+        function publishPost() {
+            const title = document.getElementById('postTitle').value.trim();
+            const content = document.getElementById('postContent').value.trim();
+            const category = document.getElementById('postCategory').value;
+            const status = document.getElementById('postStatus').value;
+            const author = document.getElementById('postAuthor').value.trim() || 'Admin';
+
+            if (!title || !content) {
+                alert('⚠️ Vui lòng nhập đầy đủ tiêu đề và nội dung!');
+                return;
+            }
+
+            const newPost = {
+                id: nextId++,
+                title: title,
+                content: content,
+                category: category,
+                status: status,
+                author: author,
+                date: new Date().toLocaleDateString('vi-VN')
+            };
+
+            posts.push(newPost);
+            savePosts();
+            renderAdminTable();
+
+            // Reset form
+            document.getElementById('postTitle').value = '';
+            document.getElementById('postContent').value = '';
+            document.getElementById('postAuthor').value = '';
+
+            showNotification('success', '✅ Đăng bài thành công!', `Bài viết "${title}" đã được xuất bản.`);
+        }
+
+        function deletePost(id) {
+            if (!confirm('Bạn có chắc muốn xóa bài viết này?')) return;
+            posts = posts.filter(p => p.id !== id);
+            savePosts();
+            renderAdminTable();
+            showNotification('info', '🗑️ Đã xóa', 'Bài viết đã được xóa thành công.');
+        }
+
+        function editPost(id) {
+            const post = posts.find(p => p.id === id);
+            if (!post) return;
+
+            document.getElementById('postTitle').value = post.title;
+            document.getElementById('postContent').value = post.content;
+            document.getElementById('postCategory').value = post.category;
+            document.getElementById('postStatus').value = post.status;
+            document.getElementById('postAuthor').value = post.author || '';
+
+            // Chuyển sang tab viết bài
+            document.querySelectorAll('.menu-item').forEach(m => m.classList.remove('active'));
+            document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+            document.querySelector('[data-tab="tab-new-post"]').classList.add('active');
+            document.getElementById('tab-new-post').classList.add('active');
+
+            // Xóa bài cũ khi lưu
+            const originalPublish = window.publishPost;
+            window.publishPost = function() {
+                posts = posts.filter(p => p.id !== id);
+                const title = document.getElementById('postTitle').value.trim();
+                const content = document.getElementById('postContent').value.trim();
+                const category = document.getElementById('postCategory').value;
+                const status = document.getElementById('postStatus').value;
+                const author = document.getElementById('postAuthor').value.trim() || 'Admin';
+
+                if (!title || !content) {
+                    alert('⚠️ Vui lòng nhập đầy đủ tiêu đề và nội dung!');
+                    return;
+                }
+
+                const updatedPost = {
+                    id: id,
+                    title: title,
+                    content: content,
+                    category: category,
+                    status: status,
+                    author: author,
+                    date: new Date().toLocaleDateString('vi-VN')
+                };
+
+                posts.push(updatedPost);
+                savePosts();
+                renderAdminTable();
+
+                document.getElementById('postTitle').value = '';
+                document.getElementById('postContent').value = '';
+                document.getElementById('postAuthor').value = '';
+
+                showNotification('success', '✅ Cập nhật thành công!', `Bài viết "${title}" đã được cập nhật.`);
+                window.publishPost = originalPublish;
+            };
+
+            showNotification('info', '✏️ Đang chỉnh sửa', `Đang sửa bài viết "${post.title}"`);
+        }
+
+        function saveDraft() {
+            const title = document.getElementById('postTitle').value.trim();
+            const content = document.getElementById('postContent').value.trim();
+            if (!title || !content) {
+                alert('⚠️ Vui lòng nhập tiêu đề và nội dung để lưu nháp!');
+                return;
+            }
+            showNotification('info', '💾 Đã lưu nháp', 'Bài viết được lưu dưới dạng bản nháp.');
+        }
+
+        function showNotification(type, title, message) {
+            const container = document.querySelector('.admin-content');
+            const notif = document.createElement('div');
+            notif.className = `notification ${type === 'error' ? 'error' : type === 'warning' ? 'warning' : 'success'}`;
+            const icon = type === 'error' ? 'fa-exclamation-circle' : type === 'warning' ? 'fa-clock' : 'fa-check-circle';
+            notif.innerHTML = `
+                        <i class="fas ${icon}"></i>
+                        <span><strong>${title}</strong> ${message}</span>
+                    `;
+            const existing = container.querySelector('.notification');
+            if (existing) existing.remove();
+            container.insertBefore(notif, container.firstChild);
+            setTimeout(() => { notif.remove(); }, 5000);
+        }
+
+        // ===== AUTH =====
+        function handleLogin(event) {
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            const errorMsg = document.getElementById('errorMsg');
+            const successMsg = document.getElementById('successMsg');
+
+            // Demo: admin / 123456
+            if (username === 'admin' && password === '123456') {
+                errorMsg.style.display = 'none';
+                successMsg.style.display = 'block';
+                successMsg.querySelector('span').textContent = 'Đăng nhập thành công! Đang chuyển hướng...';
+
+                setTimeout(() => {
+                    document.getElementById('loginScreen').style.display = 'none';
+                    document.getElementById('adminDashboard').style.display = 'block';
+                    loadPosts();
+                    renderAdminTable();
+                }, 800);
+            } else {
+                successMsg.style.display = 'none';
+                errorMsg.style.display = 'block';
+                document.getElementById('errorText').textContent = 'Tên đăng nhập hoặc mật khẩu không đúng!';
+            }
+
+            return false;
+        }
+
+        function logout() {
+            if (confirm('Bạn có chắc muốn đăng xuất?')) {
+                document.getElementById('adminDashboard').style.display = 'none';
+                document.getElementById('loginScreen').style.display = 'flex';
+                document.getElementById('loginForm').reset();
+                document.getElementById('errorMsg').style.display = 'none';
+                document.getElementById('successMsg').style.display = 'none';
+            }
+        }
+
+        // ===== TAB SWITCH =====
+        document.querySelectorAll('.menu-item[data-tab]').forEach(item => {
+            item.addEventListener('click', function() {
+                document.querySelectorAll('.menu-item').forEach(m => m.classList.remove('active'));
+                this.classList.add('active');
+                document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+                const target = document.getElementById(this.dataset.tab);
+                if (target) target.classList.add('active');
+            });
+        });
+
+        // ===== INIT =====
+        // Load dữ liệu từ localStorage
+        loadPosts();
+        // Nếu đã có dữ liệu, render ngay
+        if (posts.length > 0) {
+            renderAdminTable();
+        }
+        console.log('✅ Dashboard 12A7 đã sẵn sàng!');
+        console.log('🔑 Demo: admin / 123456');
+        console.log('📝 Số bài viết hiện tại:', posts.length);
+    </script>
+
+</body>
+</html>
