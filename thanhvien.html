@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thành Viên - Lớp 12A7 (2026 - 2027)</title>
+    <style>
+        :root {
+            --primary-color: #003366;
+            --secondary-color: #0055a5;
+            --accent-color: #d9534f;
+            --bg-light: #f4f6f9;
+            --text-color: #333;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
+        body { background-color: var(--bg-light); color: var(--text-color); line-height: 1.6; }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 20px 0;
+            border-bottom: 4px solid #ffcc00;
+        }
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .logo-box {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background-color: #fff;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            overflow: hidden;
+            border: 2px solid #fff;
+            flex-shrink: 0;
+        }
+        .logo-box img { width: 100%; height: 100%; object-fit: cover; }
+        .header-text h1 { font-size: 24px; text-transform: uppercase; letter-spacing: 1px; }
+        .header-text p { font-size: 14px; opacity: 0.9; }
+
+        nav { background-color: #002244; position: sticky; top: 0; z-index: 100; }
+        .nav-container { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; }
+        .nav-container a {
+            color: white;
+            padding: 12px 18px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            transition: background 0.3s;
+        }
+        .nav-container a:hover, .nav-container a.active { background-color: var(--secondary-color); }
+
+        .main-wrapper {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 15px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 6px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .section-title {
+            color: var(--primary-color);
+            font-size: 18px;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 8px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        /* BAN CÁN SỰ GRID */
+        .bcs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .bcs-card {
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            padding: 15px;
+            text-align: center;
+            background: #fafafa;
+        }
+        .bcs-card h4 { color: var(--primary-color); font-size: 16px; margin-bottom: 5px; }
+        .bcs-card p { font-size: 14px; color: #555; }
+
+        /* BẢNG DANH SÁCH LỚP */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+            font-size: 14px;
+        }
+        th { background-color: var(--primary-color); color: white; }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+
+        footer {
+            background-color: #001529;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-container">
+            <div class="logo-box" id="logo-container">
+                <img src="logo.png" alt="Logo Lớp 12A7" onerror="document.getElementById('logo-container').innerHTML='12A7'">
+            </div>
+            <div class="header-text">
+                <h1>CỔNG THÔNG TIN LỚP 12A7</h1>
+                <p>Trung tâm GDNN - GDTX Phú Nhuận | Năm học 2026 - 2027</p>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <div class="nav-container">
+            <a href="index.html">Trang chủ</a>
+            <a href="index.html#tin-tuc">Tin tức & Sự kiện</a>
+            <a href="index.html#hoc-tap">Góc học tập</a>
+            <a href="thanhvien.html" class="active">Thành viên</a>
+            <a href="thuvien.html">Thư viện ảnh</a>
+        </div>
+    </nav>
+
+    <div class="main-wrapper">
+        <div class="card">
+            <h3 class="section-title">Ban Cán Sự Lớp & Giáo Viên Chủ Nhiệm</h3>
+            <div class="bcs-grid">
+                <div class="bcs-card">
+                    <h4>Cô Nguyễn Thị Khánh Ly</h4>
+                    <p><b>Giáo viên chủ nhiệm</b></p>
+                </div>
+                <div class="bcs-card">
+                    <h4>VÕ NGỌC KHANG</h4>
+                    <p><b>Lớp trưởng</b></p>
+                </div>
+                <div class="bcs-card">
+                    <h4>Cao Cẩm Doanh</h4>
+                    <p><b>Lớp phó Học tập</b></p>
+                </div>
+                <div class="bcs-card">
+                    <h4>Lê Thị Kim Hương</h4>
+                    <p><b>Lớp phó Phong trào</b></p>
+                </div>
+            </div>
+
+            <h3 class="section-title">Danh Sách Học Sinh Lớp 12A7</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 60px;">STT</th>
+                        <th>Họ và Tên</th>
+                        <th>Chức vụ / Vai trò</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>VÕ NGỌC KHANG</td>
+                        <td>Lớp trưởng</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Cao Cẩm Doanh</td>
+                        <td>Lớp phó Học tập</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Lê Thị Kim Hương</td>
+                        <td>Lớp phó Phong trào</td>
+                    </tr>
+                    <!-- Bổ sung thêm các thành viên khác tại đây -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Cổng thông tin Lớp 12A7 - Trung tâm GDNN - GDTX Phú Nhuận</p>
+    </footer>
+
+</body>
+</html>

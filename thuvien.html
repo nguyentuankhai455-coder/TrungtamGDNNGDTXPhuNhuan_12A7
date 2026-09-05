@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thư Viện Ảnh - Lớp 12A7 (2026 - 2027)</title>
+    <style>
+        :root {
+            --primary-color: #003366;
+            --secondary-color: #0055a5;
+            --accent-color: #d9534f;
+            --bg-light: #f4f6f9;
+            --text-color: #333;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
+        body { background-color: var(--bg-light); color: var(--text-color); line-height: 1.6; }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 20px 0;
+            border-bottom: 4px solid #ffcc00;
+        }
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .logo-box {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background-color: #fff;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            overflow: hidden;
+            border: 2px solid #fff;
+            flex-shrink: 0;
+        }
+        .logo-box img { width: 100%; height: 100%; object-fit: cover; }
+        .header-text h1 { font-size: 24px; text-transform: uppercase; letter-spacing: 1px; }
+        .header-text p { font-size: 14px; opacity: 0.9; }
+
+        nav { background-color: #002244; position: sticky; top: 0; z-index: 100; }
+        .nav-container { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; }
+        .nav-container a {
+            color: white;
+            padding: 12px 18px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            transition: background 0.3s;
+        }
+        .nav-container a:hover, .nav-container a.active { background-color: var(--secondary-color); }
+
+        .main-wrapper {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 15px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 6px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .section-title {
+            color: var(--primary-color);
+            font-size: 18px;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 8px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        /* GALLERY GRID */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+        }
+        .gallery-item {
+            border-radius: 6px;
+            overflow: hidden;
+            border: 1px solid #ddd;
+            background: #fff;
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            display: block;
+        }
+        .gallery-item .caption {
+            padding: 10px;
+            font-size: 13px;
+            color: #555;
+            text-align: center;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #777;
+            font-style: italic;
+            font-size: 14px;
+        }
+
+        footer {
+            background-color: #001529;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-container">
+            <div class="logo-box" id="logo-container">
+                <img src="logo.png" alt="Logo Lớp 12A7" onerror="document.getElementById('logo-container').innerHTML='12A7'">
+            </div>
+            <div class="header-text">
+                <h1>CỔNG THÔNG TIN LỚP 12A7</h1>
+                <p>Trung tâm GDNN - GDTX Phú Nhuận | Năm học 2026 - 2027</p>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <div class="nav-container">
+            <a href="index.html">Trang chủ</a>
+            <a href="index.html#tin-tuc">Tin tức & Sự kiện</a>
+            <a href="index.html#hoc-tap">Góc học tập</a>
+            <a href="thanhvien.html">Thành viên</a>
+            <a href="thuvien.html" class="active">Thư viện ảnh</a>
+        </div>
+    </nav>
+
+    <div class="main-wrapper">
+        <div class="card">
+            <h3 class="section-title">Thư Viện Ảnh Kỷ Niệm Lớp 12A7</h3>
+            
+            <div class="gallery-grid">
+                <!-- Mẫu khung ảnh (Thay anh1.jpg, anh2.jpg... khi có ảnh thực tế) -->
+                <div class="gallery-item">
+                    <img src="banner.jpg" alt="Hoạt động tập thể" onerror="this.src='https://via.placeholder.com/300x180?text=K%E1%BB%B7+Ni%E1%BB%87m+12A7'">
+                    <div class="caption">Ảnh tập thể Lớp 12A7</div>
+                </div>
+            </div>
+
+            <!-- Trường hợp chưa có nhiều ảnh -->
+            <p class="empty-state" style="margin-top: 20px;">
+                Hình ảnh mới về các hoạt động phong trào và học tập sẽ tiếp tục được cập nhật.
+            </p>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Cổng thông tin Lớp 12A7 - Trung tâm GDNN - GDTX Phú Nhuận</p>
+    </footer>
+
+</body>
+</html>
