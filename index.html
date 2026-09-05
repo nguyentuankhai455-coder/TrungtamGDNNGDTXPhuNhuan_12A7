@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cổng Thông Tin Lớp Học</title>
+    <title>Cổng Thông Tin Lớp 12A7 (2026 - 2027)</title>
     <style>
         :root {
             --primary-color: #003366;
@@ -31,13 +31,25 @@
             align-items: center;
             gap: 20px;
         }
-        .logo-img {
+        .logo-box {
             width: 70px;
             height: 70px;
             border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid #fff;
             background-color: #fff;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            overflow: hidden;
+            border: 2px solid #fff;
+            flex-shrink: 0;
+        }
+        .logo-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
         .header-text h1 { font-size: 24px; text-transform: uppercase; letter-spacing: 1px; }
         .header-text p { font-size: 14px; opacity: 0.9; }
@@ -83,12 +95,21 @@
             text-transform: uppercase;
         }
 
-        /* SLIDER / BANNER FEATURE */
+        /* BANNER FEATURE */
         .banner-box {
             width: 100%;
-            height: 300px;
+            height: 250px;
             border-radius: 6px;
             overflow: hidden;
+            background: linear-gradient(135deg, #003366, #0055a5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            text-align: center;
+            font-size: 22px;
+            font-weight: bold;
+            padding: 20px;
         }
         .banner-box img {
             width: 100%;
@@ -96,10 +117,24 @@
             object-fit: cover;
         }
 
+        /* TKB IMAGE DISPLAY */
+        .tkb-img-container {
+            width: 100%;
+            margin-top: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .tkb-img-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
         /* EMPTY STATE STYLING */
         .empty-state {
             text-align: center;
-            padding: 40px 20px;
+            padding: 30px 20px;
             color: #777;
             font-style: italic;
             font-size: 14px;
@@ -141,24 +176,24 @@
         @media (max-width: 768px) {
             .main-wrapper { grid-template-columns: 1fr; }
             .header-container { flex-direction: column; text-align: center; }
-            .banner-box { height: 180px; }
+            .banner-box { height: 160px; font-size: 16px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- BANNER -->
     <header>
         <div class="header-container">
-            <img src="images/logo.png" alt="Logo Lớp" class="logo-img" onerror="this.src='https://via.placeholder.com/70?text=L%E1%BB%9EP'">
+            <div class="logo-box" id="logo-container">
+                <img src="logo.png" alt="Logo Lớp 12A7" onerror="handleLogoError()">
+            </div>
             <div class="header-text">
-                <h1>CỔNG THÔNG TIN LỚP HỌC</h1>
-                <p>Trường Trung tâm GDNN - GDTX Phú Nhuận</p>
+                <h1>CỔNG THÔNG TIN LỚP 12A7</h1>
+                <p>Trung tâm GDNN - GDTX Phú Nhuận | Năm học 2026 - 2027</p>
             </div>
         </div>
     </header>
 
-    <!-- NAVIGATION -->
     <nav>
         <div class="nav-container">
             <a href="#">Trang chủ</a>
@@ -169,18 +204,15 @@
         </div>
     </nav>
 
-    <!-- MAIN CONTENT -->
     <div class="main-wrapper">
         
-        <!-- LEFT COLUMN (MAIN) -->
         <main>
             <div class="card">
-                <div class="banner-box">
-                    <img id="main-banner" src="images/banner1.jpg" alt="Hoạt động tập thể lớp" onerror="this.src='https://via.placeholder.com/800x300?text=Banner+Hoat+Dong+Lop'">
+                <div class="banner-box" id="banner-container">
+                    <img id="main-banner" src="banner.jpg" alt="Banner Lớp 12A7" onerror="handleBannerError()">
                 </div>
             </div>
 
-            <!-- MỤC TIN TỨC ĐÃ XÓA MẪU -->
             <div class="card" id="tin-tuc">
                 <h3 class="section-title">Tin tức & Hoạt động mới</h3>
                 <div class="empty-state">
@@ -191,16 +223,17 @@
             <div class="card" id="hoc-tap">
                 <h3 class="section-title">Góc học tập & Tài liệu</h3>
                 <div class="tab-buttons">
-                    <button class="tab-btn active" onclick="switchTab('tkb')">Thời khóa biểu</button>
-                    <button class="tab-btn" onclick="switchTab('tailieu')">Tài liệu ôn thi</button>
+                    <button class="tab-btn active" onclick="switchTab('tkb', event)">Thời khóa biểu</button>
+                    <button class="tab-btn" onclick="switchTab('tailieu', event)">Tài liệu ôn thi</button>
                 </div>
                 <div id="tab-content" style="font-size: 14px; padding-top: 10px;">
-                    <p>Chưa có dữ liệu cập nhật.</p>
+                    <div class="tkb-img-container">
+                        <img src="tkb.png" alt="Thời khóa biểu Lớp 12A7" onerror="this.parentElement.innerHTML='<p class=\'empty-state\'>Chưa tìm thấy tệp ảnh tkb.png</p>'">
+                    </div>
                 </div>
             </div>
         </main>
 
-        <!-- RIGHT COLUMN (SIDEBAR) -->
         <aside>
             <div class="card">
                 <h3 class="section-title">Thông báo nhanh</h3>
@@ -210,49 +243,49 @@
             </div>
 
             <div class="card">
-                <h3 class="section-title">Ban cán sự lớp</h3>
+                <h3 class="section-title">Ban cán sự Lớp 12A7</h3>
                 <ul class="notice-list" style="font-size: 13px;">
-                    <li><b>Lớp trưởng:</b> [Cập nhật sau]</li>
-                    <li><b>Lớp phó Học tập:</b> [Cập nhật sau]</li>
-                    <li><b>Lớp phó Phong trào:</b> [Cập nhật sau]</li>
+                    <li><b>GVCN:</b> Cô Nguyễn Thị Khánh Ly</li>
+                    <li><b>Lớp trưởng:</b> VÕ NGỌC KHANG</li>
+                    <li><b>Lớp phó HT:</b> Cao Cẩm Doanh</li>
+                    <li><b>Lớp phó Phong trào:</b> Lê Thị Kim Hương</li>
                 </ul>
             </div>
         </aside>
 
     </div>
 
-    <!-- FOOTER -->
     <footer>
-        <p>&copy; Cổng thông tin Lớp học - GDNN-GDTX Phú Nhuận</p>
-        <p>Phát triển và vận hành bởi Ban cán sự lớp</p>
+        <p>&copy; 2026 Cổng thông tin Lớp 12A7 - Trung tâm GDNN - GDTX Phú Nhuận</p>
+        <p>Phát triển và vận hành bởi Tập thể Lớp 12A7</p>
     </footer>
 
-    <!-- JAVASCRIPT -->
     <script>
-        function switchTab(tabName) {
+        function handleLogoError() {
+            document.getElementById('logo-container').innerHTML = '12A7';
+        }
+
+        function handleBannerError() {
+            document.getElementById('banner-container').innerHTML = 'Chào mừng bạn đến với Cổng thông tin Lớp 12A7<br>Năm học 2026 - 2027';
+        }
+
+        function switchTab(tabName, evt) {
             const buttons = document.querySelectorAll('.tab-btn');
             buttons.forEach(btn => btn.classList.remove('active'));
+            evt.target.classList.add('active');
             
             const content = document.getElementById('tab-content');
             
             if (tabName === 'tkb') {
-                event.target.classList.add('active');
-                content.innerHTML = '<p>Chưa có dữ liệu thời khóa biểu.</p>';
+                content.innerHTML = `
+                    <div class="tkb-img-container">
+                        <img src="tkb.jpg" alt="Thời khóa biểu Lớp 12A7" onerror="this.parentElement.innerHTML='<p class=\\'empty-state\\'>Chưa tìm thấy tệp ảnh tkb.png</p>'">
+                    </div>
+                `;
             } else if (tabName === 'tailieu') {
-                event.target.classList.add('active');
-                content.innerHTML = '<p>Chưa có tài liệu ôn thi được tải lên.</p>';
+                content.innerHTML = '<p class="empty-state">Chưa có tài liệu ôn thi được tải lên.</p>';
             }
         }
-
-        // Tự động xoay danh sách ảnh Banner
-        const bannerImg = document.getElementById('main-banner');
-        const bannerList = ['images/banner1.jpg', 'images/banner2.jpg', 'images/banner3.jpg'];
-        let bannerIndex = 0;
-
-        setInterval(() => {
-            bannerIndex = (bannerIndex + 1) % bannerList.length;
-            bannerImg.src = bannerList[bannerIndex];
-        }, 5000);
     </script>
 </body>
 </html>
