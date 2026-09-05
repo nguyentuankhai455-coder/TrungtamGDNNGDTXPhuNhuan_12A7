@@ -1,439 +1,258 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Blog 12A7 - Kỷ niệm & Tri thức</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cổng Thông Tin Lớp Học</title>
     <style>
-        /* ===== RESET & BASE ===== */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --primary-color: #003366;
+            --secondary-color: #0055a5;
+            --accent-color: #d9534f;
+            --bg-light: #f4f6f9;
+            --text-color: #333;
         }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f0f2f5;
-            color: #222;
-            line-height: 1.7;
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
+        body { background-color: var(--bg-light); color: var(--text-color); line-height: 1.6; }
+
+        /* HEADER & BANNER */
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 20px 0;
+            border-bottom: 4px solid #ffcc00;
         }
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
-        ul {
-            list-style: none;
-        }
-        .container {
+        .header-container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
-        }
-
-        /* ===== HEADER ===== */
-        .header-top {
-            background: #0a2f5e;
-            color: #fff;
-            padding: 8px 0;
-            font-size: 13px;
-        }
-        .header-top .container {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            align-items: center;
-        }
-
-        .header-main {
-            background: linear-gradient(135deg, #0a2f5e, #1b4f8a);
-            color: #fff;
-            padding: 14px 0;
-            border-bottom: 4px solid #fdb813;
-        }
-        .header-main .container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
-        .logo-area {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 20px;
         }
-        .logo-area .logo-icon {
-            font-size: 32px;
-            color: #fdb813;
+        .logo-img {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #fff;
+            background-color: #fff;
         }
-        .logo-area .logo-text h1 {
-            font-size: 24px;
-            font-weight: 700;
-        }
-        .logo-area .logo-text p {
-            font-size: 12px;
-            opacity: 0.9;
-        }
+        .header-text h1 { font-size: 24px; text-transform: uppercase; letter-spacing: 1px; }
+        .header-text p { font-size: 14px; opacity: 0.9; }
 
-        /* ===== NAV ===== */
-        .main-nav {
-            background: #fdb813;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        .main-nav ul {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        .main-nav ul li a {
-            display: block;
-            padding: 12px 22px;
+        /* NAVIGATION BAR */
+        nav { background-color: #002244; position: sticky; top: 0; z-index: 100; }
+        .nav-container { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; }
+        .nav-container a {
+            color: white;
+            padding: 12px 18px;
+            text-decoration: none;
+            font-size: 14px;
             font-weight: 600;
-            color: #0a2f5e;
-            transition: all 0.3s;
-            font-size: 14px;
-            border-right: 1px solid rgba(10, 47, 94, 0.15);
-            cursor: pointer;
-        }
-        .main-nav ul li:last-child a {
-            border-right: none;
-        }
-        .main-nav ul li a:hover,
-        .main-nav ul li a.active {
-            background: #0a2f5e;
-            color: #fff;
-        }
-
-        /* ===== BLOG ===== */
-        .blog-view {
-            margin: 30px 0;
-        }
-        .featured-post {
-            background: #fff;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-            display: flex;
-            flex-wrap: wrap;
-            margin-bottom: 30px;
-        }
-        .featured-post .featured-image {
-            flex: 1 1 45%;
-            min-height: 260px;
-            background: linear-gradient(135deg, #0a2f5e, #2a5f8a);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #fff;
-            font-size: 60px;
-            padding: 30px;
-        }
-        .featured-post .featured-content {
-            flex: 1 1 55%;
-            padding: 30px;
-        }
-        .featured-post .featured-content .post-tag {
-            display: inline-block;
-            background: #fdb813;
-            color: #0a2f5e;
-            font-size: 12px;
-            font-weight: 700;
-            padding: 4px 14px;
-            border-radius: 20px;
             text-transform: uppercase;
-            margin-bottom: 10px;
+            transition: background 0.3s;
         }
-        .featured-post .featured-content h2 {
-            font-size: 26px;
-            color: #0a2f5e;
-            margin-bottom: 10px;
-        }
-        .featured-post .featured-content p {
-            color: #555;
-        }
-        .featured-post .featured-content .post-meta {
-            font-size: 14px;
-            color: #888;
-            display: flex;
-            gap: 18px;
-            flex-wrap: wrap;
-            margin-top: 12px;
-        }
+        .nav-container a:hover { background-color: var(--secondary-color); }
 
-        .blog-grid {
+        /* MAIN LAYOUT */
+        .main-wrapper {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 15px;
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 25px;
+            grid-template-columns: 3fr 1fr;
+            gap: 20px;
         }
-        .blog-card {
-            background: #fff;
-            border-radius: 14px;
-            overflow: hidden;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
-            transition: transform 0.25s, box-shadow 0.25s;
+
+        /* CARD STYLING */
+        .card {
+            background: white;
+            border-radius: 6px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
-        .blog-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.10);
-        }
-        .blog-card .card-image {
-            height: 170px;
-            background: linear-gradient(145deg, #d4a11e, #fdb813);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 44px;
-            color: #fff;
-        }
-        .blog-card .card-body {
-            padding: 18px 20px 22px;
-        }
-        .blog-card .card-body .card-tag {
-            font-size: 12px;
-            font-weight: 600;
-            color: #fdb813;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .blog-card .card-body h3 {
+        .section-title {
+            color: var(--primary-color);
             font-size: 18px;
-            color: #0a2f5e;
-            margin: 8px 0 10px;
-        }
-        .blog-card .card-body p {
-            color: #555;
-            font-size: 14px;
-            margin-bottom: 12px;
-        }
-        .blog-card .card-body .card-meta {
-            font-size: 13px;
-            color: #999;
-            display: flex;
-            justify-content: space-between;
-            border-top: 1px solid #eee;
-            padding-top: 12px;
-        }
-        .blog-card .card-body .card-meta i {
-            margin-right: 4px;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 8px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
         }
 
-        /* ===== FOOTER ===== */
-        .footer {
-            background: #0a2f5e;
-            color: #ddd;
-            padding: 30px 0 16px;
-            margin-top: 30px;
-            border-top: 6px solid #fdb813;
+        /* SLIDER / BANNER FEATURE */
+        .banner-box {
+            width: 100%;
+            height: 300px;
+            border-radius: 6px;
+            overflow: hidden;
         }
-        .footer .footer-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 24px;
+        .banner-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
-        .footer h4 {
-            color: #fff;
-        }
-        .footer .footer-bottom {
+
+        /* EMPTY STATE STYLING */
+        .empty-state {
             text-align: center;
-            padding-top: 20px;
-            border-top: 1px solid #1f4a7a;
-            font-size: 13px;
-            color: #aaa;
-            margin-top: 20px;
+            padding: 40px 20px;
+            color: #777;
+            font-style: italic;
+            font-size: 14px;
         }
 
-        /* ===== RESPONSIVE ===== */
-        @media (max-width: 992px) {
-            .featured-post {
-                flex-direction: column;
-            }
-            .featured-post .featured-image {
-                min-height: 180px;
-            }
+        /* SIDEBAR LIST */
+        .notice-list { list-style: none; }
+        .notice-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 14px;
         }
-        @media (max-width: 600px) {
-            .header-main .container {
-                flex-direction: column;
-                text-align: center;
-            }
-            .blog-grid {
-                grid-template-columns: 1fr;
-            }
+        .notice-list li a { color: #333; text-decoration: none; }
+        .notice-list li a:hover { color: var(--accent-color); }
+
+        /* TAB SECTION */
+        .tab-buttons { display: flex; gap: 5px; margin-bottom: 10px; }
+        .tab-btn {
+            padding: 6px 12px;
+            border: none;
+            background: #ddd;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+        .tab-btn.active { background: var(--primary-color); color: white; }
+
+        /* FOOTER */
+        footer {
+            background-color: #001529;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            font-size: 13px;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .main-wrapper { grid-template-columns: 1fr; }
+            .header-container { flex-direction: column; text-align: center; }
+            .banner-box { height: 180px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- ===== HEADER ===== -->
-    <div class="header-top">
-        <div class="container">
-            <span><i class="fas fa-globe"></i> Blog 12A7 - Kỷ niệm & Tri thức</span>
-            <span style="font-size:12px; opacity:0.8;">
-                <i class="fas fa-users"></i> 1.2K thành viên
-            </span>
-        </div>
-    </div>
-
-    <header class="header-main">
-        <div class="container">
-            <div class="logo-area">
-                <div class="logo-icon"><i class="fas fa-graduation-cap"></i></div>
-                <div class="logo-text">
-                    <h1>Blog 12A7</h1>
-                    <p>Nơi lưu giữ kỷ niệm và tri thức</p>
-                </div>
+    <!-- BANNER -->
+    <header>
+        <div class="header-container">
+            <img src="images/logo.png" alt="Logo Lớp" class="logo-img" onerror="this.src='https://via.placeholder.com/70?text=L%E1%BB%9EP'">
+            <div class="header-text">
+                <h1>CỔNG THÔNG TIN LỚP HỌC</h1>
+                <p>Trường Trung tâm GDNN - GDTX Phú Nhuận</p>
             </div>
         </div>
     </header>
 
-    <!-- ===== NAV ===== -->
-    <nav class="main-nav">
-        <ul class="container">
-            <li><a class="active"><i class="fas fa-home"></i> Trang chủ</a></li>
-            <li><a><i class="fas fa-newspaper"></i> Bài viết</a></li>
-            <li><a><i class="fas fa-images"></i> Thư viện</a></li>
-            <li><a><i class="fas fa-users"></i> Về lớp</a></li>
-            <li><a><i class="fas fa-envelope"></i> Liên hệ</a></li>
-        </ul>
+    <!-- NAVIGATION -->
+    <nav>
+        <div class="nav-container">
+            <a href="#">Trang chủ</a>
+            <a href="#tin-tuc">Tin tức & Sự kiện</a>
+            <a href="#hoc-tap">Góc học tập</a>
+            <a href="#thanh-vien">Thành viên</a>
+            <a href="#thu-vien">Thư viện ảnh</a>
+        </div>
     </nav>
 
-    <!-- ===== MAIN CONTENT ===== -->
-    <div class="container">
-        <div class="blog-view">
-
-            <!-- Featured -->
-            <div class="featured-post">
-                <div class="featured-image">
-                    <i class="fas fa-book-open" style="font-size:72px; opacity:0.8;"></i>
-                </div>
-                <div class="featured-content">
-                    <span class="post-tag"><i class="fas fa-star"></i> Nổi bật</span>
-                    <h2>Hành trình 30 năm – Lớp 12A7 nhìn lại chặng đường đã qua</h2>
-                    <p>Nhân dịp kỷ niệm 30 năm thành lập lớp, chúng ta cùng nhau ôn lại những kỷ niệm đẹp, những bài học quý giá và tình bạn bền chặt. Đây là câu chuyện của chúng ta – những thế hệ học sinh 12A7.</p>
-                    <div class="post-meta">
-                        <span><i class="far fa-user"></i> Ban Biên tập</span>
-                        <span><i class="far fa-calendar-alt"></i> 18/08/2026</span>
-                        <span><i class="far fa-comment"></i> 24 bình luận</span>
-                    </div>
+    <!-- MAIN CONTENT -->
+    <div class="main-wrapper">
+        
+        <!-- LEFT COLUMN (MAIN) -->
+        <main>
+            <div class="card">
+                <div class="banner-box">
+                    <img id="main-banner" src="images/banner1.jpg" alt="Hoạt động tập thể lớp" onerror="this.src='https://via.placeholder.com/800x300?text=Banner+Hoat+Dong+Lop'">
                 </div>
             </div>
 
-            <!-- Blog Grid -->
-            <div class="blog-grid" id="blogGrid">
-                <!-- Render bằng JS -->
+            <!-- MỤC TIN TỨC ĐÃ XÓA MẪU -->
+            <div class="card" id="tin-tuc">
+                <h3 class="section-title">Tin tức & Hoạt động mới</h3>
+                <div class="empty-state">
+                    Hiện chưa có bài viết hay hoạt động mới nào được cập nhật.
+                </div>
             </div>
 
-        </div>
+            <div class="card" id="hoc-tap">
+                <h3 class="section-title">Góc học tập & Tài liệu</h3>
+                <div class="tab-buttons">
+                    <button class="tab-btn active" onclick="switchTab('tkb')">Thời khóa biểu</button>
+                    <button class="tab-btn" onclick="switchTab('tailieu')">Tài liệu ôn thi</button>
+                </div>
+                <div id="tab-content" style="font-size: 14px; padding-top: 10px;">
+                    <p>Chưa có dữ liệu cập nhật.</p>
+                </div>
+            </div>
+        </main>
+
+        <!-- RIGHT COLUMN (SIDEBAR) -->
+        <aside>
+            <div class="card">
+                <h3 class="section-title">Thông báo nhanh</h3>
+                <div class="empty-state" style="padding: 15px 0;">
+                    Chưa có thông báo mới.
+                </div>
+            </div>
+
+            <div class="card">
+                <h3 class="section-title">Ban cán sự lớp</h3>
+                <ul class="notice-list" style="font-size: 13px;">
+                    <li><b>Lớp trưởng:</b> [Cập nhật sau]</li>
+                    <li><b>Lớp phó Học tập:</b> [Cập nhật sau]</li>
+                    <li><b>Lớp phó Phong trào:</b> [Cập nhật sau]</li>
+                </ul>
+            </div>
+        </aside>
+
     </div>
 
-    <!-- ===== FOOTER ===== -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-grid">
-                <div>
-                    <h4><i class="fas fa-school"></i> Lớp 12A7</h4>
-                    <p style="font-size:13px;">Nơi lưu giữ kỷ niệm và tri thức</p>
-                </div>
-                <div>
-                    <h4>Liên kết</h4>
-                    <ul style="font-size:13px; color:#bbb;">
-                        <li>Giới thiệu lớp</li>
-                        <li>Thành tích</li>
-                        <li>Ban chấp hành</li>
-                    </ul>
-                </div>
-                <div>
-                    <h4>Kết nối</h4>
-                    <ul style="font-size:13px; color:#bbb;">
-                        <li><i class="fab fa-facebook"></i> Facebook</li>
-                        <li><i class="fab fa-youtube"></i> YouTube</li>
-                        <li><i class="fab fa-tiktok"></i> TikTok</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                &copy; 2026 Blog 12A7 - Lưu giữ kỷ niệm một thời thanh xuân
-            </div>
-        </div>
+    <!-- FOOTER -->
+    <footer>
+        <p>&copy; Cổng thông tin Lớp học - GDNN-GDTX Phú Nhuận</p>
+        <p>Phát triển và vận hành bởi Ban cán sự lớp</p>
     </footer>
 
-    <!-- ===== JAVASCRIPT ===== -->
+    <!-- JAVASCRIPT -->
     <script>
-        // ===== DỮ LIỆU BÀI VIẾT =====
-        const postsData = [
-            { id: 1, title: 'Hành trình 30 năm – Lớp 12A7', category: 'Sự kiện', author: 'Ban Biên tập',
-                date: '18/08/2026', content: 'Nhân dịp kỷ niệm 30 năm thành lập lớp, chúng ta cùng nhau ôn lại những kỷ niệm đẹp, những bài học quý giá và tình bạn bền chặt. Đây là câu chuyện của chúng ta – những thế hệ học sinh 12A7.' },
-            { id: 2, title: 'Giải Nhất HSG Toán cấp trường', category: 'Thành tích', author: 'Quang Huy',
-                date: '10/08/2026', content: 'Lớp 12A7 xuất sắc giành 2 giải Nhất và 3 giải Nhì trong kỳ thi học sinh giỏi năm học 2025-2026. Đây là thành tích đáng tự hào của tập thể lớp.' },
-            { id: 3, title: 'Chuyến đi thực tế Khu di tích lịch sử', category: 'Kỷ niệm', author: 'Thu Trang',
-                date: '05/08/2026', content: 'Những khoảnh khắc đáng nhớ của lớp trong chuyến hành trình về nguồn tại các địa danh lịch sử. Chuyến đi đã để lại nhiều bài học quý giá.' },
-            { id: 4, title: 'Ngày hội đọc sách và văn hóa đọc', category: 'Văn hóa', author: 'Hà My',
-                date: '28/07/2026', content: 'Lớp 12A7 đã tổ chức thành công buổi chia sẻ sách với nhiều hoạt động ý nghĩa, lan tỏa văn hóa đọc trong cộng đồng.' },
-            { id: 5, title: 'Giải bóng đá giao lưu giữa các lớp khối 12', category: 'Thể thao', author: 'Đức Anh',
-                date: '20/07/2026', content: 'Không khí sôi động trên sân cỏ với sự cổ vũ nhiệt tình của các bạn học sinh và thầy cô. Giải đấu đã tạo nên tinh thần đoàn kết.' },
-            { id: 6, title: 'Chiến dịch tình nguyện mùa hè xanh', category: 'Tình nguyện', author: 'Minh Thư',
-                date: '12/07/2026', content: 'Lớp 12A7 tham gia các hoạt động thiện nguyện, giúp đỡ cộng đồng và lan tỏa yêu thương. Đây là hoạt động ý nghĩa của tuổi trẻ.' }
-        ];
-
-        const categoryColors = {
-            'Sự kiện': '#d4a11e',
-            'Thành tích': '#1a5a7a',
-            'Kỷ niệm': '#6a4a7a',
-            'Văn hóa': '#2a6a4a',
-            'Thể thao': '#b34a3a',
-            'Tình nguyện': '#3a5a7a'
-        };
-        const categoryIcons = {
-            'Sự kiện': 'fa-calendar-alt',
-            'Thành tích': 'fa-trophy',
-            'Kỷ niệm': 'fa-camera-retro',
-            'Văn hóa': 'fa-palette',
-            'Thể thao': 'fa-futbol',
-            'Tình nguyện': 'fa-hand-holding-heart'
-        };
-
-        // ===== RENDER BLOG =====
-        function renderBlog() {
-            const grid = document.getElementById('blogGrid');
-
-            if (postsData.length === 0) {
-                grid.innerHTML = `
-                            <div style="grid-column:1/-1; text-align:center; padding:60px 20px; background:#fff; border-radius:14px;">
-                                <i class="fas fa-newspaper" style="font-size:48px; color:#ddd;"></i>
-                                <h3 style="color:#0a2f5e; margin-top:16px;">Chưa có bài viết nào</h3>
-                                <p style="color:#888;">Hãy quay lại sau nhé!</p>
-                            </div>
-                        `;
-                return;
+        function switchTab(tabName) {
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            
+            const content = document.getElementById('tab-content');
+            
+            if (tabName === 'tkb') {
+                event.target.classList.add('active');
+                content.innerHTML = '<p>Chưa có dữ liệu thời khóa biểu.</p>';
+            } else if (tabName === 'tailieu') {
+                event.target.classList.add('active');
+                content.innerHTML = '<p>Chưa có tài liệu ôn thi được tải lên.</p>';
             }
-
-            grid.innerHTML = postsData.map(post => `
-                        <article class="blog-card">
-                            <div class="card-image" style="background:linear-gradient(145deg, ${categoryColors[post.category] || '#d4a11e'}, ${categoryColors[post.category] || '#fdb813'});">
-                                <i class="fas ${categoryIcons[post.category] || 'fa-file-alt'}"></i>
-                            </div>
-                            <div class="card-body">
-                                <span class="card-tag">${post.category}</span>
-                                <h3>${post.title}</h3>
-                                <p>${post.content.substring(0, 120)}${post.content.length > 120 ? '...' : ''}</p>
-                                <div class="card-meta">
-                                    <span><i class="far fa-user"></i> ${post.author}</span>
-                                    <span><i class="far fa-calendar-alt"></i> ${post.date}</span>
-                                </div>
-                            </div>
-                        </article>
-                    `).join('');
         }
 
-        // ===== INIT =====
-        renderBlog();
-        console.log('✅ Blog 12A7 đã sẵn sàng!');
-        console.log('🔒 Admin: truy cập dashboard.html để quản trị');
-    </script>
+        // Tự động xoay danh sách ảnh Banner
+        const bannerImg = document.getElementById('main-banner');
+        const bannerList = ['images/banner1.jpg', 'images/banner2.jpg', 'images/banner3.jpg'];
+        let bannerIndex = 0;
 
+        setInterval(() => {
+            bannerIndex = (bannerIndex + 1) % bannerList.length;
+            bannerImg.src = bannerList[bannerIndex];
+        }, 5000);
+    </script>
 </body>
 </html>
