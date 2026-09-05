@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Góc Xanh - Lớp 12A7</title>
+    <style>
+        :root {
+            --primary-color: #003366;
+            --secondary-color: #0055a5;
+            --green-color: #2e7d32;
+            --bg-light: #f4f6f9;
+            --text-color: #333;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
+        body { background-color: var(--bg-light); color: var(--text-color); line-height: 1.6; }
+
+        /* HEADER */
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 20px 0;
+            border-bottom: 4px solid #ffcc00;
+        }
+        .header-container {
+            max-width: 1200px; margin: 0 auto; padding: 0 20px;
+            display: flex; align-items: center; justify-content: space-between; gap: 20px;
+        }
+        .header-left { display: flex; align-items: center; gap: 20px; }
+        .logo-box {
+            width: 70px; height: 70px; border-radius: 50%;
+            background-color: #fff; color: var(--primary-color);
+            display: flex; align-items: center; justify-content: center;
+            font-weight: bold; font-size: 18px; overflow: hidden;
+            border: 2px solid #fff; flex-shrink: 0;
+        }
+        .logo-box img { width: 100%; height: 100%; object-fit: cover; }
+        .header-text h1 { font-size: 24px; text-transform: uppercase; letter-spacing: 1px; }
+        .header-text p { font-size: 14px; opacity: 0.9; }
+
+        /* NAVIGATION */
+        nav { background-color: #002244; position: sticky; top: 0; z-index: 100; }
+        .nav-container { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; }
+        .nav-container a {
+            color: white; padding: 12px 18px; text-decoration: none;
+            font-size: 14px; font-weight: 600; text-transform: uppercase; transition: background 0.3s;
+        }
+        .nav-container a:hover, .nav-container a.active { background-color: var(--secondary-color); }
+        .nav-container a.green-tab.active { background-color: var(--green-color); }
+
+        /* MAIN CONTENT */
+        .main-wrapper { max-width: 1200px; margin: 20px auto; padding: 0 15px; }
+        .card { background: white; border-radius: 6px; padding: 25px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .section-title {
+            color: var(--green-color); font-size: 20px;
+            border-bottom: 2px solid var(--green-color);
+            padding-bottom: 10px; margin-bottom: 20px; text-transform: uppercase;
+        }
+
+        /* LƯỚI HÌNH ẢNH GÓC XANH */
+        .green-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 20px;
+        }
+        .green-card {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #e8f5e9;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+            aspect-ratio: 4/3;
+        }
+        .green-card:hover {
+            transform: scale(1.03);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+        }
+        .green-card img {
+            width: 100%; height: 100%; object-fit: cover; display: block;
+        }
+        .green-card-overlay {
+            position: absolute; inset: 0;
+            background: rgba(46, 125, 50, 0.4);
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; transition: opacity 0.3s; color: white;
+            font-weight: bold; font-size: 14px; text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+        }
+        .green-card:hover .green-card-overlay { opacity: 1; }
+
+        /* MODAL POPUP HIỂN THỊ CHÚ THÍCH */
+        .modal {
+            display: none; position: fixed; z-index: 1000;
+            left: 0; top: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            align-items: center; justify-content: center; padding: 20px;
+        }
+        .modal-content {
+            background-color: #fff; max-width: 700px; width: 100%;
+            border-radius: 8px; overflow: hidden; position: relative;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        .modal-body { max-height: 85vh; overflow-y: auto; }
+        .modal-img { width: 100%; max-height: 450px; object-fit: contain; background: #000; display: block; }
+        .modal-caption { padding: 20px; }
+        .modal-title { font-size: 18px; font-weight: bold; color: var(--green-color); margin-bottom: 8px; }
+        .modal-desc { font-size: 14px; color: #444; line-height: 1.6; white-space: pre-line; }
+        .close-btn {
+            position: absolute; top: 10px; right: 15px; color: white;
+            font-size: 28px; font-weight: bold; cursor: pointer;
+            text-shadow: 0 0 5px rgba(0,0,0,0.8); z-index: 10;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .empty-state { text-align: center; padding: 40px 0; color: #777; font-style: italic; }
+
+        footer {
+            background-color: #001529; color: white;
+            text-align: center; padding: 20px; margin-top: 40px; font-size: 13px;
+        }
+
+        @media (max-width: 768px) {
+            .header-container { flex-direction: column; text-align: center; }
+            .header-left { flex-direction: column; }
+            .green-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <div class="header-container">
+            <div class="header-left">
+                <div class="logo-box" id="logo-container">
+                    <img src="logo.png" alt="Logo Lớp 12A7" onerror="document.getElementById('logo-container').innerHTML='12A7'">
+                </div>
+                <div class="header-text">
+                    <h1>CỔNG THÔNG TIN LỚP 12A7</h1>
+                    <p>Trung tâm GDNN - GDTX Phú Nhuận | Năm học 2026 - 2027</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- NAVIGATION -->
+    <nav>
+        <div class="nav-container">
+            <a href="index.html">Trang chủ</a>
+            <a href="gocxanh.html" class="green-tab active">Góc Xanh</a>
+            <a href="index.html#tin-tuc">Tin tức & Sự kiện</a>
+            <a href="index.html#hoc-tap">Góc học tập</a>
+            <a href="thanhvien.html">Thành viên</a>
+            <a href="thuvien.html">Thư viện ảnh</a>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-wrapper">
+        <div class="card">
+            <h2 class="section-title">🌿 Góc Xanh 12A7 - Hoạt động Môi trường & Phong trào</h2>
+            
+            <div id="green-container" class="green-grid">
+                <div class="empty-state" style="grid-column: 1/-1;">Đang tải dữ liệu Góc Xanh...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL POPUP XEM CHÚ THÍCH -->
+    <div id="imageModal" class="modal" onclick="closeModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <div class="modal-body">
+                <img id="modalImg" class="modal-img" src="" alt="">
+                <div class="modal-caption">
+                    <div id="modalTitle" class="modal-title"></div>
+                    <div id="modalDesc" class="modal-desc"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>&copy; 2026 Cổng thông tin Lớp 12A7 - Trung tâm GDNN - GDTX Phú Nhuận</p>
+        <p>Phát triển và vận hành bởi Tập thể Lớp 12A7</p>
+    </footer>
+
+    <!-- JAVASCRIPT ĐỌC DỮ LIỆU & TỰ ĐỘNG LỌC LINK ẢNH -->
+    <script>
+        const SHEET_ID = '10WZAkfTsUhEsTRADxZ3JX869kLV_Sen45r4BeSrxDZY';
+        const GID = '940791294';
+
+        function isUrl(str) {
+            if (!str) return false;
+            const s = String(str).trim();
+            return s.startsWith('http://') || s.startsWith('https://');
+        }
+
+        function formatImageUrl(url) {
+            if (!url) return '';
+            url = String(url).trim();
+
+            if (url.includes('drive.google.com')) {
+                const match = url.match(/\/d\/([^\/]+)/) || url.match(/id=([^&]+)/);
+                if (match && match[1]) {
+                    return `https://lh3.googleusercontent.com/d/${match[1]}`;
+                }
+            }
+            return url;
+        }
+
+        function handleGreenData(json) {
+            const container = document.getElementById('green-container');
+            
+            try {
+                const rows = json.table.rows;
+                if (!rows || rows.length <= 1) {
+                    container.innerHTML = '<div class="empty-state" style="grid-column: 1/-1;">Chưa có dữ liệu nào trong Góc Xanh.</div>';
+                    return;
+                }
+
+                let html = '';
+                let count = 0;
+
+                for (let i = 1; i < rows.length; i++) {
+                    const row = rows[i].c;
+                    if (!row) continue;
+
+                    let cellValues = row.map(cell => cell ? (cell.v || '').toString().trim() : '');
+                    let urlIndex = cellValues.findIndex(val => isUrl(val));
+
+                    let rawImgUrl = '';
+                    let title = `Hoạt động xanh #${i}`;
+                    let desc = '';
+
+                    if (urlIndex !== -1) {
+                        rawImgUrl = cellValues[urlIndex];
+                        let textValues = cellValues.filter((val, index) => index !== urlIndex && val.length > 0);
+                        
+                        if (textValues.length > 0) {
+                            if (textValues.length === 1) {
+                                if (textValues[0].length > 60) {
+                                    desc = textValues[0];
+                                } else {
+                                    title = textValues[0];
+                                }
+                            } else {
+                                title = textValues[0];
+                                desc = textValues.slice(1).join('\n\n');
+                            }
+                        }
+                    } else {
+                        let nonNavText = cellValues.filter(v => v.length > 0);
+                        if (nonNavText.length > 0) {
+                            desc = nonNavText.join('\n\n');
+                        }
+                    }
+
+                    const imgUrl = formatImageUrl(rawImgUrl) || 'https://images.unsplash.com/photo-1530587191325-3db32d826c18?w=600&q=80';
+                    count++;
+
+                    const safeImg = encodeURIComponent(imgUrl);
+                    const safeTitle = encodeURIComponent(title);
+                    const safeDesc = encodeURIComponent(desc || 'Hình ảnh phong trào mảng xanh và hoạt động vệ sinh môi trường của tập thể lớp 12A7.');
+
+                    html += `
+                        <div class="green-card" onclick="openModal('${safeImg}', '${safeTitle}', '${safeDesc}')">
+                            <img src="${imgUrl}" alt="${title}" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1530587191325-3db32d826c18?w=600&q=80'">
+                            <div class="green-card-overlay">🔍 Xem chi tiết</div>
+                        </div>
+                    `;
+                }
+
+                container.innerHTML = count > 0 ? html : '<div class="empty-state" style="grid-column: 1/-1;">Chưa có nội dung hợp lệ nào trong Góc Xanh.</div>';
+
+            } catch (err) {
+                console.error("Lỗi xử lý dữ liệu:", err);
+                container.innerHTML = '<div class="empty-state" style="grid-column: 1/-1;">Lỗi tải dữ liệu từ Google Sheet. Vui lòng kiểm tra lại.</div>';
+            }
+        }
+
+        function openModal(imgUrl, title, desc) {
+            document.getElementById('modalImg').src = decodeURIComponent(imgUrl);
+            document.getElementById('modalTitle').innerText = decodeURIComponent(title);
+            document.getElementById('modalDesc').innerText = decodeURIComponent(desc);
+            document.getElementById('imageModal').style.display = 'flex';
+        }
+
+        function closeModal(event) {
+            document.getElementById('imageModal').style.display = 'none';
+        }
+
+        function loadGreenData() {
+            const script = document.createElement('script');
+            script.src = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?gid=${GID}&tqx=responseHandler:handleGreenData`;
+            document.body.appendChild(script);
+        }
+
+        window.onload = loadGreenData;
+    </script>
+</body>
+</html>
