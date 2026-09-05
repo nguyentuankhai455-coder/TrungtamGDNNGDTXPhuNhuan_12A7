@@ -14,6 +14,10 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
+        
+        /* Giúp cuộn trang mượt mà */
+        html { scroll-behavior: smooth; }
+        
         body { background-color: var(--bg-light); color: var(--text-color); line-height: 1.6; }
 
         /* HEADER & BANNER */
@@ -46,11 +50,7 @@
             border: 2px solid #fff;
             flex-shrink: 0;
         }
-        .logo-box img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+        .logo-box img { width: 100%; height: 100%; object-fit: cover; }
         .header-text h1 { font-size: 24px; text-transform: uppercase; letter-spacing: 1px; }
         .header-text p { font-size: 14px; opacity: 0.9; }
 
@@ -66,7 +66,7 @@
             text-transform: uppercase;
             transition: background 0.3s;
         }
-        .nav-container a:hover { background-color: var(--secondary-color); }
+        .nav-container a:hover, .nav-container a.active { background-color: var(--secondary-color); }
 
         /* MAIN LAYOUT */
         .main-wrapper {
@@ -78,13 +78,15 @@
             gap: 20px;
         }
 
-        /* CARD STYLING */
+        /* CARD STYLING & KHẮC PHỤC LỖI CUỘN BỊ CHE */
         .card {
             background: white;
             border-radius: 6px;
             padding: 20px;
             margin-bottom: 20px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            /* Khoảng đệm để không bị menu sticky che mất tiêu đề khi nhấn link # */
+            scroll-margin-top: 60px; 
         }
         .section-title {
             color: var(--primary-color);
@@ -111,13 +113,9 @@
             font-weight: bold;
             padding: 20px;
         }
-        .banner-box img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+        .banner-box img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* TKB IMAGE DISPLAY */
+        /* DISPLAY TKB IMAGE */
         .tkb-img-container {
             width: 100%;
             margin-top: 10px;
@@ -147,8 +145,6 @@
             border-bottom: 1px solid #f0f0f0;
             font-size: 14px;
         }
-        .notice-list li a { color: #333; text-decoration: none; }
-        .notice-list li a:hover { color: var(--accent-color); }
 
         /* TAB SECTION */
         .tab-buttons { display: flex; gap: 5px; margin-bottom: 10px; }
@@ -182,10 +178,11 @@
 </head>
 <body>
 
+    <!-- BANNER & HEADER -->
     <header>
         <div class="header-container">
             <div class="logo-box" id="logo-container">
-                <img src="logo.png" alt="Logo Lớp 12A7" onerror="handleLogoError()">
+                <img src="logo.png" alt="Logo Lớp 12A7" onerror="document.getElementById('logo-container').innerHTML='12A7'">
             </div>
             <div class="header-text">
                 <h1>CỔNG THÔNG TIN LỚP 12A7</h1>
@@ -194,25 +191,29 @@
         </div>
     </header>
 
+    <!-- NAVIGATION BAR -->
     <nav>
         <div class="nav-container">
-            <a href="#">Trang chủ</a>
+            <a href="index.html" class="active">Trang chủ</a>
             <a href="#tin-tuc">Tin tức & Sự kiện</a>
             <a href="#hoc-tap">Góc học tập</a>
-            <a href="#thanh-vien">Thành viên</a>
-            <a href="#thu-vien">Thư viện ảnh</a>
+            <a href="thanhvien.html">Thành viên</a>
+            <a href="thuvien.html">Thư viện ảnh</a>
         </div>
     </nav>
 
+    <!-- MAIN CONTENT -->
     <div class="main-wrapper">
         
+        <!-- LEFT COLUMN (MAIN) -->
         <main>
             <div class="card">
                 <div class="banner-box" id="banner-container">
-                    <img id="main-banner" src="banner.jpg" alt="Banner Lớp 12A7" onerror="handleBannerError()">
+                    <img id="main-banner" src="banner.jpg" alt="Banner Lớp 12A7" onerror="this.style.display='none'; document.getElementById('banner-container').innerHTML='Chào mừng bạn đến với Cổng thông tin Lớp 12A7<br>Năm học 2026 - 2027'">
                 </div>
             </div>
 
+            <!-- MỤC TIN TỨC -->
             <div class="card" id="tin-tuc">
                 <h3 class="section-title">Tin tức & Hoạt động mới</h3>
                 <div class="empty-state">
@@ -220,6 +221,7 @@
                 </div>
             </div>
 
+            <!-- MỤC GÓC HỌC TẬP -->
             <div class="card" id="hoc-tap">
                 <h3 class="section-title">Góc học tập & Tài liệu</h3>
                 <div class="tab-buttons">
@@ -227,13 +229,15 @@
                     <button class="tab-btn" onclick="switchTab('tailieu', event)">Tài liệu ôn thi</button>
                 </div>
                 <div id="tab-content" style="font-size: 14px; padding-top: 10px;">
+                    <!-- Mặc định tải tkb.jpg -->
                     <div class="tkb-img-container">
-                        <img src="tkb.png" alt="Thời khóa biểu Lớp 12A7" onerror="this.parentElement.innerHTML='<p class=\'empty-state\'>Chưa tìm thấy tệp ảnh tkb.png</p>'">
+                        <img src="tkb.jpg" alt="Thời khóa biểu Lớp 12A7" onerror="this.parentElement.innerHTML='<p class=\'empty-state\'>Chưa tìm thấy tệp ảnh tkb (Vui lòng kiểm tra lại tên file tkb.png trên GitHub)</p>'">
                     </div>
                 </div>
             </div>
         </main>
 
+        <!-- RIGHT COLUMN (SIDEBAR) -->
         <aside>
             <div class="card">
                 <h3 class="section-title">Thông báo nhanh</h3>
@@ -255,20 +259,14 @@
 
     </div>
 
+    <!-- FOOTER -->
     <footer>
         <p>&copy; 2026 Cổng thông tin Lớp 12A7 - Trung tâm GDNN - GDTX Phú Nhuận</p>
         <p>Phát triển và vận hành bởi Tập thể Lớp 12A7</p>
     </footer>
 
+    <!-- JAVASCRIPT -->
     <script>
-        function handleLogoError() {
-            document.getElementById('logo-container').innerHTML = '12A7';
-        }
-
-        function handleBannerError() {
-            document.getElementById('banner-container').innerHTML = 'Chào mừng bạn đến với Cổng thông tin Lớp 12A7<br>Năm học 2026 - 2027';
-        }
-
         function switchTab(tabName, evt) {
             const buttons = document.querySelectorAll('.tab-btn');
             buttons.forEach(btn => btn.classList.remove('active'));
@@ -279,7 +277,7 @@
             if (tabName === 'tkb') {
                 content.innerHTML = `
                     <div class="tkb-img-container">
-                        <img src="tkb.jpg" alt="Thời khóa biểu Lớp 12A7" onerror="this.parentElement.innerHTML='<p class=\\'empty-state\\'>Chưa tìm thấy tệp ảnh tkb.png</p>'">
+                        <img src="tkb.png" alt="Thời khóa biểu Lớp 12A7" onerror="this.parentElement.innerHTML='<p class=\\'empty-state\\'>Chưa tìm thấy tệp ảnh tkb.png (Vui lòng kiểm tra lại tên file tkb.png trên GitHub)</p>'">
                     </div>
                 `;
             } else if (tabName === 'tailieu') {
