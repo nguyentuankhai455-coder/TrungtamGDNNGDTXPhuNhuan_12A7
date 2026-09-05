@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Góc Xanh - Lớp 12A7</title>
+    <title>Góc Xanh & Phong Trào - Lớp 12A7</title>
     <style>
         :root {
             --primary-color: #003366;
             --secondary-color: #0055a5;
             --green-color: #2e7d32;
+            --orange-color: #e65100;
             --bg-light: #f4f6f9;
             --text-color: #333;
         }
@@ -52,72 +53,72 @@
         /* MAIN CONTENT */
         .main-wrapper { max-width: 1200px; margin: 20px auto; padding: 0 15px; }
         .card { background: white; border-radius: 6px; padding: 25px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+
+        /* THANH NÚT BẤM CHUYỂN ĐỔI (TAB BUTTONS) */
+        .sub-nav-buttons {
+            display: flex; gap: 12px; margin-bottom: 25px; border-bottom: 2px solid #ddd; padding-bottom: 12px;
+        }
+        .tab-btn {
+            background-color: #e0e0e0; color: #444; border: none;
+            padding: 10px 22px; font-size: 15px; font-weight: bold;
+            border-radius: 6px; cursor: pointer; transition: all 0.3s ease;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .tab-btn:hover { background-color: #ccc; }
+        .tab-btn.active-green { background-color: var(--green-color); color: white; }
+        .tab-btn.active-orange { background-color: var(--orange-color); color: white; }
+
         .section-title {
-            color: var(--green-color); font-size: 20px;
-            border-bottom: 2px solid var(--green-color);
+            font-size: 20px; border-bottom: 2px solid currentColor;
             padding-bottom: 10px; margin-bottom: 20px; text-transform: uppercase;
         }
+        .title-green { color: var(--green-color); }
+        .title-orange { color: var(--orange-color); }
 
-        /* LƯỚI HÌNH ẢNH GÓC XANH */
+        /* KHU VỰC HIỂN THỊ NỘI DUNG */
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        /* GRID HÌNH ẢNH */
         .green-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-            gap: 20px;
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px;
         }
         .green-card {
-            position: relative;
-            border-radius: 8px;
-            overflow: hidden;
-            background: #e8f5e9;
-            cursor: pointer;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            transition: transform 0.2s, box-shadow 0.2s;
+            position: relative; border-radius: 8px; overflow: hidden;
+            background: #e8f5e9; cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1); transition: transform 0.2s, box-shadow 0.2s;
             aspect-ratio: 4/3;
         }
-        .green-card:hover {
-            transform: scale(1.03);
-            box-shadow: 0 6px 15px rgba(0,0,0,0.2);
-        }
-        .green-card img {
-            width: 100%; height: 100%; object-fit: cover; display: block;
-        }
+        .green-card:hover { transform: scale(1.03); box-shadow: 0 6px 15px rgba(0,0,0,0.2); }
+        .green-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
         .green-card-overlay {
-            position: absolute; inset: 0;
-            background: rgba(46, 125, 50, 0.4);
+            position: absolute; inset: 0; background: rgba(0, 0, 0, 0.4);
             display: flex; align-items: center; justify-content: center;
             opacity: 0; transition: opacity 0.3s; color: white;
             font-weight: bold; font-size: 14px; text-shadow: 0 1px 3px rgba(0,0,0,0.8);
         }
         .green-card:hover .green-card-overlay { opacity: 1; }
 
-        /* MODAL POPUP HIỂN THỊ CHÚ THÍCH */
+        /* MODAL POPUP */
         .modal {
-            display: none; position: fixed; z-index: 1000;
-            left: 0; top: 0; width: 100%; height: 100%;
-            background-color: rgba(0, 0, 0, 0.85);
-            align-items: center; justify-content: center; padding: 20px;
+            display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.85); align-items: center; justify-content: center; padding: 20px;
         }
         .modal-content {
-            background-color: #fff; max-width: 700px; width: 100%;
-            border-radius: 8px; overflow: hidden; position: relative;
-            animation: fadeIn 0.3s ease-in-out;
+            background-color: #fff; max-width: 700px; width: 100%; border-radius: 8px;
+            overflow: hidden; position: relative; animation: fadeIn 0.3s ease-in-out;
         }
         .modal-body { max-height: 85vh; overflow-y: auto; }
         .modal-img { width: 100%; max-height: 450px; object-fit: contain; background: #000; display: block; }
         .modal-caption { padding: 20px; }
-        .modal-title { font-size: 18px; font-weight: bold; color: var(--green-color); margin-bottom: 8px; }
+        .modal-title { font-size: 18px; font-weight: bold; margin-bottom: 8px; }
         .modal-desc { font-size: 14px; color: #444; line-height: 1.6; white-space: pre-line; }
         .close-btn {
             position: absolute; top: 10px; right: 15px; color: white;
-            font-size: 28px; font-weight: bold; cursor: pointer;
-            text-shadow: 0 0 5px rgba(0,0,0,0.8); z-index: 10;
+            font-size: 28px; font-weight: bold; cursor: pointer; text-shadow: 0 0 5px rgba(0,0,0,0.8); z-index: 10;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
-        }
-
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
         .empty-state { text-align: center; padding: 40px 0; color: #777; font-style: italic; }
 
         footer {
@@ -129,6 +130,7 @@
             .header-container { flex-direction: column; text-align: center; }
             .header-left { flex-direction: column; }
             .green-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+            .sub-nav-buttons { flex-direction: column; }
         }
     </style>
 </head>
@@ -149,11 +151,11 @@
         </div>
     </header>
 
-    <!-- NAVIGATION -->
+    <!-- NAVIGATION MAIN -->
     <nav>
         <div class="nav-container">
             <a href="index.html">Trang chủ</a>
-            <a href="gocxanh.html" class="green-tab active">Góc Xanh</a>
+            <a href="gocxanh.html" class="green-tab active">Góc Xanh & Phong Trào</a>
             <a href="index.html#tin-tuc">Tin tức & Sự kiện</a>
             <a href="index.html#hoc-tap">Góc học tập</a>
             <a href="thanhvien.html">Thành viên</a>
@@ -164,15 +166,33 @@
     <!-- MAIN CONTENT -->
     <div class="main-wrapper">
         <div class="card">
-            <h2 class="section-title">🌿 Góc Xanh 12A7 - Hoạt động Môi trường & Phong trào</h2>
             
-            <div id="green-container" class="green-grid">
-                <div class="empty-state" style="grid-column: 1/-1;">Đang tải dữ liệu Góc Xanh...</div>
+            <!-- NÚT CHUYỂN TAB NỘI DUNG -->
+            <div class="sub-nav-buttons">
+                <button class="tab-btn active-green" id="btn-gocxanh" onclick="switchSection('gocxanh')">🌿 Góc Xanh 12A7</button>
+                <button class="tab-btn" id="btn-phongtrao" onclick="switchSection('phongtrao')">🔥 Hoạt Động Phong Trào</button>
             </div>
+
+            <!-- NỘI DUNG 1: GÓC XANH -->
+            <div id="section-gocxanh" class="tab-content active">
+                <h2 class="section-title title-green">🌿 Mảng Cây Xanh & Môi Trường Lớp Học</h2>
+                <div id="green-container" class="green-grid">
+                    <div class="empty-state" style="grid-column: 1/-1;">Đang tải dữ liệu Góc Xanh...</div>
+                </div>
+            </div>
+
+            <!-- NỘI DUNG 2: PHONG TRÀO -->
+            <div id="section-phongtrao" class="tab-content">
+                <h2 class="section-title title-orange">🔥 Hoạt Động & Phong Trào Thi Đua Lớp 12A7</h2>
+                <div id="phongtrao-container" class="green-grid">
+                    <div class="empty-state" style="grid-column: 1/-1;">Chưa có bài viết phong trào nào.</div>
+                </div>
+            </div>
+
         </div>
     </div>
 
-    <!-- MODAL POPUP XEM CHÚ THÍCH -->
+    <!-- MODAL POPUP XEM CHI TIẾT -->
     <div id="imageModal" class="modal" onclick="closeModal(event)">
         <div class="modal-content" onclick="event.stopPropagation()">
             <span class="close-btn" onclick="closeModal()">&times;</span>
@@ -192,10 +212,32 @@
         <p>Phát triển và vận hành bởi Tập thể Lớp 12A7</p>
     </footer>
 
-    <!-- JAVASCRIPT ĐỌC DỮ LIỆU & TỰ ĐỘNG LỌC LINK ẢNH -->
+    <!-- JAVASCRIPT XỬ LÝ CHUYỂN TAB VÀ ĐỌC DỮ LIỆU -->
     <script>
         const SHEET_ID = '10WZAkfTsUhEsTRADxZ3JX869kLV_Sen45r4BeSrxDZY';
         const GID = '940791294';
+
+        // CHUYỂN NỘI DUNG THEO NÚT
+        function switchSection(type) {
+            const btnGocXanh = document.getElementById('btn-gocxanh');
+            const btnPhongTrao = document.getElementById('btn-phongtrao');
+            const secGocXanh = document.getElementById('section-gocxanh');
+            const secPhongTrao = document.getElementById('section-phongtrao');
+
+            if (type === 'gocxanh') {
+                secGocXanh.classList.add('active');
+                secPhongTrao.classList.remove('active');
+                
+                btnGocXanh.className = 'tab-btn active-green';
+                btnPhongTrao.className = 'tab-btn';
+            } else {
+                secPhongTrao.classList.add('active');
+                secGocXanh.classList.remove('active');
+                
+                btnPhongTrao.className = 'tab-btn active-orange';
+                btnGocXanh.className = 'tab-btn';
+            }
+        }
 
         function isUrl(str) {
             if (!str) return false;
@@ -206,19 +248,15 @@
         function formatImageUrl(url) {
             if (!url) return '';
             url = String(url).trim();
-
             if (url.includes('drive.google.com')) {
                 const match = url.match(/\/d\/([^\/]+)/) || url.match(/id=([^&]+)/);
-                if (match && match[1]) {
-                    return `https://lh3.googleusercontent.com/d/${match[1]}`;
-                }
+                if (match && match[1]) return `https://lh3.googleusercontent.com/d/${match[1]}`;
             }
             return url;
         }
 
         function handleGreenData(json) {
             const container = document.getElementById('green-container');
-            
             try {
                 const rows = json.table.rows;
                 if (!rows || rows.length <= 1) {
@@ -237,29 +275,20 @@
                     let urlIndex = cellValues.findIndex(val => isUrl(val));
 
                     let rawImgUrl = '';
-                    let title = `Hoạt động xanh #${i}`;
+                    let title = `Cây xanh #${i}`;
                     let desc = '';
 
                     if (urlIndex !== -1) {
                         rawImgUrl = cellValues[urlIndex];
                         let textValues = cellValues.filter((val, index) => index !== urlIndex && val.length > 0);
-                        
                         if (textValues.length > 0) {
                             if (textValues.length === 1) {
-                                if (textValues[0].length > 60) {
-                                    desc = textValues[0];
-                                } else {
-                                    title = textValues[0];
-                                }
+                                if (textValues[0].length > 60) desc = textValues[0];
+                                else title = textValues[0];
                             } else {
                                 title = textValues[0];
                                 desc = textValues.slice(1).join('\n\n');
                             }
-                        }
-                    } else {
-                        let nonNavText = cellValues.filter(v => v.length > 0);
-                        if (nonNavText.length > 0) {
-                            desc = nonNavText.join('\n\n');
                         }
                     }
 
@@ -268,32 +297,33 @@
 
                     const safeImg = encodeURIComponent(imgUrl);
                     const safeTitle = encodeURIComponent(title);
-                    const safeDesc = encodeURIComponent(desc || 'Hình ảnh phong trào mảng xanh và hoạt động vệ sinh môi trường của tập thể lớp 12A7.');
+                    const safeDesc = encodeURIComponent(desc || 'Mảng cây xanh và chậu cảnh góc lớp 12A7.');
 
                     html += `
-                        <div class="green-card" onclick="openModal('${safeImg}', '${safeTitle}', '${safeDesc}')">
+                        <div class="green-card" onclick="openModal('${safeImg}', '${safeTitle}', '${safeDesc}', 'var(--green-color)')">
                             <img src="${imgUrl}" alt="${title}" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1530587191325-3db32d826c18?w=600&q=80'">
                             <div class="green-card-overlay">🔍 Xem chi tiết</div>
                         </div>
                     `;
                 }
 
-                container.innerHTML = count > 0 ? html : '<div class="empty-state" style="grid-column: 1/-1;">Chưa có nội dung hợp lệ nào trong Góc Xanh.</div>';
-
+                container.innerHTML = count > 0 ? html : '<div class="empty-state" style="grid-column: 1/-1;">Chưa có nội dung hợp lệ.</div>';
             } catch (err) {
-                console.error("Lỗi xử lý dữ liệu:", err);
-                container.innerHTML = '<div class="empty-state" style="grid-column: 1/-1;">Lỗi tải dữ liệu từ Google Sheet. Vui lòng kiểm tra lại.</div>';
+                console.error("Lỗi dữ liệu:", err);
+                container.innerHTML = '<div class="empty-state" style="grid-column: 1/-1;">Lỗi tải dữ liệu từ Google Sheet.</div>';
             }
         }
 
-        function openModal(imgUrl, title, desc) {
+        function openModal(imgUrl, title, desc, titleColor) {
             document.getElementById('modalImg').src = decodeURIComponent(imgUrl);
-            document.getElementById('modalTitle').innerText = decodeURIComponent(title);
+            const titleEl = document.getElementById('modalTitle');
+            titleEl.innerText = decodeURIComponent(title);
+            titleEl.style.color = titleColor || 'var(--green-color)';
             document.getElementById('modalDesc').innerText = decodeURIComponent(desc);
             document.getElementById('imageModal').style.display = 'flex';
         }
 
-        function closeModal(event) {
+        function closeModal() {
             document.getElementById('imageModal').style.display = 'none';
         }
 
