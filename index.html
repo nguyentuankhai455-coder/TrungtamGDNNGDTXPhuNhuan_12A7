@@ -8,19 +8,14 @@
         :root {
             --primary-color: #003366;
             --secondary-color: #0055a5;
-            --accent-color: #d9534f;
             --bg-light: #f4f6f9;
             --text-color: #333;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
-        
-        /* Giúp cuộn trang mượt mà */
         html { scroll-behavior: smooth; }
-        
         body { background-color: var(--bg-light); color: var(--text-color); line-height: 1.6; }
 
-        /* HEADER & BANNER */
         header {
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: white;
@@ -54,7 +49,6 @@
         .header-text h1 { font-size: 24px; text-transform: uppercase; letter-spacing: 1px; }
         .header-text p { font-size: 14px; opacity: 0.9; }
 
-        /* NAVIGATION BAR */
         nav { background-color: #002244; position: sticky; top: 0; z-index: 100; }
         .nav-container { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; }
         .nav-container a {
@@ -68,7 +62,6 @@
         }
         .nav-container a:hover, .nav-container a.active { background-color: var(--secondary-color); }
 
-        /* MAIN LAYOUT */
         .main-wrapper {
             max-width: 1200px;
             margin: 20px auto;
@@ -78,15 +71,13 @@
             gap: 20px;
         }
 
-        /* CARD STYLING & KHẮC PHỤC LỖI CUỘN BỊ CHE */
         .card {
             background: white;
             border-radius: 6px;
             padding: 20px;
             margin-bottom: 20px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            /* Khoảng đệm để không bị menu sticky che mất tiêu đề khi nhấn link # */
-            scroll-margin-top: 60px; 
+            scroll-margin-top: 60px;
         }
         .section-title {
             color: var(--primary-color);
@@ -97,7 +88,6 @@
             text-transform: uppercase;
         }
 
-        /* BANNER FEATURE */
         .banner-box {
             width: 100%;
             height: 250px;
@@ -115,7 +105,6 @@
         }
         .banner-box img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* DISPLAY TKB IMAGE */
         .tkb-img-container {
             width: 100%;
             margin-top: 10px;
@@ -123,52 +112,45 @@
             border-radius: 4px;
             overflow: hidden;
         }
-        .tkb-img-container img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
+        .tkb-img-container img { width: 100%; height: auto; display: block; }
 
-        /* EMPTY STATE STYLING */
         .empty-state {
             text-align: center;
-            padding: 30px 20px;
+            padding: 20px;
             color: #777;
             font-style: italic;
             font-size: 14px;
         }
 
-        /* SIDEBAR LIST */
-        .notice-list { list-style: none; }
-        .notice-list li {
-            padding: 8px 0;
-            border-bottom: 1px solid #f0f0f0;
-            font-size: 14px;
-        }
-
-        /* TAB SECTION */
-        .tab-buttons { display: flex; gap: 5px; margin-bottom: 10px; }
-        .tab-btn {
-            padding: 6px 12px;
-            border: none;
-            background: #ddd;
-            cursor: pointer;
+        /* BÀI VIẾT TRANG CHỦ */
+        .post-item { border-bottom: 1px dashed #ddd; padding: 15px 0; }
+        .post-item:last-child { border-bottom: none; }
+        .post-date { font-size: 12px; color: #888; display: block; margin-bottom: 4px; }
+        .post-title a { font-size: 17px; color: var(--primary-color); text-decoration: none; font-weight: bold; }
+        .post-title a:hover { color: var(--secondary-color); text-decoration: underline; }
+        .post-content { font-size: 14px; color: #444; margin: 6px 0; }
+        .read-more-btn {
+            display: inline-block;
+            margin-top: 8px;
+            padding: 5px 12px;
+            background-color: var(--primary-color);
+            color: #fff;
+            text-decoration: none;
             border-radius: 4px;
-            font-size: 13px;
+            font-size: 12px;
+            font-weight: 600;
         }
+        .read-more-btn:hover { background-color: var(--secondary-color); }
+
+        .notice-list { list-style: none; }
+        .notice-list li { padding: 8px 0; border-bottom: 1px solid #f0f0f0; font-size: 14px; }
+
+        .tab-buttons { display: flex; gap: 5px; margin-bottom: 10px; }
+        .tab-btn { padding: 6px 12px; border: none; background: #ddd; cursor: pointer; border-radius: 4px; font-size: 13px; }
         .tab-btn.active { background: var(--primary-color); color: white; }
 
-        /* FOOTER */
-        footer {
-            background-color: #001529;
-            color: white;
-            text-align: center;
-            padding: 20px;
-            margin-top: 40px;
-            font-size: 13px;
-        }
+        footer { background-color: #001529; color: white; text-align: center; padding: 20px; margin-top: 40px; font-size: 13px; }
 
-        /* RESPONSIVE */
         @media (max-width: 768px) {
             .main-wrapper { grid-template-columns: 1fr; }
             .header-container { flex-direction: column; text-align: center; }
@@ -178,7 +160,7 @@
 </head>
 <body>
 
-    <!-- BANNER & HEADER -->
+    <!-- HEADER -->
     <header>
         <div class="header-container">
             <div class="logo-box" id="logo-container">
@@ -191,7 +173,7 @@
         </div>
     </header>
 
-    <!-- NAVIGATION BAR -->
+    <!-- NAVIGATION -->
     <nav>
         <div class="nav-container">
             <a href="index.html" class="active">Trang chủ</a>
@@ -204,8 +186,6 @@
 
     <!-- MAIN CONTENT -->
     <div class="main-wrapper">
-        
-        <!-- LEFT COLUMN (MAIN) -->
         <main>
             <div class="card">
                 <div class="banner-box" id="banner-container">
@@ -213,15 +193,13 @@
                 </div>
             </div>
 
-            <!-- MỤC TIN TỨC -->
             <div class="card" id="tin-tuc">
                 <h3 class="section-title">Tin tức & Hoạt động mới</h3>
-                <div class="empty-state">
-                    Hiện chưa có bài viết hay hoạt động mới nào được cập nhật.
+                <div id="posts-list">
+                    <div class="empty-state">Đang tải tin tức...</div>
                 </div>
             </div>
 
-            <!-- MỤC GÓC HỌC TẬP -->
             <div class="card" id="hoc-tap">
                 <h3 class="section-title">Góc học tập & Tài liệu</h3>
                 <div class="tab-buttons">
@@ -229,21 +207,17 @@
                     <button class="tab-btn" onclick="switchTab('tailieu', event)">Tài liệu ôn thi</button>
                 </div>
                 <div id="tab-content" style="font-size: 14px; padding-top: 10px;">
-                    <!-- Mặc định tải tkb.jpg -->
                     <div class="tkb-img-container">
-                        <img src="tkb.jpg" alt="Thời khóa biểu Lớp 12A7" onerror="this.parentElement.innerHTML='<p class=\'empty-state\'>Chưa tìm thấy tệp ảnh tkb (Vui lòng kiểm tra lại tên file tkb.png trên GitHub)</p>'">
+                        <img src="tkb.png" alt="Thời khóa biểu Lớp 12A7" onerror="this.parentElement.innerHTML='<p class=\\'empty-state\\'>Chưa tìm thấy tệp ảnh tkb.png (Vui lòng kiểm tra lại tên tệp tkb.png trên GitHub)</p>'">
                     </div>
                 </div>
             </div>
         </main>
 
-        <!-- RIGHT COLUMN (SIDEBAR) -->
         <aside>
             <div class="card">
                 <h3 class="section-title">Thông báo nhanh</h3>
-                <div class="empty-state" style="padding: 15px 0;">
-                    Chưa có thông báo mới.
-                </div>
+                <div class="empty-state" style="padding: 15px 0;">Chưa có thông báo mới.</div>
             </div>
 
             <div class="card">
@@ -256,34 +230,83 @@
                 </ul>
             </div>
         </aside>
-
     </div>
 
-    <!-- FOOTER -->
     <footer>
         <p>&copy; 2026 Cổng thông tin Lớp 12A7 - Trung tâm GDNN - GDTX Phú Nhuận</p>
         <p>Phát triển và vận hành bởi Tập thể Lớp 12A7</p>
     </footer>
 
-    <!-- JAVASCRIPT -->
+    <!-- JAVASCRIPT HIỂN THỊ DANH SÁCH -->
     <script>
+        const SHEET_ID = '10WZAkfTsUhEsTRADxZ3JX869kLV_Sen45r4BeSrxDZY';
+
+        function handleGoogleSheetsData(json) {
+            const container = document.getElementById('posts-list');
+            
+            try {
+                const rows = json.table.rows;
+                if (!rows || rows.length === 0) {
+                    container.innerHTML = '<div class="empty-state">Hiện chưa có bài viết mới nào.</div>';
+                    return;
+                }
+
+                let html = '';
+                for (let i = rows.length - 1; i >= 0; i--) {
+                    const row = rows[i].c;
+                    if (!row) continue;
+
+                    const id = row[0] ? (row[0].v || (i + 1)) : (i + 1);
+                    const ngay = row[1] ? (row[1].f || row[1].v || '') : '';
+                    const tacGia = row[2] ? (row[2].v || '') : 'BCT Lớp';
+                    const tieude = row[3] ? (row[3].v || '') : '';
+                    const tomTat = row[4] ? (row[4].v || '') : '';
+
+                    if (tieude) {
+                        html += `
+                            <div class="post-item">
+                                <span class="post-date">🕒 ${ngay} | ✍️ ${tacGia}</span>
+                                <div class="post-title">
+                                    <a href="baiviet.html?id=${id}" target="_blank">${tieude}</a>
+                                </div>
+                                <div class="post-content">${tomTat}</div>
+                                <a href="baiviet.html?id=${id}" target="_blank" class="read-more-btn">Xem chi tiết &rarr;</a>
+                            </div>
+                        `;
+                    }
+                }
+
+                container.innerHTML = html || '<div class="empty-state">Hiện chưa có bài viết mới nào.</div>';
+            } catch (err) {
+                console.error("Lỗi đọc dữ liệu:", err);
+                container.innerHTML = '<div class="empty-state">Không thể hiển thị bài viết lúc này.</div>';
+            }
+        }
+
+        function loadGoogleSheetsNews() {
+            const script = document.createElement('script');
+            script.src = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=responseHandler:handleGoogleSheetsData`;
+            document.body.appendChild(script);
+        }
+
         function switchTab(tabName, evt) {
             const buttons = document.querySelectorAll('.tab-btn');
             buttons.forEach(btn => btn.classList.remove('active'));
             evt.target.classList.add('active');
             
             const content = document.getElementById('tab-content');
-            
             if (tabName === 'tkb') {
                 content.innerHTML = `
                     <div class="tkb-img-container">
-                        <img src="tkb.png" alt="Thời khóa biểu Lớp 12A7" onerror="this.parentElement.innerHTML='<p class=\\'empty-state\\'>Chưa tìm thấy tệp ảnh tkb.png (Vui lòng kiểm tra lại tên file tkb.png trên GitHub)</p>'">
+                        <img src="tkb.png" alt="Thời khóa biểu Lớp 12A7" onerror="this.parentElement.innerHTML='<p class=\\'empty-state\\'>Chưa tìm thấy tệp ảnh tkb.png (Vui lòng kiểm tra lại tên tệp tkb.png trên GitHub)</p>'">
                     </div>
                 `;
             } else if (tabName === 'tailieu') {
                 content.innerHTML = '<p class="empty-state">Chưa có tài liệu ôn thi được tải lên.</p>';
             }
         }
+
+        window.onload = loadGoogleSheetsNews;
     </script>
 </body>
 </html>

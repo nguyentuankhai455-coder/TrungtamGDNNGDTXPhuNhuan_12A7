@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi Tiết Bài Viết - Lớp 12A7</title>
+    <style>
+        :root {
+            --primary-color: #003366;
+            --secondary-color: #0055a5;
+            --bg-light: #f4f6f9;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
+        body { background-color: var(--bg-light); color: #333; line-height: 1.8; padding: 20px 10px; }
+
+        .article-container {
+            max-width: 850px;
+            margin: 20px auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        .back-btn:hover { text-decoration: underline; }
+
+        .article-title {
+            color: var(--primary-color);
+            font-size: 26px;
+            font-weight: bold;
+            line-height: 1.4;
+            margin-bottom: 12px;
+        }
+
+        .article-meta {
+            font-size: 13px;
+            color: #666;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+
+        .article-media {
+            text-align: center;
+            margin: 20px 0 30px 0;
+        }
+
+        .article-media img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 6px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        .article-body {
+            font-size: 16px;
+            color: #333;
+            white-space: pre-line;
+            word-wrap: break-word;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 50px 0;
+            color: #777;
+            font-style: italic;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 13px;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="article-container">
+        <a href="index.html" class="back-btn">&larr; Quay lại Trang Chủ</a>
+        
+        <div id="article-content">
+            <div class="loading">Đang tải nội dung bài viết...</div>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2026 Cổng thông tin Lớp 12A7 - Trung tâm GDNN - GDTX Phú Nhuận
+    </footer>
+
+    <!-- JAVASCRIPT ĐỌC NỘI DUNG CHI TIẾT TỪ GOOGLE SHEETS -->
+    <script>
+        const SHEET_ID = '10WZAkfTsUhEsTRADxZ3JX869kLV_Sen45r4BeSrxDZY';
+
+        // Lấy tham số ID trên URL (VD: baiviet.html?id=1)
+        const urlParams = new URLSearchParams(window.location.search);
+        const articleId = urlParams.get('id');
+
+        function handleArticleData(json) {
+            const container = document.getElementById('article-content');
+            
+            try {
+                const rows = json.table.rows;
+                let targetRow = null;
+
+                for (let i = 0; i < rows.length; i++) {
+                    const row = rows[i].c;
+                    if (!row) continue;
+
+                    const id = row[0] ? (row[0].v || (i + 1)) : (i + 1);
+                    if (String(id) === String(articleId)) {
+                        targetRow = row;
+                        break;
+                    }
+                }
+
+                if (!targetRow) {
+                    container.innerHTML = '<h2 style="color:red; text-align:center;">Không tìm thấy bài viết này!</h2>';
+                    return;
+                }
+
+                const ngay = targetRow[1] ? (targetRow[1].f || targetRow[1].v || '') : '';
+                const tacGia = targetRow[2] ? (targetRow[2].v || 'Ban Cán Sự Lớp') : 'Ban Cán Sự Lớp';
+                const tieude = targetRow[3] ? (targetRow[3].v || '') : '';
+                const chiTiet = targetRow[5] ? (targetRow[5].v || targetRow[4].v || '') : '';
+                const hinhAnh = targetRow[6] ? (targetRow[6].v || '') : '';
+
+                document.title = tieude + " - Lớp 12A7";
+
+                container.innerHTML = `
+                    <h1 class="article-title">${tieude}</h1>
+                    <div class="article-meta">
+                        <span>🕒 Ngày đăng: <b>${ngay}</b></span> | 
+                        <span>✍️ Đăng bởi: <b>${tacGia}</b></span>
+                    </div>
+                    ${hinhAnh ? `
+                        <div class="article-media">
+                            <img src="${hinhAnh}" alt="Hình ảnh bài viết" onerror="this.style.display='none'">
+                        </div>
+                    ` : ''}
+                    <div class="article-body">${chiTiet}</div>
+                `;
+
+            } catch (err) {
+                console.error("Lỗi:", err);
+                container.innerHTML = '<h2 style="text-align:center;">Lỗi khi tải bài viết.</h2>';
+            }
+        }
+
+        if (articleId) {
+            const script = document.createElement('script');
+            script.src = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=responseHandler:handleArticleData`;
+            document.body.appendChild(script);
+        } else {
+            document.getElementById('article-content').innerHTML = '<h2 style="text-align:center;">Đường dẫn bài viết không hợp lệ!</h2>';
+        }
+    </script>
+</body>
+</html>
