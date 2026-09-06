@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thư Viện Ảnh - Lớp 12A7 (2026 - 2027)</title>
+    <title>Thư Viện Ảnh - Lớp 12A7</title>
     
+    <!-- FAVICON TAB TRÌNH DUYỆT -->
     <link rel="icon" type="image/png" href="logo.png">
     <link rel="shortcut icon" type="image/png" href="logo.png">
 
@@ -20,6 +21,7 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
         body { background-color: var(--bg-light); color: var(--text-color); line-height: 1.6; }
 
+        /* HEADER */
         header {
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: white;
@@ -53,6 +55,7 @@
         .header-text h1 { font-size: 24px; text-transform: uppercase; letter-spacing: 1px; }
         .header-text p { font-size: 14px; opacity: 0.9; }
 
+        /* NAVIGATION */
         nav { background-color: #002244; position: sticky; top: 0; z-index: 100; }
         .nav-container { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; }
         .nav-container a {
@@ -68,6 +71,7 @@
         .nav-container a.green-tab { color: #28a745; font-weight: bold; }
         .nav-container a.green-tab:hover { background-color: var(--green-color); color: #fff; }
 
+        /* MAIN CONTENT */
         .main-wrapper {
             max-width: 1200px;
             margin: 20px auto;
@@ -77,54 +81,100 @@
         .card {
             background: white;
             border-radius: 6px;
-            padding: 20px;
-            margin-bottom: 20px;
+            padding: 25px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
         .section-title {
             color: var(--primary-color);
-            font-size: 18px;
+            font-size: 20px;
             border-bottom: 2px solid var(--primary-color);
-            padding-bottom: 8px;
+            padding-bottom: 10px;
             margin-bottom: 20px;
             text-transform: uppercase;
         }
 
-        /* ALBUM GRID */
+        /* LƯỚI ẢNH */
         .gallery-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
             gap: 20px;
         }
+
         .gallery-card {
             border: 1px solid #e0e0e0;
             border-radius: 8px;
             overflow: hidden;
             background: #fff;
-            transition: transform 0.3s, box-shadow 0.3s;
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
         }
         .gallery-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transform: translateY(-4px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
         }
-        .gallery-card img {
+
+        .img-container {
             width: 100%;
             height: 200px;
+            background-color: #eee;
+            overflow: hidden;
+        }
+
+        .img-container img {
+            width: 100%;
+            height: 100%;
             object-fit: cover;
+            transition: transform 0.3s;
             display: block;
         }
+        .gallery-card:hover .img-container img { transform: scale(1.05); }
+
         .gallery-info {
-            padding: 15px;
+            padding: 12px 15px;
+            text-align: center;
+            flex-grow: 1;
         }
-        .gallery-info h4 {
+        .gallery-title {
+            font-size: 15px;
+            font-weight: bold;
             color: var(--primary-color);
-            font-size: 16px;
-            margin-bottom: 5px;
+            margin-bottom: 4px;
         }
-        .gallery-info p {
+        .gallery-desc {
             font-size: 13px;
             color: #666;
+            white-space: pre-line;
         }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 0;
+            color: #777;
+            font-style: italic;
+        }
+
+        /* MODAL POPUP */
+        .modal {
+            display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.85); align-items: center; justify-content: center; padding: 20px;
+        }
+        .modal-content {
+            background-color: #fff; max-width: 800px; width: 100%; border-radius: 8px;
+            overflow: hidden; position: relative; animation: fadeIn 0.3s ease-in-out;
+        }
+        .modal-body { max-height: 85vh; overflow-y: auto; }
+        .modal-img { width: 100%; max-height: 500px; object-fit: contain; background: #000; display: block; }
+        .modal-caption { padding: 20px; text-align: center; }
+        .modal-title { font-size: 18px; font-weight: bold; color: var(--primary-color); margin-bottom: 8px; }
+        .modal-desc { font-size: 14px; color: #444; line-height: 1.6; white-space: pre-line; }
+        .close-btn {
+            position: absolute; top: 10px; right: 15px; color: white;
+            font-size: 28px; font-weight: bold; cursor: pointer; text-shadow: 0 0 5px rgba(0,0,0,0.8); z-index: 10;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
 
         footer {
             background-color: #001529;
@@ -134,10 +184,16 @@
             margin-top: 40px;
             font-size: 13px;
         }
+
+        @media (max-width: 768px) {
+            .header-container { flex-direction: column; text-align: center; }
+            .gallery-grid { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
 
+    <!-- HEADER -->
     <header>
         <div class="header-container">
             <div class="logo-box" id="logo-container">
@@ -150,6 +206,7 @@
         </div>
     </header>
 
+    <!-- NAVIGATION -->
     <nav>
         <div class="nav-container">
             <a href="index.html">Trang chủ</a>
@@ -161,26 +218,127 @@
         </div>
     </nav>
 
+    <!-- MAIN CONTENT -->
     <div class="main-wrapper">
         <div class="card">
-            <h3 class="section-title">Thư Viện Hình Ảnh Lớp 12A7</h3>
+            <h2 class="section-title">Thư viện ảnh kỷ niệm Lớp 12A7</h2>
             
-            <div class="gallery-grid">
-                <div class="gallery-card">
-                    <img src="https://via.placeholder.com/400x250" alt="Chào Mừng Năm Học Mới">
-                    <div class="gallery-info">
-                        <h4>Chào Mừng Năm Học Mới</h4>
-                        <p>Kỷ niệm ngày khai giảng tập thể Lớp 12A7.</p>
-                    </div>
+            <div id="gallery-container" class="gallery-grid">
+                <div class="empty-state" style="grid-column: 1/-1;">Đang tải hình ảnh từ thư viện...</div>
+            </div>
+
+            <p style="text-align: center; margin-top: 30px; font-style: italic; color: #777; font-size: 13px;">
+                Hình ảnh mới về các hoạt động phong trào và học tập sẽ tiếp tục được cập nhật.
+            </p>
+        </div>
+    </div>
+
+    <!-- MODAL POPUP XEM CHI TIẾT -->
+    <div id="imageModal" class="modal" onclick="closeModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="close-btn" onclick="closeModal()">×</span>
+            <div class="modal-body">
+                <img id="modalImg" class="modal-img" src="" alt="">
+                <div class="modal-caption">
+                    <div id="modalTitle" class="modal-title"></div>
+                    <div id="modalDesc" class="modal-desc"></div>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- FOOTER -->
     <footer>
         <p>&copy; 2026 Cổng thông tin Lớp 12A7 - Trung tâm GDNN - GDTX Phú Nhuận</p>
         <p>Phát triển và vận hành bởi Tập thể Lớp 12A7</p>
     </footer>
 
+    <!-- JAVASCRIPT ĐỌC DỮ LIỆU TỪ GOOGLE SHEETS -->
+    <script>
+        const SHEET_ID = '10WZAkfTsUhEsTRADxZ3JX869kLV_Sen45r4BeSrxDZY';
+        const GID = '208030591';
+
+        function formatDriveUrl(url) {
+            if (!url) return '';
+            url = url.trim();
+            if (url.includes('drive.google.com')) {
+                const match = url.match(/\/d\/([^\/]+)/) || url.match(/id=([^&]+)/);
+                if (match && match[1]) {
+                    return `https://drive.google.com/uc?export=view&id=${match[1]}`;
+                }
+            }
+            return url;
+        }
+
+        function handleGalleryData(json) {
+            const container = document.getElementById('gallery-container');
+            
+            try {
+                const rows = json.table.rows;
+                if (!rows || rows.length <= 1) {
+                    container.innerHTML = '<div class="empty-state" style="grid-column: 1/-1;">Chưa có hình ảnh nào trong thư viện.</div>';
+                    return;
+                }
+
+                let html = '';
+                let count = 0;
+
+                // i = 1: Bỏ qua dòng tiêu đề
+                for (let i = 1; i < rows.length; i++) {
+                    const row = rows[i].c;
+                    if (!row) continue;
+
+                    const title = row[0] ? (row[0].v || 'Ảnh kỷ niệm') : 'Ảnh kỷ niệm';
+                    const rawImgUrl = row[1] ? (row[1].v || '') : '';
+                    const desc = row[2] ? (row[2].v || '') : '';
+
+                    const imgUrl = formatDriveUrl(rawImgUrl);
+
+                    if (imgUrl) {
+                        count++;
+                        const safeImg = encodeURIComponent(imgUrl);
+                        const safeTitle = encodeURIComponent(title);
+                        const safeDesc = encodeURIComponent(desc);
+
+                        html += `
+                            <div class="gallery-card" onclick="openModal('${safeImg}', '${safeTitle}', '${safeDesc}')">
+                                <div class="img-container">
+                                    <img src="${imgUrl}" alt="${title}" onerror="this.src='banner.jpg'">
+                                </div>
+                                <div class="gallery-info">
+                                    <div class="gallery-title">${title}</div>
+                                    ${desc ? `<div class="gallery-desc">${desc}</div>` : ''}
+                                </div>
+                            </div>
+                        `;
+                    }
+                }
+
+                container.innerHTML = (count > 0) ? html : '<div class="empty-state" style="grid-column: 1/-1;">Chưa có hình ảnh nào trong thư viện.</div>';
+            } catch (err) {
+                console.error("Lỗi xử lý dữ liệu:", err);
+                container.innerHTML = '<div class="empty-state" style="grid-column: 1/-1;">Không thể hiển thị thư viện ảnh lúc này.</div>';
+            }
+        }
+
+        function openModal(imgUrl, title, desc) {
+            document.getElementById('modalImg').src = decodeURIComponent(imgUrl);
+            document.getElementById('modalTitle').innerText = decodeURIComponent(title);
+            document.getElementById('modalDesc').innerText = decodeURIComponent(desc);
+            document.getElementById('imageModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('imageModal').style.display = 'none';
+        }
+
+        function loadGallery() {
+            const script = document.createElement('script');
+            script.src = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?gid=${GID}&tqx=responseHandler:handleGalleryData`;
+            document.body.appendChild(script);
+        }
+
+        window.onload = loadGallery;
+    </script>
 </body>
 </html>
