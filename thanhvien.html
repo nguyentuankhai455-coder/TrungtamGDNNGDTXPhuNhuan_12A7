@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thành Viên - Lớp 12A7 (2026 - 2027)</title>
+    <title>Danh Sách Thành Viên - Lớp 12A7 (2026 - 2027)</title>
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="shortcut icon" type="image/png" href="logo.png">
     <style>
         :root {
             --primary-color: #003366;
             --secondary-color: #0055a5;
-            --accent-color: #d9534f;
             --bg-light: #f4f6f9;
             --text-color: #333;
         }
@@ -62,7 +63,7 @@
         }
         .nav-container a:hover, .nav-container a.active { background-color: var(--secondary-color); }
 
-        .main-wrapper {
+        .container {
             max-width: 1200px;
             margin: 20px auto;
             padding: 0 15px;
@@ -84,45 +85,69 @@
             text-transform: uppercase;
         }
 
-        /* BAN CÁN SỰ GRID */
-        .bcs-grid {
+        /* LƯỚI BAN CÁN SỰ & THÀNH VIÊN */
+        .member-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 15px;
-            margin-bottom: 30px;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
         }
-        .bcs-card {
-            border: 1px solid #e0e0e0;
-            border-radius: 6px;
+        .member-card {
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
             padding: 15px;
             text-align: center;
-            background: #fafafa;
+            background: #fff;
+            transition: transform 0.2s, box-shadow 0.2s;
         }
-        .bcs-card h4 { color: var(--primary-color); font-size: 16px; margin-bottom: 5px; }
-        .bcs-card p { font-size: 14px; color: #555; }
-
-        /* BẢNG DANH SÁCH LỚP */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
+        .member-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 10px;
-            text-align: left;
-            font-size: 14px;
+        .member-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin: 0 auto 10px;
+            background: var(--secondary-color);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            font-weight: bold;
         }
-        th { background-color: var(--primary-color); color: white; }
-        tr:nth-child(even) { background-color: #f9f9f9; }
-
-        footer {
-            background-color: #001529;
-            color: white;
-            text-align: center;
-            padding: 20px;
-            margin-top: 40px;
+        .member-name {
+            font-size: 16px;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        .member-role {
             font-size: 13px;
+            color: #28a745;
+            font-weight: 600;
+            margin-top: 4px;
+        }
+
+        footer { 
+            background-color: #001529; 
+            color: white; 
+            padding: 20px; 
+            margin-top: 40px; 
+            font-size: 13px; 
+        }
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .header-container { flex-direction: column; text-align: center; }
+            .footer-container { flex-direction: column; text-align: center; }
         }
     </style>
 </head>
@@ -131,7 +156,7 @@
     <header>
         <div class="header-container">
             <div class="logo-box" id="logo-container">
-                <img src="logo.png" alt="Logo Lớp 12A7" onerror="document.getElementById('logo-container').innerHTML='12A7'">
+                <img src="logo.png" alt="Logo Lớp 12A7" onerror="document.getElementById('logo-container').innerText='12A7'">
             </div>
             <div class="header-text">
                 <h1>CỔNG THÔNG TIN LỚP 12A7</h1>
@@ -151,61 +176,39 @@
         </div>
     </nav>
 
-    <div class="main-wrapper">
+    <div class="container">
         <div class="card">
-            <h3 class="section-title">Ban Cán Sự Lớp & Giáo Viên Chủ Nhiệm</h3>
-            <div class="bcs-grid">
-                <div class="bcs-card">
-                    <h4>Cô Nguyễn Thị Khánh Ly</h4>
-                    <p><b>Giáo viên chủ nhiệm</b></p>
+            <h3 class="section-title">Ban Cán Sự Lớp</h3>
+            <div class="member-grid">
+                <div class="member-card">
+                    <div class="member-avatar">LY</div>
+                    <div class="member-name">Cô Nguyễn Thị Khánh Ly</div>
+                    <div class="member-role">Giáo Viên Chủ Nhiệm</div>
                 </div>
-                <div class="bcs-card">
-                    <h4>VÕ NGỌC KHANG</h4>
-                    <p><b>Lớp trưởng</b></p>
+                <div class="member-card">
+                    <div class="member-avatar">K</div>
+                    <div class="member-name">VÕ NGỌC KHANG</div>
+                    <div class="member-role">Lớp Trưởng</div>
                 </div>
-                <div class="bcs-card">
-                    <h4>Cao Cẩm Doanh</h4>
-                    <p><b>Lớp phó Học tập</b></p>
+                <div class="member-card">
+                    <div class="member-avatar">D</div>
+                    <div class="member-name">Cao Cẩm Doanh</div>
+                    <div class="member-role">Lớp Phó Học Tập</div>
                 </div>
-                <div class="bcs-card">
-                    <h4>Lê Thị Kim Hương</h4>
-                    <p><b>Lớp phó Phong trào</b></p>
+                <div class="member-card">
+                    <div class="member-avatar">H</div>
+                    <div class="member-name">Lê Thị Kim Hương</div>
+                    <div class="member-role">Lớp Phó Phong Trào</div>
                 </div>
             </div>
-
-            <h3 class="section-title">Danh Sách Học Sinh Lớp 12A7</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th style="width: 60px;">STT</th>
-                        <th>Họ và Tên</th>
-                        <th>Chức vụ / Vai trò</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>VÕ NGỌC KHANG</td>
-                        <td>Lớp trưởng</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Cao Cẩm Doanh</td>
-                        <td>Lớp phó Học tập</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Lê Thị Kim Hương</td>
-                        <td>Lớp phó Phong trào</td>
-                    </tr>
-                    <!-- Bổ sung thêm các thành viên khác tại đây -->
-                </tbody>
-            </table>
         </div>
     </div>
 
     <footer>
-        <p>&copy; 2026 Cổng thông tin Lớp 12A7 - Trung tâm GDNN - GDTX Phú Nhuận</p>
+        <div class="footer-container">
+            <div>Chào mừng bạn đến với Cổng thông tin Lớp 12A7 - Năm học 2026 - 2027</div>
+            <div>&copy; 2026 Cổng thông tin Lớp 12A7 - Trung tâm GDNN - GDTX Phú Nhuận</div>
+        </div>
     </footer>
 
 </body>

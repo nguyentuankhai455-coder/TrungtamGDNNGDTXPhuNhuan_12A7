@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Góc Xanh & Phong Trào - Lớp 12A7</title>
+
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="shortcut icon" type="image/png" href="logo.png">
+
     <style>
         :root {
             --primary-color: #003366;
@@ -136,7 +140,6 @@
 </head>
 <body>
 
-    <!-- HEADER -->
     <header>
         <div class="header-container">
             <div class="header-left">
@@ -151,29 +154,25 @@
         </div>
     </header>
 
-    <!-- NAVIGATION MAIN -->
     <nav>
         <div class="nav-container">
-            <a href="index.html" class="active">Trang chủ</a>
+            <a href="index.html">Trang chủ</a>
             <a href="index.html#tin-tuc">Tin tức & Sự kiện</a>
             <a href="index.html#hoc-tap">Góc học tập</a>
-            <a href="gocxanh.html" class="green-tab">Góc Xanh</a>
+            <a href="gocxanh.html" class="green-tab active">Góc Xanh</a>
             <a href="thanhvien.html">Thành viên</a>
             <a href="thuvien.html">Thư viện ảnh</a>
         </div>
     </nav>
 
-    <!-- MAIN CONTENT -->
     <div class="main-wrapper">
         <div class="card">
             
-            <!-- NÚT CHUYỂN TAB NỘI DUNG -->
             <div class="sub-nav-buttons">
                 <button class="tab-btn active-green" id="btn-gocxanh" onclick="switchSection('gocxanh')">🌿 Góc Xanh 12A7</button>
                 <button class="tab-btn" id="btn-phongtrao" onclick="switchSection('phongtrao')">🔥 Hoạt Động Phong Trào</button>
             </div>
 
-            <!-- NỘI DUNG 1: GÓC XANH -->
             <div id="section-gocxanh" class="tab-content active">
                 <h2 class="section-title title-green">🌿 Mảng Cây Xanh & Môi Trường Lớp Học</h2>
                 <div id="green-container" class="green-grid">
@@ -181,7 +180,6 @@
                 </div>
             </div>
 
-            <!-- NỘI DUNG 2: PHONG TRÀO -->
             <div id="section-phongtrao" class="tab-content">
                 <h2 class="section-title title-orange">🔥 Hoạt Động & Phong Trào Thi Đua Lớp 12A7</h2>
                 <div id="phongtrao-container" class="green-grid">
@@ -192,10 +190,9 @@
         </div>
     </div>
 
-    <!-- MODAL POPUP XEM CHI TIẾT -->
     <div id="imageModal" class="modal" onclick="closeModal(event)">
         <div class="modal-content" onclick="event.stopPropagation()">
-            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <span class="close-btn" onclick="closeModal()">×</span>
             <div class="modal-body">
                 <img id="modalImg" class="modal-img" src="" alt="">
                 <div class="modal-caption">
@@ -206,13 +203,11 @@
         </div>
     </div>
 
-    <!-- FOOTER -->
     <footer>
-        <p>&copy; 2026 Cổng thông tin Lớp 12A7 - Trung tâm GDNN - GDTX Phú Nhuận</p>
+        <p>© 2026 Cổng thông tin Lớp 12A7 - Trung tâm GDNN - GDTX Phú Nhuận</p>
         <p>Phát triển và vận hành bởi Tập thể Lớp 12A7</p>
     </footer>
 
-    <!-- JAVASCRIPT XỬ LÝ CHUYỂN TAB VÀ ĐỌC DỮ LIỆU -->
     <script>
         const SHEET_ID = '10WZAkfTsUhEsTRADxZ3JX869kLV_Sen45r4BeSrxDZY';
         const GID = '940791294';
@@ -250,7 +245,7 @@
             url = String(url).trim();
             if (url.includes('drive.google.com')) {
                 const match = url.match(/\/d\/([^\/]+)/) || url.match(/id=([^&]+)/);
-                if (match && match[1]) return `https://lh3.googleusercontent.com/d/${match[1]}`;
+                if (match && match[1]) return `https://drive.google.com/uc?export=view&id=${match[1]}`;
             }
             return url;
         }
