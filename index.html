@@ -88,7 +88,9 @@
             text-transform: uppercase;
         }
 
+        /* BANNER */
         .banner-box {
+            position: relative;
             width: 100%;
             height: 250px;
             border-radius: 6px;
@@ -97,13 +99,25 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #ffffff;
-            text-align: center;
-            font-size: 22px;
-            font-weight: bold;
-            padding: 20px;
         }
-        .banner-box img { width: 100%; height: 100%; object-fit: cover; }
+        .banner-box img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+        }
+        .banner-overlay-text {
+            position: absolute;
+            background: rgba(0, 51, 102, 0.65);
+            color: #ffffff;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            line-height: 1.4;
+            backdrop-filter: blur(2px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
 
         .tkb-img-container {
             width: 100%;
@@ -142,6 +156,31 @@
         }
         .read-more-btn:hover { background-color: var(--secondary-color); }
 
+        /* DANH SÁCH TÀI LIỆU */
+        .doc-list { list-style: none; padding: 0; }
+        .doc-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 10px;
+            border-bottom: 1px solid #eee;
+            gap: 15px;
+        }
+        .doc-item:hover { background-color: #f9fbfd; }
+        .doc-info { font-size: 14px; color: #333; }
+        .doc-link {
+            padding: 6px 14px;
+            background-color: #28a745;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: bold;
+            white-space: nowrap;
+            transition: background 0.2s;
+        }
+        .doc-link:hover { background-color: #218838; }
+
         .notice-list { list-style: none; }
         .notice-list li { padding: 8px 0; border-bottom: 1px solid #f0f0f0; font-size: 14px; }
 
@@ -149,22 +188,40 @@
         .tab-btn { padding: 6px 12px; border: none; background: #ddd; cursor: pointer; border-radius: 4px; font-size: 13px; }
         .tab-btn.active { background: var(--primary-color); color: white; }
 
-        footer { background-color: #001529; color: white; text-align: center; padding: 20px; margin-top: 40px; font-size: 13px; }
+        /* FOOTER */
+        footer { 
+            background-color: #001529; 
+            color: white; 
+            padding: 20px; 
+            margin-top: 40px; 
+            font-size: 13px; 
+        }
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
 
         @media (max-width: 768px) {
             .main-wrapper { grid-template-columns: 1fr; }
             .header-container { flex-direction: column; text-align: center; }
-            .banner-box { height: 160px; font-size: 16px; }
+            .banner-box { height: 160px; }
+            .banner-overlay-text { font-size: 15px; padding: 8px 12px; }
+            .doc-item { flex-direction: column; align-items: flex-start; }
+            .footer-container { flex-direction: column; text-align: center; }
         }
     </style>
 </head>
 <body>
 
-    <!-- HEADER -->
     <header>
         <div class="header-container">
             <div class="logo-box" id="logo-container">
-                <img src="logo.png" alt="Logo Lớp 12A7" onerror="document.getElementById('logo-container').innerHTML='12A7'">
+                <img src="logo.png" alt="Logo Lớp 12A7" onerror="document.getElementById('logo-container').innerText='12A7'">
             </div>
             <div class="header-text">
                 <h1>CỔNG THÔNG TIN LỚP 12A7</h1>
@@ -173,7 +230,6 @@
         </div>
     </header>
 
-    <!-- NAVIGATION -->
     <nav>
         <div class="nav-container">
             <a href="index.html" class="active">Trang chủ</a>
@@ -185,19 +241,21 @@
         </div>
     </nav>
 
-    <!-- MAIN CONTENT -->
     <div class="main-wrapper">
         <main>
             <div class="card">
-                <div class="banner-box" id="banner-container">
-                    <img id="main-banner" src="banner.jpg" alt="Banner Lớp 12A7" onerror="this.style.display='none'; document.getElementById('banner-container').innerHTML='Chào mừng bạn đến với Cổng thông tin Lớp 12A7<br>Năm học 2026 - 2027'">
+                <div class="banner-box">
+                    <img id="main-banner" src="banner.jpg" alt="Banner Lớp 12A7" onerror="this.style.display='none'">
+                    <div class="banner-overlay-text">
+                        Chào mừng bạn đến với Cổng thông tin Lớp 12A7<br>Năm học 2026 - 2027
+                    </div>
                 </div>
             </div>
 
             <div class="card" id="tin-tuc">
                 <h3 class="section-title">Tin tức & Hoạt động mới</h3>
                 <div id="posts-list">
-                    <div class="empty-state">Đang tải tin tức...</div>
+                    <div class="empty-state">⏳ Đang tải tin tức...</div>
                 </div>
             </div>
 
@@ -225,7 +283,7 @@
                 <h3 class="section-title">Ban cán sự Lớp 12A7</h3>
                 <ul class="notice-list" style="font-size: 13px;">
                     <li><b>GVCN:</b> Cô Nguyễn Thị Khánh Ly</li>
-                    <li><b>Lớp trưởng:</b> VÕ NGỌC KHANG</li>
+                    <li><b>Lớp trưởng:</b> Võ Ngọc Khang</li>
                     <li><b>Lớp phó HT:</b> Cao Cẩm Doanh</li>
                     <li><b>Lớp phó Phong trào:</b> Lê Thị Kim Hương</li>
                 </ul>
@@ -234,20 +292,27 @@
     </div>
 
     <footer>
-        <p>&copy; 2026 Cổng thông tin Lớp 12A7 - Trung tâm GDNN - GDTX Phú Nhuận</p>
-        <p>Phát triển và vận hành bởi Tập thể Lớp 12A7</p>
+        <div class="footer-container">
+            <div>Chào mừng bạn đến với Cổng thông tin Lớp 12A7 - Năm học 2026 - 2027</div>
+            <div>&copy; 2026 Cổng thông tin Lớp 12A7 - Trung tâm GDNN - GDTX Phú Nhuận</div>
+        </div>
     </footer>
 
-    <!-- JAVASCRIPT HIỂN THỊ DANH SÁCH -->
     <script>
-        const SHEET_ID = '10WZAkfTsUhEsTRADxZ3JX869kLV_Sen45r4BeSrxDZY';
+        const SPREADSHEET_ID = '10WZAkfTsUhEsTRADxZ3JX869kLV_Sen45r4BeSrxDZY';
+        const GID_TAI_LIEU = '782348969'; 
 
-        function handleGoogleSheetsData(json) {
+        // 1. Hàm nạp Tin tức
+        function handleNewsData(json) {
             const container = document.getElementById('posts-list');
-            
             try {
+                if (!json || !json.table || !json.table.rows) {
+                    container.innerHTML = '<div class="empty-state">Không thể kết nối tới dữ liệu Tin tức.</div>';
+                    return;
+                }
+
                 const rows = json.table.rows;
-                if (!rows || rows.length === 0) {
+                if (rows.length === 0) {
                     container.innerHTML = '<div class="empty-state">Hiện chưa có bài viết mới nào.</div>';
                     return;
                 }
@@ -257,36 +322,98 @@
                     const row = rows[i].c;
                     if (!row) continue;
 
-                    const id = row[0] ? (row[0].v || (i + 1)) : (i + 1);
+                    const id = row[0] ? (row[0].v !== null ? row[0].v : (i + 1)) : (i + 1);
                     const ngay = row[1] ? (row[1].f || row[1].v || '') : '';
-                    const tacGia = row[2] ? (row[2].v || '') : 'BCT Lớp';
+                    const tacGia = row[2] ? (row[2].v || 'BCT Lớp') : 'BCT Lớp';
                     const tieude = row[3] ? (row[3].v || '') : '';
                     const tomTat = row[4] ? (row[4].v || '') : '';
 
-                    if (tieude) {
+                    if (tieude && tieude.trim() !== '') {
                         html += `
                             <div class="post-item">
                                 <span class="post-date">🕒 ${ngay} | ✍️ ${tacGia}</span>
                                 <div class="post-title">
-                                    <a href="baiviet.html?id=${id}" target="_blank">${tieude}</a>
+                                    <a href="baiviet.html?id=${id}">${tieude}</a>
                                 </div>
                                 <div class="post-content">${tomTat}</div>
-                                <a href="baiviet.html?id=${id}" target="_blank" class="read-more-btn">Xem chi tiết &rarr;</a>
+                                <a href="baiviet.html?id=${id}" class="read-more-btn">Xem chi tiết &rarr;</a>
                             </div>
                         `;
                     }
                 }
-
                 container.innerHTML = html || '<div class="empty-state">Hiện chưa có bài viết mới nào.</div>';
             } catch (err) {
-                console.error("Lỗi đọc dữ liệu:", err);
+                console.error("Lỗi đọc tin tức:", err);
                 container.innerHTML = '<div class="empty-state">Không thể hiển thị bài viết lúc này.</div>';
             }
         }
 
-        function loadGoogleSheetsNews() {
+        // 2. Hàm nạp Tài liệu (Lọc dòng tiêu đề "mô tả")
+        function handleDocsData(json) {
+            const contentBox = document.getElementById('tab-content');
+            try {
+                if (!json || !json.table || !json.table.rows) {
+                    contentBox.innerHTML = '<p class="empty-state">Không thể lấy dữ liệu tài liệu từ Google Sheet.</p>';
+                    return;
+                }
+
+                const rows = json.table.rows;
+                if (rows.length === 0) {
+                    contentBox.innerHTML = '<p class="empty-state">Chưa có tài liệu ôn thi được tải lên.</p>';
+                    return;
+                }
+
+                let html = '<ul class="doc-list">';
+                let count = 0;
+
+                for (let r of rows) {
+                    if (!r.c) continue;
+                    
+                    const moTa = r.c[0] && r.c[0].v !== null ? String(r.c[0].v).trim() : '';
+                    let link = r.c[1] && r.c[1].v !== null ? String(r.c[1].v).trim() : '';
+
+                    if (moTa.toLowerCase() === 'mô tả' || moTa === '') {
+                        continue;
+                    }
+
+                    if (link && !link.startsWith('http://') && !link.startsWith('https://')) {
+                        link = 'https://' + link;
+                    }
+
+                    if (moTa && link) {
+                        count++;
+                        html += `
+                            <li class="doc-item">
+                                <div class="doc-info">📄 <b>${moTa}</b></div>
+                                <a href="${link}" target="_blank" rel="noopener noreferrer" class="doc-link">Tải về / Xem ngay &rarr;</a>
+                            </li>
+                        `;
+                    }
+                }
+                html += '</ul>';
+
+                contentBox.innerHTML = count > 0 ? html : '<p class="empty-state">Chưa có tài liệu ôn thi được tải lên.</p>';
+            } catch (err) {
+                console.error("Lỗi đọc tài liệu:", err);
+                contentBox.innerHTML = '<p class="empty-state">Lỗi kết nối khi tải danh sách tài liệu.</p>';
+            }
+        }
+
+        function loadNews() {
             const script = document.createElement('script');
-            script.src = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=responseHandler:handleGoogleSheetsData`;
+            script.src = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=responseHandler:handleNewsData`;
+            document.body.appendChild(script);
+        }
+
+        function loadDocs() {
+            document.getElementById('tab-content').innerHTML = '<p class="empty-state">⏳ Đang nạp danh sách tài liệu...</p>';
+            
+            const oldScript = document.getElementById('docs-jsonp-script');
+            if (oldScript) oldScript.remove();
+
+            const script = document.createElement('script');
+            script.id = 'docs-jsonp-script';
+            script.src = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?gid=${GID_TAI_LIEU}&tqx=responseHandler:handleDocsData`;
             document.body.appendChild(script);
         }
 
@@ -303,11 +430,11 @@
                     </div>
                 `;
             } else if (tabName === 'tailieu') {
-                content.innerHTML = '<p class="empty-state">Chưa có tài liệu ôn thi được tải lên.</p>';
+                loadDocs();
             }
         }
 
-        window.onload = loadGoogleSheetsNews;
+        window.onload = loadNews;
     </script>
 </body>
 </html>
