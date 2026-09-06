@@ -4,12 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Thư Viện Ảnh - Lớp 12A7 (2026 - 2027)</title>
+    
     <link rel="icon" type="image/png" href="logo.png">
     <link rel="shortcut icon" type="image/png" href="logo.png">
+
     <style>
         :root {
             --primary-color: #003366;
             --secondary-color: #0055a5;
+            --green-color: #28a745;
             --bg-light: #f4f6f9;
             --text-color: #333;
         }
@@ -62,8 +65,10 @@
             transition: background 0.3s;
         }
         .nav-container a:hover, .nav-container a.active { background-color: var(--secondary-color); }
+        .nav-container a.green-tab { color: #28a745; font-weight: bold; }
+        .nav-container a.green-tab:hover { background-color: var(--green-color); color: #fff; }
 
-        .container {
+        .main-wrapper {
             max-width: 1200px;
             margin: 20px auto;
             padding: 0 15px;
@@ -85,35 +90,35 @@
             text-transform: uppercase;
         }
 
-        /* ALBUM VÀ LƯỚI ẢNH */
+        /* ALBUM GRID */
         .gallery-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 20px;
         }
-        .gallery-item {
+        .gallery-card {
+            border: 1px solid #e0e0e0;
             border-radius: 8px;
             overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
             background: #fff;
             transition: transform 0.3s, box-shadow 0.3s;
         }
-        .gallery-item:hover {
+        .gallery-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
-        .gallery-item img {
+        .gallery-card img {
             width: 100%;
             height: 200px;
             object-fit: cover;
             display: block;
         }
         .gallery-info {
-            padding: 12px;
+            padding: 15px;
         }
         .gallery-info h4 {
-            font-size: 15px;
             color: var(--primary-color);
+            font-size: 16px;
             margin-bottom: 5px;
         }
         .gallery-info p {
@@ -121,26 +126,13 @@
             color: #666;
         }
 
-        footer { 
-            background-color: #001529; 
-            color: white; 
-            padding: 20px; 
-            margin-top: 40px; 
-            font-size: 13px; 
-        }
-        .footer-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        @media (max-width: 768px) {
-            .header-container { flex-direction: column; text-align: center; }
-            .footer-container { flex-direction: column; text-align: center; }
+        footer {
+            background-color: #001529;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            font-size: 13px;
         }
     </style>
 </head>
@@ -149,7 +141,7 @@
     <header>
         <div class="header-container">
             <div class="logo-box" id="logo-container">
-                <img src="logo.png" alt="Logo Lớp 12A7" onerror="document.getElementById('logo-container').innerText='12A7'">
+                <img src="logo.png" alt="Logo Lớp 12A7" onerror="document.getElementById('logo-container').innerHTML='12A7'">
             </div>
             <div class="header-text">
                 <h1>CỔNG THÔNG TIN LỚP 12A7</h1>
@@ -160,35 +152,34 @@
 
     <nav>
         <div class="nav-container">
-            <a href="index.html" class="active">Trang chủ</a>
+            <a href="index.html">Trang chủ</a>
             <a href="index.html#tin-tuc">Tin tức & Sự kiện</a>
             <a href="index.html#hoc-tap">Góc học tập</a>
             <a href="gocxanh.html" class="green-tab">Góc Xanh</a>
             <a href="thanhvien.html">Thành viên</a>
-            <a href="thuvien.html">Thư viện ảnh</a>
+            <a href="thuvien.html" class="active">Thư viện ảnh</a>
         </div>
     </nav>
 
-    <div class="container">
+    <div class="main-wrapper">
         <div class="card">
-            <h3 class="section-title">Thư viện hình ảnh Lớp 12A7</h3>
+            <h3 class="section-title">Thư Viện Hình Ảnh Lớp 12A7</h3>
+            
             <div class="gallery-grid">
-                <div class="gallery-item">
-                    <img src="banner.jpg" alt="Kỷ niệm lớp" onerror="this.src='logo.png'">
+                <div class="gallery-card">
+                    <img src="https://via.placeholder.com/400x250" alt="Chào Mừng Năm Học Mới">
                     <div class="gallery-info">
                         <h4>Chào Mừng Năm Học Mới</h4>
                         <p>Kỷ niệm ngày khai giảng tập thể Lớp 12A7.</p>
                     </div>
                 </div>
-                </div>
+            </div>
         </div>
     </div>
 
     <footer>
-        <div class="footer-container">
-            <div>Chào mừng bạn đến với Cổng thông tin Lớp 12A7 - Năm học 2026 - 2027</div>
-            <div>&copy; 2026 Cổng thông tin Lớp 12A7 - Trung tâm GDNN - GDTX Phú Nhuận</div>
-        </div>
+        <p>&copy; 2026 Cổng thông tin Lớp 12A7 - Trung tâm GDNN - GDTX Phú Nhuận</p>
+        <p>Phát triển và vận hành bởi Tập thể Lớp 12A7</p>
     </footer>
 
 </body>
