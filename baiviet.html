@@ -9,179 +9,237 @@
             --primary-color: #003366;
             --secondary-color: #0055a5;
             --bg-light: #f4f6f9;
+            --text-color: #333;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
-        body { background-color: var(--bg-light); color: #333; line-height: 1.8; padding: 20px 10px; }
-
-        .article-container {
-            max-width: 850px;
-            margin: 20px auto;
-            background: #fff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        body { 
+            background-color: var(--bg-light); 
+            color: var(--text-color); 
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
-        .back-btn {
-            display: inline-block;
-            margin-bottom: 20px;
-            color: var(--primary-color);
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 14px;
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 20px 0;
+            border-bottom: 4px solid #ffcc00;
         }
-        .back-btn:hover { text-decoration: underline; }
+        .header-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .header-text h1 { font-size: 22px; text-transform: uppercase; }
+
+        .container {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 0 15px;
+            flex: 1;
+        }
+
+        .card {
+            background: white;
+            border-radius: 6px;
+            padding: 25px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
 
         .article-title {
             color: var(--primary-color);
-            font-size: 26px;
-            font-weight: bold;
-            line-height: 1.4;
-            margin-bottom: 12px;
+            font-size: 22px;
+            margin-bottom: 10px;
         }
-
         .article-meta {
             font-size: 13px;
             color: #666;
             border-bottom: 1px solid #eee;
-            padding-bottom: 15px;
-            margin-bottom: 25px;
+            padding-bottom: 12px;
+            margin-bottom: 20px;
         }
-
-        /* KHU VỰC HIỂN THỊ NHIỀU HÌNH ÁNH */
-        .article-media-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 15px;
-            margin: 20px 0 30px 0;
-        }
-
-        .article-media-grid img {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-            border-radius: 6px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-            transition: transform 0.2s;
-            cursor: pointer;
-        }
-
-        .article-media-grid img:hover {
-            transform: scale(1.02);
-        }
-
         .article-body {
-            font-size: 16px;
+            font-size: 15px;
             color: #333;
-            white-space: pre-line;
-            word-wrap: break-word;
+            line-height: 1.8;
+            white-space: pre-wrap;
         }
 
-        .loading {
-            text-align: center;
-            padding: 50px 0;
-            color: #777;
-            font-style: italic;
+        .back-btn {
+            display: inline-block;
+            margin-top: 25px;
+            padding: 8px 16px;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: bold;
         }
+        .back-btn:hover { background-color: var(--secondary-color); }
+        .empty-state { text-align: center; color: #cc0000; font-weight: bold; font-size: 18px; padding: 30px 0; }
 
         footer {
+            background-color: #001529;
+            color: white;
             text-align: center;
+            padding: 20px;
             margin-top: 40px;
             font-size: 13px;
-            color: #888;
         }
     </style>
 </head>
 <body>
 
-    <div class="article-container">
-        <a href="index.html" class="back-btn">&larr; Quay lại Trang Chủ</a>
-        
-        <div id="article-content">
-            <div class="loading">Đang tải nội dung bài viết...</div>
+    <header>
+        <div class="header-container">
+            <div class="header-text">
+                <h1>CỔNG THÔNG TIN LỚP 12A7</h1>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="card" id="article-box">
+            <div style="text-align: center; color: #777; padding: 20px 0;">⏳ Đang tải bài viết...</div>
         </div>
     </div>
 
     <footer>
-        &copy; 2026 Cổng thông tin Lớp 12A7 - Trung tâm GDNN - GDTX Phú Nhuận
+        <p>&copy; 2026 Cổng thông tin Lớp 12A7 - Trung tâm GDNN - GDTX Phú Nhuận</p>
+        <p>Phát triển và vận hành bởi Tập thể Lớp 12A7</p>
     </footer>
 
-    <!-- JAVASCRIPT ĐỌC NỘI DUNG CHI TIẾT TỪ GOOGLE SHEETS -->
     <script>
-        const SHEET_ID = '10WZAkfTsUhEsTRADxZ3JX869kLV_Sen45r4BeSrxDZY';
+        const SPREADSHEET_ID = '10WZAkfTsUhEsTRADxZ3JX869kLV_Sen45r4BeSrxDZY';
+        const GID_BAO_BAI = '1447199433';
 
-        // Lấy tham số ID trên URL (VD: baiviet.html?id=1)
         const urlParams = new URLSearchParams(window.location.search);
         const articleId = urlParams.get('id');
+        const rowIndex = urlParams.get('row');
+        const articleType = urlParams.get('type');
+
+        function parseCellValue(cell) {
+            if (!cell || cell.v === null || cell.v === undefined) return '';
+            if (cell.f) return String(cell.f).trim();
+            let val = String(cell.v).trim();
+            if (val.startsWith('Date(')) {
+                const matches = val.match(/\d+/g);
+                if (matches && matches.length >= 3) {
+                    const year = matches[0];
+                    const month = String(parseInt(matches[1]) + 1).padStart(2, '0');
+                    const day = String(matches[2]).padStart(2, '0');
+                    return `${day}/${month}/${year}`;
+                }
+            }
+            return val;
+        }
 
         function handleArticleData(json) {
-            const container = document.getElementById('article-content');
-            
+            const container = document.getElementById('article-box');
             try {
-                const rows = json.table.rows;
-                let targetRow = null;
-
-                for (let i = 0; i < rows.length; i++) {
-                    const row = rows[i].c;
-                    if (!row) continue;
-
-                    const id = row[0] ? (row[0].v || (i + 1)) : (i + 1);
-                    if (String(id) === String(articleId)) {
-                        targetRow = row;
-                        break;
-                    }
-                }
-
-                if (!targetRow) {
-                    container.innerHTML = '<h2 style="color:red; text-align:center;">Không tìm thấy bài viết này!</h2>';
+                if (!json || !json.table || !json.table.rows) {
+                    container.innerHTML = `
+                        <div class="empty-state">Không tìm thấy bài viết này!</div>
+                        <div style="text-align: center;"><a href="index.html" class="back-btn">&larr; Quay lại Trang Chủ</a></div>
+                    `;
                     return;
                 }
 
-                const ngay = targetRow[1] ? (targetRow[1].f || targetRow[1].v || '') : '';
-                const tacGia = targetRow[2] ? (targetRow[2].v || 'Ban Cán Sự Lớp') : 'Ban Cán Sự Lớp';
-                const tieude = targetRow[3] ? (targetRow[3].v || '') : '';
-                const chiTiet = targetRow[5] ? (targetRow[5].v || targetRow[4].v || '') : '';
-                const rawHinhAnh = targetRow[6] ? (targetRow[6].v || '') : '';
+                const rows = json.table.rows;
 
-                document.title = tieude + " - Lớp 12A7";
+                if (articleType === 'baobai') {
+                    // Xử lý Báo bài
+                    const idx = parseInt(rowIndex);
+                    if (isNaN(idx) || idx < 0 || idx >= rows.length || !rows[idx].c) {
+                        container.innerHTML = `
+                            <div class="empty-state">Không tìm thấy bài viết này!</div>
+                            <div style="text-align: center;"><a href="index.html" class="back-btn">&larr; Quay lại Trang Chủ</a></div>
+                        `;
+                        return;
+                    }
 
-                // XỬ LÝ NỘI DUNG NHIỀU HÌNH ÁNH (Tách theo dấu phẩy hoặc xuống dòng)
-                let imagesHtml = '';
-                if (rawHinhAnh.trim()) {
-                    const imgList = rawHinhAnh.split(/[\n,]+/).map(url => url.trim()).filter(url => url.length > 0);
-                    if (imgList.length > 0) {
-                        imagesHtml = '<div class="article-media-grid">';
-                        imgList.forEach(url => {
-                            imagesHtml += `<a href="${url}" target="_blank"><img src="${url}" alt="Hình ảnh bài viết" onerror="this.parentElement.style.display='none'"></a>`;
-                        });
-                        imagesHtml += '</div>';
+                    const r = rows[idx].c;
+                    const ngayThang = parseCellValue(r[0]);
+                    const monHoc = parseCellValue(r[1]);
+                    const noiDung = parseCellValue(r[2]);
+
+                    container.innerHTML = `
+                        <a href="index.html" style="text-decoration: none; color: var(--primary-color); font-weight: bold; font-size: 14px;">&larr; Quay lại Trang Chủ</a>
+                        <h2 class="article-title" style="margin-top: 15px;">[BÁO BÀI] Môn ${monHoc || 'Học tập'}</h2>
+                        <div class="article-meta">🕒 Ngày dặn / Hạn nộp: <b>${ngayThang || 'Chưa cập nhật'}</b></div>
+                        <div class="article-body">${noiDung}</div>
+                    `;
+                } else {
+                    // Xử lý Tin tức thông thường
+                    let found = false;
+                    for (let i = 0; i < rows.length; i++) {
+                        const row = rows[i].c;
+                        if (!row) continue;
+
+                        const id = row[0] ? (row[0].v !== null ? String(row[0].v) : String(i + 1)) : String(i + 1);
+                        if (id === articleId) {
+                            found = true;
+                            const ngay = parseCellValue(row[1]);
+                            const tacGia = row[2] && row[2].v ? String(row[2].v).trim() : 'Ban Truyền thông 12A7';
+                            const tieude = row[3] && row[3].v ? String(row[3].v).trim() : '';
+                            const noiDung = row[5] && row[5].v ? String(row[5].v).trim() : (row[4] && row[4].v ? String(row[4].v).trim() : '');
+
+                            container.innerHTML = `
+                                <a href="index.html" style="text-decoration: none; color: var(--primary-color); font-weight: bold; font-size: 14px;">&larr; Quay lại Trang Chủ</a>
+                                <h2 class="article-title" style="margin-top: 15px;">${tieude}</h2>
+                                <div class="article-meta">🕒 Ngày đăng: <b>${ngay || 'Chưa cập nhật'}</b> | ✍️ Đăng bởi: <b>${tacGia}</b></div>
+                                <div class="article-body">${noiDung}</div>
+                            `;
+                            break;
+                        }
+                    }
+
+                    if (!found) {
+                        container.innerHTML = `
+                            <div class="empty-state">Không tìm thấy bài viết này!</div>
+                            <div style="text-align: center;"><a href="index.html" class="back-btn">&larr; Quay lại Trang Chủ</a></div>
+                        `;
                     }
                 }
-
-                container.innerHTML = `
-                    <h1 class="article-title">${tieude}</h1>
-                    <div class="article-meta">
-                        <span>🕒 Ngày đăng: <b>${ngay}</b></span> | 
-                        <span>✍️ Đăng bởi: <b>${tacGia}</b></span>
-                    </div>
-                    <div class="article-body">${chiTiet}</div>
-                    ${imagesHtml}
-                `;
-
             } catch (err) {
-                console.error("Lỗi:", err);
-                container.innerHTML = '<h2 style="text-align:center;">Lỗi khi tải bài viết.</h2>';
+                console.error("Lỗi bài viết:", err);
+                container.innerHTML = `
+                    <div class="empty-state">Không tìm thấy bài viết này!</div>
+                    <div style="text-align: center;"><a href="index.html" class="back-btn">&larr; Quay lại Trang Chủ</a></div>
+                `;
             }
         }
 
-        if (articleId) {
+        window.onload = function() {
             const script = document.createElement('script');
-            script.src = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=responseHandler:handleArticleData`;
+            if (articleType === 'baobai') {
+                if (rowIndex === null) {
+                    document.getElementById('article-box').innerHTML = `
+                        <div class="empty-state">Không tìm thấy bài viết này!</div>
+                        <div style="text-align: center;"><a href="index.html" class="back-btn">&larr; Quay lại Trang Chủ</a></div>
+                    `;
+                    return;
+                }
+                script.src = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?gid=${GID_BAO_BAI}&tqx=responseHandler:handleArticleData`;
+            } else {
+                if (!articleId) {
+                    document.getElementById('article-box').innerHTML = `
+                        <div class="empty-state">Không tìm thấy bài viết này!</div>
+                        <div style="text-align: center;"><a href="index.html" class="back-btn">&larr; Quay lại Trang Chủ</a></div>
+                    `;
+                    return;
+                }
+                script.src = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=responseHandler:handleArticleData`;
+            }
             document.body.appendChild(script);
-        } else {
-            document.getElementById('article-content').innerHTML = '<h2 style="text-align:center;">Đường dẫn bài viết không hợp lệ!</h2>';
-        }
+        };
     </script>
 </body>
 </html>
