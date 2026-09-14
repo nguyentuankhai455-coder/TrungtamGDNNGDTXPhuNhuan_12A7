@@ -21,7 +21,6 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
         body { background-color: var(--bg-light); color: var(--text-color); line-height: 1.6; }
 
-        /* HEADER */
         header {
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: white;
@@ -55,7 +54,6 @@
         .header-text h1 { font-size: 24px; text-transform: uppercase; letter-spacing: 1px; }
         .header-text p { font-size: 14px; opacity: 0.9; }
 
-        /* NAVIGATION */
         nav { background-color: #002244; position: sticky; top: 0; z-index: 100; }
         .nav-container { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; }
         .nav-container a {
@@ -68,10 +66,9 @@
             transition: background 0.3s;
         }
         .nav-container a:hover, .nav-container a.active { background-color: var(--secondary-color); }
-        .nav-container a.green-tab { color: #28a745; font-weight: bold; }
-        .nav-container a.green-tab:hover { background-color: var(--green-color); color: #fff; }
+        .nav-container a.green-tab { background-color: #28a745; color: #fff; }
+        .nav-container a.green-tab:hover { background-color: #218838; }
 
-        /* MAIN WRAPPER */
         .main-wrapper {
             max-width: 1200px;
             margin: 20px auto;
@@ -94,7 +91,6 @@
             text-transform: uppercase;
         }
 
-        /* BAN CÁN SỰ GRID */
         .bcs-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -111,7 +107,6 @@
         .bcs-card h4 { color: var(--primary-color); font-size: 16px; margin-bottom: 5px; }
         .bcs-card p { font-size: 14px; color: #555; }
 
-        /* BẢNG DANH SÁCH LỚP */
         table {
             width: 100%;
             border-collapse: collapse;
@@ -126,7 +121,6 @@
         th { background-color: var(--primary-color); color: white; }
         tr:nth-child(even) { background-color: #f9f9f9; }
 
-        /* FOOTER */
         footer {
             background-color: #001529;
             color: white;
@@ -160,6 +154,7 @@
             <a href="index.html">Trang chủ</a>
             <a href="index.html#tin-tuc">Tin tức & Sự kiện</a>
             <a href="index.html#hoc-tap">Góc học tập</a>
+            <a href="giaovien.html">Giáo viên</a>
             <a href="gocxanh.html" class="green-tab">Góc Xanh</a>
             <a href="thanhvien.html" class="active">Thành viên</a>
             <a href="thuvien.html">Thư viện ảnh</a>
@@ -213,7 +208,7 @@
                         <td>Lê Thị Kim Hương</td>
                         <td>Lớp phó Phong trào</td>
                     </tr>
-                    </tbody>
+                </tbody>
             </table>
         </div>
     </div>
