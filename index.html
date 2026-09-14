@@ -67,6 +67,7 @@
         }
         .nav-container a:hover, .nav-container a.active { background-color: var(--secondary-color); }
         
+        /* BỔ SUNG COLOR CHO GÓC XANH */
         .nav-container a.green-tab { color: #28a745; font-weight: bold; }
         .nav-container a.green-tab:hover { background-color: var(--green-color); color: #fff; }
 
@@ -96,6 +97,7 @@
             text-transform: uppercase;
         }
 
+        /* BANNER */
         .banner-box {
             position: relative;
             width: 100%;
@@ -137,7 +139,7 @@
 
         .empty-state {
             text-align: center;
-            padding: 15px 0;
+            padding: 20px;
             color: #777;
             font-style: italic;
             font-size: 14px;
@@ -162,34 +164,6 @@
             font-weight: 600;
         }
         .read-more-btn:hover { background-color: var(--secondary-color); }
-
-        /* DANH SÁCH BÁO BÀI */
-        .bao-bai-list { list-style: none; padding: 0; }
-        .bao-bai-item {
-            padding: 10px 0;
-            border-bottom: 1px solid #eee;
-            font-size: 13px;
-        }
-        .bao-bai-item:last-child { border-bottom: none; }
-        .bao-bai-link {
-            text-decoration: none;
-            color: var(--primary-color);
-            font-weight: bold;
-            display: block;
-            margin-bottom: 3px;
-        }
-        .bao-bai-link:hover {
-            color: var(--secondary-color);
-            text-decoration: underline;
-        }
-        .bao-bai-preview {
-            color: #555;
-            font-size: 12px;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
 
         /* DANH SÁCH TÀI LIỆU */
         .doc-list { list-style: none; padding: 0; }
@@ -223,6 +197,7 @@
         .tab-btn { padding: 6px 12px; border: none; background: #ddd; cursor: pointer; border-radius: 4px; font-size: 13px; }
         .tab-btn.active { background: var(--primary-color); color: white; }
 
+        /* FOOTER */
         footer {
             background-color: #001529;
             color: white;
@@ -234,7 +209,6 @@
 
         @media (max-width: 768px) {
             .header-container { flex-direction: column; text-align: center; }
-            .main-wrapper { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -254,13 +228,13 @@
 
     <nav>
         <div class="nav-container">
-            <a href="index.html"class="active">Trang chủ</a>
+            <a href="index.html" class="active">Trang chủ</a>
             <a href="index.html#tin-tuc">Tin tức & Sự kiện</a>
             <a href="index.html#hoc-tap">Góc học tập</a>
-            <a href="giaovien.html">Giáo viên</a>
+            <a href="giaovien.html">GIÁO VIÊN</a>
             <a href="gocxanh.html" class="green-tab">Góc Xanh</a>
             <a href="thanhvien.html">Thành viên</a>
-            <a href="thuvien.html"Thư viện ảnh</a>
+            <a href="thuvien.html">Thư viện ảnh</a>
         </div>
     </nav>
 
@@ -290,7 +264,7 @@
                 </div>
                 <div id="tab-content" style="font-size: 14px; padding-top: 10px;">
                     <div class="tkb-img-container">
-                        <img src="tkb.png" alt="Thời khóa biểu Lớp 12A7" onerror="this.parentElement.innerHTML='<p class=\\'empty-state\\'>Chưa tìm thấy tệp ảnh tkb.png trên GitHub</p>'">
+                        <img src="tkb.png" alt="Thời khóa biểu Lớp 12A7" onerror="this.parentElement.innerHTML='<p class=\\'empty-state\\'>Chưa tìm thấy tệp ảnh tkb.png (Vui lòng kiểm tra lại tên tệp tkb.png trên GitHub)</p>'">
                     </div>
                 </div>
             </div>
@@ -298,10 +272,8 @@
 
         <aside>
             <div class="card">
-                <h3 class="section-title">Báo bài</h3>
-                <div id="bao-bai-container">
-                    <div class="empty-state">⏳ Đang tải báo bài...</div>
-                </div>
+                <h3 class="section-title">Thông báo nhanh</h3>
+                <div class="empty-state" style="padding: 15px 0;">Chưa có thông báo mới.</div>
             </div>
 
             <div class="card">
@@ -316,6 +288,7 @@
         </aside>
     </div>
 
+    <!-- FOOTER -->
     <footer>
         <p>&copy; 2026 Cổng thông tin Lớp 12A7 - Trung tâm GDNN - GDTX Phú Nhuận</p>
         <p>Phát triển và vận hành bởi Tập thể Lớp 12A7</p>
@@ -324,78 +297,8 @@
     <script>
         const SPREADSHEET_ID = '10WZAkfTsUhEsTRADxZ3JX869kLV_Sen45r4BeSrxDZY';
         const GID_TAI_LIEU = '782348969'; 
-        const GID_BAO_BAI = '1447199433';
 
-        function parseCellValue(cell) {
-            if (!cell || cell.v === null || cell.v === undefined) return '';
-            if (cell.f) return String(cell.f).trim();
-            let val = String(cell.v).trim();
-            if (val.startsWith('Date(')) {
-                const matches = val.match(/\d+/g);
-                if (matches && matches.length >= 3) {
-                    const year = matches[0];
-                    const month = String(parseInt(matches[1]) + 1).padStart(2, '0');
-                    const day = String(matches[2]).padStart(2, '0');
-                    return `${day}/${month}/${year}`;
-                }
-            }
-            return val;
-        }
-
-        // 1. NẠP BÁO BÀI (Đã sửa lại thứ tự cột: A: Ngay, B: Mon, C: Noi dung)
-        function handleBaoBaiData(json) {
-            const container = document.getElementById('bao-bai-container');
-            try {
-                if (!json || !json.table || !json.table.rows) {
-                    container.innerHTML = '<div class="empty-state">Chưa có báo bài mới.</div>';
-                    return;
-                }
-
-                const rows = json.table.rows;
-                if (rows.length === 0) {
-                    container.innerHTML = '<div class="empty-state">Chưa có báo bài mới.</div>';
-                    return;
-                }
-
-                let html = '<ul class="bao-bai-list">';
-                let count = 0;
-
-                for (let i = 0; i < rows.length; i++) {
-                    const r = rows[i];
-                    if (!r.c) continue;
-                    
-                    const ngayThang = parseCellValue(r.c[0]);
-                    const monHoc = parseCellValue(r.c[1]);
-                    const noiDung = parseCellValue(r.c[2]);
-
-                    if (monHoc !== '' || noiDung !== '' || ngayThang !== '') {
-                        count++;
-                        const titleText = monHoc ? `[${monHoc}] Báo bài ${ngayThang ? '(' + ngayThang + ')' : ''}` : `Báo bài ngày ${ngayThang}`;
-
-                        html += `
-                            <li class="bao-bai-item">
-                                <a href="baiviet.html?type=baobai&row=${i}" class="bao-bai-link">📌 ${titleText}</a>
-                                <div class="bao-bai-preview">${noiDung}</div>
-                            </li>
-                        `;
-                    }
-                }
-                html += '</ul>';
-
-                container.innerHTML = count > 0 ? html : '<div class="empty-state">Chưa có báo bài mới.</div>';
-            } catch (err) {
-                console.error("Lỗi đọc báo bài:", err);
-                container.innerHTML = '<div class="empty-state">Không thể tải danh sách báo bài.</div>';
-            }
-        }
-
-        function loadBaoBai() {
-            const script = document.createElement('script');
-            script.src = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?gid=${GID_BAO_BAI}&tqx=responseHandler:handleBaoBaiData`;
-            document.body.appendChild(script);
-        }
-
-        // 2. NẠP TIN TỨC
+        // 1. Hàm nạp Tin tức
         function handleNewsData(json) {
             const container = document.getElementById('posts-list');
             try {
@@ -416,8 +319,8 @@
                     if (!row) continue;
 
                     const id = row[0] ? (row[0].v !== null ? row[0].v : (i + 1)) : (i + 1);
-                    const ngay = parseCellValue(row[1]);
-                    const tacGia = row[2] ? (row[2].v || 'admin') : 'admin';
+                    const ngay = row[1] ? (row[1].f || row[1].v || '') : '';
+                    const tacGia = row[2] ? (row[2].v || 'BCT Lớp') : 'BCT Lớp';
                     const tieude = row[3] ? (row[3].v || '') : '';
                     const tomTat = row[4] ? (row[4].v || '') : '';
 
@@ -441,18 +344,12 @@
             }
         }
 
-        function loadNews() {
-            const script = document.createElement('script');
-            script.src = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=responseHandler:handleNewsData`;
-            document.body.appendChild(script);
-        }
-
-        // 3. NẠP TÀI LIỆU
+        // 2. Hàm nạp Tài liệu
         function handleDocsData(json) {
             const contentBox = document.getElementById('tab-content');
             try {
                 if (!json || !json.table || !json.table.rows) {
-                    contentBox.innerHTML = '<p class="empty-state">Không thể lấy dữ liệu tài liệu.</p>';
+                    contentBox.innerHTML = '<p class="empty-state">Không thể lấy dữ liệu tài liệu từ Google Sheet.</p>';
                     return;
                 }
 
@@ -471,7 +368,9 @@
                     const moTa = r.c[0] && r.c[0].v !== null ? String(r.c[0].v).trim() : '';
                     let link = r.c[1] && r.c[1].v !== null ? String(r.c[1].v).trim() : '';
 
-                    if (moTa.toLowerCase() === 'mô tả' || moTa === '') continue;
+                    if (moTa.toLowerCase() === 'mô tả' || moTa === '') {
+                        continue;
+                    }
 
                     if (link && !link.startsWith('http://') && !link.startsWith('https://')) {
                         link = 'https://' + link;
@@ -496,8 +395,15 @@
             }
         }
 
+        function loadNews() {
+            const script = document.createElement('script');
+            script.src = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=responseHandler:handleNewsData`;
+            document.body.appendChild(script);
+        }
+
         function loadDocs() {
             document.getElementById('tab-content').innerHTML = '<p class="empty-state">⏳ Đang nạp danh sách tài liệu...</p>';
+            
             const oldScript = document.getElementById('docs-jsonp-script');
             if (oldScript) oldScript.remove();
 
@@ -516,7 +422,7 @@
             if (tabName === 'tkb') {
                 content.innerHTML = `
                     <div class="tkb-img-container">
-                        <img src="tkb.png" alt="Thời khóa biểu Lớp 12A7" onerror="this.parentElement.innerHTML='<p class=\\'empty-state\\'>Chưa tìm thấy tệp ảnh tkb.png trên GitHub</p>'">
+                        <img src="tkb.png" alt="Thời khóa biểu Lớp 12A7" onerror="this.parentElement.innerHTML='<p class=\\'empty-state\\'>Chưa tìm thấy tệp ảnh tkb.png (Vui lòng kiểm tra lại tên tệp tkb.png trên GitHub)</p>'">
                     </div>
                 `;
             } else if (tabName === 'tailieu') {
@@ -524,10 +430,7 @@
             }
         }
 
-        window.onload = function() {
-            loadNews();
-            loadBaoBai();
-        };
+        window.onload = loadNews;
     </script>
 </body>
 </html>
