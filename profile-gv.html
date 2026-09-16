@@ -3,66 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thông Tin Chi Tiết Giáo Viên - Cổng Thông Tin Lớp 12A7</title>
-
+    <title>Thông Tin Giáo Viên - Lớp 12A7</title>
+    
     <link rel="icon" type="image/png" href="logo.png">
-    <link rel="shortcut icon" type="image/png" href="logo.png">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
 
     <style>
         :root {
             --primary-color: #003366;
             --secondary-color: #0055a5;
-            --accent-gold: #ffcc00;
-            --bg-light: #f4f6f9;
-            --card-bg: #ffffff;
-            --text-dark: #1d2d44;
-            --text-muted: #6c757d;
-            --border-color: #e2e8f0;
             --green-color: #28a745;
-            --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.05);
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --bg-light: #f4f6f9;
+            --text-color: #333;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-
-        body {
-            font-family: 'Plus Jakarta Sans', 'Segoe UI', Arial, sans-serif;
-            background-color: var(--bg-light);
-            color: var(--text-dark);
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
+        body { 
+            background-color: var(--bg-light); 
+            color: var(--text-color); 
             line-height: 1.6;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
-            min-height: 100vh;
         }
 
+        /* HEADER */
         header {
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: white;
             padding: 20px 0;
-            border-bottom: 4px solid var(--accent-gold);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            border-bottom: 4px solid #ffcc00;
         }
-
         .header-container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
             display: flex;
             align-items: center;
-            justify-content: space-between;
             gap: 20px;
         }
-
-        .header-left { display: flex; align-items: center; gap: 20px; }
-
         .logo-box {
             width: 70px;
             height: 70px;
@@ -82,6 +60,7 @@
         .header-text h1 { font-size: 24px; text-transform: uppercase; letter-spacing: 1px; }
         .header-text p { font-size: 14px; opacity: 0.9; }
 
+        /* NAVIGATION MENU - ĐỒNG BỘ CHUẨN GÓC XANH */
         nav { background-color: #002244; position: sticky; top: 0; z-index: 100; }
         .nav-container { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; }
         .nav-container a {
@@ -94,46 +73,53 @@
             transition: background 0.3s;
         }
         .nav-container a:hover, .nav-container a.active { background-color: var(--secondary-color); }
-        .nav-container a.green-tab { background-color: #28a745; color: #fff; }
-        .nav-container a.green-tab:hover { background-color: #218838; }
+        
+        /* Đồng bộ nút Góc Xanh chuẩn theo index.html */
+        .nav-container a.green-tab { 
+            color: #28a745 !important; 
+            font-weight: bold; 
+            background-color: transparent !important;
+        }
+        .nav-container a.green-tab:hover { 
+            background-color: var(--green-color) !important; 
+            color: #fff !important; 
+        }
 
-        main {
-            flex: 1;
+        /* MAIN CONTAINER */
+        .container {
             max-width: 1000px;
-            width: 90%;
             margin: 30px auto;
+            padding: 0 15px;
+            flex: 1;
+            width: 100%;
         }
 
         .back-btn {
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            margin-bottom: 20px;
+            gap: 5px;
             color: var(--primary-color);
             text-decoration: none;
-            font-weight: 700;
-            font-size: 0.95rem;
-            transition: var(--transition);
+            font-weight: 600;
+            margin-bottom: 20px;
+            font-size: 14px;
         }
+        .back-btn:hover { text-decoration: underline; }
 
-        .back-btn:hover {
-            color: var(--secondary-color);
-            transform: translateX(-3px);
-        }
-
+        /* PROFILE CARD DISPLAY */
         .profile-card {
-            background: var(--card-bg);
+            background: white;
             border-radius: 12px;
-            box-shadow: var(--shadow-sm);
-            padding: 35px;
-            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            overflow: hidden;
+            padding: 30px;
         }
 
         .profile-header {
             display: flex;
             gap: 30px;
             align-items: center;
-            border-bottom: 2px solid #f4f6f9;
+            border-bottom: 2px solid #e9ecef;
             padding-bottom: 25px;
             margin-bottom: 25px;
         }
@@ -142,81 +128,69 @@
             width: 150px;
             height: 150px;
             border-radius: 50%;
+            border: 4px solid var(--secondary-color);
             background-color: #e9ecef;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 3.5rem;
+            font-size: 70px;
+            color: #adb5bd;
             overflow: hidden;
-            border: 4px solid var(--primary-color);
             flex-shrink: 0;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
-
         .profile-avatar img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
 
-        .profile-info h2 {
-            font-size: 1.8rem;
-            color: var(--primary-color);
-            margin-bottom: 8px;
-            font-weight: 800;
-        }
-
+        .profile-info { flex: 1; }
         .profile-badge {
-            background-color: #fff3e0;
-            color: #d97706;
-            border: 1px solid #fde68a;
-            font-size: 0.75rem;
-            font-weight: 700;
-            padding: 5px 12px;
-            border-radius: 20px;
             display: inline-block;
+            background-color: #fff3cd;
+            color: #856404;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        .profile-info h2 {
+            font-size: 26px;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+        .info-row {
+            font-size: 15px;
+            margin-bottom: 6px;
+            color: #444;
+        }
+        .info-row strong { color: var(--primary-color); display: inline-block; width: 140px; }
+
+        .details-section h3 {
+            font-size: 16px;
+            color: var(--primary-color);
+            border-left: 4px solid #ffcc00;
+            padding-left: 10px;
             margin-bottom: 12px;
             text-transform: uppercase;
         }
-
-        .info-row {
-            margin-bottom: 8px;
-            font-size: 1.05rem;
-            color: #444;
-        }
-
-        .info-row strong {
-            color: var(--primary-color);
-        }
-
-        .details-section {
-            line-height: 1.8;
+        .details-content {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            font-size: 15px;
+            line-height: 1.7;
+            white-space: pre-line;
             color: #333;
-            font-size: 1rem;
-        }
-
-        .details-section h3 {
-            color: var(--primary-color);
-            margin-top: 10px;
-            margin-bottom: 15px;
-            border-left: 4px solid var(--accent-gold);
-            padding-left: 10px;
-            font-size: 1.2rem;
-            font-weight: 800;
-            text-transform: uppercase;
-        }
-
-        .details-content p {
-            margin-bottom: 15px;
-            text-align: justify;
         }
 
         .loading-text {
             text-align: center;
             padding: 50px;
-            font-size: 1.1rem;
-            color: var(--text-muted);
-            font-weight: 600;
+            font-size: 16px;
+            color: #666;
         }
 
         footer {
@@ -224,31 +198,27 @@
             color: white;
             text-align: center;
             padding: 20px;
+            margin-top: 40px;
             font-size: 13px;
-            margin-top: auto;
         }
 
         @media (max-width: 768px) {
-            .profile-header {
-                flex-direction: column;
-                text-align: center;
-            }
             .header-container { flex-direction: column; text-align: center; }
-            .header-left { flex-direction: column; }
+            .profile-header { flex-direction: column; text-align: center; }
+            .info-row strong { width: auto; display: block; margin-bottom: 2px; }
         }
     </style>
 </head>
 <body>
+
     <header>
         <div class="header-container">
-            <div class="header-left">
-                <div class="logo-box" id="logo-container">
-                    <img src="logo.png" alt="Logo Lớp 12A7" onerror="document.getElementById('logo-container').innerHTML='12A7'">
-                </div>
-                <div class="header-text">
-                    <h1>CỔNG THÔNG TIN LỚP 12A7</h1>
-                    <p>Trung tâm GDNN - GDTX Phú Nhuận | Năm học 2026 - 2027</p>
-                </div>
+            <div class="logo-box" id="logo-container">
+                <img src="logo.png" alt="Logo Lớp 12A7" onerror="document.getElementById('logo-container').innerText='12A7'">
+            </div>
+            <div class="header-text">
+                <h1>CỔNG THÔNG TIN LỚP 12A7</h1>
+                <p>Trung tâm GDNN - GDTX Phú Nhuận | Năm học 2026 - 2027</p>
             </div>
         </div>
     </header>
@@ -265,99 +235,102 @@
         </div>
     </nav>
 
-    <main>
+    <div class="container">
         <a href="giaovien.html" class="back-btn">&larr; Quay lại danh sách giáo viên</a>
-        
+
         <div id="profile-container">
             <div class="loading-text">⏳ Đang tải thông tin chi tiết giáo viên...</div>
         </div>
-    </main>
+    </div>
 
     <footer>
         <p>&copy; 2026 Cổng thông tin Lớp 12A7 - Trung tâm GDNN - GDTX Phú Nhuận</p>
         <p>Phát triển và vận hành bởi Tập thể Lớp 12A7</p>
     </footer>
 
-<script>
-        const TSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQzikJgQA99tZH8THj1ecKZBDbxH4GMM3snKPtovgaGdr_vVNv72F63qPl_epUs0rVSedCqx5elaJvB/pub?gid=590362463&single=true&output=tsv';
+    <script>
+        const SPREADSHEET_ID = '10WZAkfTsUhEsTRADxZ3JX869kLV_Sen45r4BeSrxDZY';
+        const GID_GIAO_VIEN = '590362463';
 
         function getTeacherIdFromUrl() {
             const urlParams = new URLSearchParams(window.location.search);
             return urlParams.get('id');
         }
 
-        function formatDetailText(text) {
-            if (!text) return '';
-            return text.split('\n\n').map(paragraph => {
-                let formatted = paragraph.trim();
-                formatted = formatted.replace(/^([I|V|X]+\.\s*[^:]+:)/g, '<strong>$1</strong>');
-                return `<p>${formatted}</p>`;
-            }).join('');
-        }
-
-        function renderProfile(rows) {
+        function handleProfileData(json) {
             const container = document.getElementById('profile-container');
             const targetId = getTeacherIdFromUrl();
 
-            const dataRows = rows.slice(1);
-            const row = dataRows.find(r => r[6] === targetId);
+            try {
+                if (!json || !json.table || !json.table.rows) {
+                    container.innerHTML = '<div class="loading-text" style="color: #e74c3c;">❌ Không lấy được dữ liệu giáo viên!</div>';
+                    return;
+                }
 
-            if (!row) {
-                container.innerHTML = '<div class="loading-text" style="color: #e74c3c;">❌ Không tìm thấy thông tin giáo viên yêu cầu!</div>';
-                return;
-            }
+                const rows = json.table.rows;
+                let foundTeacher = null;
 
-            const img = row[0] || '';              
-            const name = row[1] || 'Chưa cập nhật'; 
-            const subject = row [2]|| 'Bộ môn';     
-            const role = row[3] || '';             
-            const unit = row[4] || 'Trung tâm GDNN - GDTX Phú Nhuận'; 
-            const details = row[5] || '';           
+                // Cột G (index 6) là ID Giáo Viên
+                for (let row of rows) {
+                    if (!row.c) continue;
+                    const c = row.c;
+                    const id = c[6] && c[6].v !== null ? String(c[6].v).trim() : '';
 
-            const isHomeroom = role.toLowerCase().includes('gvcn') || role.toLowerCase().includes('chủ nhiệm');
+                    if (id === targetId) {
+                        foundTeacher = c;
+                        break;
+                    }
+                }
 
-            container.innerHTML = `
-                <div class="profile-card">
-                    <div class="profile-header">
-                        <div class="profile-avatar">
-                            <img src="${img}" alt="${name}" onerror="this.style.display='none'; this.parentElement.innerText='👤';">
+                if (!foundTeacher) {
+                    container.innerHTML = '<div class="loading-text" style="color: #e74c3c;">❌ Không tìm thấy thông tin giáo viên yêu cầu!</div>';
+                    return;
+                }
+
+                // Đọc đúng cấu trúc cột theo Google Sheet
+                const img = foundTeacher[0] && foundTeacher[0].v ? String(foundTeacher[0].v).trim() : '';
+                const name = foundTeacher[1] && foundTeacher[1].v ? String(foundTeacher[1].v).trim() : 'Chưa cập nhật';
+                const subject = foundTeacher[2] && foundTeacher[2].v ? String(foundTeacher[2].v).trim() : 'Bộ môn';
+                const role = foundTeacher[3] && foundTeacher[3].v ? String(foundTeacher[3].v).trim() : 'Giáo viên bộ môn';
+                const unit = foundTeacher[4] && foundTeacher[4].v ? String(foundTeacher[4].v).trim() : 'Trung tâm GDNN - GDTX Phú Nhuận';
+                const quote = foundTeacher[5] && foundTeacher[5].v ? String(foundTeacher[5].v).trim() : 'Chúc các em học sinh lớp 12A7 luôn học tập tốt!';
+
+                const isHomeroom = role.toLowerCase().includes('gvcn') || role.toLowerCase().includes('chủ nhiệm');
+
+                const avatarHtml = img 
+                    ? `<img src="${img}" alt="${name}" onerror="this.style.display='none'; document.getElementById('gv-avatar-box').innerText='👤';">`
+                    : `👤`;
+
+                container.innerHTML = `
+                    <div class="profile-card">
+                        <div class="profile-header">
+                            <div class="profile-avatar" id="gv-avatar-box">${avatarHtml}</div>
+                            <div class="profile-info">
+                                ${isHomeroom ? '<span class="profile-badge">⭐ Giáo Viên Chủ Nhiệm</span>' : ''}
+                                <h2>${name}</h2>
+                                <div class="info-row"><strong>Bộ môn:</strong> ${subject}</div>
+                                <div class="info-row"><strong>Nhiệm vụ:</strong> ${role}</div>
+                                <div class="info-row"><strong>Đơn vị công tác:</strong> ${unit}</div>
+                            </div>
                         </div>
-                        <div class="profile-info">
-                            ${isHomeroom ? '<span class="profile-badge">⭐ Giáo Viên Chủ Nhiệm</span>' : ''}
-                            <h2>${name}</h2>
-                            <div class="info-row"><strong>Bộ môn:</strong> ${subject}</div>
-                            <div class="info-row"><strong>Nhiệm vụ:</strong> ${role || 'Giáo viên bộ môn'}</div>
-                            <div class="info-row"><strong>Đơn vị công tác:</strong> ${unit}</div>
-                        </div>
-                    </div>
 
-                    ${details ? `
                         <div class="details-section">
                             <h3>THÔNG TIN & ĐÁNH GIÁ TỔNG QUAN</h3>
-                            <div class="details-content">${formatDetailText(details)}</div>
+                            <div class="details-content">${quote}</div>
                         </div>
-                    ` : ''}
-                </div>
-            `;
+                    </div>
+                `;
+            } catch (err) {
+                console.error("Lỗi:", err);
+                container.innerHTML = '<div class="loading-text" style="color: #e74c3c;">❌ Lỗi kết nối dữ liệu Google Sheets!</div>';
+            }
         }
 
-        function loadProfileData() {
-            Papa.parse(TSV_URL, {
-                download: true,
-                header: false,
-                skipEmptyLines: true,
-                delimiter: "\t",
-                complete: function(results) {
-                    renderProfile(results.data);
-                },
-                error: function() {
-                    document.getElementById('profile-container').innerHTML = 
-                        '<div class="loading-text" style="color: #e74c3c;">❌ Lỗi kết nối dữ liệu Google Sheets!</div>';
-                }
-            });
-        }
-
-        loadProfileData();
+        window.onload = function() {
+            const script = document.createElement('script');
+            script.src = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?gid=${GID_GIAO_VIEN}&tqx=responseHandler:handleProfileData`;
+            document.body.appendChild(script);
+        };
     </script>
 </body>
 </html>

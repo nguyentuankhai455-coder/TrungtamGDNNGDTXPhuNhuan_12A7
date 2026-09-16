@@ -3,381 +3,301 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đội Ngũ Giáo Viên - Cổng Thông Tin Lớp 12A7</title>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    <title>Đội Ngũ Giáo Viên - Lớp 12A7</title>
+    
+    <link rel="icon" type="image/png" href="logo.png">
 
     <style>
         :root {
-            --header-bg: #003366;
-            --header-top-bg: #002b55;
-            --nav-bg: #004080;
-            --nav-active: #0059b3;
-            --accent-gold: #ffcc00;
-            --bg-color: #f4f6f9;
-            --card-bg: #ffffff;
-            --text-dark: #1d2d44;
-            --text-muted: #6c757d;
-            --border-color: #e2e8f0;
+            --primary-color: #003366;
+            --secondary-color: #0055a5;
             --green-color: #28a745;
-            --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.05);
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --bg-light: #f4f6f9;
+            --text-color: #333;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-dark);
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
+        body { 
+            background-color: var(--bg-light); 
+            color: var(--text-color); 
             line-height: 1.6;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
-            min-height: 100vh;
         }
 
         header {
-            background-color: var(--header-bg);
-            color: #ffffff;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 20px 0;
+            border-bottom: 4px solid #ffcc00;
         }
-
         .header-container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 15px;
-        }
-
-        .header-top {
+            padding: 0 20px;
             display: flex;
             align-items: center;
-            padding: 15px 0;
-            gap: 15px;
+            gap: 20px;
         }
-
-        .logo-img {
-            width: 55px;
-            height: 55px;
+        .logo-box {
+            width: 70px;
+            height: 70px;
             border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid var(--accent-gold);
-            background-color: #ffffff;
-        }
-
-        .header-titles h1 {
-            font-size: 1.4rem;
-            font-weight: 800;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-            color: #ffffff;
-            margin: 0;
-            line-height: 1.2;
-        }
-
-        .header-titles p {
-            font-size: 0.85rem;
-            opacity: 0.85;
-            font-weight: 500;
-            margin-top: 3px;
-        }
-
-        .navbar-wrap {
-            background-color: var(--header-bg);
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            border-bottom: 3px solid var(--accent-gold);
-        }
-
-        .navbar {
+            background-color: #fff;
+            color: var(--primary-color);
             display: flex;
             align-items: center;
-            gap: 5px;
-            overflow-x: auto;
-            padding: 0;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            overflow: hidden;
+            border: 2px solid #fff;
+            flex-shrink: 0;
         }
+        .logo-box img { width: 100%; height: 100%; object-fit: cover; }
+        .header-text h1 { font-size: 24px; text-transform: uppercase; letter-spacing: 1px; }
+        .header-text p { font-size: 14px; opacity: 0.9; }
 
-        .nav-link {
-            color: #ffffff;
-            text-decoration: none;
+        nav { background-color: #002244; position: sticky; top: 0; z-index: 100; }
+        .nav-container { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; }
+        .nav-container a {
+            color: white;
             padding: 12px 18px;
-            font-weight: 700;
-            font-size: 0.85rem;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
             text-transform: uppercase;
-            white-space: nowrap;
-            transition: var(--transition);
-            display: inline-block;
+            transition: background 0.3s;
+        }
+        .nav-container a:hover, .nav-container a.active { background-color: var(--secondary-color); }
+        
+        /* Đồng bộ chuẩn nút Góc Xanh theo index.html */
+        .nav-container a.green-tab { 
+            color: #28a745 !important; 
+            font-weight: bold; 
+            background-color: transparent !important;
+        }
+        .nav-container a.green-tab:hover { 
+            background-color: var(--green-color) !important; 
+            color: #fff !important; 
         }
 
-        .nav-link:hover {
-            background-color: rgba(255, 255, 255, 0.15);
-            color: #ffffff;
-        }
-
-        .nav-link.active {
-            background-color: #0059b3;
-            color: #ffffff;
-        }
-
-        /* Nút Góc Xanh màu xanh lá chuẩn */
-        .nav-link.green-tab {
-            background-color: #28a745 !important;
-            color: #ffffff !important;
-        }
-        .nav-link.green-tab:hover {
-            background-color: #218838 !important;
-        }
-
-        main {
-            flex: 1;
+        .container {
             max-width: 1200px;
-            width: 92%;
             margin: 30px auto;
+            padding: 0 15px;
+            flex: 1;
+            width: 100%;
         }
 
-        .page-title-box {
-            text-align: center;
-            margin-bottom: 35px;
-        }
-
-        .page-title-box h2 {
-            font-size: 1.8rem;
-            color: #003366;
-            font-weight: 800;
+        .page-title {
+            color: var(--primary-color);
+            font-size: 20px;
             text-transform: uppercase;
-            display: inline-flex;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 8px;
+            margin-bottom: 25px;
+            display: flex;
             align-items: center;
-            gap: 10px;
-            border-bottom: 2px solid #cbd5e1;
-            padding-bottom: 10px;
+            gap: 8px;
         }
 
         .teachers-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 20px;
         }
 
         .teacher-card {
-            background: var(--card-bg);
-            border-radius: 12px;
-            box-shadow: var(--shadow-sm);
-            padding: 25px;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
             text-align: center;
-            border: 1px solid var(--border-color);
-            transition: var(--transition);
+            padding: 25px 20px;
+            transition: transform 0.2s, box-shadow 0.2s;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
         }
-
         .teacher-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-            border-color: #cbd5e1;
+            transform: translateY(-4px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
 
-        .teacher-avatar {
-            width: 120px;
-            height: 120px;
+        /* Khung Avatar chuẩn hiển thị icon 👤 khi trống ảnh */
+        .avatar-box {
+            width: 110px;
+            height: 110px;
             border-radius: 50%;
             margin: 0 auto 15px;
+            border: 3px solid var(--secondary-color);
             background-color: #e9ecef;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 3rem;
             overflow: hidden;
-            border: 3px solid #003366;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            font-size: 50px;
+            color: #adb5bd;
+            flex-shrink: 0;
         }
-
-        .teacher-avatar img {
+        .avatar-box img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
 
-        .teacher-info h3 {
-            font-size: 1.2rem;
-            color: #003366;
+        .teacher-name {
+            font-size: 17px;
+            font-weight: bold;
+            color: var(--primary-color);
             margin-bottom: 6px;
-            font-weight: 800;
-        }
-
-        .teacher-subject {
-            background-color: #fff3e0;
-            color: #d97706;
-            border: 1px solid #fde68a;
-            font-size: 0.75rem;
-            font-weight: 700;
-            padding: 4px 10px;
-            border-radius: 20px;
-            display: inline-block;
-            margin-bottom: 8px;
             text-transform: uppercase;
         }
 
-        .teacher-role {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            margin-bottom: 15px;
-            font-weight: 600;
-            min-height: 40px;
-        }
-
-        .detail-btn {
+        .teacher-subject {
             display: inline-block;
-            background-color: transparent;
-            color: #003366;
-            border: 2px solid #003366;
-            padding: 8px 16px;
-            border-radius: 6px;
+            background-color: #e6f0fa;
+            color: var(--secondary-color);
+            padding: 3px 14px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .view-detail-btn {
+            display: inline-block;
+            color: var(--secondary-color);
             text-decoration: none;
-            font-weight: 700;
-            font-size: 0.85rem;
-            transition: var(--transition);
-        }
-
-        .detail-btn:hover {
-            background-color: #003366;
-            color: #ffffff;
-        }
-
-        .loading-text {
-            text-align: center;
-            grid-column: 1 / -1;
-            padding: 50px;
-            font-size: 1.1rem;
-            color: var(--text-muted);
+            font-size: 13px;
             font-weight: 600;
         }
+        .view-detail-btn:hover { text-decoration: underline; }
 
         footer {
-            background-color: #002244;
-            color: rgba(255, 255, 255, 0.8);
+            background-color: #001529;
+            color: white;
             text-align: center;
             padding: 20px;
-            font-size: 0.85rem;
-            margin-top: auto;
+            margin-top: 40px;
+            font-size: 13px;
         }
 
-        footer p {
-            margin: 5px 0;
+        @media (max-width: 768px) {
+            .header-container { flex-direction: column; text-align: center; }
         }
     </style>
 </head>
 <body>
+
     <header>
         <div class="header-container">
-            <div class="header-top">
-                <img src="logo.png" alt="Logo Lớp 12A7" class="logo-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'50\' height=\'50\' viewBox=\'0 0 24 24\' fill=\'%23003366\'><circle cx=\'12\' cy=\'12\' r=\'10\'/></svg>'">
-                <div class="header-titles">
-                    <h1>CỔNG THÔNG TIN LỚP 12A7</h1>
-                    <p>Trung tâm GDNN - GDTX Phú Nhuận | Năm học 2026 - 2027</p>
-                </div>
+            <div class="logo-box" id="logo-container">
+                <img src="logo.png" alt="Logo Lớp 12A7" onerror="document.getElementById('logo-container').innerText='12A7'">
             </div>
-        </div>
-
-        <div class="navbar-wrap">
-            <div class="header-container">
-                <nav class="navbar">
-                    <a href="index.html" class="nav-link">TRANG CHỦ</a>
-                    <a href="index.html#tintuc.html" class="nav-link">TIN TỨC & SỰ KIỆN</a>
-                    <a href="index.html#gochoctap.html" class="nav-link">GÓC HỌC TẬP</a>
-                    <a href="giaovien.html" class="nav-link active">GIÁO VIÊN</a>
-                    <a href="gocxanh.html" class="nav-link green-tab">GÓC XANH</a>
-                    <a href="thanhvien.html" class="nav-link">THÀNH VIÊN</a>
-                    <a href="thuvienanh.html" class="nav-link">THƯ VIỆN ẢNH</a>
-                </nav>
+            <div class="header-text">
+                <h1>CỔNG THÔNG TIN LỚP 12A7</h1>
+                <p>Trung tâm GDNN - GDTX Phú Nhuận | Năm học 2026 - 2027</p>
             </div>
         </div>
     </header>
 
-    <main>
-        <div class="page-title-box">
-            <h2>👨‍🏫 Đội Ngũ Giáo Viên Giảng Dạy Lớp 12A7</h2>
+    <nav>
+        <div class="nav-container">
+            <a href="index.html">Trang chủ</a>
+            <a href="index.html#tin-tuc">Tin tức & Sự kiện</a>
+            <a href="index.html#hoc-tap">Góc học tập</a>
+            <a href="giaovien.html" class="active">Giáo viên</a>
+            <a href="gocxanh.html" class="green-tab">Góc Xanh</a>
+            <a href="thanhvien.html">Thành viên</a>
+            <a href="thuvien.html">Thư viện ảnh</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h2 class="page-title">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--primary-color);"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            ĐỘI NGŨ GIÁO VIÊN GIẢNG DẠY LỚP 12A7
+        </h2>
+
+        <div id="loading-box" style="text-align: center; padding: 40px; color: #666;">
+            ⏳ Đang tải thông tin giáo viên...
         </div>
 
-        <div id="teachers-grid" class="teachers-grid">
-            <div class="loading-text">⏳ Đang tải danh sách giáo viên từ hệ thống...</div>
-        </div>
-    </main>
+        <div class="teachers-grid" id="teachers-list"></div>
+    </div>
 
     <footer>
-        <p>© 2026 Cổng thông tin Lớp 12A7 - Trung tâm GDNN - GDTX Phú Nhuận</p>
+        <p>&copy; 2026 Cổng thông tin Lớp 12A7 - Trung tâm GDNN - GDTX Phú Nhuận</p>
         <p>Phát triển và vận hành bởi Tập thể Lớp 12A7</p>
     </footer>
+<script>
+    const SPREADSHEET_ID = '10WZAkfTsUhEsTRADxZ3JX869kLV_Sen45r4BeSrxDZY';
+    const GID_GIAO_VIEN = '590362463';
 
-    <script>
-        const TSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQzikJgQA99tZH8THj1ecKZBDbxH4GMM3snKPtovgaGdr_vVNv72F63qPl_epUs0rVSedCqx5elaJvB/pub?gid=590362463&single=true&output=tsv';
+    function handleTeacherData(json) {
+        const loadingBox = document.getElementById('loading-box');
+        const teachersList = document.getElementById('teachers-list');
 
-        function renderTeachers(rows) {
-            const grid = document.getElementById('teachers-grid');
-            grid.innerHTML = '';
-
-            // Bỏ qua dòng tiêu đề (header row)
-            const dataRows = rows.slice(1);
-
-            if (dataRows.length === 0) {
-                grid.innerHTML = '<div class="loading-text" style="color: #e74c3c;">❌ Không tìm thấy dữ liệu giáo viên!</div>';
+        try {
+            if (!json || !json.table || !json.table.rows) {
+                loadingBox.innerHTML = '<span style="color:red;">Không tìm thấy dữ liệu giáo viên!</span>';
                 return;
             }
 
-            dataRows.forEach(row => {
-                const img = row[0] || '';
-                const name = row[1] || 'Chưa cập nhật';
-                const subject = row[2] || 'Bộ môn';
-                const role = row[3] || 'Giáo viên bộ môn';
-                const id = row[6] || '';
+            loadingBox.style.display = 'none';
+            teachersList.innerHTML = '';
+            const rows = json.table.rows;
 
-                const card = document.createElement('div');
-                card.className = 'teacher-card';
-                card.innerHTML = `
-                    <div>
-                        <div class="teacher-avatar">
-                            <img src="${img}" alt="${name}" onerror="this.style.display='none'; this.parentElement.innerText='👤';">
+            rows.forEach((row, index) => {
+                if (!row.c) return;
+                const c = row.c;
+
+                // Cột G (index 6) là ID Giáo Viên
+                const id = c[6] && c[6].v !== null ? String(c[6].v).trim() : `gv_${index + 1}`;
+                
+                // Cột A (index 0) là Ảnh Avatar
+                const avatar = c[0] && c[0].v !== null ? String(c[0].v).trim() : '';
+                
+                // Cột B (index 1) là Họ và Tên
+                const name = c[1] && c[1].v !== null ? String(c[1].v).trim() : 'Chưa cập nhật';
+                
+                // Cột C (index 2) là Môn học
+                const subject = c[2] && c[2].v !== null ? String(c[2].v).trim() : 'Bộ môn';
+
+                const avatarHtml = avatar 
+                    ? `<img src="${avatar}" alt="${name}" onerror="this.style.display='none'; this.parentElement.innerText='👤';">`
+                    : `👤`;
+
+                const cardHtml = `
+                    <div class="teacher-card">
+                        <div>
+                            <div class="avatar-box">${avatarHtml}</div>
+                            <div class="teacher-name">${name}</div>
+                            <div class="teacher-subject">${subject}</div>
                         </div>
-                        <div class="teacher-info">
-                            <h3>${name}</h3>
-                            <span class="teacher-subject">${subject}</span>
-                            <div class="teacher-role">${role}</div>
+                        <div>
+                            <a href="profile-gv.html?id=${encodeURIComponent(id)}" class="view-detail-btn">Bấm để xem thông tin chi tiết &rarr;</a>
                         </div>
-                    </div>
-                    <div>
-                        <a href="profile-gv.html?id=${id}" class="detail-btn">Bấm để xem thông tin chi tiết →</a>
                     </div>
                 `;
-                grid.appendChild(card);
+                teachersList.insertAdjacentHTML('beforeend', cardHtml);
             });
-        }
 
-        function loadTeachersData() {
-            Papa.parse(TSV_URL, {
-                download: true,
-                header: false,
-                skipEmptyLines: true,
-                delimiter: "\t",
-                complete: function(results) {
-                    renderTeachers(results.data);
-                },
-                error: function() {
-                    document.getElementById('teachers-grid').innerHTML = 
-                        '<div class="loading-text" style="color: #e74c3c;">❌ Không lấy được dữ liệu từ Google Sheets.</div>';
-                }
-            });
+        } catch (err) {
+            console.error("Lỗi xử lý:", err);
+            loadingBox.innerHTML = '<span style="color:red;">Lỗi tải dữ liệu giáo viên!</span>';
         }
+    }
 
-        loadTeachersData();
-    </script>
+    window.onload = function() {
+        const script = document.createElement('script');
+        script.src = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?gid=${GID_GIAO_VIEN}&tqx=responseHandler:handleTeacherData`;
+        document.body.appendChild(script);
+    };
+</script>
 </body>
 </html>
