@@ -19,14 +19,24 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
-        body { background-color: var(--bg-light); color: var(--text-color); line-height: 1.6; }
+        html { scroll-behavior: smooth; }
+        body { 
+            background-color: var(--bg-light); 
+            color: var(--text-color); 
+            line-height: 1.8;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
 
+        /* HEADER */
         header {
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: white;
             padding: 20px 0;
             border-bottom: 4px solid #ffcc00;
         }
+
         .header-container {
             max-width: 1200px;
             margin: 0 auto;
@@ -35,6 +45,7 @@
             align-items: center;
             gap: 20px;
         }
+
         .logo-box {
             width: 70px;
             height: 70px;
@@ -50,10 +61,12 @@
             border: 2px solid #fff;
             flex-shrink: 0;
         }
+
         .logo-box img { width: 100%; height: 100%; object-fit: cover; }
         .header-text h1 { font-size: 24px; text-transform: uppercase; letter-spacing: 1px; }
         .header-text p { font-size: 14px; opacity: 0.9; }
 
+        /* NAV MENU */
         nav { background-color: #002244; position: sticky; top: 0; z-index: 100; }
         .nav-container { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; }
         .nav-container a {
@@ -66,22 +79,30 @@
             transition: background 0.3s;
         }
         .nav-container a:hover, .nav-container a.active { background-color: var(--secondary-color); }
-        .nav-container a.green-tab { background-color: #28a745; color: #fff; }
-        .nav-container a.green-tab:hover { background-color: #218838; }
+        .nav-container a.green-tab { color: #28a745; font-weight: bold; }
+        .nav-container a.green-tab:hover { background-color: var(--green-color); color: #fff; }
 
+        /* LAYOUT 2 CỘT */
         .main-wrapper {
             max-width: 1200px;
-            margin: 20px auto;
+            width: 100%;
+            margin: 30px auto;
             padding: 0 15px;
+            display: grid;
+            grid-template-columns: 3fr 1fr;
+            gap: 20px;
+            flex: 1;
         }
 
         .card {
-            background: white;
-            border-radius: 6px;
-            padding: 20px;
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            border: 1px solid #e1e8ed;
             margin-bottom: 20px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
+
         .section-title {
             color: var(--primary-color);
             font-size: 18px;
@@ -91,56 +112,82 @@
             text-transform: uppercase;
         }
 
+        /* GRID BAN CÁN SỰ */
         .bcs-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 15px;
             margin-bottom: 30px;
         }
+        
         .bcs-card {
             border: 1px solid #e0e0e0;
             border-radius: 6px;
             padding: 15px;
             text-align: center;
             background: #fafafa;
+            border-top: 3px solid var(--secondary-color);
         }
+
+        .bcs-card.gvcn { border-top-color: #ffcc00; background-color: #fffdf0; }
         .bcs-card h4 { color: var(--primary-color); font-size: 16px; margin-bottom: 5px; }
         .bcs-card p { font-size: 14px; color: #555; }
 
+        /* BẢNG DANH SÁCH */
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 10px;
         }
+
         th, td {
             border: 1px solid #ddd;
-            padding: 10px;
+            padding: 10px 12px;
             text-align: left;
             font-size: 14px;
         }
+
         th { background-color: var(--primary-color); color: white; }
         tr:nth-child(even) { background-color: #f9f9f9; }
+        tr:hover { background-color: #f1f5f9; }
 
+        /* HIGHLIGHT BCS TRONG BẢNG */
+        tr.highlight-role {
+            background-color: #eef6ff;
+            font-weight: 600;
+        }
+
+        /* SIDEBAR LIST */
+        .notice-list { list-style: none; }
+        .notice-list li { padding: 8px 0; border-bottom: 1px solid #f0f0f0; font-size: 14px; }
+
+        /* FOOTER */
         footer {
             background-color: #001529;
             color: white;
             text-align: center;
             padding: 20px;
-            margin-top: 40px;
             font-size: 13px;
+            margin-top: auto;
         }
+
+        footer p { margin: 5px 0; color: #aaa; }
 
         @media (max-width: 768px) {
             .header-container { flex-direction: column; text-align: center; }
+            .main-wrapper { grid-template-columns: 1fr; }
+            .card { padding: 20px; }
+            .bcs-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
+    <!-- HEADER -->
     <header>
         <div class="header-container">
             <div class="logo-box" id="logo-container">
-                <img src="logo.png" alt="Logo Lớp 12A7" onerror="document.getElementById('logo-container').innerHTML='12A7'">
+                <img src="logo.png" alt="Logo Lớp 12A7" onerror="document.getElementById('logo-container').innerText='12A7'">
             </div>
             <div class="header-text">
                 <h1>CỔNG THÔNG TIN LỚP 12A7</h1>
@@ -149,6 +196,7 @@
         </div>
     </header>
 
+    <!-- NAV MENU -->
     <nav>
         <div class="nav-container">
             <a href="index.html">Trang chủ</a>
@@ -158,64 +206,96 @@
             <a href="gocxanh.html" class="green-tab">Góc Xanh</a>
             <a href="thanhvien.html" class="active">Thành viên</a>
             <a href="thuvien.html">Thư viện ảnh</a>
+            <a href="credits.html">Credits</a>
         </div>
     </nav>
 
+    <!-- MAIN LAYOUT -->
     <div class="main-wrapper">
-        <div class="card">
-            <h3 class="section-title">Ban Cán Sự Lớp & Giáo Viên Chủ Nhiệm</h3>
-            <div class="bcs-grid">
-                <div class="bcs-card">
-                    <h4>Cô Nguyễn Thị Khánh Ly</h4>
-                    <p><b>Giáo viên chủ nhiệm</b></p>
+        <main>
+            <div class="card">
+                <h3 class="section-title">Ban Cán Sự Lớp & Giáo Viên Chủ Nhiệm</h3>
+                <div class="bcs-grid">
+                    <div class="bcs-card gvcn">
+                        <h4>Cô Nguyễn Thị Khánh Ly</h4>
+                        <p><b>Giáo viên chủ nhiệm</b></p>
+                    </div>
+                    <div class="bcs-card">
+                        <h4>VÕ NGỌC KHANG</h4>
+                        <p><b>Lớp trưởng</b></p>
+                    </div>
+                    <div class="bcs-card">
+                        <h4>Cao Cẩm Doanh</h4>
+                        <p><b>Lớp phó Học tập</b></p>
+                    </div>
+                    <div class="bcs-card">
+                        <h4>Lê Thị Kim Hương</h4>
+                        <p><b>Lớp phó Phong trào</b></p>
+                    </div>
                 </div>
-                <div class="bcs-card">
-                    <h4>VÕ NGỌC KHANG</h4>
-                    <p><b>Lớp trưởng</b></p>
-                </div>
-                <div class="bcs-card">
-                    <h4>Cao Cẩm Doanh</h4>
-                    <p><b>Lớp phó Học tập</b></p>
-                </div>
-                <div class="bcs-card">
-                    <h4>Lê Thị Kim Hương</h4>
-                    <p><b>Lớp phó Phong trào</b></p>
-                </div>
-            </div>
 
-            <h3 class="section-title">Danh Sách Học Sinh Lớp 12A7</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th style="width: 60px;">STT</th>
-                        <th>Họ và Tên</th>
-                        <th>Chức vụ / Vai trò</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>VÕ NGỌC KHANG</td>
-                        <td>Lớp trưởng</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Cao Cẩm Doanh</td>
-                        <td>Lớp phó Học tập</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Lê Thị Kim Hương</td>
-                        <td>Lớp phó Phong trào</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+                <h3 class="section-title">Danh Sách Học Sinh Lớp 12A7 (29 Thành Viên)</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 60px; text-align: center;">STT</th>
+                            <th>Họ và Tên</th>
+                            <th>Chức vụ / Vai trò</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td style="text-align: center;">1</td><td>ĐỖ HÙNG VƯƠNG ANH</td><td>Học sinh</td></tr>
+                        <tr><td style="text-align: center;">2</td><td>TRƯƠNG TÚ ANH</td><td>Học sinh</td></tr>
+                        <tr><td style="text-align: center;">3</td><td>PHẠM THẢO CHI</td><td>Học sinh</td></tr>
+                        <tr class="highlight-role"><td style="text-align: center;">4</td><td>CAO CẨM DOANH</td><td>Lớp phó Học tập</td></tr>
+                        <tr><td style="text-align: center;">5</td><td>NGUYỄN NGỌC DUY</td><td>Học sinh</td></tr>
+                        <tr><td style="text-align: center;">6</td><td>NGUYỄN TẤN ĐẠT</td><td>Học sinh</td></tr>
+                        <tr><td style="text-align: center;">7</td><td>VŨ MINH ĐỨC</td><td>Học sinh</td></tr>
+                        <tr><td style="text-align: center;">8</td><td>MAI THANH HẰNG</td><td>Học sinh</td></tr>
+                        <tr><td style="text-align: center;">9</td><td>TRỊNH THANH QUỐC</td><td>Học sinh</td></tr>
+                        <tr class="highlight-role"><td style="text-align: center;">10</td><td>LÊ THỊ KIM HƯƠNG</td><td>Lớp phó Phong trào</td></tr>
+                        <tr><td style="text-align: center;">11</td><td>NGUYỄN TUẤN KHẢI</td><td>Học sinh</td></tr>
+                        <tr class="highlight-role"><td style="text-align: center;">12</td><td>VÕ NGỌC KHANG</td><td>Lớp trưởng</td></tr>
+                        <tr><td style="text-align: center;">13</td><td>HUỲNH ĐĂNG KHÔI</td><td>Học sinh</td></tr>
+                        <tr><td style="text-align: center;">14</td><td>VÕ HOÀNG LONG</td><td>Học sinh</td></tr>
+                        <tr><td style="text-align: center;">16</td><td>NGUYỄN TRẦN THẢO LY</td><td>Học sinh</td></tr>
+                        <tr><td style="text-align: center;">17</td><td>TRẦN GIA MINH</td><td>Học sinh</td></tr>
+                        <tr><td style="text-align: center;">18</td><td>LÊ VÕ HOÀNG NGHĨA</td><td>Học sinh</td></tr>
+                        <tr><td style="text-align: center;">19</td><td>TRƯƠNG MINH NGỌC</td><td>Học sinh</td></tr>
+                        <tr><td style="text-align: center;">20</td><td>BÙI THỊ KIM NGUYÊN</td><td>Học sinh</td></tr>
+                        <tr><td style="text-align: center;">21</td><td>NGUYỄN LÊ THẢO</td><td>Học sinh</td></tr>
+                        <tr><td style="text-align: center;">22</td><td>LƯU THỊ NGUYỆT</td><td>Học sinh</td></tr>
+                        <tr><td style="text-align: center;">23</td><td>NGUYỄN NGỌC TUYẾT</td><td>Học sinh</td></tr>
+                        <tr><td style="text-align: center;">24</td><td>KHÂU NGỌC MAI</td><td>Học sinh</td></tr>
+                        <tr><td style="text-align: center;">25</td><td>TRẦN TRÍ THÀNH</td><td>Học sinh</td></tr>
+                        <tr><td style="text-align: center;">26</td><td>LÊ HỒNG HIẾU THẢO</td><td>Học sinh</td></tr>
+                        <tr><td style="text-align: center;">27</td><td>TRẦN THỊ MỸ TRINH</td><td>Học sinh</td></tr>
+                        <tr><td style="text-align: center;">28</td><td>LÊ MINH TRUNG</td><td>Học sinh</td></tr>
+                        <tr><td style="text-align: center;">29</td><td>NGUYỄN NGHIÊM LÂM</td><td>Học sinh</td></tr>
+                        <tr><td style="text-align: center;">30</td><td>LÊ VĂN HOÀNG VŨ</td><td>Học sinh</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+
+        <!-- SIDEBAR BÊN PHẢI -->
+        <aside>
+            <div class="card">
+                <h3 class="section-title">Ban cán sự Lớp 12A7</h3>
+                <ul class="notice-list">
+                    <li><b>GVCN:</b> Cô Nguyễn Thị Khánh Ly</li>
+                    <li><b>Lớp trưởng:</b> VÕ NGỌC KHANG</li>
+                    <li><b>Lớp phó HT:</b> Cao Cẩm Doanh</li>
+                    <li><b>Lớp phó Phong trào:</b> Lê Thị Kim Hương</li>
+                </ul>
+            </div>
+        </aside>
     </div>
 
+    <!-- FOOTER -->
     <footer>
         <p>&copy; 2026 Cổng thông tin Lớp 12A7 - Trung tâm GDNN - GDTX Phú Nhuận</p>
-        <p>Phát triển và vận hành bởi Tập thể Lớp 12A7</p>
+        <p>Phát triển và vận hành bởi Nguyễn Tuấn Khải - Tập thể Lớp 12A7</p>
     </footer>
 
 </body>
