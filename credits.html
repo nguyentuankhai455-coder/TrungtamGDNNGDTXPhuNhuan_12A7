@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ghi Nhận Đóng Góp (Credits) - Cổng Thông Tin Lớp 12A7</title>
+
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="shortcut icon" type="image/png" href="logo.png">
+
+    <style>
+        :root {
+            --primary-color: #003366;
+            --secondary-color: #0055a5;
+            --green-color: #28a745;
+            --bg-light: #f4f6f9;
+            --text-color: #333;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
+        html { scroll-behavior: smooth; }
+        body { 
+            background-color: var(--bg-light); 
+            color: var(--text-color); 
+            line-height: 1.8;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* HEADER */
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 20px 0;
+            border-bottom: 4px solid #ffcc00;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo-box {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background-color: #fff;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            overflow: hidden;
+            border: 2px solid #fff;
+            flex-shrink: 0;
+        }
+
+        .logo-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .header-text h1 {
+            font-size: 24px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .header-text p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        /* NAV MENU */
+        nav { 
+            background-color: #002244; 
+            position: sticky; 
+            top: 0; 
+            z-index: 100; 
+        }
+
+        .nav-container { 
+            max-width: 1200px; 
+            margin: 0 auto; 
+            display: flex; 
+            flex-wrap: wrap; 
+        }
+
+        .nav-container a {
+            color: white;
+            padding: 12px 18px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            transition: background 0.3s;
+        }
+
+        .nav-container a:hover, .nav-container a.active { 
+            background-color: var(--secondary-color); 
+        }
+
+        .nav-container a.green-tab { 
+            color: #28a745; 
+            font-weight: bold; 
+        }
+
+        .nav-container a.green-tab:hover { 
+            background-color: var(--green-color); 
+            color: #fff; 
+        }
+
+        /* LAYOUT & CARDS */
+        .main-wrapper {
+            max-width: 1200px;
+            width: 100%;
+            margin: 30px auto;
+            padding: 0 15px;
+            display: grid;
+            grid-template-columns: 3fr 1fr;
+            gap: 20px;
+            flex: 1;
+        }
+
+        .card {
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            border: 1px solid #e1e8ed;
+            margin-bottom: 20px;
+        }
+
+        .page-title {
+            color: var(--primary-color);
+            font-size: 24px;
+            font-weight: bold;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        /* CREDIT SECTIONS */
+        .credit-group {
+            margin-bottom: 30px;
+        }
+
+        .credit-role {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--secondary-color);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .credit-list {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 12px;
+        }
+
+        .credit-item {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--primary-color);
+            padding: 12px 15px;
+            border-radius: 0 6px 6px 0;
+            font-size: 14px;
+        }
+
+        .credit-item.developer {
+            border-left-color: #ffcc00;
+            background-color: #fffdf0;
+        }
+
+        .credit-item strong {
+            display: block;
+            color: #222;
+            font-size: 15px;
+        }
+
+        .credit-item span {
+            color: #555;
+            font-size: 13px;
+        }
+
+        .thanks-box {
+            background: #eef6ff;
+            border: 1px dashed var(--secondary-color);
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 20px;
+            font-style: italic;
+            color: #444;
+        }
+
+        .section-title {
+            color: var(--primary-color);
+            font-size: 18px;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 8px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        .notice-list { list-style: none; }
+        .notice-list li { padding: 8px 0; border-bottom: 1px solid #f0f0f0; font-size: 14px; }
+
+        /* FOOTER */
+        footer {
+            background-color: #001529;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 13px;
+            margin-top: auto;
+        }
+
+        footer p { margin: 5px 0; color: #aaa; }
+
+        @media (max-width: 768px) {
+            .header-container { flex-direction: column; text-align: center; }
+            .main-wrapper { grid-template-columns: 1fr; }
+            .card { padding: 20px; }
+            .credit-list { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <div class="header-container">
+            <div class="logo-box" id="logo-container">
+                <img src="logo.png" alt="Logo Lớp 12A7" onerror="document.getElementById('logo-container').innerText='12A7'">
+            </div>
+            <div class="header-text">
+                <h1>CỔNG THÔNG TIN LỚP 12A7</h1>
+                <p>Trung tâm GDNN - GDTX Phú Nhuận | Năm học 2026 - 2027</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- NAV MENU -->
+    <nav>
+        <div class="nav-container">
+            <a href="index.html">Trang chủ</a>
+            <a href="index.html#tin-tuc">Tin tức & Sự kiện</a>
+            <a href="index.html#hoc-tap">Góc học tập</a>
+            <a href="giaovien.html">Giáo viên</a>
+            <a href="gocxanh.html" class="green-tab">Góc Xanh</a>
+            <a href="thanhvien.html">Thành viên</a>
+            <a href="thuvien.html">Thư viện ảnh</a>
+            <a href="credits.html" class="active">Credits</a>
+        </div>
+    </nav>
+
+    <!-- LAYOUT CHÍNH -->
+    <div class="main-wrapper">
+        <main>
+            <div class="card">
+                <h2 class="page-title">🎗️ Ghi Nhận Đóng Góp (Credits)</h2>
+
+                <!-- THIẾT KẾ & PHÁT TRIỂN -->
+                <div class="credit-group">
+                    <div class="credit-role">💻 Thiết Kế & Phát Triển Hệ Thống</div>
+                    <div class="credit-list">
+                        <div class="credit-item developer">
+                            <strong>Nguyễn Tuấn Khải</strong>
+                            <span>Thiết kế giao diện, lập trình & vận hành toàn bộ hệ thống</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CẬP NHẬT NỘI DUNG -->
+                <div class="credit-group">
+                    <div class="credit-role">📝 Quản Lý & Cập Nhật Báo Bài</div>
+                    <div class="credit-list">
+                        <div class="credit-item">
+                            <strong>Cao Cẩm Doanh</strong>
+                            <span>Lớp phó Học tập - Phụ trách ghi nhận & cập nhật nội dung Báo bài</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- GIÁO VIÊN CHỦ NHIỆM & BỘ MÔN -->
+                <div class="credit-group">
+                    <div class="credit-role">👩‍🏫 Giáo Viên Chủ Nhiệm & Bộ Môn Lớp 12A7</div>
+                    <div class="credit-list">
+                        <div class="credit-item">
+                            <strong>Cô Nguyễn Thị Khánh Ly</strong>
+                            <span>GVCN & Giáo viên môn Lịch sử</span>
+                        </div>
+                        <div class="credit-item">
+                            <strong>Cô An Thị Thanh Bình</strong>
+                            <span>Giáo viên môn Toán</span>
+                        </div>
+                        <div class="credit-item">
+                            <strong>Cô Phan Thị Hiền Lương</strong>
+                            <span>Giáo viên môn Ngữ văn</span>
+                        </div>
+                        <div class="credit-item">
+                            <strong>Cô Văn Lý Thanh Thùy</strong>
+                            <span>Giáo viên môn Địa lý</span>
+                        </div>
+                        <div class="credit-item">
+                            <strong>Cô Lê Thị Hạnh</strong>
+                            <span>Giáo viên môn Tiếng Anh</span>
+                        </div>
+                        <div class="credit-item">
+                            <strong>Cô Lưu Thị Hồng Loan</strong>
+                            <span>Giáo viên môn Sinh học</span>
+                        </div>
+                        <div class="credit-item">
+                            <strong>Cô Trần Thị Ngọc Trà</strong>
+                            <span>Giáo viên môn GDKT&PL</span>
+                        </div>
+                        <div class="credit-item">
+                            <strong>Cô Lê Thị Hoài Thu</strong>
+                            <span>Giáo viên môn Vật lý</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- LỜI CẢM ƠN -->
+                <div class="thanks-box">
+                    ❤️ Chân thành cảm ơn quý Thầy Cô cùng toàn thể <b>Tập thể Lớp 12A7</b> đã hỗ trợ và đồng hành để hoàn thiện cổng thông tin này!
+                </div>
+            </div>
+        </main>
+
+        <aside>
+            <div class="card">
+                <h3 class="section-title">Ban cán sự Lớp 12A7</h3>
+                <ul class="notice-list">
+                    <li><b>GVCN:</b> Cô Nguyễn Thị Khánh Ly</li>
+                    <li><b>Lớp trưởng:</b> VÕ NGỌC KHANG</li>
+                    <li><b>Lớp phó HT:</b> Cao Cẩm Doanh</li>
+                    <li><b>Lớp phó Phong trào:</b> Lê Thị Kim Hương</li>
+                </ul>
+            </div>
+        </aside>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>&copy; 2026 Cổng thông tin Lớp 12A7 - Trung tâm GDNN - GDTX Phú Nhuận</p>
+        <p>Phát triển và vận hành bởi Nguyễn Tuấn Khải - Tập thể Lớp 12A7</p>
+    </footer>
+
+</body>
+</html>
