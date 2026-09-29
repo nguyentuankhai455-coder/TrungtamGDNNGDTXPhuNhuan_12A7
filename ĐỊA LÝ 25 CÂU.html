@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Ôn Tập Kiểm Tra 15' (Câu 25 - 45)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col justify-between items-center m-0 p-0">
+
+    <!-- Mobile Frame Wrapper -->
+    <div class="w-full max-w-md min-h-screen bg-white shadow-xl flex flex-col justify-between relative">
+
+        <!-- Header & Progress Bar -->
+        <header class="bg-white border-b border-slate-100 sticky top-0 z-10 px-4 py-3">
+            <div class="flex items-center justify-between mb-2">
+                <h1 class="font-bold text-sm text-slate-700 truncate pr-2">Ôn Tập (Câu 25 - 45)</h1>
+                <span id="progress-text" class="text-xs font-semibold text-slate-500 whitespace-nowrap">Câu 1 / 21</span>
+            </div>
+            <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                <div id="progress-bar" class="bg-blue-600 h-full w-0 transition-all duration-300"></div>
+            </div>
+        </header>
+
+        <!-- Main Quiz Container -->
+        <main class="w-full p-4 flex-1 flex flex-col justify-center">
+            <div id="quiz-container" class="bg-white rounded-2xl p-2">
+                <div id="question-area"></div>
+                <div id="error-msg" class="text-center font-medium text-sm mt-3 h-6 transition-all"></div>
+            </div>
+        </main>
+
+        <!-- Footer / Reset Button -->
+        <footer class="w-full p-4 text-center border-t border-slate-100 bg-white">
+            <button onclick="resetQuiz()" class="text-xs font-medium text-slate-400 hover:text-slate-600 underline">Quay lại (Reset tất cả)</button>
+        </footer>
+
+    </div>
+
+    <script>
+        const rawQuizData = [
+            {
+                id: 25,
+                question: "Câu 25: Sự hình thành các miền tự nhiên khác nhau ở nước ta chủ yếu do",
+                options: [
+                    { text: "khí hậu và sông ngòi.", isCorrect: false },
+                    { text: "vị trí địa lí và hình thể.", isCorrect: true },
+                    { text: "khoáng sản và biển.", isCorrect: false },
+                    { text: "gió mùa và dòng biển.", isCorrect: false }
+                ]
+            },
+            {
+                id: 26,
+                question: "Câu 26: Gió mùa đông bắc tạo nên một mùa đông lạnh",
+                options: [
+                    { text: "Từ dãy Bạch Mã vào miền Nam.", isCorrect: false },
+                    { text: "Từ dãy Bạch Mã ra miền Bắc.", isCorrect: false },
+                    { text: "Từ dãy Hoành Sơn ra miền Bắc.", isCorrect: true },
+                    { text: "Từ dãy Hoành Sơn vào miền Nam.", isCorrect: false }
+                ]
+            },
+            {
+                id: 27,
+                question: "Câu 27: Gió mùa đông bắc gần như bị chặn lại ở dãy núi nào sau đây?",
+                options: [
+                    { text: "Tam Điệp.", isCorrect: false },
+                    { text: "Hoành Sơn.", isCorrect: true },
+                    { text: "Bạch Mã.", isCorrect: false },
+                    { text: "Hoàng Liên Sơn.", isCorrect: false }
+                ]
+            },
+            {
+                id: 28,
+                question: "Câu 28: Gió mùa mùa hạ hoạt động ở nước ta vào thời gian nào sau đây?",
+                options: [
+                    { text: "Tháng 6 đến 10.", isCorrect: false },
+                    { text: "Tháng 8 đến 10.", isCorrect: false },
+                    { text: "Tháng 1 đến 12.", isCorrect: false },
+                    { text: "Tháng 5 đến 10.", isCorrect: true }
+                ]
+            },
+            {
+                id: 29,
+                question: "Câu 29: Nơi có sự bào mòn, rửa trôi đất đai mạnh nhất là",
+                options: [
+                    { text: "đồng bằng.", isCorrect: false },
+                    { text: "miền núi.", isCorrect: true },
+                    { text: "ô trũng.", isCorrect: false },
+                    { text: "ven biển.", isCorrect: false }
+                ]
+            },
+            {
+                id: 30,
+                question: "Câu 30: Loại đất chiếm diện tích lớn nhất ở nước ta là",
+                options: [
+                    { text: "đất xám bạc màu.", isCorrect: false },
+                    { text: "đất mùn thô.", isCorrect: false },
+                    { text: "đất phù sa.", isCorrect: false },
+                    { text: "đất feralit.", isCorrect: true }
+                ]
+            },
+            {
+                id: 31,
+                question: "Câu 31: Nước ta có khoảng bao nhiêu con sông dài trên 10km?",
+                options: [
+                    { text: "2360.", isCorrect: false },
+                    { text: "2620.", isCorrect: false },
+                    { text: "3260.", isCorrect: true },
+                    { text: "3630.", isCorrect: false }
+                ]
+            },
+            {
+                id: 32,
+                question: "Câu 32: Phát biểu nào sau đây không đúng với khí hậu Việt Nam?",
+                options: [
+                    { text: "Khí hậu có sự phân hoá đa dạng.", isCorrect: false },
+                    { text: "Khí hậu mang tính chất nhiệt đới.", isCorrect: false },
+                    { text: "Mùa đông lạnh kéo dài 2 - 3 tháng.", isCorrect: true },
+                    { text: "Chịu tác động sâu sắc của gió mùa.", isCorrect: false }
+                ]
+            },
+            {
+                id: 33,
+                question: "Câu 33: Tính chất nhiệt đới của khí hậu nước ta được quy định bởi",
+                options: [
+                    { text: "ảnh hưởng của biển Đông rộng lớn.", isCorrect: false },
+                    { text: "ảnh hưởng sâu sắc hoàn lưu gió mùa.", isCorrect: false },
+                    { text: "vị trí nằm trong vùng nội chí tuyến.", isCorrect: true },
+                    { text: "chuyển động biểu kiến của Mặt Trời.", isCorrect: false }
+                ]
+            },
+            {
+                id: 34,
+                question: "Câu 34: Đất feralit ở nước ta có màu đỏ vàng chủ yếu do",
+                options: [
+                    { text: "quá trình tích tụ mùn mạnh.", isCorrect: false },
+                    { text: "rửa trôi các chất badơ dễ tan.", isCorrect: false },
+                    { text: "tỉ lệ ôxit sắt và ôxit nhôm cao.", isCorrect: true },
+                    { text: "quá trình phong hóa mạnh mẽ.", isCorrect: false }
+                ]
+            },
+            {
+                id: 35,
+                question: "Câu 35: Loại gió thổi quanh năm ở nước ta là",
+                options: [
+                    { text: "Tây ôn đới.", isCorrect: false },
+                    { text: "Tín phong.", isCorrect: true },
+                    { text: "gió phơn.", isCorrect: false },
+                    { text: "gió mùa.", isCorrect: false }
+                ]
+            },
+            {
+                id: 36,
+                question: "Câu 36: Càng vào phía Nam gió mùa Đông Bắc càng",
+                options: [
+                    { text: "suy yếu.", isCorrect: true },
+                    { text: "mạnh.", isCorrect: false },
+                    { text: "khô nóng.", isCorrect: false },
+                    { text: "mưa nhiều.", isCorrect: false }
+                ]
+            },
+            {
+                id: 37,
+                question: "Câu 37: Mưa phùn vùng ven biển và các đồng bằng Bắc Bộ, Bắc Trung Bộ thường diễn ra vào",
+                options: [
+                    { text: "nửa đầu mùa đông.", isCorrect: false },
+                    { text: "nửa sau mùa đông.", isCorrect: true },
+                    { text: "nửa sau mùa xuân.", isCorrect: false },
+                    { text: "nửa đầu mùa hạ.", isCorrect: false }
+                ]
+            },
+            {
+                id: 38,
+                question: "Câu 38: Phát biểu nào sau đây không đúng với đặc điểm sông ngòi nước ta?",
+                options: [
+                    { text: "Nhiều sông.", isCorrect: false },
+                    { text: "Phần lớn là sông nhỏ.", isCorrect: false },
+                    { text: "Giàu phù sa.", isCorrect: false },
+                    { text: "Ít phụ lưu.", isCorrect: true }
+                ]
+            },
+            {
+                id: 39,
+                question: "Câu 39: Quá trình feralit hóa là quá trình hình thành đất đặc trưng cho vùng khí hậu",
+                options: [
+                    { text: "cận nhiệt lục địa.", isCorrect: false },
+                    { text: "nhiệt đới ẩm.", isCorrect: true },
+                    { text: "ôn đới hải dương.", isCorrect: false },
+                    { text: "cận cực lục địa.", isCorrect: false }
+                ]
+            },
+            {
+                id: 40,
+                question: "Câu 40: Phát biểu nào sau đây không đúng với đặc điểm sông ngòi nước ta?",
+                options: [
+                    { text: "Dày đặc.", isCorrect: false },
+                    { text: "Ít nước.", isCorrect: true },
+                    { text: "Giàu phù sa.", isCorrect: false },
+                    { text: "Thủy chế theo mùa.", isCorrect: false }
+                ]
+            },
+            {
+                id: 41,
+                question: "Câu 41: Địa hình Cac-xtơ được hình thành chủ yếu trên loại đá nào sau đây?",
+                options: [
+                    { text: "Granit.", isCorrect: false },
+                    { text: "Vôi.", isCorrect: true },
+                    { text: "Badan.", isCorrect: false },
+                    { text: "Sét.", isCorrect: false }
+                ]
+            },
+            {
+                id: 42,
+                question: "Câu 42: Gió tín phong nửa cầu Bắc chiếm ưu thế từ khu vực dãy Bạch Mã trở vào Nam có hướng",
+                options: [
+                    { text: "Tây Bắc.", isCorrect: false },
+                    { text: "Tây Nam.", isCorrect: false },
+                    { text: "Đông Nam.", isCorrect: false },
+                    { text: "Đông Bắc.", isCorrect: true }
+                ]
+            },
+            {
+                id: 43,
+                question: "Câu 43: Thiên nhiên nhiệt đới ẩm gió mùa ở nước ta ảnh hưởng trực tiếp và rõ rệt nhất đến hoạt động sản xuất nào sau đây?",
+                options: [
+                    { text: "Công nghiêp.", isCorrect: false },
+                    { text: "Nông nghiệp.", isCorrect: true },
+                    { text: "Du lịch.", isCorrect: false },
+                    { text: "Giao thông vận tải.", isCorrect: false }
+                ]
+            },
+            {
+                id: 44,
+                question: "Câu 44: Thành phần loài nào sau đây không thuộc cây nhiệt đới?",
+                options: [
+                    { text: "Dầu.", isCorrect: false },
+                    { text: "Đỗ Quyên.", isCorrect: true },
+                    { text: "Dâu tằm.", isCorrect: false },
+                    { text: "Đậu.", isCorrect: false }
+                ]
+            },
+            {
+                id: 45,
+                question: "Câu 45: Thời kì chuyển tiếp hoạt động giữa gió mùa Đông Bắc và Tây Nam là thời kì hoạt động mạnh của",
+                options: [
+                    { text: "gió mùa mùa đông.", isCorrect: false },
+                    { text: "gió mùa mùa hạ.", isCorrect: false },
+                    { text: "gió Mậu dịch.", isCorrect: true },
+                    { text: "gió địa phương.", isCorrect: false }
+                ]
+            }
+        ];
+
+        let quizData = rawQuizData.map(q => {
+            let shuffledOptions = [...q.options]
+                .map(value => ({ value, sort: Math.random() }))
+                .sort((a, b) => a.sort - b.sort)
+                .map(({ value }) => value);
+            return {
+                ...q,
+                options: shuffledOptions,
+                attempts: 0
+            };
+        });
+
+        let currentQuestionIndex = 0;
+        let scoreFirstTry = 0;
+
+        function renderQuiz() {
+            const container = document.getElementById('question-area');
+            const progressText = document.getElementById('progress-text');
+            const progressBar = document.getElementById('progress-bar');
+            const errorMsg = document.getElementById('error-msg');
+            
+            errorMsg.innerText = "";
+            errorMsg.className = "text-center font-medium text-sm mt-3 h-6 transition-all";
+
+            if (currentQuestionIndex >= quizData.length) {
+                renderResult();
+                return;
+            }
+
+            progressText.innerText = `Câu ${currentQuestionIndex + 1} / ${quizData.length}`;
+            progressBar.style.width = `${((currentQuestionIndex) / quizData.length) * 100}%`;
+
+            const q = quizData[currentQuestionIndex];
+
+            let html = `
+                <h2 class="font-semibold text-slate-800 text-sm sm:text-base mb-4 leading-relaxed">${q.question}</h2>
+                <div class="space-y-2.5">
+            `;
+
+            q.options.forEach((opt, idx) => {
+                html += `<button onclick="handleAnswer(${idx})" class="w-full text-left p-3.5 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 text-xs sm:text-sm font-medium transition active:scale-[0.99] shadow-sm">${opt.text}</button>`;
+            });
+
+            html += `</div>`;
+            container.innerHTML = html;
+        }
+
+        function handleAnswer(optionIndex) {
+            const q = quizData[currentQuestionIndex];
+            const selectedOption = q.options[optionIndex];
+            const errorMsg = document.getElementById('error-msg');
+
+            q.attempts++;
+
+            if (selectedOption.isCorrect) {
+                if (q.attempts === 1) {
+                    scoreFirstTry++;
+                }
+                currentQuestionIndex++;
+                renderQuiz();
+            } else {
+                errorMsg.innerText = "VUI LÒNG THỬ LẠI";
+                
+                if (q.attempts === 1) {
+                    errorMsg.className = "text-center font-medium text-sm mt-3 h-6 transition-all text-red-500";
+                } else if (q.attempts === 2) {
+                    errorMsg.className = "text-center font-semibold text-sm mt-3 h-6 transition-all text-red-600";
+                } else {
+                    errorMsg.className = "text-center font-bold text-sm mt-3 h-6 transition-all text-rose-800";
+                }
+            }
+        }
+
+        function renderResult() {
+            document.getElementById('progress-text').innerText = "Hoàn thành";
+            document.getElementById('progress-bar').style.width = "100%";
+
+            const container = document.getElementById('question-area');
+            document.getElementById('error-msg').innerText = "";
+
+            container.innerHTML = `
+                <div class="text-center py-6">
+                    <div class="inline-flex items-center justify-center w-16 h-16 bg-green-100 text-green-600 rounded-full mb-4 text-2xl font-bold">✓</div>
+                    <h2 class="text-lg font-bold text-slate-800 mb-2">Hoàn thành bài ôn tập!</h2>
+                    <p class="text-base sm:text-lg font-bold text-green-600 mb-6 px-2">CHÚC MỪNG BẠN ĐÃ ĐƯỢC ${scoreFirstTry} ĐIỂM</p>
+                    <button onclick="resetQuiz()" class="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl shadow transition text-sm">Làm lại từ đầu</button>
+                </div>
+            `;
+        }
+
+        function resetQuiz() {
+            currentQuestionIndex = 0;
+            scoreFirstTry = 0;
+            quizData = rawQuizData.map(q => {
+                let shuffledOptions = [...q.options]
+                    .map(value => ({ value, sort: Math.random() }))
+                    .sort((a, b) => a.sort - b.sort)
+                    .map(({ value }) => value);
+                return {
+                    ...q,
+                    options: shuffledOptions,
+                    attempts: 0
+                };
+            });
+            renderQuiz();
+        }
+
+        renderQuiz();
+    </script>
+</body>
+</html>

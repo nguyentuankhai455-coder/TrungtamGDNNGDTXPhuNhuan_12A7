@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Ôn Tập Kiểm Tra 15'</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col justify-between items-center m-0 p-0">
+
+    <!-- Mobile Frame Wrapper -->
+    <div class="w-full max-w-md min-h-screen bg-white shadow-xl flex flex-col justify-between relative">
+
+        <!-- Header & Progress Bar -->
+        <header class="bg-white border-b border-slate-100 sticky top-0 z-10 px-4 py-3">
+            <div class="flex items-center justify-between mb-2">
+                <h1 class="font-bold text-sm text-slate-700 truncate pr-2">Ôn Tập Kiểm Tra 15'</h1>
+                <span id="progress-text" class="text-xs font-semibold text-slate-500 whitespace-nowrap">Câu 1 / 49</span>
+            </div>
+            <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                <div id="progress-bar" class="bg-blue-600 h-full w-0 transition-all duration-300"></div>
+            </div>
+        </header>
+
+        <!-- Main Quiz Container -->
+        <main class="w-full p-4 flex-1 flex flex-col justify-center">
+            <div id="quiz-container" class="bg-white rounded-2xl p-2">
+                <!-- Question area -->
+                <div id="question-area"></div>
+                <!-- Error message area -->
+                <div id="error-msg" class="text-center font-medium text-sm mt-3 h-6 transition-all"></div>
+            </div>
+        </main>
+
+        <!-- Footer / Reset Button -->
+        <footer class="w-full p-4 text-center border-t border-slate-100 bg-white">
+            <button onclick="resetQuiz()" class="text-xs font-medium text-slate-400 hover:text-slate-600 underline">Quay lại (Reset tất cả)</button>
+        </footer>
+
+    </div>
+
+    <script>
+        const rawQuizData = [
+            {
+                id: 1,
+                question: "Câu 1: Việt Nam gắn liền với lục địa và đại dương nào sau đây?",
+                options: [
+                    { text: "Á-Âu và Bắc Băng Dương.", isCorrect: false },
+                    { text: "Á- Âu và Đại Tây Dương.", isCorrect: false },
+                    { text: "Á-Âu và Ấn Độ Dương.", isCorrect: false },
+                    { text: "Á-Âu và Thái Bình Dương.", isCorrect: true }
+                ]
+            },
+            {
+                id: 2,
+                question: "Câu 2: Vùng biển của nước ta không tiếp giáp với vùng biển của quốc gia nào sau đây?",
+                options: [
+                    { text: "Trung Quốc.", isCorrect: false },
+                    { text: "Cam-pu-chia.", isCorrect: false },
+                    { text: "Thái Lan.", isCorrect: false },
+                    { text: "Mi-an-ma.", isCorrect: true }
+                ]
+            },
+            {
+                id: 3,
+                question: "Câu 3: Quần đảo nằm cách xa đất liền nhất của nước ta là",
+                options: [
+                    { text: "Hoàng Sa.", isCorrect: false },
+                    { text: "Phú Quốc.", isCorrect: false },
+                    { text: "Phú Quý.", isCorrect: false },
+                    { text: "Trường Sa.", isCorrect: true }
+                ]
+            },
+            {
+                id: 4,
+                question: "Câu 4: Lãnh thổ nước ta",
+                options: [
+                    { text: "có đường bờ biển dài từ Bắc vào Nam.", isCorrect: true },
+                    { text: "có vùng đất gấp nhiều lần vùng biển.", isCorrect: false },
+                    { text: "nằm hoàn toàn ở trong vùng xích đạo.", isCorrect: false },
+                    { text: "chỉ tiếp giáp với các quốc gia trên biển.", isCorrect: false }
+                ]
+            },
+            {
+                id: 5,
+                question: "Câu 5: Lãnh thổ nước ta",
+                options: [
+                    { text: "có biên giới chung với nhiều nước.", isCorrect: true },
+                    { text: "nằm hoàn toàn trong vùng xích đạo.", isCorrect: false },
+                    { text: "có vùng đất rộng lớn hơn vùng biển.", isCorrect: false },
+                    { text: "có bờ biển dài theo chiều Đông - Tây.", isCorrect: false }
+                ]
+            },
+            {
+                id: 6,
+                question: "Câu 6: Hai vịnh biển có diện tích lớn nhất nước ta là",
+                options: [
+                    { text: "vịnh Bắc Bộ và vịnh Thái Lan.", isCorrect: true },
+                    { text: "vịnh Bắc Bộ và vịnh Nha Trang.", isCorrect: false },
+                    { text: "vịnh Thái Lan và vịnh Vân Phong.", isCorrect: false },
+                    { text: "vịnh Bắc Bộ và vịnh Vân Phong.", isCorrect: false }
+                ]
+            },
+            {
+                id: 7,
+                question: "Câu 7: Ý nghĩa về văn hóa - xã hội của vị trí địa lí nước ta là",
+                options: [
+                    { text: "giao lưu, hợp tác về văn hóa xã hội với các quốc gia.", isCorrect: true },
+                    { text: "phát triển nhiều loại hình giao thông vận tải khác nhau.", isCorrect: false },
+                    { text: "thu hút được nhiều nguồn vốn đầu tư của nước ngoài.", isCorrect: false },
+                    { text: "cầu nối phát triển kinh tế giữa các nước trong khu vực.", isCorrect: false }
+                ]
+            },
+            {
+                id: 8,
+                question: "Câu 8: Nước ta nằm ở",
+                options: [
+                    { text: "Tây Nam châu Á, trong vùng khí hậu ôn hòa.", isCorrect: false },
+                    { text: "trong khu vực kinh tế phát triển năng động.", isCorrect: true },
+                    { text: "vùng xích đạo bán cầu Nam, giáp nhiều nước.", isCorrect: false },
+                    { text: "khu vực á nhiệt đới gió mùa, có ít thiên tai.", isCorrect: false }
+                ]
+            },
+            {
+                id: 9,
+                question: "Câu 9: Phát biểu nào sau đây thể hiện ý nghĩa về mặt kinh tế của vị trí địa lí nước ta ?",
+                options: [
+                    { text: "Tự nhiên phân hóa đa dạng giữa Bắc - Nam, Đông - Tây.", isCorrect: false },
+                    { text: "Nguồn tài nguyên sinh vật và khoáng sản vô cùng giàu có.", isCorrect: false },
+                    { text: "Thuận lợi giao lưu với các nước trong khu vực và thế giới.", isCorrect: true },
+                    { text: "Thuận lợi để xây dựng nền văn hóa tương đồng với khu vực.", isCorrect: false }
+                ]
+            },
+            {
+                id: 10,
+                question: "Câu 10: Tính chất nhiệt đới của khí hậu nước ta được quy định bởi",
+                options: [
+                    { text: "vị trí trong vùng nội chí tuyến.", isCorrect: true },
+                    { text: "địa hình nước ta thấp dần ra biển.", isCorrect: false },
+                    { text: "hoạt động của gió phơn Tây Nam.", isCorrect: false },
+                    { text: "địa hình nước ta nhiều đồi núi.", isCorrect: false }
+                ]
+            },
+            {
+                id: 11,
+                question: "Câu 11: Phát biểu nào sau đây đúng về lãnh thổ của nước ta?",
+                options: [
+                    { text: "Nhiều đảo ven bờ, vùng biển rộng hơn so với vùng đất.", isCorrect: true },
+                    { text: "Hẹp ngang ở Nam bộ và mở rộng vùng Bắc Trung Bộ.", isCorrect: false },
+                    { text: "Đường bờ biển kéo dài từ Quảng Ninh cho đến Cà Mau.", isCorrect: false },
+                    { text: "Đường biên giới trên đất liền dài nhất với Trung Quốc.", isCorrect: false }
+                ]
+            },
+            {
+                id: 12,
+                question: "Câu 12: Vị trí địa lí đã làm cho tự nhiên nước ta",
+                options: [
+                    { text: "mang tính chất cận xích đạo gió mùa.", isCorrect: false },
+                    { text: "phân hóa đa dạng, có nhiều thiên tai.", isCorrect: true },
+                    { text: "phân hóa chủ yếu theo độ cao địa hình.", isCorrect: false },
+                    { text: "có khí hậu, thời tiết biến đổi khắc nghiệt.", isCorrect: false }
+                ]
+            },
+            {
+                id: 13,
+                question: "Câu 13: Vị trí nước ta nằm trong vùng nội chí tuyến nên có",
+                options: [
+                    { text: "lượng mưa trung bình năm lớn.", isCorrect: false },
+                    { text: "gió mùa Đông Bắc hoạt động.", isCorrect: false },
+                    { text: "số giờ nắng trong năm nhiều.", isCorrect: true },
+                    { text: "khí hậu phân mùa sâu sắc.", isCorrect: false }
+                ]
+            },
+            {
+                id: 14,
+                question: "Câu 14: Trong các vùng biển sau đây, vùng nào có diện tích lớn nhất?",
+                options: [
+                    { text: "Nội thủy.", isCorrect: false },
+                    { text: "Lãnh hải.", isCorrect: false },
+                    { text: "Tiếp giáp lãnh hải.", isCorrect: false },
+                    { text: "Đặc quyền kinh tế.", isCorrect: true }
+                ]
+            },
+            {
+                id: 15,
+                question: "Câu 15: Nhân tố nào sau đây quyết định tính phong phú về thành phần loài sinh vật nước ta?",
+                options: [
+                    { text: "Sự phong phú, đa dạng của các nhóm đất và sông ngòi.", isCorrect: false },
+                    { text: "Khí hậu nhiệt đới ẩm gió mùa, có sự phân hóa đa dạng.", isCorrect: false },
+                    { text: "Địa hình đồi núi chiếm ưu thế, có sự phân hóa phức tạp.", isCorrect: false },
+                    { text: "Vị trí trên đường di cư và di lưu của nhiều loài sinh vật.", isCorrect: true }
+                ]
+            },
+            {
+                id: 16,
+                question: "Câu 16: Phát biểu nào sau đây không đúng về ý nghĩa vị trí địa lí nước ta?",
+                options: [
+                    { text: "Tạo điều kiện chung sống hòa bình với các nước Đông Nam Á.", isCorrect: false },
+                    { text: "Quy định đặc điểm cơ bản của thiên nhiên nhiệt đới ẩm gió mùa.", isCorrect: false },
+                    { text: "Tạo điều kiện để xây dựng nền văn hóa đồng nhất trong khu vực.", isCorrect: true },
+                    { text: "Tạo điều kiện cho việc phát triển giao thông đường biển quốc tế.", isCorrect: false }
+                ]
+            },
+            {
+                id: 17,
+                question: "Câu 17: Do lãnh thổ kéo dài trên nhiều vĩ độ nên tự nhiên nước ta có sự phân hóa rõ rệt",
+                options: [
+                    { text: "giữa miền núi với đồng bằng.", isCorrect: false },
+                    { text: "giữa miền Bắc với miền Nam.", isCorrect: true },
+                    { text: "giữa đồng bằng và ven biển.", isCorrect: false },
+                    { text: "giữa đất liền và ven biển.", isCorrect: false }
+                ]
+            },
+            {
+                id: 18,
+                question: "Câu 18: Vị trí địa lí của nước ta tạo điều kiện thuận lợi chủ yếu cho",
+                options: [
+                    { text: "phát triển nền nông nghiệp nhiệt đới.", isCorrect: false },
+                    { text: "bảo vệ chủ quyền, an ninh quốc phòng.", isCorrect: true },
+                    { text: "phát triển kinh tế nhiều thành phần.", isCorrect: false },
+                    { text: "phát triển nền nông nghiệp cận nhiệt đới.", isCorrect: false }
+                ]
+            },
+            {
+                id: 19,
+                question: "Câu 19: Đại bộ phận lãnh thổ của nước ta nằm trong múi giờ số 7 là do",
+                options: [
+                    { text: "nước ta trải dài nhiều vĩ độ và địa hình phân hóa.", isCorrect: false },
+                    { text: "lãnh thổ của nước ta trải dài theo chiều Bắc-Nam.", isCorrect: false },
+                    { text: "nằm trong vùng nội chí tuyến thuộc bán cầu Bắc.", isCorrect: false },
+                    { text: "kinh tuyến 105 độ Đ chạy qua lãnh thổ của nước ta.", isCorrect: true }
+                ]
+            },
+            {
+                id: 20,
+                question: "Câu 20: Vị trí địa lí nước ta không tạo thuận lợi cho hoạt động nào sau đây?",
+                options: [
+                    { text: "Mở rộng hợp tác đầu tư.", isCorrect: false },
+                    { text: "Phát triển nông nghiệp nhiệt đới.", isCorrect: false },
+                    { text: "Phòng chống thiên tai.", isCorrect: true },
+                    { text: "Phát triển các ngành kinh tế biển.", isCorrect: false }
+                ]
+            },
+            {
+                id: 21,
+                question: "Câu 21: Việt Nam không có khí hậu nhiệt đới khô như một số nước cùng vĩ độ là do",
+                options: [
+                    { text: "nằm trên vành đai sinh khoáng Địa Trung Hải.", isCorrect: false },
+                    { text: "nằm hoàn toàn trong vùng nội chí tuyến.", isCorrect: false },
+                    { text: "tiếp giáp với Biển Đông và ảnh hưởng gió mùa.", isCorrect: true },
+                    { text: "nằm ở trung tâm của vùng Đông Nam Á.", isCorrect: false }
+                ]
+            },
+            {
+                id: 22,
+                question: "Câu 22: Đặc điểm nào sau đây không đúng với thiên nhiên vùng biển và thềm lục địa nước ta?",
+                options: [
+                    { text: "Vùng biển có diện tích lớn gấp khoảng ba lần vùng đất liền.", isCorrect: false },
+                    { text: "Thềm lục địa nông, được mở rộng ở phía Bắc và phía Nam.", isCorrect: false },
+                    { text: "Độ nông - sâu của thềm lục địa đồng nhất từ Bắc vào Nam.", isCorrect: true },
+                    { text: "Thềm lục địa miền Trung hẹp, tiếp giáp với vùng biển sâu.", isCorrect: false }
+                ]
+            },
+            {
+                id: 23,
+                question: "Câu 23: Đường cơ sở của nước ta được xác định là đường",
+                options: [
+                    { text: "được xem là ranh giới trên biển của nước ta.", isCorrect: false },
+                    { text: "khoảng cách 12 hải lí tính từ vùng lãnh hải.", isCorrect: false },
+                    { text: "tính từ mức nước thủy triều lúc lên cao nhất.", isCorrect: false },
+                    { text: "nối các mũi đất xa nhất với các đảo ven bờ.", isCorrect: true }
+                ]
+            },
+            {
+                id: 24,
+                question: "Câu 24: Ảnh hưởng của vị trí địa lí và hình dáng lãnh thổ đến sông ngòi nước ta là",
+                options: [
+                    { text: "mạng lưới sông ngòi dày đặc, có độ dốc lớn.", isCorrect: false },
+                    { text: "phần lớn là sông nhỏ, chế độ nước theo mùa.", isCorrect: true },
+                    { text: "có rất nhiều chi lưu và tổng lượng nước lớn.", isCorrect: false },
+                    { text: "hàm lượng phù sa lớn và chảy ra biển Đông.", isCorrect: false }
+                ]
+            },
+            {
+                id: 25,
+                question: "Câu 25: Sự hình thành các miền tự nhiên khác nhau ở nước ta chủ yếu do",
+                options: [
+                    { text: "khí hậu và sông ngòi.", isCorrect: false },
+                    { text: "vị trí địa lí và hình thể.", isCorrect: true },
+                    { text: "khoáng sản và biển.", isCorrect: false },
+                    { text: "gió mùa và dòng biển.", isCorrect: false }
+                ]
+            },
+            {
+                id: 26,
+                question: "Câu 26: Gió mùa đông bắc tạo nên một mùa đông lạnh",
+                options: [
+                    { text: "Từ dãy Bạch Mã vào miền Nam.", isCorrect: false },
+                    { text: "Từ dãy Bạch Mã ra miền Bắc.", isCorrect: false },
+                    { text: "Từ dãy Hoành Sơn ra miền Bắc.", isCorrect: true },
+                    { text: "Từ dãy Hoành Sơn vào miền Nam.", isCorrect: false }
+                ]
+            },
+            {
+                id: 27,
+                question: "Câu 27: Gió mùa đông bắc gần như bị chặn lại ở dãy núi nào sau đây?",
+                options: [
+                    { text: "Tam Điệp.", isCorrect: false },
+                    { text: "Hoành Sơn.", isCorrect: true },
+                    { text: "Bạch Mã.", isCorrect: false },
+                    { text: "Hoàng Liên Sơn.", isCorrect: false }
+                ]
+            },
+            {
+                id: 28,
+                question: "Câu 28: Gió mùa mùa hạ hoạt động ở nước ta vào thời gian nào sau đây?",
+                options: [
+                    { text: "Tháng 6 đến 10.", isCorrect: false },
+                    { text: "Tháng 8 đến 10.", isCorrect: false },
+                    { text: "Tháng 1 đến 12.", isCorrect: false },
+                    { text: "Tháng 5 đến 10.", isCorrect: true }
+                ]
+            },
+            {
+                id: 29,
+                question: "Câu 29: Nơi có sự bào mòn, rửa trôi đất đai mạnh nhất là",
+                options: [
+                    { text: "đồng bằng.", isCorrect: false },
+                    { text: "miền núi.", isCorrect: true },
+                    { text: "ô trũng.", isCorrect: false },
+                    { text: "ven biển.", isCorrect: false }
+                ]
+            },
+            {
+                id: 30,
+                question: "Câu 30: Loại đất chiếm diện tích lớn nhất ở nước ta là",
+                options: [
+                    { text: "đất xám bạc màu.", isCorrect: false },
+                    { text: "đất mùn thô.", isCorrect: false },
+                    { text: "đất phù sa.", isCorrect: false },
+                    { text: "đất feralit.", isCorrect: true }
+                ]
+            },
+            {
+                id: 31,
+                question: "Câu 31: Nước ta có khoảng bao nhiêu con sông dài trên 10km?",
+                options: [
+                    { text: "2360.", isCorrect: false },
+                    { text: "2620.", isCorrect: false },
+                    { text: "3260.", isCorrect: true },
+                    { text: "3630.", isCorrect: false }
+                ]
+            },
+            {
+                id: 32,
+                question: "Câu 32: Phát biểu nào sau đây không đúng với khí hậu Việt Nam?",
+                options: [
+                    { text: "Khí hậu có sự phân hoá đa dạng.", isCorrect: false },
+                    { text: "Khí hậu mang tính chất nhiệt đới.", isCorrect: false },
+                    { text: "Mùa đông lạnh kéo dài 2 - 3 tháng.", isCorrect: true },
+                    { text: "Chịu tác động sâu sắc của gió mùa.", isCorrect: false }
+                ]
+            },
+            {
+                id: 33,
+                question: "Câu 33: Tính chất nhiệt đới của khí hậu nước ta được quy định bởi",
+                options: [
+                    { text: "ảnh hưởng của biển Đông rộng lớn.", isCorrect: false },
+                    { text: "ảnh hưởng sâu sắc hoàn lưu gió mùa.", isCorrect: false },
+                    { text: "vị trí nằm trong vùng nội chí tuyến.", isCorrect: true },
+                    { text: "chuyển động biểu kiến của Mặt Trời.", isCorrect: false }
+                ]
+            },
+            {
+                id: 34,
+                question: "Câu 34: Đất feralit ở nước ta có màu đỏ vàng chủ yếu do",
+                options: [
+                    { text: "quá trình tích tụ mùn mạnh.", isCorrect: false },
+                    { text: "rửa trôi các chất badơ dễ tan.", isCorrect: false },
+                    { text: "tỉ lệ ôxit sắt và ôxit nhôm cao.", isCorrect: true },
+                    { text: "quá trình phong hóa mạnh mẽ.", isCorrect: false }
+                ]
+            },
+            {
+                id: 35,
+                question: "Câu 35: Loại gió thổi quanh năm ở nước ta là",
+                options: [
+                    { text: "Tây ôn đới.", isCorrect: false },
+                    { text: "Tín phong.", isCorrect: true },
+                    { text: "gió phơn.", isCorrect: false },
+                    { text: "gió mùa.", isCorrect: false }
+                ]
+            },
+            {
+                id: 36,
+                question: "Câu 36: Càng vào phía Nam gió mùa Đông Bắc càng",
+                options: [
+                    { text: "suy yếu.", isCorrect: true },
+                    { text: "mạnh.", isCorrect: false },
+                    { text: "khô nóng.", isCorrect: false },
+                    { text: "mưa nhiều.", isCorrect: false }
+                ]
+            },
+            {
+                id: 37,
+                question: "Câu 37: Mưa phùn vùng ven biển và các đồng bằng Bắc Bộ, Bắc Trung Bộ thường diễn ra vào",
+                options: [
+                    { text: "nửa đầu mùa đông.", isCorrect: false },
+                    { text: "nửa sau mùa đông.", isCorrect: true },
+                    { text: "nửa sau mùa xuân.", isCorrect: false },
+                    { text: "nửa đầu mùa hạ.", isCorrect: false }
+                ]
+            },
+            {
+                id: 38,
+                question: "Câu 38: Phát biểu nào sau đây không đúng với đặc điểm sông ngòi nước ta?",
+                options: [
+                    { text: "Nhiều sông.", isCorrect: false },
+                    { text: "Phần lớn là sông nhỏ.", isCorrect: false },
+                    { text: "Giàu phù sa.", isCorrect: false },
+                    { text: "Ít phụ lưu.", isCorrect: true }
+                ]
+            },
+            {
+                id: 39,
+                question: "Câu 39: Quá trình feralit hóa là quá trình hình thành đất đặc trưng cho vùng khí hậu",
+                options: [
+                    { text: "cận nhiệt lục địa.", isCorrect: false },
+                    { text: "nhiệt đới ẩm.", isCorrect: true },
+                    { text: "ôn đới hải dương.", isCorrect: false },
+                    { text: "cận cực lục địa.", isCorrect: false }
+                ]
+            },
+            {
+                id: 40,
+                question: "Câu 40: Phát biểu nào sau đây không đúng với đặc điểm sông ngòi nước ta?",
+                options: [
+                    { text: "Dày đặc.", isCorrect: false },
+                    { text: "Ít nước.", isCorrect: true },
+                    { text: "Giàu phù sa.", isCorrect: false },
+                    { text: "Thủy chế theo mùa.", isCorrect: false }
+                ]
+            },
+            {
+                id: 41,
+                question: "Câu 41: Địa hình Cac-xtơ được hình thành chủ yếu trên loại đá nào sau đây?",
+                options: [
+                    { text: "Granit.", isCorrect: false },
+                    { text: "Vôi.", isCorrect: true },
+                    { text: "Badan.", isCorrect: false },
+                    { text: "Sét.", isCorrect: false }
+                ]
+            },
+            {
+                id: 42,
+                question: "Câu 42: Gió tín phong nửa cầu Bắc chiếm ưu thế từ khu vực dãy Bạch Mã trở vào Nam có hướng",
+                options: [
+                    { text: "Tây Bắc.", isCorrect: false },
+                    { text: "Tây Nam.", isCorrect: false },
+                    { text: "Đông Nam.", isCorrect: false },
+                    { text: "Đông Bắc.", isCorrect: true }
+                ]
+            },
+            {
+                id: 43,
+                question: "Câu 43: Thiên nhiên nhiệt đới ẩm gió mùa ở nước ta ảnh hưởng trực tiếp và rõ rệt nhất đến hoạt động sản xuất nào sau đây?",
+                options: [
+                    { text: "Công nghiêp.", isCorrect: false },
+                    { text: "Nông nghiệp.", isCorrect: true },
+                    { text: "Du lịch.", isCorrect: false },
+                    { text: "Giao thông vận tải.", isCorrect: false }
+                ]
+            },
+            {
+                id: 44,
+                question: "Câu 44: Thành phần loài nào sau đây không thuộc cây nhiệt đới?",
+                options: [
+                    { text: "Dầu.", isCorrect: false },
+                    { text: "Đỗ Quyên.", isCorrect: true },
+                    { text: "Dâu tằm.", isCorrect: false },
+                    { text: "Đậu.", isCorrect: false }
+                ]
+            },
+            {
+                id: 45,
+                question: "Câu 45: Thời kì chuyển tiếp hoạt động giữa gió mùa Đông Bắc và Tây Nam là thời kì hoạt động mạnh của",
+                options: [
+                    { text: "gió mùa mùa đông.", isCorrect: false },
+                    { text: "gió mùa mùa hạ.", isCorrect: false },
+                    { text: "gió Mậu dịch.", isCorrect: true },
+                    { text: "gió địa phương.", isCorrect: false }
+                ]
+            },
+            {
+                id: 46,
+                question: "Phần II. Câu 1: Cho thông tin sau: Từ tháng 11 đến tháng 4 năm sau, miền Bắc nước ta chịu tác động của gió mùa Đông Bắc...",
+                options: [
+                    { text: "Nửa đầu mùa đông, miền Bắc có thời tiết lạnh ẩm.", isCorrect: false },
+                    { text: "Gió mùa Đông Bắc tác động yếu đến Bắc Trung Bộ do ảnh hưởng của dãy Bạch Mã.", isCorrect: false },
+                    { text: "Gió mùa Đông Bắc là nguyên nhân chính tạo nên mùa khô ở Nam Bộ.", isCorrect: false },
+                    { text: "Gió mùa Đông Bắc di chuyển quãng đường dài trên lục địa, gây nên thời tiết lạnh khô vào đầu mùa Đông ở miền Bắc.", isCorrect: true }
+                ]
+            },
+            {
+                id: 47,
+                question: "Phần II. Câu 2: Cho thông tin sau: Nước ta quanh năm nhận được một lượng ẩm rất lớn...",
+                options: [
+                    { text: "Lượng mưa trung bình năm trên toàn bộ lãnh thổ nước ta đạt 3 500 - 4 000 mm.", isCorrect: false },
+                    { text: "Ở những vùng núi cao và sườn núi đón gió thường có lượng mưa nhỏ.", isCorrect: false },
+                    { text: "Nước ta có nguồn ẩm dồi dào do thiên nhiên chịu ảnh hưởng sâu sắc của biển.", isCorrect: true },
+                    { text: "Do có lượng mưa và độ ẩm lớn nên hệ sinh thái rừng thường xanh chiếm ưu thế.", isCorrect: true }
+                ]
+            },
+            {
+                id: 48,
+                question: "Phần II. Câu 3: Cho thông tin sau: Hai đường chí tuyến bắc và nam đã phân chia khí hậu thế giới ra làm hai khu vực cơ bản...",
+                options: [
+                    { text: "Tọa độ địa lí qui định vị trí nước ta nằm trong vùng nội chí tuyến bán cầu Bắc.", isCorrect: true },
+                    { text: "Khí hậu nước ta mang tính chất nhiệt đới với nền nhiệt trung bình năm cao trên 200C.", isCorrect: true },
+                    { text: "Tất cả các địa điểm trên lãnh thổ nước ta đều có hai lần Mặt trời lên thiên đỉnh cùng nhau.", isCorrect: false },
+                    { text: "Sinh vật nhiệt đới chiếm ưu thế ở nước ta chủ yếu do tính chất nhiệt đới của khí hậu.", isCorrect: true }
+                ]
+            },
+            {
+                id: 49,
+                question: "Phần II. Câu 4: Cho thông tin sau: Quanh năm gió Tín phong thổi trên lãnh thổ nước ta và biển Đông...",
+                options: [
+                    { text: "Gió Tín phong bán cầu Bắc hoạt động quanh năm trên lãnh thổ nước ta.", isCorrect: true },
+                    { text: "Do tác động của Tín phong bán cầu Bắc, vào mùa đông ở miền Bắc thường xuất hiện những ngày nắng ấm xen kẽ những ngày thời tiết âm u.", isCorrect: true },
+                    { text: "Tín phong bán cầu Bắc là nguyên nhân chủ yếu gây ra mùa khô cho khu vực cao nguyên phía tây Nam Trung Bộ và Nam Bộ.", isCorrect: true },
+                    { text: "Gió Tín phong kết hợp với hoạt động của dải hội tụ gây nên sự phân hóa mưa - khô ở hai sườn dãy Trường Sơn của nước ta.", isCorrect: false }
+                ]
+            }
+        ];
+
+        let quizData = rawQuizData.map(q => {
+            let shuffledOptions = [...q.options]
+                .map(value => ({ value, sort: Math.random() }))
+                .sort((a, b) => a.sort - b.sort)
+                .map(({ value }) => value);
+            return {
+                ...q,
+                options: shuffledOptions,
+                attempts: 0
+            };
+        });
+
+        let currentQuestionIndex = 0;
+        let scoreFirstTry = 0;
+
+        function renderQuiz() {
+            const container = document.getElementById('question-area');
+            const progressText = document.getElementById('progress-text');
+            const progressBar = document.getElementById('progress-bar');
+            const errorMsg = document.getElementById('error-msg');
+            
+            errorMsg.innerText = "";
+            errorMsg.className = "text-center font-medium text-sm mt-3 h-6 transition-all";
+
+            if (currentQuestionIndex >= quizData.length) {
+                renderResult();
+                return;
+            }
+
+            progressText.innerText = `Câu ${currentQuestionIndex + 1} / ${quizData.length}`;
+            progressBar.style.width = `${((currentQuestionIndex) / quizData.length) * 100}%`;
+
+            const q = quizData[currentQuestionIndex];
+
+            let html = `
+                <h2 class="font-semibold text-slate-800 text-sm sm:text-base mb-4 leading-relaxed">${q.question}</h2>
+                <div class="space-y-2.5">
+            `;
+
+            q.options.forEach((opt, idx) => {
+                html += `<button onclick="handleAnswer(${idx})" class="w-full text-left p-3.5 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 text-xs sm:text-sm font-medium transition active:scale-[0.99] shadow-sm">${opt.text}</button>`;
+            });
+
+            html += `</div>`;
+            container.innerHTML = html;
+        }
+
+        function handleAnswer(optionIndex) {
+            const q = quizData[currentQuestionIndex];
+            const selectedOption = q.options[optionIndex];
+            const errorMsg = document.getElementById('error-msg');
+
+            q.attempts++;
+
+            if (selectedOption.isCorrect) {
+                if (q.attempts === 1) {
+                    scoreFirstTry++;
+                }
+                currentQuestionIndex++;
+                renderQuiz();
+            } else {
+                errorMsg.innerText = "VUI LÒNG THỬ LẠI";
+                
+                // Cấp độ màu đỏ theo yêu cầu:
+                // - Sai lần 1: đánh đỏ (text-red-500)
+                // - Sai lần 2: đánh đỏ đậm hơn (text-red-600 font-semibold)
+                // - Sai lần 3 trở đi: đánh đỏ đen / đỏ sẫm đậm nhất (text-rose-800 font-bold)
+                if (q.attempts === 1) {
+                    errorMsg.className = "text-center font-medium text-sm mt-3 h-6 transition-all text-red-500";
+                } else if (q.attempts === 2) {
+                    errorMsg.className = "text-center font-semibold text-sm mt-3 h-6 transition-all text-red-600";
+                } else {
+                    errorMsg.className = "text-center font-bold text-sm mt-3 h-6 transition-all text-rose-800";
+                }
+            }
+        }
+
+        function renderResult() {
+            document.getElementById('progress-text').innerText = "Hoàn thành";
+            document.getElementById('progress-bar').style.width = "100%";
+
+            const container = document.getElementById('question-area');
+            document.getElementById('error-msg').innerText = "";
+
+            container.innerHTML = `
+                <div class="text-center py-6">
+                    <div class="inline-flex items-center justify-center w-16 h-16 bg-green-100 text-green-600 rounded-full mb-4 text-2xl font-bold">✓</div>
+                    <h2 class="text-lg font-bold text-slate-800 mb-2">Hoàn thành bài ôn tập!</h2>
+                    <p class="text-base sm:text-lg font-bold text-green-600 mb-6 px-2">CHÚC MỪNG BẠN ĐÃ ĐƯỢC ${scoreFirstTry} ĐIỂM</p>
+                    <button onclick="resetQuiz()" class="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl shadow transition text-sm">Làm lại từ đầu</button>
+                </div>
+            `;
+        }
+
+        function resetQuiz() {
+            currentQuestionIndex = 0;
+            scoreFirstTry = 0;
+            quizData = rawQuizData.map(q => {
+                let shuffledOptions = [...q.options]
+                    .map(value => ({ value, sort: Math.random() }))
+                    .sort((a, b) => a.sort - b.sort)
+                    .map(({ value }) => value);
+                return {
+                    ...q,
+                    options: shuffledOptions,
+                    attempts: 0
+                };
+            });
+            renderQuiz();
+        }
+
+        renderQuiz();
+    </script>
+</body>
+</html>
