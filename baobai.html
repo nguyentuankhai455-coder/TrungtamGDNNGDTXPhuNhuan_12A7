@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thành Viên - Lớp 12A7 (2026 - 2027)</title>
-    
+    <title>Báo Bài Hàng Ngày - Cổng Thông Tin Lớp 12A7</title>
+
     <link rel="icon" type="image/png" href="logo.png">
     <link rel="shortcut icon" type="image/png" href="logo.png">
 
@@ -12,7 +12,6 @@
         :root {
             --primary-color: #003366;
             --secondary-color: #0055a5;
-            --accent-color: #d9534f;
             --green-color: #28a745;
             --bg-light: #f4f6f9;
             --text-color: #333;
@@ -103,37 +102,17 @@
             margin-bottom: 20px;
         }
 
-        .section-title {
+        .page-title {
             color: var(--primary-color);
-            font-size: 18px;
+            font-size: 22px;
+            font-weight: bold;
             border-bottom: 2px solid var(--primary-color);
             padding-bottom: 8px;
             margin-bottom: 20px;
             text-transform: uppercase;
         }
 
-        /* GRID BAN CÁN SỰ */
-        .bcs-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-        
-        .bcs-card {
-            border: 1px solid #e0e0e0;
-            border-radius: 6px;
-            padding: 15px;
-            text-align: center;
-            background: #fafafa;
-            border-top: 3px solid var(--secondary-color);
-        }
-
-        .bcs-card.gvcn { border-top-color: #ffcc00; background-color: #fffdf0; }
-        .bcs-card h4 { color: var(--primary-color); font-size: 16px; margin-bottom: 5px; }
-        .bcs-card p { font-size: 14px; color: #555; }
-
-        /* BẢNG DANH SÁCH */
+        /* BẢNG BÁO BÀI */
         table {
             width: 100%;
             border-collapse: collapse;
@@ -142,7 +121,7 @@
 
         th, td {
             border: 1px solid #ddd;
-            padding: 10px 12px;
+            padding: 12px;
             text-align: left;
             font-size: 14px;
         }
@@ -151,15 +130,31 @@
         tr:nth-child(even) { background-color: #f9f9f9; }
         tr:hover { background-color: #f1f5f9; }
 
-        /* HIGHLIGHT BCS TRONG BẢNG */
-        tr.highlight-role {
-            background-color: #eef6ff;
+        td a {
+            color: var(--secondary-color);
+            text-decoration: none;
             font-weight: 600;
         }
+        td a:hover { text-decoration: underline; color: var(--primary-color); }
 
-        /* SIDEBAR LIST */
+        .section-title {
+            color: var(--primary-color);
+            font-size: 18px;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 8px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
         .notice-list { list-style: none; }
         .notice-list li { padding: 8px 0; border-bottom: 1px solid #f0f0f0; font-size: 14px; }
+
+        .loading, .empty-state {
+            text-align: center;
+            padding: 40px 0;
+            color: #777;
+            font-style: italic;
+        }
 
         /* FOOTER */
         footer {
@@ -177,7 +172,6 @@
             .header-container { flex-direction: column; text-align: center; }
             .main-wrapper { grid-template-columns: 1fr; }
             .card { padding: 20px; }
-            .bcs-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -196,16 +190,16 @@
         </div>
     </header>
 
-    <!--<!-- NAV MENU (Đã thêm tab Báo Bài) -->
+    <!-- NAV MENU (Đã thêm tab Báo Bài) -->
     <nav>
         <div class="nav-container">
             <a href="index.html">Trang chủ</a>
-            <a href="baobai.html">Báo Bài</a>
+            <a href="baobai.html" class="active">Báo Bài</a>
             <a href="index.html#tin-tuc">Tin tức & Sự kiện</a>
             <a href="index.html#hoc-tap">Góc học tập</a>
             <a href="giaovien.html">Giáo viên</a>
             <a href="gocxanh.html" class="green-tab">Góc Xanh</a>
-            <a href="thanhvien.html"class="active">Thành viên</a>
+            <a href="thanhvien.html">Thành viên</a>
             <a href="thuvien.html">Thư viện ảnh</a>
             <a href="credits.html">Credits</a>
         </div>
@@ -215,67 +209,10 @@
     <div class="main-wrapper">
         <main>
             <div class="card">
-                <h3 class="section-title">Ban Cán Sự Lớp & Giáo Viên Chủ Nhiệm</h3>
-                <div class="bcs-grid">
-                    <div class="bcs-card gvcn">
-                        <h4>Cô Nguyễn Thị Khánh Ly</h4>
-                        <p><b>Giáo viên chủ nhiệm</b></p>
-                    </div>
-                    <div class="bcs-card">
-                        <h4>VÕ NGỌC KHANG</h4>
-                        <p><b>Lớp trưởng</b></p>
-                    </div>
-                    <div class="bcs-card">
-                        <h4>Cao Cẩm Doanh</h4>
-                        <p><b>Lớp phó Học tập</b></p>
-                    </div>
-                    <div class="bcs-card">
-                        <h4>Lê Thị Kim Hương</h4>
-                        <p><b>Lớp phó Phong trào</b></p>
-                    </div>
+                <h2 class="page-title">📚 Danh Sách Báo Bài Hàng Ngày</h2>
+                <div id="baobai-table-container">
+                    <div class="loading">⏳ Đang tải dữ liệu báo bài từ hệ thống...</div>
                 </div>
-
-                <h3 class="section-title">Danh Sách Học Sinh Lớp 12A7 (29 Thành Viên)</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th style="width: 60px; text-align: center;">STT</th>
-                            <th>Họ và Tên</th>
-                            <th>Chức vụ / Vai trò</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr><td style="text-align: center;">1</td><td>ĐỖ HÙNG VƯƠNG ANH</td><td>Học sinh</td></tr>
-                        <tr><td style="text-align: center;">2</td><td>TRƯƠNG TÚ ANH</td><td>Học sinh</td></tr>
-                        <tr><td style="text-align: center;">3</td><td>PHẠM THẢO CHI</td><td>Học sinh</td></tr>
-                        <tr class="highlight-role"><td style="text-align: center;">4</td><td>CAO CẨM DOANH</td><td>Lớp phó Học tập</td></tr>
-                        <tr><td style="text-align: center;">5</td><td>NGUYỄN NGỌC DUY</td><td>Học sinh</td></tr>
-                        <tr><td style="text-align: center;">6</td><td>NGUYỄN TẤN ĐẠT</td><td>Học sinh</td></tr>
-                        <tr><td style="text-align: center;">7</td><td>VŨ MINH ĐỨC</td><td>Học sinh</td></tr>
-                        <tr><td style="text-align: center;">8</td><td>MAI THANH HẰNG</td><td>Học sinh</td></tr>
-                        <tr><td style="text-align: center;">9</td><td>TRỊNH THANH QUỐC</td><td>Học sinh</td></tr>
-                        <tr class="highlight-role"><td style="text-align: center;">10</td><td>LÊ THỊ KIM HƯƠNG</td><td>Lớp phó Phong trào</td></tr>
-                        <tr><td style="text-align: center;">11</td><td>NGUYỄN TUẤN KHẢI</td><td>Học sinh</td></tr>
-                        <tr class="highlight-role"><td style="text-align: center;">12</td><td>VÕ NGỌC KHANG</td><td>Lớp trưởng</td></tr>
-                        <tr><td style="text-align: center;">13</td><td>HUỲNH ĐĂNG KHÔI</td><td>Học sinh</td></tr>
-                        <tr><td style="text-align: center;">14</td><td>VÕ HOÀNG LONG</td><td>Học sinh</td></tr>
-                        <tr class="highlight-role"><td style="text-align: center;">15</td><td>NGUYỄN TRẦN THẢO LY</td><td>Tổ trưởng Tổ 4</td></tr>                        
-                        <tr><td style="text-align: center;">16</td><td>TRẦN GIA MINH</td><td>Học sinh</td></tr>
-                        <tr><td style="text-align: center;">17</td><td>LÊ VÕ HOÀNG NGHĨA</td><td>Học sinh</td></tr>
-                        <tr><td style="text-align: center;">18</td><td>TRƯƠNG MINH NGỌC</td><td>Học sinh</td></tr>
-                        <tr class="highlight-role"><td style="text-align: center;">29</td><td>BÙI THỊ KIM NGUYÊN</td><td>Tổ trưởng Tổ 3</td></tr>    
-                        <tr class="highlight-role"><td style="text-align: center;">20</td><td>NGUYỄN LÊ THẢO NGUYÊN</td><td>Tổ trưởng Tổ 1</td></tr>                   
-                        <tr><td style="text-align: center;">21</td><td>LƯU THỊ NGUYỆT</td><td>Học sinh</td></tr>
-                        <tr><td style="text-align: center;">22</td><td>NGUYỄN NGỌC TUYẾT</td><td>Học sinh</td></tr>
-                        <tr class="highlight-role"><td style="text-align: center;">23</td><td>KHÂU NGỌC MAI PHƯƠNG</td><td>Tổ trưởng Tổ 2</td></tr>
-                        <tr><td style="text-align: center;">24</td><td>TRẦN TRÍ THÀNH</td><td>Học sinh</td></tr>
-                        <tr><td style="text-align: center;">25</td><td>LÊ HỒNG HIẾU THẢO</td><td>Học sinh</td></tr>
-                        <tr><td style="text-align: center;">26</td><td>TRẦN THỊ MỸ TRINH</td><td>Học sinh</td></tr>
-                        <tr><td style="text-align: center;">27</td><td>LÊ MINH TRUNG</td><td>Học sinh</td></tr>
-                        <tr><td style="text-align: center;">28</td><td>NGUYỄN NGHIÊM LÂM</td><td>Học sinh</td></tr>
-                        <tr><td style="text-align: center;">29</td><td>LÊ VĂN HOÀNG VŨ</td><td>Học sinh</td></tr>
-                    </tbody>
-                </table>
             </div>
         </main>
 
@@ -296,8 +233,104 @@
     <!-- FOOTER -->
     <footer>
         <p>&copy; 2026 Cổng thông tin Lớp 12A7 - Trung tâm GDNN - GDTX Phú Nhuận</p>
-        <p>Phát triển và vận hành bởi Nguyễn Tuấn Khải - Tập thể Lớp 12A7</p>
+        <p>Phát triển và vận hành bởi Tập thể Lớp 12A7</p>
     </footer>
 
+    <!-- JAVASCRIPT XỬ LÝ LẤY DỮ LIỆU GOOGLE SHEETS -->
+    <script>
+        const SPREADSHEET_ID = '10WZAkfTsUhEsTRADxZ3JX869kLV_Sen45r4BeSrxDZY';
+        const GID_BAO_BAI = '1447199433';
+
+        function escapeHtml(text) {
+            if (!text) return '';
+            return String(text)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+        function parseCellValue(cell) {
+            if (!cell || cell.v === null || cell.v === undefined) return '';
+            if (cell.f) return String(cell.f).trim();
+            let val = String(cell.v).trim();
+            if (val.startsWith('Date(')) {
+                const matches = val.match(/\d+/g);
+                if (matches && matches.length >= 3) {
+                    const year = matches[0];
+                    const month = String(parseInt(matches[1]) + 1).padStart(2, '0');
+                    const day = String(matches[2]).padStart(2, '0');
+                    return `${day}/${month}/${year}`;
+                }
+            }
+            return val;
+        }
+
+        function handleBaoBaiList(json) {
+            const container = document.getElementById('baobai-table-container');
+
+            try {
+                if (!json || !json.table || !json.table.rows || json.table.rows.length === 0) {
+                    container.innerHTML = '<div class="empty-state">Chưa có thông tin báo bài nào được cập nhật.</div>';
+                    return;
+                }
+
+                const rows = json.table.rows;
+                let html = `
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width: 120px; text-align: center;">Ngày</th>
+                                <th style="width: 150px;">Môn học</th>
+                                <th>Nội dung báo bài</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                `;
+
+                // Đọc dữ liệu từ bảng (bỏ qua hàng tiêu đề đầu tiên nếu có, ở đây bắt đầu từ i = 0 hoặc 1 tùy bảng của bạn)
+                for (let i = 0; i < rows.length; i++) {
+                    const r = rows[i].c;
+                    if (!r) continue;
+
+                    const ngay = parseCellValue(r[0]);
+                    const monHoc = parseCellValue(r[1]);
+                    const noiDung = parseCellValue(r[2]);
+
+                    // Nếu dòng trống hoàn toàn thì bỏ qua
+                    if (!ngay && !monHoc && !noiDung) continue;
+
+                    html += `
+                        <tr>
+                            <td style="text-align: center; font-weight: 600;">${escapeHtml(ngay || '---')}</td>
+                            <td><span style="color: var(--primary-color); font-weight: bold;">${escapeHtml(monHoc || 'Chung')}</span></td>
+                            <td>
+                                <a href="baiviet.html?type=baobai&row=${i}" target="_blank">
+                                    ${escapeHtml(noiDung.length > 80 ? noiDung.substring(0, 80) + '...' : (noiDung || 'Xem chi tiết'))}
+                                </a>
+                            </td>
+                        </tr>
+                    `;
+                }
+
+                html += `</tbody></table>`;
+                container.innerHTML = html;
+
+            } catch (err) {
+                console.error("Lỗi tải danh sách báo bài:", err);
+                container.innerHTML = '<div class="empty-state">Đã xảy ra lỗi khi tải dữ liệu báo bài.</div>';
+            }
+        }
+
+        // Gọi Google Sheets API lấy dữ liệu tab Báo Bài
+        function init() {
+            const script = document.createElement('script');
+            script.src = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?gid=${GID_BAO_BAI}&tqx=responseHandler:handleBaoBaiList`;
+            document.body.appendChild(script);
+        }
+
+        window.onload = init;
+    </script>
 </body>
 </html>
