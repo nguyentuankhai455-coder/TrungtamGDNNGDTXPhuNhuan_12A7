@@ -182,7 +182,16 @@
             word-wrap: break-word;
         }
 
-        /* KHU VỰC LƯỚI HÌNH ÁNH NHIỀU ẢNH */
+        /* Định dạng link trong nội dung bài viết / báo bài */
+        .article-body a, .article-summary a {
+            color: var(--secondary-color);
+            text-decoration: underline;
+        }
+        .article-body a:hover, .article-summary a:hover {
+            color: var(--primary-color);
+        }
+
+        /* KHU VỰC LƯỚI HÌNH ẢNH */
         .article-media-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -303,7 +312,7 @@
     <nav>
         <div class="nav-container">
             <a href="index.html">Trang chủ</a>
-            <a href="index.html#tin-tuc"class="active">Tin tức & Sự kiện</a>
+            <a href="index.html#tin-tuc" class="active">Tin tức & Sự kiện</a>
             <a href="index.html#hoc-tap">Góc học tập</a>
             <a href="giaovien.html">Giáo viên</a>
             <a href="gocxanh.html" class="green-tab">Góc Xanh</a>
@@ -346,7 +355,7 @@
     <!-- FOOTER -->
     <footer>
         <p>&copy; 2026 Cổng thông tin Lớp 12A7 - Trung tâm GDNN - GDTX Phú Nhuận</p>
-        <p>Phát triển và vận hành bởi Tập thể Lớp 12A7</p>
+        <p>Phát triển và vận hành bởi Nguyễn Tuấn Khải - Tập thể Lớp 12A7</p>
     </footer>
 
     <!-- JAVASCRIPT -->
@@ -362,6 +371,20 @@
                 .replace(/>/g, "&gt;")
                 .replace(/"/g, "&quot;")
                 .replace(/'/g, "&#039;");
+        }
+
+        // Hàm hỗ trợ nhận diện link (URL) thô và chuyển thành thẻ a có thể bấm được
+        function linkify(text) {
+            if (!text) return '';
+            // Bước 1: Escape cơ bản để tránh lỗi XSS
+            const safeText = escapeHtml(text);
+            
+            // Bước 2: Biểu thức chính quy (Regex) quét tìm các đường dẫn bắt đầu bằng http:// hoặc https://
+            const urlRegex = /(https?:\/\/[^\s]+)/g;
+            
+            return safeText.replace(urlRegex, function(url) {
+                return `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`;
+            });
         }
 
         function parseCellValue(cell) {
@@ -458,8 +481,8 @@
                         🕒 Ngày đăng: <b>${escapeHtml(ngay)}</b> | 
                         ✍️ Đăng bởi: <b>${escapeHtml(tacGia)}</b>
                     </div>
-                    ${tomTat ? `<div class="article-summary">${escapeHtml(tomTat)}</div>` : ''}
-                    <div class="article-body">${escapeHtml(noiDung)}</div>
+                    ${tomTat ? `<div class="article-summary">${linkify(tomTat)}</div>` : ''}
+                    <div class="article-body">${linkify(noiDung)}</div>
                     ${imagesHtml}
                 `;
 
@@ -496,7 +519,7 @@
                         🕒 Ngày giao: <b>${escapeHtml(ngayThang || 'Chưa cập nhật')}</b> | 
                         📖 Môn học: <b>${escapeHtml(monHoc || 'Chung')}</b>
                     </div>
-                    <div class="article-body">${escapeHtml(noiDung || 'Không có nội dung chi tiết.')}</div>
+                    <div class="article-body">${linkify(noiDung || 'Không có nội dung chi tiết.')}</div>
                 `;
             } catch (err) {
                 console.error("Lỗi đọc báo bài:", err);
