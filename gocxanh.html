@@ -19,7 +19,15 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
-        body { background-color: var(--bg-light); color: var(--text-color); line-height: 1.6; }
+        html { scroll-behavior: smooth; }
+        body { 
+            background-color: var(--bg-light); 
+            color: var(--text-color); 
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
 
         header {
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
@@ -53,16 +61,24 @@
         .nav-container a.green-tab { background-color: #28a745; color: #fff; }
         .nav-container a.green-tab:hover { background-color: #218838; }
 
-        .main-wrapper { max-width: 1200px; margin: 20px auto; padding: 0 15px; }
-        .card { background: white; border-radius: 6px; padding: 25px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .main-wrapper { max-width: 1200px; width: 100%; margin: 30px auto; padding: 0 15px; flex: 1; }
+        
+        /* Đồng bộ bo tròn card */
+        .card { 
+            background: white; 
+            border-radius: 12px; 
+            padding: 24px; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+            border: 1px solid #eaeaea;
+        }
 
         .sub-nav-buttons {
-            display: flex; gap: 12px; margin-bottom: 25px; border-bottom: 2px solid #ddd; padding-bottom: 12px;
+            display: flex; gap: 12px; margin-bottom: 25px; border-bottom: 2px solid #eaeaea; padding-bottom: 15px;
         }
         .tab-btn {
             background-color: #e0e0e0; color: #444; border: none;
             padding: 10px 22px; font-size: 15px; font-weight: bold;
-            border-radius: 6px; cursor: pointer; transition: all 0.3s ease;
+            border-radius: 8px; cursor: pointer; transition: all 0.3s ease;
             display: flex; align-items: center; gap: 8px;
         }
         .tab-btn:hover { background-color: #ccc; }
@@ -83,7 +99,7 @@
             display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px;
         }
         .green-card {
-            position: relative; border-radius: 8px; overflow: hidden;
+            position: relative; border-radius: 10px; overflow: hidden;
             background: #e8f5e9; cursor: pointer;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1); transition: transform 0.2s, box-shadow 0.2s;
             aspect-ratio: 4/3;
@@ -98,12 +114,24 @@
         }
         .green-card:hover .green-card-overlay { opacity: 1; }
 
+        /* DANH SÁCH BÀI VIẾT PHONG TRÀO */
+        .post-list-container { display: flex; flex-direction: column; gap: 15px; }
+        .post-item {
+            border: 1px solid #e0e0e0; border-radius: 10px; padding: 18px; background: #fff;
+            transition: box-shadow 0.2s;
+        }
+        .post-item:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        .post-date { font-size: 12px; color: #888; display: block; margin-bottom: 4px; }
+        .post-title a { font-size: 17px; color: var(--orange-color); text-decoration: none; font-weight: bold; }
+        .post-title a:hover { text-decoration: underline; }
+        .post-content { font-size: 14px; color: #444; margin: 6px 0; line-height: 1.5; }
+
         .modal {
             display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%;
             background-color: rgba(0, 0, 0, 0.85); align-items: center; justify-content: center; padding: 20px;
         }
         .modal-content {
-            background-color: #fff; max-width: 700px; width: 100%; border-radius: 8px;
+            background-color: #fff; max-width: 700px; width: 100%; border-radius: 12px;
             overflow: hidden; position: relative; animation: fadeIn 0.3s ease-in-out;
         }
         .modal-body { max-height: 85vh; overflow-y: auto; }
@@ -148,7 +176,6 @@
         </div>
     </header>
 
-    <!-- NAV MENU (Đã thêm tab Báo Bài) -->
     <nav>
         <div class="nav-container">
             <a href="index.html">Trang chủ</a>
@@ -156,7 +183,7 @@
             <a href="index.html#tin-tuc">Tin tức & Sự kiện</a>
             <a href="index.html#hoc-tap">Góc học tập</a>
             <a href="giaovien.html">Giáo viên</a>
-            <a href="gocxanh.html" class="green-tab">Góc Xanh</a>
+            <a href="gocxanh.html" class="green-tab active">Góc Xanh</a>
             <a href="thanhvien.html">Thành viên</a>
             <a href="thuvien.html">Thư viện ảnh</a>
             <a href="credits.html">Credits</a>
@@ -180,8 +207,8 @@
 
             <div id="section-phongtrao" class="tab-content">
                 <h2 class="section-title title-orange">🔥 Hoạt Động & Phong Trào Thi Đua Lớp 12A7</h2>
-                <div id="phongtrao-container" class="green-grid">
-                    <div class="empty-state" style="grid-column: 1/-1;">Chưa có bài viết phong trào nào.</div>
+                <div id="phongtrao-container" class="post-list-container">
+                    <div class="empty-state">Đang tải bài viết phong trào...</div>
                 </div>
             </div>
 
@@ -203,12 +230,15 @@
 
     <footer>
         <p>&copy; 2026 Cổng thông tin Lớp 12A7 - Trung tâm GDNN - GDTX Phú Nhuận</p>
-        <p>Phát triển và vận hành bởi Tập thể Lớp 12A7</p>
+        <p>Phát triển và vận hành bởi Nguyễn Tuấn Khải - Tập thể Lớp 12A7</p>
     </footer>
 
     <script>
         const SHEET_ID = '10WZAkfTsUhEsTRADxZ3JX869kLV_Sen45r4BeSrxDZY';
-        const GID = '940791294';
+        const GID_GOCXANH = '940791294';
+        
+        // Đường dẫn TSV Hoạt động phong trào
+        const TSV_PHONGTRAO = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQzikJgQA99tZH8THj1ecKZBDbxH4GMM3snKPtovgaGdr_vVNv72F63qPl_epUs0rVSedCqx5elaJvB/pub?gid=2104947705&single=true&output=tsv';
 
         function switchSection(type) {
             const btnGocXanh = document.getElementById('btn-gocxanh');
@@ -219,13 +249,11 @@
             if (type === 'gocxanh') {
                 secGocXanh.classList.add('active');
                 secPhongTrao.classList.remove('active');
-                
                 btnGocXanh.className = 'tab-btn active-green';
                 btnPhongTrao.className = 'tab-btn';
             } else {
                 secPhongTrao.classList.add('active');
                 secGocXanh.classList.remove('active');
-                
                 btnPhongTrao.className = 'tab-btn active-orange';
                 btnGocXanh.className = 'tab-btn';
             }
@@ -242,11 +270,12 @@
             url = String(url).trim();
             if (url.includes('drive.google.com')) {
                 const match = url.match(/\/d\/([^\/]+)/) || url.match(/id=([^&]+)/);
-                if (match && match) return `https://drive.google.com/uc?export=view&id=${match}`;
+                if (match && match[1]) return `https://drive.google.com/uc?export=view&id=${match[1]}`;
             }
             return url;
         }
 
+        /* 1. XỬ LÝ DỮ LIỆU GÓC XANH (JSONP) */
         function handleGreenData(json) {
             const container = document.getElementById('green-container');
             try {
@@ -306,6 +335,56 @@
             }
         }
 
+        function loadGreenData() {
+            const script = document.createElement('script');
+            script.src = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?gid=${GID_GOCXANH}&tqx=responseHandler:handleGreenData`;
+            document.body.appendChild(script);
+        }
+
+        /* 2. XỬ LÝ DỮ LIỆU HOẠT ĐỘNG PHONG TRÀO (TSV) - FIX ĐÚNG UID */
+        async function loadPhongTraoData() {
+            const container = document.getElementById('phongtrao-container');
+            try {
+                const response = await fetch(TSV_PHONGTRAO);
+                const text = await response.text();
+                const lines = text.split('\n').filter(line => line.trim() !== '');
+
+                if (lines.length <= 1) {
+                    container.innerHTML = '<div class="empty-state">Chưa có bài viết phong trào nào.</div>';
+                    return;
+                }
+
+                let html = '';
+                for (let i = lines.length - 1; i >= 1; i--) {
+                    const cols = lines[i].split('\t');
+                    // Lấy chính xác cột uid (cột số 0) để trỏ đúng id sang trang chi tiết
+                    const uid = cols[0] ? cols[0].trim() : '';
+                    const ngay = cols[1] ? cols[1].trim() : '';
+                    const tacGia = cols[2] ? cols[2].trim() : 'Ban Phong Trào';
+                    const tieuDe = cols[3] ? cols[3].trim() : '';
+                    const chiTiet = cols[4] ? cols[4].trim() : '';
+
+                    if (tieuDe && uid) {
+                        const preview = chiTiet.length > 150 ? chiTiet.substring(0, 150) + '...' : chiTiet;
+                        html += `
+                            <div class="post-item">
+                                <span class="post-date">🕒 ${ngay} | ✍️ ${tacGia}</span>
+                                <div class="post-title">
+                                    <a href="baiviet.html?type=gocxanh&id=${uid}">${tieuDe}</a>
+                                </div>
+                                <div class="post-content">${preview}</div>
+                            </div>
+                        `;
+                    }
+                }
+
+                container.innerHTML = html || '<div class="empty-state">Chưa có bài viết phong trào nào.</div>';
+            } catch (err) {
+                console.error("Lỗi đọc TSV phong trào:", err);
+                container.innerHTML = '<div class="empty-state">Không thể tải dữ liệu hoạt động phong trào.</div>';
+            }
+        }
+
         function openModal(imgUrl, title, desc, titleColor) {
             document.getElementById('modalImg').src = decodeURIComponent(imgUrl);
             const titleEl = document.getElementById('modalTitle');
@@ -319,13 +398,10 @@
             document.getElementById('imageModal').style.display = 'none';
         }
 
-        function loadGreenData() {
-            const script = document.createElement('script');
-            script.src = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?gid=${GID}&tqx=responseHandler:handleGreenData`;
-            document.body.appendChild(script);
-        }
-
-        window.onload = loadGreenData;
+        window.onload = function() {
+            loadGreenData();
+            loadPhongTraoData();
+        };
     </script>
 </body>
 </html>

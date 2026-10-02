@@ -61,38 +61,13 @@
             flex-shrink: 0;
         }
 
-        .logo-box img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .header-text h1 {
-            font-size: 24px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .header-text p {
-            font-size: 14px;
-            opacity: 0.9;
-        }
+        .logo-box img { width: 100%; height: 100%; object-fit: cover; }
+        .header-text h1 { font-size: 24px; text-transform: uppercase; letter-spacing: 1px; }
+        .header-text p { font-size: 14px; opacity: 0.9; }
 
         /* NAV MENU */
-        nav { 
-            background-color: #002244; 
-            position: sticky; 
-            top: 0; 
-            z-index: 100; 
-        }
-
-        .nav-container { 
-            max-width: 1200px; 
-            margin: 0 auto; 
-            display: flex; 
-            flex-wrap: wrap; 
-        }
-
+        nav { background-color: #002244; position: sticky; top: 0; z-index: 100; }
+        .nav-container { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; }
         .nav-container a {
             color: white;
             padding: 12px 18px;
@@ -102,20 +77,9 @@
             text-transform: uppercase;
             transition: background 0.3s;
         }
-
-        .nav-container a:hover, .nav-container a.active { 
-            background-color: var(--secondary-color); 
-        }
-
-        .nav-container a.green-tab { 
-            color: #28a745; 
-            font-weight: bold; 
-        }
-
-        .nav-container a.green-tab:hover { 
-            background-color: var(--green-color); 
-            color: #fff; 
-        }
+        .nav-container a:hover, .nav-container a.active { background-color: var(--secondary-color); }
+        .nav-container a.green-tab { color: #28a745; font-weight: bold; }
+        .nav-container a.green-tab:hover { background-color: var(--green-color); color: #fff; }
 
         /* LAYOUT & CARDS */
         .main-wrapper {
@@ -132,9 +96,9 @@
         .card {
             background: #fff;
             padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-            border: 1px solid #e1e8ed;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+            border: 1px solid #eaeaea;
             margin-bottom: 20px;
         }
 
@@ -172,7 +136,7 @@
             padding: 12px 15px;
             border-left: 4px solid var(--primary-color);
             margin-bottom: 20px;
-            border-radius: 0 4px 4px 0;
+            border-radius: 0 6px 6px 0;
         }
 
         .article-body {
@@ -182,14 +146,11 @@
             word-wrap: break-word;
         }
 
-        /* Định dạng link trong nội dung bài viết / báo bài */
         .article-body a, .article-summary a {
             color: var(--secondary-color);
             text-decoration: underline;
         }
-        .article-body a:hover, .article-summary a:hover {
-            color: var(--primary-color);
-        }
+        .article-body a:hover, .article-summary a:hover { color: var(--primary-color); }
 
         /* KHU VỰC LƯỚI HÌNH ẢNH */
         .article-media-grid {
@@ -203,15 +164,12 @@
             width: 100%;
             height: 250px;
             object-fit: cover;
-            border-radius: 6px;
+            border-radius: 8px;
             box-shadow: 0 2px 6px rgba(0,0,0,0.1);
             transition: transform 0.2s;
             cursor: pointer;
         }
-
-        .article-media-grid img:hover {
-            transform: scale(1.02);
-        }
+        .article-media-grid img:hover { transform: scale(1.02); }
 
         .section-title {
             color: var(--primary-color);
@@ -234,56 +192,22 @@
 
         /* LIGHTBOX POPUP MODAL */
         .modal {
-            display: none; 
-            position: fixed; 
-            z-index: 1000; 
-            padding-top: 50px; 
-            left: 0;
-            top: 0;
-            width: 100%; 
-            height: 100%; 
-            background-color: rgba(0, 0, 0, 0.85); 
-            backdrop-filter: blur(4px);
+            display: none; position: fixed; z-index: 1000; padding-top: 50px; left: 0; top: 0;
+            width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.85); backdrop-filter: blur(4px);
         }
-
         .modal-content {
-            margin: auto;
-            display: block;
-            max-width: 90%;
-            max-height: 85vh;
-            border-radius: 8px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-            animation: zoom 0.3s ease-in-out;
+            margin: auto; display: block; max-width: 90%; max-height: 85vh; border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5); animation: zoom 0.3s ease-in-out;
         }
-
-        @keyframes zoom {
-            from { transform: scale(0.7); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-
+        @keyframes zoom { from { transform: scale(0.7); opacity: 0; } to { transform: scale(1); opacity: 1; } }
         .close-modal {
-            position: absolute;
-            top: 20px;
-            right: 35px;
-            color: #fff;
-            font-size: 40px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: color 0.2s;
+            position: absolute; top: 20px; right: 35px; color: #fff; font-size: 40px; font-weight: bold; cursor: pointer;
         }
-
         .close-modal:hover { color: #bbb; }
 
-        /* FOOTER */
         footer {
-            background-color: #001529;
-            color: white;
-            text-align: center;
-            padding: 20px;
-            font-size: 13px;
-            margin-top: auto;
+            background-color: #001529; color: white; text-align: center; padding: 20px; font-size: 13px; margin-top: auto;
         }
-
         footer p { margin: 5px 0; color: #aaa; }
 
         @media (max-width: 768px) {
@@ -296,7 +220,6 @@
 </head>
 <body>
 
-    <!-- HEADER -->
     <header>
         <div class="header-container">
             <div class="logo-box" id="logo-container">
@@ -309,12 +232,11 @@
         </div>
     </header>
 
-    <!-- NAV MENU (Đã thêm tab Báo Bài) -->
     <nav>
         <div class="nav-container">
             <a href="index.html">Trang chủ</a>
             <a href="baobai.html">Báo Bài</a>
-            <a href="index.html#tin-tuc"class="active">Tin tức & Sự kiện</a>
+            <a href="index.html#tin-tuc">Tin tức & Sự kiện</a>
             <a href="index.html#hoc-tap">Góc học tập</a>
             <a href="giaovien.html">Giáo viên</a>
             <a href="gocxanh.html" class="green-tab">Góc Xanh</a>
@@ -324,11 +246,10 @@
         </div>
     </nav>
 
-    <!-- LAYOUT CHÍNH -->
     <div class="main-wrapper">
         <main>
             <div class="card">
-                <a href="index.html" class="back-btn">&larr; Quay lại Trang Chủ</a>
+                <a href="gocxanh.html" class="back-btn" id="back-link">&larr; Quay lại Góc Xanh</a>
                 <div id="article-container">
                     <div class="loading">⏳ Đang tải nội dung bài viết...</div>
                 </div>
@@ -348,22 +269,21 @@
         </aside>
     </div>
 
-    <!-- LIGHTBOX POPUP MODAL -->
+    <!-- LIGHTBOX MODAL -->
     <div id="imageModal" class="modal" onclick="closeModal()">
         <span class="close-modal">&times;</span>
         <img class="modal-content" id="imgFull" alt="Phóng to ảnh" onclick="event.stopPropagation()">
     </div>
 
-    <!-- FOOTER -->
     <footer>
         <p>&copy; 2026 Cổng thông tin Lớp 12A7 - Trung tâm GDNN - GDTX Phú Nhuận</p>
-        <p>Phát triển và vận hành bởi Nguyễn Tuấn Khải - Tập thể Lớp 12A7</p>
+        <p>Phát triển và vận hành bởi Tập thể Lớp 12A7</p>
     </footer>
 
-    <!-- JAVASCRIPT -->
     <script>
         const SPREADSHEET_ID = '10WZAkfTsUhEsTRADxZ3JX869kLV_Sen45r4BeSrxDZY';
         const GID_BAO_BAI = '1447199433';
+        const TSV_PHONGTRAO = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQzikJgQA99tZH8THj1ecKZBDbxH4GMM3snKPtovgaGdr_vVNv72F63qPl_epUs0rVSedCqx5elaJvB/pub?gid=2104947705&single=true&output=tsv';
 
         function escapeHtml(text) {
             if (!text) return '';
@@ -375,15 +295,10 @@
                 .replace(/'/g, "&#039;");
         }
 
-        // Hàm hỗ trợ nhận diện link (URL) thô và chuyển thành thẻ a có thể bấm được
         function linkify(text) {
             if (!text) return '';
-            // Bước 1: Escape cơ bản để tránh lỗi XSS
             const safeText = escapeHtml(text);
-            
-            // Bước 2: Biểu thức chính quy (Regex) quét tìm các đường dẫn bắt đầu bằng http:// hoặc https://
             const urlRegex = /(https?:\/\/[^\s]+)/g;
-            
             return safeText.replace(urlRegex, function(url) {
                 return `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`;
             });
@@ -426,10 +341,77 @@
             };
         }
 
-        /* XỬ LÝ BÀI VIẾT THƯỜNG / TIN TỨC */
+        /* 1. XỬ LÝ BÀI VIẾT PHONG TRÀO (TYPE = GOCXANH) */
+        async function loadGocXanhDetail() {
+            const container = document.getElementById('article-container');
+            const { id } = getUrlParams();
+            
+            document.getElementById('back-link').href = 'gocxanh.html';
+            document.getElementById('back-link').innerHTML = '&larr; Quay lại Góc Xanh';
+
+            try {
+                const response = await fetch(TSV_PHONGTRAO);
+                const text = await response.text();
+                const lines = text.split('\n').filter(line => line.trim() !== '');
+
+                let targetRow = null;
+                for (let i = 1; i < lines.length; i++) {
+                    const cols = lines[i].split('\t');
+                    const rowUid = cols[0] ? cols[0].trim() : '';
+                    if (rowUid === String(id)) {
+                        targetRow = cols;
+                        break;
+                    }
+                }
+
+                if (!targetRow) {
+                    container.innerHTML = '<div class="empty-state">Bài viết phong trào không tồn tại hoặc đã bị xóa.</div>';
+                    return;
+                }
+
+                // Cột: uid(0), Ngày(1), Tác Giả(2), Tiêu Đề(3), Chi Tiết(4), Ảnh(5)
+                const ngay = targetRow[1] ? targetRow[1].trim() : '';
+                const tacGia = targetRow[2] ? targetRow[2].trim() : 'Ban Phong Trào';
+                const tieuDe = targetRow[3] ? targetRow[3].trim() : 'Không có tiêu đề';
+                const chiTiet = targetRow[4] ? targetRow[4].trim() : '';
+                const rawHinhAnh = targetRow[5] ? targetRow[5].trim() : '';
+
+                document.title = `${tieuDe} - Cổng Thông Tin Lớp 12A7`;
+
+                let imagesHtml = '';
+                if (rawHinhAnh) {
+                    const imgList = rawHinhAnh.split(/[\n,]+/).map(u => u.trim()).filter(u => u.length > 0);
+                    if (imgList.length > 0) {
+                        imagesHtml = '<div class="article-media-grid">';
+                        imgList.forEach(url => {
+                            const formattedUrl = formatImageUrl(url);
+                            imagesHtml += `<img src="${escapeHtml(formattedUrl)}" alt="Hình ảnh bài viết" onclick="openModal(this)" onerror="this.style.display='none'">`;
+                        });
+                        imagesHtml += '</div>';
+                    }
+                }
+
+                container.innerHTML = `
+                    <h1 class="article-title">${escapeHtml(tieuDe)}</h1>
+                    <div class="article-meta">
+                        🕒 Ngày đăng: <b>${escapeHtml(ngay)}</b> | 
+                        ✍️ Đăng bởi: <b>${escapeHtml(tacGia)}</b>
+                    </div>
+                    <div class="article-body">${linkify(chiTiet || 'Không có nội dung chi tiết.')}</div>
+                    ${imagesHtml}
+                `;
+
+            } catch (err) {
+                console.error("Lỗi tải bài viết phong trào:", err);
+                container.innerHTML = '<div class="empty-state">Đã xảy ra lỗi khi tải chi tiết bài viết.</div>';
+            }
+        }
+
+        /* 2. XỬ LÝ BÀI VIẾT THƯỜNG / TIN TỨC */
         function handleNewsDetail(json) {
             const container = document.getElementById('article-container');
             const { id } = getUrlParams();
+            document.getElementById('back-link').href = 'index.html';
 
             try {
                 if (!json || !json.table || !json.table.rows) {
@@ -443,7 +425,7 @@
                 for (let i = 0; i < rows.length; i++) {
                     const r = rows[i].c;
                     if (!r) continue;
-                    const rowId = r[0] ? (r[0].v !== null && r[0].v !== undefined ? String(r[0].v) : String(i + 1)) : String(i + 1);
+                    const rowId = r[0] ? (r[0].v !== null ? String(r[0].v) : String(i + 1)) : String(i + 1);
                     if (rowId === String(id)) {
                         targetRow = r;
                         break;
@@ -494,11 +476,13 @@
             }
         }
 
-        /* XỬ LÝ NỘI DUNG BÁO BÀI */
+        /* 3. XỬ LÝ NỘI DUNG BÁO BÀI */
         function handleBaoBaiDetail(json) {
             const container = document.getElementById('article-container');
             const { row } = getUrlParams();
             const rowIndex = parseInt(row, 10);
+            document.getElementById('back-link').href = 'baobai.html';
+            document.getElementById('back-link').innerHTML = '&larr; Quay lại Danh Sách Báo Bài';
 
             try {
                 if (!json || !json.table || !json.table.rows || isNaN(rowIndex) || !json.table.rows[rowIndex]) {
@@ -542,9 +526,7 @@
         }
 
         document.addEventListener("keydown", function(e) {
-            if (e.key === "Escape") {
-                closeModal();
-            }
+            if (e.key === "Escape") closeModal();
         });
 
         /* KHỞI TẠO DỮ LIỆU */
@@ -552,16 +534,17 @@
             const { id, type } = getUrlParams();
             const script = document.createElement('script');
 
-            if (type === 'baobai') {
+            if (type === 'gocxanh') {
+                loadGocXanhDetail();
+            } else if (type === 'baobai') {
                 script.src = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?gid=${GID_BAO_BAI}&tqx=responseHandler:handleBaoBaiDetail`;
+                document.body.appendChild(script);
             } else if (id) {
                 script.src = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=responseHandler:handleNewsDetail`;
+                document.body.appendChild(script);
             } else {
                 document.getElementById('article-container').innerHTML = '<div class="empty-state">Liên kết bài viết không hợp lệ.</div>';
-                return;
             }
-
-            document.body.appendChild(script);
         }
 
         window.onload = init;
