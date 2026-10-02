@@ -249,7 +249,7 @@
     <div class="main-wrapper">
         <main>
             <div class="card">
-                <a href="gocxanh.html" class="back-btn" id="back-link">&larr; Quay lại Góc Xanh</a>
+                <a href="index.html" class="back-btn" id="back-link">&larr; Quay lại Trang Chủ</a>
                 <div id="article-container">
                     <div class="loading">⏳ Đang tải nội dung bài viết...</div>
                 </div>
@@ -346,8 +346,9 @@
             const container = document.getElementById('article-container');
             const { id } = getUrlParams();
             
-            document.getElementById('back-link').href = 'gocxanh.html';
-            document.getElementById('back-link').innerHTML = '&larr; Quay lại Góc Xanh';
+            const backLink = document.getElementById('back-link');
+            backLink.href = 'gocxanh.html';
+            backLink.innerHTML = '&larr; Quay lại Góc Xanh';
 
             try {
                 const response = await fetch(TSV_PHONGTRAO);
@@ -369,7 +370,6 @@
                     return;
                 }
 
-                // Cột: uid(0), Ngày(1), Tác Giả(2), Tiêu Đề(3), Chi Tiết(4), Ảnh(5)
                 const ngay = targetRow[1] ? targetRow[1].trim() : '';
                 const tacGia = targetRow[2] ? targetRow[2].trim() : 'Ban Phong Trào';
                 const tieuDe = targetRow[3] ? targetRow[3].trim() : 'Không có tiêu đề';
@@ -410,8 +410,12 @@
         /* 2. XỬ LÝ BÀI VIẾT THƯỜNG / TIN TỨC */
         function handleNewsDetail(json) {
             const container = document.getElementById('article-container');
+            
+            const backLink = document.getElementById('back-link');
+            backLink.href = 'index.html';
+            backLink.innerHTML = '&larr; Quay lại Trang Chủ';
+
             const { id } = getUrlParams();
-            document.getElementById('back-link').href = 'index.html';
 
             try {
                 if (!json || !json.table || !json.table.rows) {
@@ -481,8 +485,10 @@
             const container = document.getElementById('article-container');
             const { row } = getUrlParams();
             const rowIndex = parseInt(row, 10);
-            document.getElementById('back-link').href = 'baobai.html';
-            document.getElementById('back-link').innerHTML = '&larr; Quay lại Danh Sách Báo Bài';
+            
+            const backLink = document.getElementById('back-link');
+            backLink.href = 'baobai.html';
+            backLink.innerHTML = '&larr; Quay lại Danh Sách Báo Bài';
 
             try {
                 if (!json || !json.table || !json.table.rows || isNaN(rowIndex) || !json.table.rows[rowIndex]) {
@@ -529,7 +535,7 @@
             if (e.key === "Escape") closeModal();
         });
 
-        /* KHỞI TẠO DỮ LIỆU */
+        /* KHỞI TẠO */
         function init() {
             const { id, type } = getUrlParams();
             const script = document.createElement('script');
