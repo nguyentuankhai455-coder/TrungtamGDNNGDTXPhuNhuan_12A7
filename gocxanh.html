@@ -78,7 +78,7 @@
         .tab-btn {
             background-color: #e0e0e0; color: #444; border: none;
             padding: 10px 22px; font-size: 15px; font-weight: bold;
-            border-radius: 8px; cursor: pointer; transition: all 0.3s ease;
+            border-radius: 8px; cursor: pointer; transition: all 0.2s ease;
             display: flex; align-items: center; gap: 8px;
         }
         .tab-btn:hover { background-color: #ccc; }
@@ -92,8 +92,9 @@
         .title-green { color: var(--green-color); }
         .title-orange { color: var(--orange-color); }
 
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
+        /* Tối ưu chống khựng khi chuyển tab bằng opacity thay vì display block/none đột ngột */
+        .tab-content { display: none; opacity: 0; transition: opacity 0.15s ease-in-out; }
+        .tab-content.active { display: block; opacity: 1; }
 
         .green-grid {
             display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px;
@@ -146,6 +147,29 @@
 
         @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
         .empty-state { text-align: center; padding: 40px 0; color: #777; font-style: italic; }
+
+        /* WIDGET TRỢ LÝ AI BẢO TRÌ */
+        #gemini-chat-widget { position: fixed; bottom: 20px; right: 20px; z-index: 9999; }
+        #gemini-chat-btn { 
+            width: 60px; height: 60px; border-radius: 50%; 
+            background: linear-gradient(135deg, #003366, #0055a5); color: white; 
+            border: none; box-shadow: 0 4px 15px rgba(0,0,0,0.2); cursor: pointer; 
+            font-size: 28px; display: flex; align-items: center; justify-content: center; 
+            transition: transform 0.3s; 
+        }
+        #gemini-chat-btn:hover { transform: scale(1.1); }
+        #gemini-chat-box { 
+            display: none; position: absolute; bottom: 80px; right: 0; 
+            width: 350px; height: 320px; background: white; border-radius: 12px; 
+            box-shadow: 0 5px 25px rgba(0,0,0,0.2); flex-direction: column; 
+            overflow: hidden; border: 1px solid #ddd; opacity: 0; pointer-events: none; 
+            transition: opacity 0.3s ease, transform 0.3s ease; transform: translateY(20px); 
+        }
+        #gemini-chat-box.show { opacity: 1; pointer-events: all; transform: translateY(0); display: flex; }
+        .chat-header { background: linear-gradient(135deg, #003366, #0055a5); color: white; padding: 12px 15px; font-weight: bold; font-size: 15px; display: flex; justify-content: space-between; align-items: center; }
+        .chat-close { cursor: pointer; font-size: 18px; }
+        .chat-messages { flex: 1; padding: 20px; overflow-y: auto; background: #f9f9f9; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+        .maintenance-notice { background: #fff3cd; color: #856404; border: 1px solid #ffeeba; padding: 15px; border-radius: 8px; font-size: 14px; font-weight: 500; line-height: 1.5; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
 
         footer {
             background-color: #001529; color: white;
@@ -215,9 +239,25 @@
         </div>
     </div>
 
+    <!-- WIDGET TRỢ LÝ AI BẢO TRÌ -->
+    <div id="gemini-chat-widget">
+        <div id="gemini-chat-box">
+            <div class="chat-header">
+                <span>🤖 Trợ lý AI Góc Xanh 12A7</span>
+                <span class="chat-close" onclick="toggleChat()">✖</span>
+            </div>
+            <div class="chat-messages">
+                <div class="maintenance-notice">
+                    🛠️ <b>AI Góc Xanh lớp 12A7 hiện đang bảo trì</b><br>Vui lòng thử lại sau!
+                </div>
+            </div>
+        </div>
+        <button id="gemini-chat-btn" onclick="toggleChat()">✨</button>
+    </div>
+
     <div id="imageModal" class="modal" onclick="closeModal(event)">
         <div class="modal-content" onclick="event.stopPropagation()">
-            <span class="close-btn" onclick="closeModal()">×</span>
+            <span class="close-btn" onclick="closeModal()">&times;</span>
             <div class="modal-body">
                 <img id="modalImg" class="modal-img" src="" alt="">
                 <div class="modal-caption">
@@ -322,7 +362,7 @@
 
                     html += `
                         <div class="green-card" onclick="openModal('${safeImg}', '${safeTitle}', '${safeDesc}', 'var(--green-color)')">
-                            <img src="${imgUrl}" alt="${title}" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1530587191325-3db32d826c18?w=600&q=80'">
+                            <img src="${imgUrl}" alt="${title}" loading="lazy" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1530587191325-3db32d826c18?w=600&q=80'">
                             <div class="green-card-overlay">🔍 Xem chi tiết</div>
                         </div>
                     `;
@@ -396,6 +436,11 @@
 
         function closeModal() {
             document.getElementById('imageModal').style.display = 'none';
+        }
+
+        const chatBox = document.getElementById('gemini-chat-box');
+        function toggleChat() {
+            chatBox.classList.toggle('show');
         }
 
         window.onload = function() {

@@ -28,7 +28,6 @@
             min-height: 100vh;
         }
 
-        /* HEADER */
         header {
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: white;
@@ -65,7 +64,6 @@
         .header-text h1 { font-size: 24px; text-transform: uppercase; letter-spacing: 1px; }
         .header-text p { font-size: 14px; opacity: 0.9; }
 
-        /* NAV MENU */
         nav { background-color: #002244; position: sticky; top: 0; z-index: 100; }
         .nav-container { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; }
         .nav-container a {
@@ -81,7 +79,6 @@
         .nav-container a.green-tab { color: #28a745; font-weight: bold; }
         .nav-container a.green-tab:hover { background-color: var(--green-color); color: #fff; }
 
-        /* LAYOUT & CARDS */
         .main-wrapper {
             max-width: 1200px;
             width: 100%;
@@ -102,124 +99,35 @@
             margin-bottom: 20px;
         }
 
-        .back-btn {
-            display: inline-block;
-            margin-bottom: 20px;
-            color: var(--secondary-color);
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 14px;
-        }
+        .back-btn { display: inline-block; margin-bottom: 20px; color: var(--secondary-color); text-decoration: none; font-weight: bold; font-size: 14px; }
         .back-btn:hover { text-decoration: underline; }
 
-        .article-title {
-            color: var(--primary-color);
-            font-size: 24px;
-            font-weight: bold;
-            line-height: 1.4;
-            margin-bottom: 12px;
-        }
+        .article-title { color: var(--primary-color); font-size: 24px; font-weight: bold; line-height: 1.4; margin-bottom: 12px; }
+        .article-meta { font-size: 13px; color: #666; border-bottom: 1px solid #eee; padding-bottom: 15px; margin-bottom: 25px; }
+        .article-summary { font-weight: 600; font-size: 15px; color: #444; background-color: #f8f9fa; padding: 12px 15px; border-left: 4px solid var(--primary-color); margin-bottom: 20px; border-radius: 0 6px 6px 0; }
+        .article-body { font-size: 16px; color: #333; white-space: pre-line; word-wrap: break-word; }
+        .article-media-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin: 25px 0 10px 0; }
+        .article-media-grid img { width: 100%; height: 250px; object-fit: cover; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); cursor: pointer; }
 
-        .article-meta {
-            font-size: 13px;
-            color: #666;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 15px;
-            margin-bottom: 25px;
-        }
-
-        .article-summary {
-            font-weight: 600;
-            font-size: 15px;
-            color: #444;
-            background-color: #f8f9fa;
-            padding: 12px 15px;
-            border-left: 4px solid var(--primary-color);
-            margin-bottom: 20px;
-            border-radius: 0 6px 6px 0;
-        }
-
-        .article-body {
-            font-size: 16px;
-            color: #333;
-            white-space: pre-line;
-            word-wrap: break-word;
-        }
-
-        .article-body a, .article-summary a {
-            color: var(--secondary-color);
-            text-decoration: underline;
-        }
-        .article-body a:hover, .article-summary a:hover { color: var(--primary-color); }
-
-        /* KHU VỰC LƯỚI HÌNH ẢNH */
-        .article-media-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 15px;
-            margin: 25px 0 10px 0;
-        }
-
-        .article-media-grid img {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-            border-radius: 8px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-            transition: transform 0.2s;
-            cursor: pointer;
-        }
-        .article-media-grid img:hover { transform: scale(1.02); }
-
-        .section-title {
-            color: var(--primary-color);
-            font-size: 18px;
-            border-bottom: 2px solid var(--primary-color);
-            padding-bottom: 8px;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-        }
-
+        .section-title { color: var(--primary-color); font-size: 18px; border-bottom: 2px solid var(--primary-color); padding-bottom: 8px; margin-bottom: 15px; text-transform: uppercase; }
         .notice-list { list-style: none; }
         .notice-list li { padding: 8px 0; border-bottom: 1px solid #f0f0f0; font-size: 14px; }
+        .loading, .empty-state { text-align: center; padding: 50px 0; color: #777; font-style: italic; }
 
-        .loading, .empty-state {
-            text-align: center;
-            padding: 50px 0;
-            color: #777;
-            font-style: italic;
-        }
+        .modal { display: none; position: fixed; z-index: 1000; padding-top: 50px; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.85); backdrop-filter: blur(4px); }
+        .modal-content { margin: auto; display: block; max-width: 90%; max-height: 85vh; border-radius: 8px; }
+        .close-modal { position: absolute; top: 20px; right: 35px; color: #fff; font-size: 40px; font-weight: bold; cursor: pointer; }
 
-        /* LIGHTBOX POPUP MODAL */
-        .modal {
-            display: none; position: fixed; z-index: 1000; padding-top: 50px; left: 0; top: 0;
-            width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.85); backdrop-filter: blur(4px);
-        }
-        .modal-content {
-            margin: auto; display: block; max-width: 90%; max-height: 85vh; border-radius: 8px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.5); animation: zoom 0.3s ease-in-out;
-        }
-        @keyframes zoom { from { transform: scale(0.7); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-        .close-modal {
-            position: absolute; top: 20px; right: 35px; color: #fff; font-size: 40px; font-weight: bold; cursor: pointer;
-        }
-        .close-modal:hover { color: #bbb; }
-
-        footer {
-            background-color: #001529; color: white; text-align: center; padding: 20px; font-size: 13px; margin-top: auto;
-        }
+        footer { background-color: #001529; color: white; text-align: center; padding: 20px; font-size: 13px; margin-top: auto; }
         footer p { margin: 5px 0; color: #aaa; }
 
         @media (max-width: 768px) {
             .header-container { flex-direction: column; text-align: center; }
             .main-wrapper { grid-template-columns: 1fr; }
             .card { padding: 20px; }
-            .article-title { font-size: 20px; }
         }
 
-        /* ========================================== */
-        /* WIDGET TRỢ LÝ AI GEMINI                    */
-        /* ========================================== */
+        /* WIDGET TRỢ LÝ AI GROQ */
         #gemini-chat-widget { position: fixed; bottom: 20px; right: 20px; z-index: 9999; }
         #gemini-chat-btn {
             width: 60px; height: 60px; border-radius: 50%;
@@ -248,8 +156,8 @@
         .msg.bot { background: #e0e0e0; color: #333; align-self: flex-start; border-bottom-left-radius: 2px; }
         .chat-input-area { display: flex; padding: 10px; background: white; border-top: 1px solid #eee; gap: 8px; }
         .chat-input-area input { flex: 1; padding: 10px 15px; border: 1px solid #ccc; border-radius: 20px; outline: none; font-size: 14px; }
-        .chat-input-area button { background: var(--primary-color, #003366); color: white; border: none; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
-        .chat-input-area button:hover { background: var(--secondary-color, #0055a5); }
+        .chat-input-area button { background: #0055a5; color: white; border: none; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
+        .chat-input-area button:hover { background: #003366; }
         .loading-dots::after { content: '.'; animation: dots 1.5s steps(5, end) infinite; }
         @keyframes dots { 0%, 20% { color: transparent; text-shadow: .25em 0 0 transparent, .5em 0 0 transparent; } 40% { color: #333; text-shadow: .25em 0 0 transparent, .5em 0 0 transparent; } 60% { text-shadow: .25em 0 0 #333, .5em 0 0 transparent; } 80%, 100% { text-shadow: .25em 0 0 #333, .5em 0 0 #333; } }
     </style>
@@ -305,15 +213,12 @@
         </aside>
     </div>
 
-    <!-- LIGHTBOX MODAL -->
     <div id="imageModal" class="modal" onclick="closeModal()">
         <span class="close-modal">&times;</span>
         <img class="modal-content" id="imgFull" alt="Phóng to ảnh" onclick="event.stopPropagation()">
     </div>
 
-    <!-- ========================================== -->
-    <!-- WIDGET TRỢ LÝ AI GEMINI                    -->
-    <!-- ========================================== -->
+    <!-- WIDGET TRỢ LÝ AI GROQ -->
     <div id="gemini-chat-widget">
         <div id="gemini-chat-box">
             <div class="chat-header">
@@ -343,21 +248,13 @@
 
         function escapeHtml(text) {
             if (!text) return '';
-            return String(text)
-                .replace(/&/g, "&amp;")
-                .replace(/</g, "&lt;")
-                .replace(/>/g, "&gt;")
-                .replace(/"/g, "&quot;")
-                .replace(/'/g, "&#039;");
+            return String(text).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
         }
 
         function linkify(text) {
             if (!text) return '';
             const safeText = escapeHtml(text);
-            const urlRegex = /(https?:\/\/[^\s]+)/g;
-            return safeText.replace(urlRegex, function(url) {
-                return `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`;
-            });
+            return safeText.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>');
         }
 
         function parseCellValue(cell) {
@@ -367,10 +264,7 @@
             if (val.startsWith('Date(')) {
                 const matches = val.match(/\d+/g);
                 if (matches && matches.length >= 3) {
-                    const year = matches[0];
-                    const month = String(parseInt(matches[1]) + 1).padStart(2, '0');
-                    const day = String(matches[2]).padStart(2, '0');
-                    return `${day}/${month}/${year}`;
+                    return `${matches[2]}/${String(parseInt(matches[1]) + 1).padStart(2, '0')}/${matches[0]}`;
                 }
             }
             return val;
@@ -381,51 +275,33 @@
             url = url.trim();
             if (url.includes('drive.google.com')) {
                 const match = url.match(/\/d\/([a-zA-Z0-9_-]+)/) || url.match(/id=([a-zA-Z0-9_-]+)/);
-                if (match && match[1]) {
-                    return `https://lh3.googleusercontent.com/d/${match[1]}`;
-                }
+                if (match && match[1]) return `https://lh3.googleusercontent.com/d/${match[1]}`;
             }
             return url;
         }
 
         function getUrlParams() {
             const params = new URLSearchParams(window.location.search);
-            return {
-                id: params.get('id'),
-                type: params.get('type'),
-                row: params.get('row')
-            };
+            return { id: params.get('id'), type: params.get('type'), row: params.get('row') };
         }
 
-        /* 1. XỬ LÝ BÀI VIẾT PHONG TRÀO (TYPE = GOCXANH) */
         async function loadGocXanhDetail() {
             const container = document.getElementById('article-container');
             const { id } = getUrlParams();
-            
-            const backLink = document.getElementById('back-link');
-            backLink.href = 'gocxanh.html';
-            backLink.innerHTML = '&larr; Quay lại Góc Xanh';
+            document.getElementById('back-link').href = 'gocxanh.html';
+            document.getElementById('back-link').innerHTML = '&larr; Quay lại Góc Xanh';
 
             try {
                 const response = await fetch(TSV_PHONGTRAO);
                 const text = await response.text();
-                const lines = text.split('\n').filter(line => line.trim() !== '');
-
+                const lines = text.split('\n').filter(l => l.trim() !== '');
                 let targetRow = null;
                 for (let i = 1; i < lines.length; i++) {
                     const cols = lines[i].split('\t');
-                    const rowUid = cols[0] ? cols[0].trim() : '';
-                    if (rowUid === String(id)) {
-                        targetRow = cols;
-                        break;
-                    }
+                    if (cols[0] && cols[0].trim() === String(id)) { targetRow = cols; break; }
                 }
 
-                if (!targetRow) {
-                    container.innerHTML = '<div class="empty-state">Bài viết phong trào không tồn tại hoặc đã bị xóa.</div>';
-                    return;
-                }
-
+                if (!targetRow) { container.innerHTML = '<div class="empty-state">Bài viết phong trào không tồn tại.</div>'; return; }
                 const ngay = targetRow[1] ? targetRow[1].trim() : '';
                 const tacGia = targetRow[2] ? targetRow[2].trim() : 'Ban Phong Trào';
                 const tieuDe = targetRow[3] ? targetRow[3].trim() : 'Không có tiêu đề';
@@ -433,166 +309,85 @@
                 const rawHinhAnh = targetRow[5] ? targetRow[5].trim() : '';
 
                 document.title = `${tieuDe} - Cổng Thông Tin Lớp 12A7`;
-
                 let imagesHtml = '';
                 if (rawHinhAnh) {
                     const imgList = rawHinhAnh.split(/[\n,]+/).map(u => u.trim()).filter(u => u.length > 0);
                     if (imgList.length > 0) {
                         imagesHtml = '<div class="article-media-grid">';
-                        imgList.forEach(url => {
-                            const formattedUrl = formatImageUrl(url);
-                            imagesHtml += `<img src="${escapeHtml(formattedUrl)}" alt="Hình ảnh bài viết" onclick="openModal(this)" onerror="this.style.display='none'">`;
-                        });
+                        imgList.forEach(url => { imagesHtml += `<img src="${escapeHtml(formatImageUrl(url))}" alt="Hình ảnh" onclick="openModal(this)">`; });
                         imagesHtml += '</div>';
                     }
                 }
 
-                container.innerHTML = `
-                    <h1 class="article-title">${escapeHtml(tieuDe)}</h1>
-                    <div class="article-meta">
-                        🕒 Ngày đăng: <b>${escapeHtml(ngay)}</b> | 
-                        ✍️ Đăng bởi: <b>${escapeHtml(tacGia)}</b>
-                    </div>
-                    <div class="article-body">${linkify(chiTiet || 'Không có nội dung chi tiết.')}</div>
-                    ${imagesHtml}
-                `;
-
-            } catch (err) {
-                console.error("Lỗi tải bài viết phong trào:", err);
-                container.innerHTML = '<div class="empty-state">Đã xảy ra lỗi khi tải chi tiết bài viết.</div>';
-            }
+                container.innerHTML = `<h1 class="article-title">${escapeHtml(tieuDe)}</h1><div class="article-meta">🕒 Ngày đăng: <b>${escapeHtml(ngay)}</b> | ✍️ Đăng bởi: <b>${escapeHtml(tacGia)}</b></div><div class="article-body">${linkify(chiTiet)}</div>${imagesHtml}`;
+            } catch (err) { container.innerHTML = '<div class="empty-state">Lỗi tải chi tiết bài viết.</div>'; }
         }
 
-        /* 2. XỬ LÝ BÀI VIẾT THƯỜNG / TIN TỨC */
         function handleNewsDetail(json) {
             const container = document.getElementById('article-container');
-            
-            const backLink = document.getElementById('back-link');
-            backLink.href = 'index.html';
-            backLink.innerHTML = '&larr; Quay lại Trang Chủ';
-
+            document.getElementById('back-link').href = 'index.html';
+            document.getElementById('back-link').innerHTML = '&larr; Quay lại Trang Chủ';
             const { id } = getUrlParams();
 
             try {
-                if (!json || !json.table || !json.table.rows) {
-                    container.innerHTML = '<div class="empty-state">Không thể kết nối dữ liệu bài viết.</div>';
-                    return;
-                }
-
                 const rows = json.table.rows;
                 let targetRow = null;
-
                 for (let i = 0; i < rows.length; i++) {
                     const r = rows[i].c;
                     if (!r) continue;
-                    const rowId = r[0] ? (r[0].v !== null ? String(r[0].v) : String(i + 1)) : String(i + 1);
-                    if (rowId === String(id)) {
-                        targetRow = r;
-                        break;
-                    }
+                    if ((r[0] ? String(r[0].v) : String(i + 1)) === String(id)) { targetRow = r; break; }
                 }
 
-                if (!targetRow) {
-                    container.innerHTML = '<div class="empty-state">Bài viết không tồn tại hoặc đã bị xóa.</div>';
-                    return;
-                }
-
+                if (!targetRow) { container.innerHTML = '<div class="empty-state">Bài viết không tồn tại.</div>'; return; }
                 const ngay = parseCellValue(targetRow[1]);
                 const tacGia = targetRow[2] && targetRow[2].v ? targetRow[2].v : 'Ban Cán Sự Lớp';
                 const tieuDe = targetRow[3] && targetRow[3].v ? targetRow[3].v : 'Không có tiêu đề';
                 const tomTat = targetRow[4] && targetRow[4].v ? targetRow[4].v : '';
-                const noiDung = (targetRow[5] && targetRow[5].v) ? targetRow[5].v : tomTat;
+                const noiDung = targetRow[5] && targetRow[5].v ? targetRow[5].v : tomTat;
                 const rawHinhAnh = targetRow[6] ? parseCellValue(targetRow[6]) : '';
 
                 document.title = `${tieuDe} - Cổng Thông Tin Lớp 12A7`;
-
                 let imagesHtml = '';
                 if (rawHinhAnh.trim()) {
-                    const imgList = rawHinhAnh.split(/[\n,]+/).map(url => url.trim()).filter(url => url.length > 0);
+                    const imgList = rawHinhAnh.split(/[\n,]+/).map(u => u.trim()).filter(u => u.length > 0);
                     if (imgList.length > 0) {
                         imagesHtml = '<div class="article-media-grid">';
-                        imgList.forEach(url => {
-                            const formattedUrl = formatImageUrl(url);
-                            imagesHtml += `<img src="${escapeHtml(formattedUrl)}" alt="Hình ảnh bài viết" onclick="openModal(this)" onerror="this.style.display='none'">`;
-                        });
+                        imgList.forEach(url => { imagesHtml += `<img src="${escapeHtml(formatImageUrl(url))}" alt="Hình ảnh" onclick="openModal(this)">`; });
                         imagesHtml += '</div>';
                     }
                 }
 
-                container.innerHTML = `
-                    <h1 class="article-title">${escapeHtml(tieuDe)}</h1>
-                    <div class="article-meta">
-                        🕒 Ngày đăng: <b>${escapeHtml(ngay)}</b> | 
-                        ✍️ Đăng bởi: <b>${escapeHtml(tacGia)}</b>
-                    </div>
-                    ${tomTat ? `<div class="article-summary">${linkify(tomTat)}</div>` : ''}
-                    <div class="article-body">${linkify(noiDung)}</div>
-                    ${imagesHtml}
-                `;
-
-            } catch (err) {
-                console.error("Lỗi đọc bài viết:", err);
-                container.innerHTML = '<div class="empty-state">Đã xảy ra lỗi khi hiển thị bài viết.</div>';
-            }
+                container.innerHTML = `<h1 class="article-title">${escapeHtml(tieuDe)}</h1><div class="article-meta">🕒 Ngày đăng: <b>${escapeHtml(ngay)}</b> | ✍️ Đăng bởi: <b>${escapeHtml(tacGia)}</b></div>${tomTat ? `<div class="article-summary">${linkify(tomTat)}</div>` : ''}<div class="article-body">${linkify(noiDung)}</div>${imagesHtml}`;
+            } catch (err) { container.innerHTML = '<div class="empty-state">Lỗi hiển thị bài viết.</div>'; }
         }
 
-        /* 3. XỬ LÝ NỘI DUNG BÁO BÀI */
         function handleBaoBaiDetail(json) {
             const container = document.getElementById('article-container');
             const { row } = getUrlParams();
             const rowIndex = parseInt(row, 10);
-            
-            const backLink = document.getElementById('back-link');
-            backLink.href = 'baobai.html';
-            backLink.innerHTML = '&larr; Quay lại Danh Sách Báo Bài';
+            document.getElementById('back-link').href = 'baobai.html';
+            document.getElementById('back-link').innerHTML = '&larr; Quay lại Danh Sách Báo Bài';
 
             try {
-                if (!json || !json.table || !json.table.rows || isNaN(rowIndex) || !json.table.rows[rowIndex]) {
-                    container.innerHTML = '<div class="empty-state">Không tìm thấy thông tin báo bài.</div>';
-                    return;
-                }
-
                 const r = json.table.rows[rowIndex].c;
                 const ngayThang = parseCellValue(r[0]);
                 const monHoc = parseCellValue(r[1]);
                 const noiDung = parseCellValue(r[2]);
-
                 const titleText = monHoc ? `[${monHoc}] Báo bài ${ngayThang ? '(' + ngayThang + ')' : ''}` : `Báo bài ngày ${ngayThang}`;
 
                 document.title = `${titleText} - Cổng Thông Tin Lớp 12A7`;
-
-                container.innerHTML = `
-                    <h1 class="article-title">📌 ${escapeHtml(titleText)}</h1>
-                    <div class="article-meta">
-                        🕒 Ngày giao: <b>${escapeHtml(ngayThang || 'Chưa cập nhật')}</b> | 
-                        📖 Môn học: <b>${escapeHtml(monHoc || 'Chung')}</b>
-                    </div>
-                    <div class="article-body">${linkify(noiDung || 'Không có nội dung chi tiết.')}</div>
-                `;
-            } catch (err) {
-                console.error("Lỗi đọc báo bài:", err);
-                container.innerHTML = '<div class="empty-state">Đã xảy ra lỗi khi hiển thị chi tiết báo bài.</div>';
-            }
+                container.innerHTML = `<h1 class="article-title">📌 ${escapeHtml(titleText)}</h1><div class="article-meta">🕒 Ngày giao: <b>${escapeHtml(ngayThang)}</b> | 📖 Môn học: <b>${escapeHtml(monHoc)}</b></div><div class="article-body">${linkify(noiDung)}</div>`;
+            } catch (err) { container.innerHTML = '<div class="empty-state">Không tìm thấy báo bài.</div>'; }
         }
 
-        /* LIGHTBOX FUNCTIONS */
         function openModal(imgElement) {
-            const modal = document.getElementById("imageModal");
-            const modalImg = document.getElementById("imgFull");
-            modal.style.display = "block";
-            modalImg.src = imgElement.src;
+            document.getElementById("imageModal").style.display = "block";
+            document.getElementById("imgFull").src = imgElement.src;
         }
+        function closeModal() { document.getElementById("imageModal").style.display = "none"; }
 
-        function closeModal() {
-            document.getElementById("imageModal").style.display = "none";
-        }
-
-        document.addEventListener("keydown", function(e) {
-            if (e.key === "Escape") closeModal();
-        });
-
-        /* SCRIPT TRỢ LÝ AI GEMINI */
-        const GEMINI_API_KEY = 'AQ.Ab8RN6JlhLtB3ZWDBGtReCkHqxKZM1KguHPrdYCpjnDyDv4SgA'; 
+        // CHATBOT GROQ API
+        const GROQ_API_KEY = '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';
         const chatBox = document.getElementById('gemini-chat-box');
         const chatMessages = document.getElementById('chat-messages');
         const chatInput = document.getElementById('chat-input');
@@ -602,48 +397,37 @@
             if(chatBox.classList.contains('show')) chatInput.focus();
         }
 
-        function handleEnter(e) {
-            if (e.key === 'Enter') sendMessage();
-        }
+        function handleEnter(e) { if (e.key === 'Enter') sendMessage(); }
 
         async function sendMessage() {
             const text = chatInput.value.trim();
             if (!text) return;
-
             appendMessage(text, 'user');
             chatInput.value = '';
-
             const loadingId = appendMessage('<span class="loading-dots">AI đang suy nghĩ</span>', 'bot');
 
             try {
-                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent?key=${GEMINI_API_KEY}`, {
+                const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${GROQ_API_KEY}` },
                     body: JSON.stringify({
-                        contents: [{ parts: [{ text: text }] }],
-                        systemInstruction: {
-                            parts: [{ text: "Bạn là một trợ lý AI học tập nhiệt tình, thông minh của lớp 12A7 thuộc Trung tâm GDNN - GDTX Tân Bình (Phân hiệu Phú Nhuận). Hãy trả lời ngắn gọn, thân thiện, xưng hô bằng 'mình' và 'bạn'. Có thể hỗ trợ tóm tắt bài, giải đáp thắc mắc cơ bản." }]
-                        }
+                        model: 'openai/gpt-oss-20b',
+                        messages: [
+                            { role: 'system', content: 'Bạn là trợ lý AI thông minh của lớp 12A7. Trả lời ngắn gọn, thân thiện, xưng hô "mình" và "bạn".' },
+                            { role: 'user', content: text }
+                        ]
                     })
                 });
-
                 const data = await response.json();
                 document.getElementById(loadingId).remove();
-
-                if (data.candidates && data.candidates.length > 0) {
-                    let reply = data.candidates[0].content.parts[0].text;
-                    reply = reply.replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<b>$1</b>'); 
-                    appendMessage(reply, 'bot');
-                } else if (data.error) {
-                    console.error('Lỗi API từ Google:', data.error);
-                    appendMessage(`Lỗi Google API: ${data.error.message}`, 'bot');
+                if (data.choices && data.choices.length > 0) {
+                    appendMessage(data.choices[0].message.content.replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<b>$1</b>'), 'bot');
                 } else {
-                    appendMessage('Xin lỗi, mình đang gặp chút sự cố kết nối.', 'bot');
+                    appendMessage('Xin lỗi, mình đang gặp sự cố kết nối.', 'bot');
                 }
             } catch (error) {
-                console.error('Lỗi mạng/fetch:', error);
                 document.getElementById(loadingId).remove();
-                appendMessage('Lỗi kết nối. Bạn nhấn F12 (tab Console) để xem chi tiết nhé!', 'bot');
+                appendMessage('Lỗi kết nối mạng!', 'bot');
             }
         }
 
@@ -658,24 +442,18 @@
             return id;
         }
 
-        /* KHỞI TẠO */
         function init() {
             const { id, type } = getUrlParams();
             const script = document.createElement('script');
-
-            if (type === 'gocxanh') {
-                loadGocXanhDetail();
-            } else if (type === 'baobai') {
+            if (type === 'gocxanh') { loadGocXanhDetail(); }
+            else if (type === 'baobai') {
                 script.src = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?gid=${GID_BAO_BAI}&tqx=responseHandler:handleBaoBaiDetail`;
                 document.body.appendChild(script);
             } else if (id) {
                 script.src = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=responseHandler:handleNewsDetail`;
                 document.body.appendChild(script);
-            } else {
-                document.getElementById('article-container').innerHTML = '<div class="empty-state">Liên kết bài viết không hợp lệ.</div>';
-            }
+            } else { document.getElementById('article-container').innerHTML = '<div class="empty-state">Liên kết không hợp lệ.</div>'; }
         }
-
         window.onload = init;
     </script>
 </body>
