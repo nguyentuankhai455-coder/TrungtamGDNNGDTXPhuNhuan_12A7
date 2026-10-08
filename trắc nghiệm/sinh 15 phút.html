@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trắc Nghiệm Sinh Học - DNA & Tái Bản</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f1f5f9;
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-6px); }
+            40%, 80% { transform: translateX(6px); }
+        }
+        .animate-shake {
+            animation: shake 0.4s ease-in-out;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-slate-100 flex flex-col items-center justify-start py-3 px-2 sm:px-4">
+
+    <!-- Mobile Device Frame Container -->
+    <div id="app" class="w-full max-w-md bg-white rounded-3xl shadow-xl overflow-hidden flex flex-col min-h-[90vh] border border-slate-200">
+        
+        <!-- Header -->
+        <div class="bg-gradient-to-r from-indigo-600 to-violet-600 text-white p-4 text-center relative shadow-md">
+            <h1 class="text-base sm:text-lg font-bold">Trắc Nghiệm Sinh Học</h1>
+            <p class="text-[11px] text-indigo-100 mt-0.5">Chương: DNA và Cơ Chế Tái Bản</p>
+        </div>
+
+        <!-- Progress Bar & Stats (Mobile Menu replacement) -->
+        <div class="bg-slate-50 px-4 py-3 border-b border-slate-200">
+            <div class="flex justify-between items-center text-xs font-semibold text-slate-600 mb-1.5">
+                <span id="progress-text">Câu 1 / 18</span>
+                <span id="score-display" class="text-indigo-600 font-bold">Điểm (Lần 1): 0</span>
+            </div>
+            <!-- Progress Bar -->
+            <div class="w-full bg-slate-200 h-2.5 rounded-full overflow-hidden">
+                <div id="progress-bar" class="bg-indigo-600 h-2.5 transition-all duration-300 w-[5.5%]"></div>
+            </div>
+        </div>
+
+        <!-- Notification Toast Box -->
+        <div id="toast-container" class="px-4 pt-3 hidden">
+            <div id="toast-message" class="p-3 rounded-xl text-xs sm:text-sm font-semibold text-center transition-all"></div>
+        </div>
+
+        <!-- Quiz Content Area -->
+        <div id="quiz-container" class="p-4 flex-1 flex flex-col justify-between">
+            <!-- Populated via JavaScript -->
+        </div>
+
+    </div>
+
+    <!-- Footer Note -->
+    <footer class="mt-3 text-center text-[11px] text-slate-400">
+        Ứng dụng ôn tập trắc nghiệm tối ưu di động • Chuẩn tài liệu học tập
+    </footer>
+
+    <script>
+        // RAW DATA EXTRACTED STRICTLY FROM IMAGES (Part I, Câu 1 to 18)
+        const rawQuestions = [
+            {
+                id: 1,
+                question: "Cho hình vẽ cấu trúc của một nucleotide. Nucleotide này là đơn phân của phân tử nào?",
+                image: "https://placehold.co/400x140/f8fafc/475569?text=Minh+hoa+Cau+1:+Cau+truc+nucleotide",
+                options: [
+                    { text: "mRNA.", isCorrect: false },
+                    { text: "tRNA.", isCorrect: false },
+                    { text: "rRNA.", isCorrect: false },
+                    { text: "DNA.", isCorrect: true }
+                ]
+            },
+            {
+                id: 2,
+                question: "Cho một đoạn mạch gốc của gene chỉ chứa 3 loại nucleotide adenine, guanine, cytosine. Trong điều kiện không có đột biến, mạch bổ sung của gene không có loại nucleotide nào sau đây?",
+                options: [
+                    { text: "Adenine.", isCorrect: false },
+                    { text: "Thymine.", isCorrect: false },
+                    { text: "Guanine.", isCorrect: false },
+                    { text: "Uracil.", isCorrect: true }
+                ]
+            },
+            {
+                id: 3,
+                question: "Sơ đồ nào sau đây mô tả đúng về giai đoạn kéo dài mạch polynucleotide mới trên một chạc chữ Y trong quá trình tái bản DNA ở sinh vật nhân sơ?",
+                image: "https://placehold.co/400x150/f8fafc/475569?text=So+do+I,+II,+III,+IV+(Chac+Y)",
+                options: [
+                    { text: "Sơ đồ I.", isCorrect: true },
+                    { text: "Sơ đồ II.", isCorrect: false },
+                    { text: "Sơ đồ III.", isCorrect: false },
+                    { text: "Sơ đồ IV.", isCorrect: false }
+                ]
+            },
+            {
+                id: 4,
+                question: "Những thông tin nào sau đây đúng khi nói về quá trình tái bản DNA ở sinh vật nhân thực?<br>(1) Chỉ xảy ra trên 1 đơn vị tái bản.<br>(2) Có sự tham gia của enzyme nối ligase.<br>(3) Enzyme DNA polymerase lắp ráp nucleotide vào đầu 3'-OH của đoạn mồi RNA tổng hợp nên mạch đơn mới.<br>(4) Quá trình này chỉ diễn ra trong tế bào chất.",
+                options: [
+                    { text: "1, 2, 3, và 4.", isCorrect: false },
+                    { text: "1 và 4.", isCorrect: false },
+                    { text: "2 và 3.", isCorrect: false },
+                    { text: "1, 2 và 3.", isCorrect: true }
+                ]
+            },
+            {
+                id: 5,
+                question: "Sơ đồ dưới đây mô tả quá trình tái bản DNA đang thực hiện ở 2 chạc sao chép. Nhận định nào sau đây đúng?",
+                image: "https://placehold.co/400x140/f8fafc/475569?text=So+do+2+chac+sao+chep",
+                options: [
+                    { text: "Đoạn mạch mới số 1 và đoạn mạch mới số 2 tổng hợp không liên tục.", isCorrect: false },
+                    { text: "Đoạn mạch mới số 2 và đoạn mạch mới số 3 được tổng hợp liên tục.", isCorrect: false },
+                    { text: "Đây là quá trình tái bản ở sinh vật nhân sơ.", isCorrect: false },
+                    { text: "Đoạn mạch mới số 3 và đoạn mạch mới số 4 có cùng chiều tổng hợp.", isCorrect: true }
+                ]
+            },
+            {
+                id: 6,
+                question: "Trong cấu trúc phân tử DNA, các nitrogenous base giữa hai mạch bắt cặp theo nguyên tắc bổ sung nào sau đây?",
+                options: [
+                    { text: "A = U, G ≡ C.", isCorrect: false },
+                    { text: "A = T, G ≡ C.", isCorrect: true },
+                    { text: "A ≡ T, G = C.", isCorrect: false },
+                    { text: "A ≡ U, G = C.", isCorrect: false }
+                ]
+            },
+            {
+                id: 7,
+                question: "Phân tử DNA có chức năng nào sau đây?",
+                options: [
+                    { text: "Mang thông tin quy định sản phẩm là polypeptide hoặc RNA.", isCorrect: false },
+                    { text: "Mang, bảo quản và truyền đạt thông tin di truyền.", isCorrect: true },
+                    { text: "Làm khuôn cho quá trình tổng hợp chuỗi polypeptide.", isCorrect: false },
+                    { text: "Vận chuyển amino acid đến ribosome và tiến hành dịch mã.", isCorrect: false }
+                ]
+            },
+            {
+                id: 8,
+                question: "Trong tế bào nhân thực, quá trình tái bản DNA diễn ra ở vị trí nào sau đây?",
+                options: [
+                    { text: "Nhân tế bào.", isCorrect: true },
+                    { text: "Lưới nội chất.", isCorrect: false },
+                    { text: "Bộ máy Golgi.", isCorrect: false },
+                    { text: "Không bào.", isCorrect: false }
+                ]
+            },
+            {
+                id: 9,
+                question: "Trong quá trình tái bản DNA, enzyme ligase có vai trò nào sau đây?",
+                options: [
+                    { text: "Tổng hợp đoạn DNA thay thế đoạn mồi.", isCorrect: false },
+                    { text: "Tổng hợp mạch DNA mới theo chiều 5' → 3'.", isCorrect: false },
+                    { text: "Cắt đứt liên kết hydrogen, tách DNA thành 2 mạch đơn.", isCorrect: false },
+                    { text: "Nối các đoạn Okazaki tạo mạch DNA hoàn chỉnh.", isCorrect: true }
+                ]
+            },
+            {
+                id: 10,
+                question: "Trong một đơn vị tái bản có bao nhiêu chạc chữ Y sao chép?",
+                options: [
+                    { text: "2.", isCorrect: true },
+                    { text: "1.", isCorrect: false },
+                    { text: "3.", isCorrect: false },
+                    { text: "4.", isCorrect: false }
+                ]
+            },
+            {
+                id: 11,
+                question: "Quá trình tái bản DNA có tối đa bao nhiêu loại nucleotide tham gia?",
+                options: [
+                    { text: "4.", isCorrect: true },
+                    { text: "5.", isCorrect: false },
+                    { text: "3.", isCorrect: false },
+                    { text: "2.", isCorrect: false }
+                ]
+            },
+            {
+                id: 12,
+                question: "Trên mạch 1 của một đoạn phân tử DNA có trình tự nucleotide: 3'...TACAGCGTCATG...5' thì trình tự nucleotide tương ứng ở mạch 2 của đoạn phân tử DNA đó là:",
+                options: [
+                    { text: "5'...ATGTCGCAGTAC...3'", isCorrect: true },
+                    { text: "5'...ATGTCCGCAGTAC...3'", isCorrect: false },
+                    { text: "5'...AUGUCGCAGUAC...3'", isCorrect: false },
+                    { text: "3'...ATGTCCGCAGTAC...5'", isCorrect: false }
+                ]
+            },
+            {
+                id: 13,
+                question: "Trong quá trình tái bản DNA, cả hai mạch mới đều được tổng hợp theo chiều nào sau đây?",
+                options: [
+                    { text: "5' → 3'.", isCorrect: true },
+                    { text: "3' → 5'.", isCorrect: false },
+                    { text: "Mạch liên tục có chiều 5' → 3', mạch gián đoạn có chiều 3' → 5'.", isCorrect: false },
+                    { text: "Mạch liên tục có chiều 3' → 5', mạch gián đoạn có chiều 5' → 3'.", isCorrect: false }
+                ]
+            },
+            {
+                id: 14,
+                question: "Trong quá trình tái bản DNA, enzyme nào sau đây tham gia tổng hợp đoạn mồi?",
+                options: [
+                    { text: "DNA polymerase.", isCorrect: false },
+                    { text: "RNA polymerase.", isCorrect: true },
+                    { text: "Ligase.", isCorrect: false },
+                    { text: "Helicase.", isCorrect: false }
+                ]
+            },
+            {
+                id: 15,
+                question: "Loại nucleotide nào sau đây không tham gia cấu tạo nên phân tử DNA?",
+                options: [
+                    { text: "Adenine.", isCorrect: false },
+                    { text: "Thymine.", isCorrect: false },
+                    { text: "Uracil.", isCorrect: true },
+                    { text: "Cytosine.", isCorrect: false }
+                ]
+            },
+            {
+                id: 16,
+                question: "Hình sau đây mô tả mô tả quá trình tái bản của DNA. Nhận định sau đây đúng?",
+                image: "https://placehold.co/400x140/f8fafc/475569?text=Hinh+mo+ta+chac+chu+Y+(Cau+16)",
+                options: [
+                    { text: "Mạch c → d là mạch mới được tổng hợp liên tục có chiều 5' → 3'.", isCorrect: true },
+                    { text: "Chiều mạch khuôn tổng hợp ra mạch mới a → b có chiều 5' → 3'.", isCorrect: false },
+                    { text: "Mạch 3 → 4 có chiều 3' → 5'.", isCorrect: false },
+                    { text: "Mạch 1 → 2 có chiều 5' → 3'.", isCorrect: false }
+                ]
+            },
+            {
+                id: 17,
+                question: "Ở cấp độ phân tử, thông tin di truyền được truyền từ tế bào mẹ sang tế bào con nhờ cơ chế nào sau đây?",
+                options: [
+                    { text: "Tái bản DNA.", isCorrect: true },
+                    { text: "Phiên mã.", isCorrect: false },
+                    { text: "Đột biến.", isCorrect: false },
+                    { text: "Dịch mã.", isCorrect: false }
+                ]
+            },
+            {
+                id: 18,
+                question: "Hình bên mô tả một đơn vị sao chép của phân tử DNA, trong đó O là điểm khởi đầu sao chép. Kí hiệu I, II, III, IV chỉ các đoạn mạch đơn của phân tử DNA. Đoạn gốc nào có mạch đơn mới được tổng hợp gián đoạn?",
+                image: "https://placehold.co/400x130/f8fafc/475569?text=Don+vi+sao+chep+O+(Cau+18)",
+                options: [
+                    { text: "I và III.", isCorrect: false },
+                    { text: "I và IV.", isCorrect: true },
+                    { text: "I và II.", isCorrect: false },
+                    { text: "II và III.", isCorrect: false }
+                ]
+            }
+        ];
+
+        // State variables
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let userAttempts = {}; 
+        let questionStatus = {}; // 'green', 'yellow', 'red1', 'red2', 'red3'
+        let activeQuestions = []; // Cloned and shuffled questions
+
+        // Initialize quiz data and shuffle options
+        function initQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            activeQuestions = JSON.parse(JSON.stringify(rawQuestions));
+            
+            activeQuestions.forEach((q, idx) => {
+                userAttempts[idx] = 0;
+                questionStatus[idx] = null;
+                shuffleArray(q.options);
+            });
+            renderQuiz();
+        }
+
+        // Shuffle helper (Fisher-Yates)
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        // Render current question in mobile view
+        function renderQuiz() {
+            const container = document.getElementById('quiz-container');
+            const progressText = document.getElementById('progress-text');
+            const progressBar = document.getElementById('progress-bar');
+            const scoreDisplay = document.getElementById('score-display');
+
+            progressText.innerText = `Câu ${currentQuestionIndex + 1} / ${activeQuestions.length}`;
+            progressBar.style.width = `${((currentQuestionIndex + 1) / activeQuestions.length) * 100}%`;
+            scoreDisplay.innerText = `Điểm (Lần 1): ${score}`;
+
+            if (currentQuestionIndex >= activeQuestions.length) {
+                renderResultScreen();
+                return;
+            }
+
+            const q = activeQuestions[currentQuestionIndex];
+            let imageHtml = q.image ? `<div class="mb-3 rounded-xl overflow-hidden bg-slate-50 border border-slate-100 flex justify-center p-2"><img src="${q.image}" alt="Minh họa" class="max-h-36 object-contain rounded" onerror="this.style.display='none'"></div>` : '';
+
+            let html = `
+                <div class="space-y-3 flex-1 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-1">
+                            <span class="text-[11px] font-bold px-2.5 py-0.5 bg-indigo-50 text-indigo-700 rounded-full uppercase tracking-wide">Câu hỏi ${currentQuestionIndex + 1}</span>
+                        </div>
+                        <h2 class="text-sm sm:text-base font-semibold text-slate-800 leading-snug mb-3">${q.question}</h2>
+                        ${imageHtml}
+                        <div class="space-y-2 mt-2" id="options-list">
+            `;
+
+            q.options.forEach((opt, oIdx) => {
+                html += `
+                    <button onclick="handleSelectOption(${oIdx})" class="w-full text-left p-3 rounded-xl border border-slate-200 bg-white hover:bg-indigo-50/70 hover:border-indigo-300 text-xs sm:text-sm font-medium text-slate-700 transition-all flex items-center shadow-xs active:scale-[0.99]">
+                        <span class="w-6 h-6 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center text-xs font-bold mr-3 flex-shrink-0">${String.fromCharCode(65 + oIdx)}</span>
+                        <span class="flex-1">${opt.text}</span>
+                    </button>
+                `;
+            });
+
+            html += `
+                        </div>
+                    </div>
+                    <div class="pt-3 border-t border-slate-100 flex justify-between items-center text-[11px] text-slate-500 mt-2">
+                        <span>Số lần thử câu này: <strong id="attempt-counter" class="text-indigo-600">${userAttempts[currentQuestionIndex]}</strong></span>
+                        <span class="italic text-rose-500 font-medium">Đúng mới được qua câu!</span>
+                    </div>
+                </div>
+            `;
+
+            container.innerHTML = html;
+        }
+
+        // Handle selection validation
+        function handleSelectOption(optionIndex) {
+            const q = activeQuestions[currentQuestionIndex];
+            const selectedOpt = q.options[optionIndex];
+            
+            userAttempts[currentQuestionIndex]++;
+            const attempts = userAttempts[currentQuestionIndex];
+            document.getElementById('attempt-counter').innerText = attempts;
+
+            if (selectedOpt.isCorrect) {
+                // Correct answer condition
+                if (attempts === 1) {
+                    score += 1; // +1 point for first-try correct
+                    questionStatus[currentQuestionIndex] = 'green';
+                } else {
+                    questionStatus[currentQuestionIndex] = 'yellow'; // correct from 2nd try onward (marked yellow)
+                }
+
+                showToast("Chính xác! Đang chuyển câu...", "success");
+                
+                setTimeout(() => {
+                    hideToast();
+                    currentQuestionIndex++;
+                    renderQuiz();
+                }, 700);
+
+            } else {
+                // Incorrect answer condition & progressive red marking
+                if (attempts === 1) {
+                    questionStatus[currentQuestionIndex] = 'red1'; // Đỏ nhạt/bình thường
+                } else if (attempts === 2) {
+                    questionStatus[currentQuestionIndex] = 'red2'; // Đỏ đậm hơn
+                } else {
+                    questionStatus[currentQuestionIndex] = 'red3'; // Đỏ đen / đỏ sậm tối đa
+                }
+
+                // Trigger shake animation for wrong choice feedback
+                const optList = document.getElementById('options-list');
+                optList.classList.add('animate-shake');
+                setTimeout(() => optList.classList.remove('animate-shake'), 400);
+
+                showToast("Vui lòng thử lại", "error");
+            }
+        }
+
+        // Toast feedback helpers
+        function showToast(message, type) {
+            const container = document.getElementById('toast-container');
+            const msgBox = document.getElementById('toast-message');
+            
+            container.classList.remove('hidden');
+            msgBox.innerText = message;
+
+            if (type === 'success') {
+                msgBox.className = "p-2.5 rounded-xl text-xs sm:text-sm font-semibold text-center bg-emerald-100 text-emerald-800 border border-emerald-200 shadow-sm";
+            } else {
+                msgBox.className = "p-2.5 rounded-xl text-xs sm:text-sm font-semibold text-center bg-rose-100 text-rose-800 border border-rose-200 shadow-sm";
+            }
+        }
+
+        function hideToast() {
+            document.getElementById('toast-container').classList.add('hidden');
+        }
+
+        // Final result screen renderer
+        function renderResultScreen() {
+            const container = document.getElementById('quiz-container');
+            document.getElementById('progress-text').innerText = "Hoàn thành";
+            document.getElementById('progress-bar').style.width = "100%";
+
+            // Build detailed color matrix breakdown
+            let matrixHtml = '<div class="grid grid-cols-6 gap-1.5 my-3">';
+            activeQuestions.forEach((_, idx) => {
+                let colorClass = 'bg-slate-200 text-slate-600';
+                const status = questionStatus[idx];
+                
+                if (status === 'green') colorClass = 'bg-emerald-500 text-white font-bold';
+                else if (status === 'yellow') colorClass = 'bg-amber-400 text-white font-bold';
+                else if (status === 'red1') colorClass = 'bg-rose-400 text-white font-bold';
+                else if (status === 'red2') colorClass = 'bg-rose-600 text-white font-bold';
+                else if (status === 'red3') colorClass = 'bg-rose-950 text-white font-bold';
+
+                matrixHtml += `<div class="${colorClass} rounded-lg py-1.5 text-center text-xs flex items-center justify-center shadow-xs">C${idx+1}</div>`;
+            });
+            matrixHtml += '</div>';
+
+            container.innerHTML = `
+                <div class="flex flex-col items-center justify-center text-center py-4 space-y-3">
+                    <div class="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-2xl font-bold shadow-inner">
+                        🏆
+                    </div>
+                    <div>
+                        <h2 class="text-base sm:text-lg font-bold text-slate-800">CHÚC MỪNG BẠN ĐÃ ĐƯỢC ${score} ĐIỂM</h2>
+                        <p class="text-[11px] text-slate-500 mt-0.5">Tổng điểm tính dựa trên số câu trả lời đúng ngay lần đầu tiên (màu xanh lá).</p>
+                    </div>
+
+                    <div class="w-full text-left bg-slate-50 p-3 rounded-2xl border border-slate-200">
+                        <p class="text-[11px] font-bold text-slate-700 mb-1">Bảng trạng thái chi tiết từng câu:</p>
+                        ${matrixHtml}
+                        <div class="grid grid-cols-2 gap-1 text-[10px] text-slate-600 mt-2">
+                            <span class="flex items-center"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block mr-1.5"></span> Xanh lá (Đúng lần 1)</span>
+                            <span class="flex items-center"><span class="w-2.5 h-2.5 rounded-full bg-amber-400 inline-block mr-1.5"></span> Vàng (Đúng từ lần 2+)</span>
+                            <span class="flex items-center"><span class="w-2.5 h-2.5 rounded-full bg-rose-400 inline-block mr-1.5"></span> Đỏ (Sai lần 1)</span>
+                            <span class="flex items-center"><span class="w-2.5 h-2.5 rounded-full bg-rose-600 inline-block mr-1.5"></span> Đỏ đậm (Sai lần 2)</span>
+                            <span class="flex items-center col-span-2 justify-center"><span class="w-2.5 h-2.5 rounded-full bg-rose-950 inline-block mr-1.5"></span> Đỏ đen (Sai từ lần 3+)</span>
+                        </div>
+                    </div>
+
+                    <button onclick="initQuiz()" class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl shadow-md transition-all text-xs sm:text-sm mt-2">
+                        Quay lại / Làm lại từ đầu
+                    </button>
+                </div>
+            `;
+        }
+
+        // Run on load
+        window.onload = function() {
+            initQuiz();
+        };
+    </script>
+</body>
+</html>
