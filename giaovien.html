@@ -28,9 +28,18 @@
 
         nav { background-color: #002244; position: sticky; top: 0; z-index: 100; }
         .nav-container { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; }
-        .nav-container a { color: white; padding: 12px 18px; text-decoration: none; font-size: 14px; font-weight: 600; text-transform: uppercase; transition: background 0.3s; }
-        .nav-container a:hover, .nav-container a.active { background-color: var(--secondary-color); }
-        .nav-container.green-tab { color: #28a745 !important; }
+        .nav-container a { color: white; padding: 12px 18px; text-decoration: none; font-size: 14px; font-weight: 600; text-transform: uppercase; transition: background 0.3s, color 0.3s; }
+        .nav-container a:hover, .nav-container a.active { background-color: var(--secondary-color); color: white; }
+        
+        /* Style riêng cho nút Góc Xanh: Mặc định chữ xanh lá, rê chuột vào nền xanh lá chữ trắng */
+        .nav-container a.green-tab {
+            color: #28a745;
+            font-weight: bold;
+        }
+        .nav-container a.green-tab:hover {
+            background-color: #28a745 !important;
+            color: #ffffff !important;
+        }
 
         .container { max-width: 1200px; margin: 30px auto; padding: 0 15px; flex: 1; width: 100%; }
         .page-title { color: var(--primary-color); font-size: 20px; text-transform: uppercase; border-bottom: 2px solid var(--primary-color); padding-bottom: 8px; margin-bottom: 25px; display: flex; align-items: center; gap: 8px; }
