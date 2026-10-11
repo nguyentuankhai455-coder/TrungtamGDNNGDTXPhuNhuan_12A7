@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trắc Nghiệm Lịch Sử - Mã 3 (Câu 59-88)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f1f5f9; }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-6px); }
+            40%, 80% { transform: translateX(6px); }
+        }
+        .animate-shake { animation: shake 0.4s ease-in-out; }
+    </style>
+</head>
+<body class="min-h-screen bg-slate-100 flex flex-col items-center justify-start py-3 px-2 sm:px-4">
+
+    <div id="app" class="w-full max-w-md bg-white rounded-3xl shadow-xl overflow-hidden flex flex-col min-h-[90vh] border border-slate-200">
+        
+        <div class="bg-gradient-to-r from-blue-700 to-indigo-600 text-white p-4 text-center relative shadow-md">
+            <h1 class="text-base sm:text-lg font-bold">ÔN TẬP TRẮC NGHIỆM LỊCH SỬ</h1>
+            <p class="text-[11px] text-blue-100 mt-0.5">Mã 3 • Câu 59 – 88</p>
+        </div>
+
+        <div class="bg-slate-50 px-4 py-3 border-b border-slate-200">
+            <div class="flex justify-between items-center text-xs font-semibold text-slate-600 mb-1.5">
+                <span id="progress-text">Câu 1 / 30</span>
+                <span id="score-display" class="text-blue-700 font-bold">Điểm (Lần 1): 0</span>
+            </div>
+            <div class="w-full bg-slate-200 h-2.5 rounded-full overflow-hidden">
+                <div id="progress-bar" class="bg-blue-600 h-2.5 transition-all duration-300 w-[3.3%]"></div>
+            </div>
+        </div>
+
+        <div id="toast-container" class="px-4 pt-3 hidden">
+            <div id="toast-message" class="p-3 rounded-xl text-xs sm:text-sm font-semibold text-center transition-all"></div>
+        </div>
+
+        <div id="quiz-container" class="p-4 flex-1 flex flex-col justify-between"></div>
+
+    </div>
+
+    <footer class="mt-3 text-center text-[11px] text-slate-400">
+        Mã 3 • 30 Câu trắc nghiệm
+    </footer>
+
+    <script>
+        const rawQuestions = [
+            { id: 59, question: "Nhận định nào dưới đây giải thích đúng nhất lý do tại sao một trật tự thế giới \"đơn cực\" (chỉ do Mỹ lãnh đạo) khó có thể tồn tại lâu dài sau Chiến tranh lạnh?", options: [{ text: "Do Mỹ đã tự nguyện từ bỏ vị trí cường quốc số một của mình.", isCorrect: false }, { text: "Do Liên Hợp Quốc cấm bất kỳ quốc gia nào đứng đầu thế giới.", isCorrect: false }, { text: "Do sự vươn lên mạnh mẽ về kinh tế của nhiều quốc gia và trung tâm khác đã san sẻ quyền lực toàn cầu.", isCorrect: true }, { text: "Do sức mạnh quân sự của Mỹ bị tiêu diệt hoàn toàn trong các cuộc chiến tranh cục bộ.", isCorrect: false }] },
+            { id: 60, question: "Nội dung nào sau đây phản ánh đúng mối quan hệ giữa các quốc gia trong xu thế toàn cầu hoá sau Chiến tranh lạnh?", options: [{ text: "Hợp nhất và xóa bỏ chủ quyền.", isCorrect: false }, { text: "Độc lập và không liên quan nhau.", isCorrect: false }, { text: "Xung đột và triệt tiêu lẫn nhau.", isCorrect: false }, { text: "Phụ thuộc và tác động lẫn nhau.", isCorrect: true }] },
+            { id: 61, question: "Từ khái niệm \"Toàn cầu hoá\" là sự gia tăng mối liên hệ, phụ thuộc lẫn nhau, có thể rút ra hệ quả nào về mặt rủi ro đối với an ninh kinh tế quốc gia?", options: [{ text: "Nguy cơ khủng hoảng kinh tế toàn cầu sẽ bị loại bỏ hoàn toàn.", isCorrect: false }, { text: "Các quốc gia sẽ được miễn nhiễm với mọi biến động tiêu cực từ bên ngoài.", isCorrect: false }, { text: "Mỗi quốc gia sẽ tự giải quyết triệt để được lạm phát mà không cần quốc tế can thiệp.", isCorrect: false }, { text: "Một cuộc khủng hoảng tài chính tại một trung tâm lớn sẽ nhanh chóng gây hiệu ứng dây chuyền toàn cầu.", isCorrect: true }] },
+            { id: 62, question: "Nhận xét nào sau đây đúng về quan hệ quốc tế trong đầu thế kỷ XXI?", options: [{ text: "Có nhiều biến động nhưng vẫn giữ được hòa bình tuyệt đối để phát triển.", isCorrect: false }, { text: "Các nước đã điều chỉnh quan hệ đối ngoại theo hướng hợp tác cùng có lợi.", isCorrect: true }, { text: "Những xung đột tôn giáo và sắc tộc không còn trong các liên minh kinh tế.", isCorrect: false }, { text: "Mâu thuẫn lợi ích được hóa giải khi các nước gia nhập các tổ chức quốc tế.", isCorrect: false }] },
+            { id: 63, question: "Nếu xuất hiện tình trạng một quốc gia cố tình phớt lờ luật pháp quốc tế, lấy sức mạnh quân sự chèn ép nước nhỏ, thì hành vi này đang vi phạm trực tiếp đặc trưng nào của thế giới sau Chiến tranh lạnh?", options: [{ text: "Xu thế toàn cầu hóa về văn hóa.", isCorrect: false }, { text: "Quá trình phát triển khoa học - kỹ thuật.", isCorrect: false }, { text: "Biểu hiện vươn lên của Liên minh châu Âu (EU).", isCorrect: false }, { text: "Cơ sở tồn tại hòa bình, tôn trọng lẫn nhau của xu thế đối thoại, hợp tác.", isCorrect: true }] },
+            { id: 64, question: "Xu thế toàn cầu hóa là hệ quả của", options: [{ text: "Sự ra đời các công ty xuyên quốc gia.", isCorrect: false }, { text: "Quá trình thống nhất thị trường thế giới.", isCorrect: false }, { text: "Cuộc cách mạng khoa học - công nghệ.", isCorrect: true }, { text: "Sự phụ thuộc giữa các quốc gia trên thế giới.", isCorrect: false }] },
+            { id: 65, question: "Xét về bản chất, toàn cầu hóa là", options: [{ text: "Sự ra đời của các tổ chức liên kết kinh tế, thương mại, tài chính quốc tế và khu vực.", isCorrect: false }, { text: "Sự tăng lên mạnh mẽ những mối liên hệ, tác động, phụ thuộc lẫn nhau giữa các nước.", isCorrect: true }, { text: "Sự phát triển nhanh chóng của quan hệ thương mại giữa các quốc gia trên thế giới.", isCorrect: false }, { text: "Sự tăng cường sáp nhập, hợp nhất các công ty thành những tập đoàn lớn trên toàn cầu.", isCorrect: false }] },
+            { id: 66, question: "Trong bối cảnh quốc tế sau Chiến tranh lạnh diễn biến phức tạp, chủ trương nhất quán của Đảng và Nhà nước Việt Nam là", options: [{ text: "Mở rộng việc hội nhập quốc tế toàn diện bằng mọi giá.", isCorrect: false }, { text: "Nhượng bộ các nước lớn để nâng tầm đối tác chiến lược.", isCorrect: false }, { text: "Gia nhập vào các liên minh chính trị quốc tế và khu vực.", isCorrect: false }, { text: "Chủ động đi tắt đón đầu và nắm bắt thời cơ để phát triển.", isCorrect: true }] },
+            { id: 67, question: "Nội dung nào sau đây không phải là nhân tố tác động đến sự hình thành Trật tự thế giới mới sau khi Chiến tranh lạnh chấm dứt?", options: [{ text: "Sự lớn mạnh của các lực lượng hòa bình, dân chủ, tiến bộ.", isCorrect: false }, { text: "Sự lớn mạnh và ảnh hưởng của hệ thống xã hội chủ nghĩa.", isCorrect: true }, { text: "Sự phát triển mạnh mẽ của cách mạng khoa học công nghệ.", isCorrect: false }, { text: "Thực lực kinh tế, chính trị và quân sự của các cường quốc.", isCorrect: false }] },
+            { id: 68, question: "Đặc điểm nổi bật trong quan hệ quốc tế sau khi Chiến tranh lạnh chấm dứt là", options: [{ text: "Liên Xô - Mỹ tiếp tục tăng cường hợp tác kinh tế, xã hội.", isCorrect: false }, { text: "Quan hệ giữa Liên Xô - Mỹ ngày càng trở nên căng thẳng.", isCorrect: false }, { text: "Hòa bình, hợp tác trở thành xu thế chủ đạo của thế giới.", isCorrect: true }, { text: "Có sự đối đầu giữa hai hệ thống chính trị xã hội đối lập.", isCorrect: false }] },
+            { id: 69, question: "Quan điểm của Đại hội XII Đảng Cộng sản Việt Nam: \"Cục diện thế giới theo xu hướng đa cực, đa trung tâm diễn ra nhanh hơn\" đòi hỏi đường lối ngoại giao của Việt Nam phải ưu tiên chiến lược nào?", options: [{ text: "Đóng cửa nền kinh tế để tránh bị các trung tâm lớn chi phối.", isCorrect: false }, { text: "Đa phương hóa, đa dạng hóa quan hệ quốc tế, làm bạn với tất cả các nước.", isCorrect: true }, { text: "Chọn một siêu cường duy nhất để liên minh quân sự nhằm tự vệ.", isCorrect: false }, { text: "Tập trung toàn lực chạy đua vũ trang với các nước láng giềng.", isCorrect: false }] },
+            { id: 70, question: "Việc các quốc gia hợp tác trên cơ sở \"hai bên cùng có lợi, tôn trọng lẫn nhau, cùng tồn tại hòa bình\" có ý nghĩa nào trong quan hệ quốc tế sau Chiến tranh lạnh?", options: [{ text: "Hạn chế hoàn toàn nguy cơ xung đột vũ trang và căng thẳng.", isCorrect: false }, { text: "Là động lực để thúc đẩy quan hệ hợp tác toàn cầu bền vững.", isCorrect: true }, { text: "Tạo ra những khối đối đầu mới giữa các nước đang phát triển.", isCorrect: false }, { text: "Thúc đẩy chiến lược cạnh tranh ảnh hưởng giữa các nước lớn.", isCorrect: false }] },
+            { id: 71, question: "Trong xu thế đa cực, quyền lực toàn cầu được phân bổ như thế nào?", options: [{ text: "Bị chi phối bởi hai quốc gia có vũ khí hạt nhân mạnh nhất.", isCorrect: false }, { text: "Tập trung hoàn toàn vào tay một siêu cường duy nhất.", isCorrect: false }, { text: "Không một quốc gia nào có quyền lực áp đảo đối với các quốc gia khác.", isCorrect: true }, { text: "Do Liên minh châu Âu (EU) độc quyền quản lý.", isCorrect: false }] },
+            { id: 72, question: "Sau Chiến tranh lạnh, nhiều tổ chức kinh tế -tài chính khu vực, liên khu vực có vai trò ngày càng lớn đối với sự phát triển của thế giới, ngoại trừ", options: [{ text: "Diễn đàn hợp tác Á Âu (ASEM).", isCorrect: false }, { text: "Hiệp hội các quốc gia Đông Nam Á (ASEAN).", isCorrect: false }, { text: "Hội đồng Tương trợ kinh tế (SEV).", isCorrect: true }, { text: "Liên minh châu Âu (EU).", isCorrect: false }] },
+            { id: 73, question: "Xu thế đối thoại, hợp tác sau Chiến tranh lạnh phản ánh điều nào sau đây?", options: [{ text: "Sự quay trở lại của chính sách ngoại giao pháo hạm của các nước lớn.", isCorrect: false }, { text: "Nguyện vọng kiến tạo một môi trường hòa bình của nhân loại tiến bộ.", isCorrect: true }, { text: "Tình trạng phân cực quyền lực giữa các nước lớn tồn tại trên thế giới.", isCorrect: false }, { text: "Xung đột ngày càng gay gắt giữa các nền văn minh lớn của nhân loại.", isCorrect: false }] },
+            { id: 74, question: "Xu thế nào sau đây là xu thế phát triển chính của thế giới sau Chiến tranh lạnh và là hệ quả cuộc cách mạng khoa học - công nghệ?", options: [{ text: "Toàn cầu hoá.", isCorrect: true }, { text: "Lấy kinh tế làm trung tâm.", isCorrect: false }, { text: "Đối thoại giữa các nước lớn.", isCorrect: false }, { text: "Xu thế đa cực.", isCorrect: false }] },
+            { id: 75, question: "Nội dung nào sau đây là đặc điểm nổi bật của quan hệ quốc tế trong giai đoạn từ năm 1945 đến đầu những năm 70 của thế kỉ XX?", options: [{ text: "Chủ yếu giải quyết tranh chấp bằng đối thoại, hòa hoãn.", isCorrect: false }, { text: "Xu thế toàn cầu hóa ra đời và phát triển mạnh mẽ.", isCorrect: false }, { text: "Sự căng thẳng, chạy đua vũ trang giữa Mỹ và Liên Xô.", isCorrect: true }, { text: "Các nước lớn tăng cường hợp tác kinh tế, văn hóa.", isCorrect: false }] },
+            { id: 76, question: "Trong xu thế đa cực, quốc gia nào sau đây đang phục hồi mạnh mẽ và trở thành một trong những cường quốc hàng đầu thế giới về quân sự, khoa học, kỹ thuật?", options: [{ text: "Bô-li-vi-a.", isCorrect: false }, { text: "Mi-an-ma.", isCorrect: false }, { text: "Xu-đăng.", isCorrect: false }, { text: "Liên bang Nga.", isCorrect: true }] },
+            { id: 77, question: "Nguyên tắc căn bản để duy trì xu thế đối thoại, hợp tác giữa các quốc gia là gì?", options: [{ text: "Hai bên cùng có lợi, tôn trọng lẫn nhau, cùng tồn tại hoà bình.", isCorrect: true }, { text: "Các nước lớn được quyền áp đặt luật lệ cho nước nhỏ.", isCorrect: false }, { text: "Sử dụng vũ lực để giải quyết triệt để các tranh chấp.", isCorrect: false }, { text: "Buộc các quốc gia phải có cùng một thể chế chính trị.", isCorrect: false }] },
+            { id: 78, question: "Sau khi Chiến tranh lạnh kết thúc, các quốc gia trên thế giới đều ra sức điều chỉnh chiến lược phát triển lấy kinh tế làm trọng tâm vì một trong những lí do nào sau đây?", options: [{ text: "Sự chỉ đạo trực tiếp, thống nhất của tổ chức Liên hợp quốc.", isCorrect: false }, { text: "Kinh tế phát triển tạo nên sức mạnh thực sự cho quốc gia.", isCorrect: true }, { text: "Hòa bình và an ninh thế giới được bảo vệ ở mức cao nhất.", isCorrect: false }, { text: "Giữa các cường quốc đã chấm dứt việc chạy đua vũ trang.", isCorrect: false }] },
+            { id: 79, question: "Tổ chức ASEM bao gồm các nước thuộc Liên minh châu Âu (EU) và các quốc gia thuộc tổ chức nào ở Đông Nam Á?", options: [{ text: "Tổ chức Hiệp ước Bắc Đại Tây Dương (NATO).", isCorrect: false }, { text: "Tổ chức Thương mại Thế giới (WTO).", isCorrect: false }, { text: "Diễn đàn Hợp tác Kinh tế Châu Á - Thái Bình Dương (APEC).", isCorrect: false }, { text: "Hiệp hội các quốc gia Đông Nam Á (ASEAN).", isCorrect: true }] },
+            { id: 80, question: "Trong xu thế hội nhập và toàn cầu hóa, việc đẩy mạnh hợp tác trên cơ sở tôn trọng độc lập, chủ quyền, toàn vẹn lãnh thổ, không can dự vào công việc nội bộ của nhau và cùng có lợi là", options: [{ text: "Con đường cách mạng duy nhất.", isCorrect: false }, { text: "Đích đến cuối cùng mọi nước.", isCorrect: false }, { text: "Lựa chọn duy nhất của thế giới.", isCorrect: false }, { text: "Nguyên tắc mang tính tất yếu.", isCorrect: true }] },
+            { id: 81, question: "Đứng trước cơ hội và thách thức của cục diện đa cực, \"vũ khí\" quan trọng nhất để các nước đang phát triển bảo vệ được lợi ích cốt lõi của mình là gì?", options: [{ text: "Giao toàn quyền quyết định đối ngoại cho Liên Hợp Quốc.", isCorrect: false }, { text: "Xây dựng một liên minh quân sự hạt nhân mạnh mẽ.", isCorrect: false }, { text: "Nâng cao tiềm lực tổng hợp quốc gia dựa trên nền tảng kinh tế và khoa học công nghệ.", isCorrect: true }, { text: "Từ chối tham gia vào các diễn đàn như G20 hay ASEM.", isCorrect: false }] },
+            { id: 82, question: "Yếu tố nào sau đây là một trong những nguyên nhân thúc đẩy mạnh mẽ xu thế toàn cầu hoá sau Chiến tranh lạnh?", options: [{ text: "Cách mạng khoa học - công nghệ.", isCorrect: true }, { text: "Sự duy trì Trật tự hai cực I-an-ta.", isCorrect: false }, { text: "Sự đối đầu giữa các cường quốc.", isCorrect: false }, { text: "Các cuộc xung đột vũ trang cục bộ.", isCorrect: false }] },
+            { id: 83, question: "Nội dung nào sau đây phản ánh không đúng biểu hiện của xu thế đa cực trong quan hệ quốc tế sau khi Chiến tranh lạnh chấm dứt?", options: [{ text: "Sự cạnh tranh sức mạnh tổng hợp giữa hệ thống tư bản chủ nghĩa và xã hội chủ nghĩa.", isCorrect: true }, { text: "Mỹ suy giảm sức mạnh tương đối trong tương quan so sánh với các cường quốc khác.", isCorrect: false }, { text: "Sự gia tăng sức mạnh, tầm ảnh hưởng và vị thế kinh tế và chính trị của các nước lớn.", isCorrect: false }, { text: "Vai trò ngày càng tăng của các trung tâm, tổ chức kinh tế, tài chính khu vực, quốc tế.", isCorrect: false }] },
+            { id: 84, question: "Từ thập niên 90 của thế kỉ XX, xu thế nào ngày càng chiếm ưu thế trong quan hệ quốc tế?", options: [{ text: "Hòa hoãn Đông Tây.", isCorrect: false }, { text: "Chạy đua vũ trang.", isCorrect: false }, { text: "Nhất siêu, nhất cường.", isCorrect: false }, { text: "Đối thoại, hợp tác.", isCorrect: true }] },
+            { id: 85, question: "Sau Chiến tranh lạnh, quốc gia nào sau đây ở châu Á là một trong những trung tâm quyền lực đang vươn lên khẳng định vị thế trong quan hệ quốc tế?", options: [{ text: "Ấn Độ.", isCorrect: true }, { text: "Mi-an-ma.", isCorrect: false }, { text: "Campuchia.", isCorrect: false }, { text: "Ma-lai-xi-a.", isCorrect: false }] },
+            { id: 86, question: "Động lực cốt lõi nào đã thúc đẩy mạnh mẽ quá trình toàn cầu hoá sau Chiến tranh lạnh?", options: [{ text: "Cuộc chạy đua vũ trang trên không gian.", isCorrect: false }, { text: "Sự kết thúc Chiến tranh lạnh và cách mạng khoa học - công nghệ.", isCorrect: true }, { text: "Sự suy yếu hoàn toàn của nền kinh tế Mỹ.", isCorrect: false }, { text: "Sự ra đời của các loại vũ khí hạt nhân mới.", isCorrect: false }] },
+            { id: 87, question: "Trong thời kỳ hậu Chiến tranh lạnh, trụ cột đóng vai trò trung tâm trong sức mạnh quốc gia tổng hợp là", options: [{ text: "Văn hóa - xã hội.", isCorrect: false }, { text: "Kinh tế - khoa học kỹ thuật.", isCorrect: true }, { text: "Chính trị - tư tưởng.", isCorrect: false }, { text: "Quốc phòng - an ninh.", isCorrect: false }] },
+            { id: 88, question: "Mỹ, Nhật Bản, Liên bang Nga, Trung Quốc và Ấn Độ là các cường quốc trong xu thế đa cực nhiều trung tâm vào đầu thế kỉ XXI vì một trong những lí do nào sau đây?", options: [{ text: "Đều là các Ủy viên thường trực của Hội đồng Bảo an Liên hợp quốc.", isCorrect: false }, { text: "Có nền văn hóa truyền thống và giáo dục tiên tiến hàng đầu thế giới.", isCorrect: false }, { text: "Tham gia nhiều tổ chức, liên minh chính trị và quân sự trên thế giới.", isCorrect: false }, { text: "Có sức mạnh tổng hợp, đặc biệt là kinh tế và khoa học - công nghệ.", isCorrect: true }] }
+        ];
+
+        let currentIndex = 0;
+        let score = 0;
+        let userAttempts = {};
+        let questionStatus = {};
+        let activeQuestions = [];
+
+        function initApp() {
+            currentIndex = 0;
+            score = 0;
+            userAttempts = {};
+            questionStatus = {};
+            activeQuestions = JSON.parse(JSON.stringify(rawQuestions));
+            activeQuestions.forEach((q, idx) => {
+                userAttempts[idx] = 0;
+                questionStatus[idx] = null;
+                shuffleArray(q.options);
+            });
+            renderQuiz();
+        }
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        function renderQuiz() {
+            const container = document.getElementById('quiz-container');
+            const progressText = document.getElementById('progress-text');
+            const progressBar = document.getElementById('progress-bar');
+            const scoreDisplay = document.getElementById('score-display');
+
+            scoreDisplay.innerText = `Điểm (Lần 1): ${score}`;
+            const total = activeQuestions.length;
+
+            if (currentIndex >= total) {
+                renderResultScreen();
+                return;
+            }
+
+            progressText.innerText = `Câu ${currentIndex + 1} / ${total}`;
+            progressBar.style.width = `${((currentIndex + 1) / total) * 100}%`;
+
+            const q = activeQuestions[currentIndex];
+            let html = `
+                <div class="space-y-3 flex-1 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-1.5">
+                            <span class="text-[11px] font-bold px-2.5 py-0.5 bg-blue-50 text-blue-700 rounded-full uppercase">Câu hỏi số ${q.id}</span>
+                        </div>
+                        <h2 class="text-sm sm:text-base font-semibold text-slate-800 leading-snug mb-3">${q.question}</h2>
+                        <div class="space-y-2 mt-2" id="options-list">
+            `;
+
+            q.options.forEach((opt, oIdx) => {
+                html += `
+                    <button onclick="handleSelect(${oIdx})" class="w-full text-left p-3 rounded-xl border border-slate-200 bg-white hover:bg-blue-50/70 hover:border-blue-300 text-xs sm:text-sm font-medium text-slate-700 transition-all flex items-center shadow-xs active:scale-[0.99]">
+                        <span class="w-6 h-6 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center text-xs font-bold mr-3 flex-shrink-0">${String.fromCharCode(65 + oIdx)}</span>
+                        <span class="flex-1">${opt.text}</span>
+                    </button>
+                `;
+            });
+
+            html += `
+                        </div>
+                    </div>
+                    <div class="pt-3 border-t border-slate-100 flex justify-between items-center text-[11px] text-slate-500 mt-2">
+                        <span>Số lần thử câu này: <strong id="attempt-counter" class="text-blue-600">${userAttempts[currentIndex]}</strong></span>
+                        <span class="italic text-rose-500 font-medium">Đúng mới được qua câu!</span>
+                    </div>
+                </div>
+            `;
+            container.innerHTML = html;
+        }
+
+        function handleSelect(optionIndex) {
+            const q = activeQuestions[currentIndex];
+            const selectedOpt = q.options[optionIndex];
+            
+            userAttempts[currentIndex]++;
+            const attempts = userAttempts[currentIndex];
+            document.getElementById('attempt-counter').innerText = attempts;
+
+            if (selectedOpt.isCorrect) {
+                if (attempts === 1) {
+                    score += 1;
+                    questionStatus[currentIndex] = 'green';
+                } else {
+                    questionStatus[currentIndex] = 'yellow';
+                }
+
+                showToast("Chính xác! Đang chuyển câu...", "success");
+                setTimeout(() => {
+                    hideToast();
+                    currentIndex++;
+                    renderQuiz();
+                }, 700);
+
+            } else {
+                if (attempts === 1) questionStatus[currentIndex] = 'red1';
+                else if (attempts === 2) questionStatus[currentIndex] = 'red2';
+                else questionStatus[currentIndex] = 'red3';
+
+                const optList = document.getElementById('options-list');
+                optList.classList.add('animate-shake');
+                setTimeout(() => optList.classList.remove('animate-shake'), 400);
+
+                showToast("VUI LÒNG THỬ LẠI", "error");
+            }
+        }
+
+        function showToast(message, type) {
+            const container = document.getElementById('toast-container');
+            const msgBox = document.getElementById('toast-message');
+            container.classList.remove('hidden');
+            msgBox.innerText = message;
+
+            if (type === 'success') {
+                msgBox.className = "p-2.5 rounded-xl text-xs sm:text-sm font-semibold text-center bg-emerald-100 text-emerald-800 border border-emerald-200 shadow-sm";
+            } else {
+                msgBox.className = "p-2.5 rounded-xl text-xs sm:text-sm font-semibold text-center bg-rose-100 text-rose-800 border border-rose-200 shadow-sm";
+            }
+        }
+
+        function hideToast() {
+            document.getElementById('toast-container').classList.add('hidden');
+        }
+
+        function renderResultScreen() {
+            const container = document.getElementById('quiz-container');
+            document.getElementById('progress-text').innerText = "Hoàn thành";
+            document.getElementById('progress-bar').style.width = "100%";
+
+            let matrixHtml = '<div class="grid grid-cols-6 gap-1.5 my-3">';
+            activeQuestions.forEach((q, idx) => {
+                let colorClass = 'bg-slate-200 text-slate-600';
+                const status = questionStatus[idx];
+                
+                if (status === 'green') colorClass = 'bg-emerald-500 text-white font-bold';
+                else if (status === 'yellow') colorClass = 'bg-amber-400 text-white font-bold';
+                else if (status === 'red1') colorClass = 'bg-rose-400 text-white font-bold';
+                else if (status === 'red2') colorClass = 'bg-rose-600 text-white font-bold';
+                else if (status === 'red3') colorClass = 'bg-rose-950 text-white font-bold';
+
+                matrixHtml += `<div class="${colorClass} rounded-lg py-1.5 text-center text-[11px] flex flex-col items-center justify-center shadow-xs">Câu ${q.id}</div>`;
+            });
+            matrixHtml += '</div>';
+
+            container.innerHTML = `
+                <div class="flex flex-col items-center justify-center text-center py-4 space-y-3">
+                    <div class="w-14 h-14 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center text-2xl font-bold shadow-inner">
+                        🏆
+                    </div>
+                    <div>
+                        <h2 class="text-base sm:text-lg font-bold text-slate-800 uppercase">CHÚC MỪNG BẠN ĐÃ ĐƯỢC ${score} ĐIỂM</h2>
+                        <p class="text-[11px] text-slate-500 mt-0.5">Tổng số điểm đạt được khi người chơi nhấp đúng câu trả lời đúng lần đầu (Màu xanh lá).</p>
+                    </div>
+
+                    <div class="w-full text-left bg-slate-50 p-3 rounded-2xl border border-slate-200">
+                        <p class="text-[11px] font-bold text-slate-700 mb-1">Bảng thống kê trạng thái (30 câu):</p>
+                        ${matrixHtml}
+                        <div class="grid grid-cols-2 gap-1 text-[10px] text-slate-600 mt-2 border-t border-slate-200 pt-2">
+                            <span class="flex items-center"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block mr-1.5"></span> Xanh lá (Đúng lần 1)</span>
+                            <span class="flex items-center"><span class="w-2.5 h-2.5 rounded-full bg-amber-400 inline-block mr-1.5"></span> Vàng (Đúng lần 2+)</span>
+                            <span class="flex items-center"><span class="w-2.5 h-2.5 rounded-full bg-rose-400 inline-block mr-1.5"></span> Đỏ (Sai lần 1)</span>
+                            <span class="flex items-center"><span class="w-2.5 h-2.5 rounded-full bg-rose-600 inline-block mr-1.5"></span> Đỏ đậm (Sai lần 2)</span>
+                            <span class="flex items-center col-span-2 justify-center"><span class="w-2.5 h-2.5 rounded-full bg-rose-950 inline-block mr-1.5"></span> Đỏ đen (Sai từ lần 3+)</span>
+                        </div>
+                    </div>
+
+                    <button onclick="initApp()" class="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-md transition-all text-xs sm:text-sm mt-2 flex items-center justify-center gap-1.5">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                        Làm lại bộ 30 câu này
+                    </button>
+                </div>
+            `;
+        }
+
+        window.onload = initApp;
+    </script>
+</body>
+</html>

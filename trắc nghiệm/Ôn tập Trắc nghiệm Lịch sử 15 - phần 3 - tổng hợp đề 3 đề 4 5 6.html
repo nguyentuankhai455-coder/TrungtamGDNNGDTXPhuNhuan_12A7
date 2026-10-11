@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ôn Tập Trắc Nghiệm Lịch Sử - 88 Câu</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f1f5f9; }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-6px); }
+            40%, 80% { transform: translateX(6px); }
+        }
+        .animate-shake { animation: shake 0.4s ease-in-out; }
+    </style>
+</head>
+<body class="min-h-screen bg-slate-100 flex flex-col items-center justify-start py-3 px-2 sm:px-4">
+
+    <div id="app" class="w-full max-w-md bg-white rounded-3xl shadow-xl overflow-hidden flex flex-col min-h-[90vh] border border-slate-200">
+        
+        <!-- Header -->
+        <div class="bg-gradient-to-r from-blue-700 to-indigo-600 text-white p-4 text-center relative shadow-md">
+            <h1 class="text-base sm:text-lg font-bold">ÔN TẬP TRẮC NGHIỆM LỊCH SỬ</h1>
+            <p class="text-[11px] text-blue-100 mt-0.5">Trắc nghiệm 4 lựa chọn (88 câu)</p>
+        </div>
+
+        <!-- Progress Bar & Score -->
+        <div class="bg-slate-50 px-4 py-3 border-b border-slate-200">
+            <div class="flex justify-between items-center text-xs font-semibold text-slate-600 mb-1.5">
+                <span id="progress-text">Câu 1 / 88</span>
+                <span id="score-display" class="text-blue-700 font-bold">Điểm (Lần 1): 0</span>
+            </div>
+            <div class="w-full bg-slate-200 h-2.5 rounded-full overflow-hidden">
+                <div id="progress-bar" class="bg-blue-600 h-2.5 transition-all duration-300 w-[1.1%]"></div>
+            </div>
+        </div>
+
+        <!-- Toast -->
+        <div id="toast-container" class="px-4 pt-3 hidden">
+            <div id="toast-message" class="p-3 rounded-xl text-xs sm:text-sm font-semibold text-center transition-all"></div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div id="quiz-container" class="p-4 flex-1 flex flex-col justify-between"></div>
+
+    </div>
+
+    <footer class="mt-3 text-center text-[11px] text-slate-400">
+        Ứng dụng ôn tập Lịch sử di động • 88 Câu trắc nghiệm
+    </footer>
+
+    <script>
+        const rawQuestions = [
+            // ===== PHẦN I - LẦN 1 (Câu 1-24) =====
+            { id: 1, question: "Tại sao thắng lợi của phong trào giải phóng dân tộc lại góp phần làm sụp đổ trật tự I-an-ta?", options: [{ text: "Vì các nước mới độc lập sở hữu vũ khí hạt nhân đe dọa Mỹ.", isCorrect: false }, { text: "Vì phong trào này trực tiếp làm sụp đổ chủ nghĩa xã hội ở Liên Xô.", isCorrect: false }, { text: "Vì sự ra đời của các quốc gia độc lập làm thay đổi khuôn khổ áp đặt của trật tự hai cực.", isCorrect: true }, { text: "Vì các nước này gia nhập khối Na-tô để chống lại Liên Xô.", isCorrect: false }] },
+            { id: 2, question: "Nội dung nào sau đây không phải xu thế phát triển của thế giới sau Chiến tranh lạnh?", options: [{ text: "Lấy phát triển kinh tế làm trung tâm.", isCorrect: false }, { text: "Đa quốc gia, đa bản sắc văn hoá.", isCorrect: true }, { text: "Quốc tế hoá - toàn cầu hoá.", isCorrect: false }, { text: "Đối thoại, hợp tác cùng phát triển.", isCorrect: false }] },
+            { id: 3, question: "Sự vươn lên của Nhật Bản và các nước Tây Âu những năm 70 thế kỉ XX có tác động như thế nào đến trật tự thế giới hai cực?", options: [{ text: "Trực tiếp tiêu diệt hệ thống xã hội chủ nghĩa ở Đông Âu.", isCorrect: false }, { text: "Củng cố vững chắc vị thế thống trị tuyệt đối của Mỹ.", isCorrect: false }, { text: "Đưa thế giới bước vào cuộc Chiến tranh thế giới thứ ba.", isCorrect: false }, { text: "Tạo ra các trung tâm kinh tế mới, làm thay đổi cán cân kinh tế thế giới.", isCorrect: true }] },
+            { id: 4, question: "Bản chất của Trật tự thế giới hai cực I-an-ta là gì?", options: [{ text: "Sự phân chia phạm vi ảnh hưởng và thiết lập sự đối đầu Xô - Mỹ.", isCorrect: true }, { text: "Sự hợp tác toàn diện giữa Mỹ và Liên Xô để phát triển kinh tế.", isCorrect: false }, { text: "Sự thống trị tuyệt đối của chủ nghĩa tư bản trên toàn cầu.", isCorrect: false }, { text: "Sự ra đời của một chính phủ thế giới thống nhất.", isCorrect: false }] },
+            { id: 5, question: "Nội dung nào sau đây phản ánh đúng tác động của sự sụp đổ Trật tự thế giới hai cực I-an-ta (1991) đến các quốc gia trên thế giới?", options: [{ text: "Các quốc gia chạy đua vũ trang để có vị trí trong trật tự thế giới mới.", isCorrect: false }, { text: "Một số cường quốc có vị trí ngày càng cao trong quan hệ quốc tế.", isCorrect: true }, { text: "Các nước tư bản chủ nghĩa và xã hội chủ nghĩa xung đột gay gắt.", isCorrect: false }, { text: "Mỹ vươn lên thiết lập trật tự thế giới \"đơn cực\" do Mỹ làm bá chủ.", isCorrect: false }] },
+            { id: 6, question: "Mâu thuẫn cốt lõi nhất, mang tính quy luật dẫn đến sự sụp đổ tất yếu của Trật tự thế giới hai cực I-an-ta là gì?", options: [{ text: "Sự phát triển không đồng đều về kinh tế dẫn đến khủng hoảng thừa ở nước Mỹ.", isCorrect: false }, { text: "Sự khác biệt về văn hóa, tôn giáo giữa các quốc gia châu Âu và châu Á.", isCorrect: false }, { text: "Sự đối lập giữa khuôn khổ cứng nhắc của trật tự hai cực với xu hướng vươn lên đa dạng, độc lập của các quốc gia trên thế giới.", isCorrect: true }, { text: "Mâu thuẫn trong việc phân chia lợi nhuận kinh tế giữa Liên Xô và các nước Đông Âu.", isCorrect: false }] },
+            { id: 7, question: "Sau Chiến tranh thế giới thứ hai, mối quan hệ đồng minh chống phát xít giữa Liên Xô và Mỹ không còn tồn tại vì một trong những nguyên nhân nào sau đây?", options: [{ text: "Lợi ích và ý thức hệ của hai bên không có sự đối lập với nhau.", isCorrect: false }, { text: "Sự lo ngại của trước chủ nghĩa cộng sản của Tổng thống Mỹ.", isCorrect: true }, { text: "Không còn có chung kẻ thù là chủ nghĩa đế quốc và thực dân.", isCorrect: false }, { text: "Các cường quốc có ý thức hệ khác nhau nên không thể hợp tác.", isCorrect: false }] },
+            { id: 8, question: "Đánh giá một cách khách quan, bản chất của Hội nghị I-an-ta (1945) phản ánh điều gì trong quan hệ quốc tế?", options: [{ text: "Sự bình đẳng tuyệt đối giữa các quốc gia dù lớn hay nhỏ.", isCorrect: false }, { text: "Tinh thần vị tha, hy sinh quyền lợi quốc gia của ba nước lớn vì nền hòa bình nhân loại.", isCorrect: false }, { text: "Sự thắng lợi vĩ đại của công lý và luật pháp quốc tế đối với sức mạnh bạo lực.", isCorrect: false }, { text: "Sự thỏa hiệp, phân chia quyền lợi và không gian sinh tồn dựa trên tương quan sức mạnh quân sự thực tế của các cường quốc.", isCorrect: true }] },
+            { id: 9, question: "Việc hai siêu cường Mỹ và Liên Xô trực tiếp hỗ trợ các phe đối lập trong Chiến tranh Triều Tiên và Chiến tranh Việt Nam chứng tỏ điều gì về Trật tự I-an-ta?", options: [{ text: "Sự bất lực của Mỹ trước sự mở rộng lãnh thổ của Liên Xô.", isCorrect: false }, { text: "Tính chất hòa bình và hợp tác của trật tự này.", isCorrect: false }, { text: "Sự kết thúc của cuộc chạy đua vũ trang trên quy mô toàn cầu.", isCorrect: false }, { text: "Sự đối đầu ý thức hệ Xô - Mỹ được chuyển hóa thành các cuộc chiến tranh ủy nhiệm (cục bộ).", isCorrect: true }] },
+            { id: 10, question: "Nội dung nào sau đây là yếu tố quyết định dẫn đến Trật tự thế giới hai cực I-an-ta sụp đổ?", options: [{ text: "Chủ nghĩa xã hội ở Liên Xô lâm vào khủng hoảng và tan rã.", isCorrect: true }, { text: "Liên Xô và Mỹ bị suy giảm vị thế do phải chạy đua vũ trang.", isCorrect: false }, { text: "Tác động của cuộc Cách mạng công nghiệp lần thứ ba.", isCorrect: false }, { text: "Sự vươn lên mạnh mẽ của các nước và tổ chức quốc tế.", isCorrect: false }] },
+            { id: 11, question: "Sự chuyển dịch từ Trật tự hai cực I-an-ta sang một trật tự thế giới mới chứng minh quy luật nào trong lịch sử quan hệ quốc tế?", options: [{ text: "Tương quan lực lượng kinh tế giữa các cường quốc thay đổi sẽ kéo theo sự thay đổi của trật tự thế giới.", isCorrect: true }, { text: "Hệ tư tưởng chính trị luôn là yếu tố bất biến và quyết định sự tồn vong của một quốc gia.", isCorrect: false }, { text: "Quan hệ quốc tế luôn được định hình bởi những cá nhân lãnh đạo kiệt xuất, không phụ thuộc vào nền tảng vật chất.", isCorrect: false }, { text: "Các tổ chức quân sự là nhân tố duy nhất duy trì sự ổn định của quan hệ quốc tế.", isCorrect: false }] },
+            { id: 12, question: "Sự tồn tại của Trật tự thế giới hai cực Ianta trong phần lớn nửa sau thế kỉ XX không phù hợp với lợi ích chung của cộng đồng quốc tế vì", options: [{ text: "Giúp Mỹ thiết lập trật tự thế giới \"đơn cực\", chi phối thế giới.", isCorrect: false }, { text: "Làm cho Liên Xô không thể giúp đỡ phong trào cách mạng thế giới.", isCorrect: false }, { text: "Làm cho các cuộc chiến tranh cục bộ diễn ra không có hồi kết.", isCorrect: false }, { text: "Chủ quyền lãnh thổ của nhiều quốc gia bị xâm phạm nghiêm trọng.", isCorrect: true }] },
+            { id: 13, question: "Tại sao nói sự tồn tại của Trật tự thế giới hai cực I-an-ta \"không phù hợp với lợi ích chung của cộng đồng quốc tế\"?", options: [{ text: "Vì nó ngăn cản hoàn toàn sự giao thương kinh tế giữa các quốc gia cùng một khối.", isCorrect: false }, { text: "Vì nó xóa bỏ hoàn toàn nền văn hóa truyền thống của các quốc gia thuộc thế giới thứ ba.", isCorrect: false }, { text: "Vì nó đẩy nhân loại vào trạng thái luôn đối diện với nguy cơ hủy diệt của Chiến tranh thế giới thứ ba và vũ khí hạt nhân.", isCorrect: true }, { text: "Vì nó thủ tiêu vai trò của mọi tổ chức quốc tế, bao gồm cả Liên hợp quốc.", isCorrect: false }] },
+            { id: 14, question: "Nội dung nào sau đây góp phần duy trì sự ổn định tương đối của Trật tự thế giới hai cực Ianta trong phần lớn nửa sau thế kỉ XX?", options: [{ text: "Không có sự khác biệt giữa hai cực, hai phe về lợi ích.", isCorrect: false }, { text: "Sự cân bằng trong lợi ích giữa hai cực, hai phe đế quốc.", isCorrect: false }, { text: "Sự cân bằng sức mạnh tương đối giữa hai phe, hai cực.", isCorrect: true }, { text: "Sự thống nhất về mục tiêu và chiến lược giữa hai phe.", isCorrect: false }] },
+            { id: 15, question: "Nhận định nào sau đây phản ánh đúng về quan hệ quốc tế trong thời kỳ Chiến tranh lạnh?", options: [{ text: "Các nước cùng tồn tại, hợp tác, cạnh tranh với sự áp đặt của Liên hợp quốc.", isCorrect: false }, { text: "Các nước vừa hợp tác, vừa đấu tranh trong bối cảnh thế giới đầy biến động.", isCorrect: true }, { text: "Chịu sự chi phối với tác động của trật tự thế giới đa cực và nhiều trung tâm.", isCorrect: false }, { text: "Liên Xô và Mỹ từ hậu thuẫn đến xung đột quân sự trực tiếp ở Đông Dương.", isCorrect: false }] },
+            { id: 16, question: "Từ sự thay đổi trạng thái quan hệ quốc tế (từ đối đầu sang đối thoại) vào cuối những năm 80, nhân tố nào được khẳng định là động lực chính chi phối chính sách đối ngoại của các siêu cường?", options: [{ text: "Sự thù hận về ý thức hệ tư tưởng.", isCorrect: false }, { text: "Lợi ích quốc gia, dân tộc và yêu cầu ổn định nội tại để phát triển kinh tế.", isCorrect: true }, { text: "Áp lực từ các tổ chức hòa bình phi chính phủ.", isCorrect: false }, { text: "Yêu cầu mở rộng lãnh thổ và thuộc địa kiểu mới.", isCorrect: false }] },
+            { id: 17, question: "Sự kiện cách mạng Trung Quốc thắng lợi (1949) là mốc đánh dấu bước đột phá, góp phần làm xói mòn trật tự hai cực Ianta, vì đã làm cho", options: [{ text: "Hệ thống thuộc địa của chủ nghĩa thực dân ở Châu Á tan rã.", isCorrect: false }, { text: "Thế giới xuất hiện thêm một cực bên cạnh hai cực Xô - Mĩ.", isCorrect: false }, { text: "Âm mưu khống chế Trung Quốc của đế quốc Mỹ bị phá sản.", isCorrect: true }, { text: "Chủ nghĩa xã hội trở thành một hệ thống trên toàn thế giới.", isCorrect: false }] },
+            { id: 18, question: "Từ cuộc Chiến tranh lạnh (1947 - 1989), Việt Nam rút ra được bài học kinh nghiệm nào sau đây cho việc xây dựng chính sách quốc phòng - an ninh hiện nay?", options: [{ text: "Phải tích cực tham gia vào các liên minh quân sự do các cường quốc thành lập.", isCorrect: false }, { text: "Đối đầu quân sự với nhau không phải là giải pháp tối ưu trong quan hệ quốc tế.", isCorrect: true }, { text: "Muốn tự lực tự cường đất nước chỉ có con đường tập trung phát triển quân sự.", isCorrect: false }, { text: "Chiếm ưu thế về quân sự sẽ giải quyết được tất cả các vấn đề an ninh quốc gia.", isCorrect: false }] },
+            { id: 19, question: "Trật tự thế giới hai cực I-an-ta sụp đổ (1991) có tác động nào sau đây đến quốc tế?", options: [{ text: "Mỹ chuyển sang ủng hộ xu thế đa cực, nhiều trung tâm.", isCorrect: false }, { text: "Trung Quốc đã vươn lên trở thành nền kinh tế số 1 thế giới.", isCorrect: false }, { text: "Mở rộng quan hệ quốc tế, thúc đẩy xu thế toàn cầu hoá.", isCorrect: true }, { text: "Đưa tới sự ra đời của Hiệp hội các quốc gia Đông Nam Á.", isCorrect: false }] },
+            { id: 20, question: "Sự suy giảm sức mạnh tương đối của Mỹ và sự sụp đổ của Liên Xô sau Chiến tranh lạnh để lại bài học chiến lược lớn nhất nào cho các cường quốc đương đại?", options: [{ text: "Việc bành trướng lãnh thổ vật lý là giải pháp duy nhất để duy trì vị thế siêu cường.", isCorrect: false }, { text: "Sức mạnh quân sự không thể bù đắp được sự yếu kém về kinh tế; phát triển kinh tế là nền tảng cốt lõi của an ninh quốc gia.", isCorrect: true }, { text: "Cần phải khép kín nền kinh tế, hạn chế giao thương để tránh bị ảnh hưởng bởi khủng hoảng toàn cầu.", isCorrect: false }, { text: "An ninh quốc gia chỉ được bảo đảm vững chắc bằng việc sở hữu kho vũ khí hạt nhân lớn nhất.", isCorrect: false }] },
+            { id: 21, question: "Sự lớn mạnh của các nước Tây Âu và Nhật Bản vào khoảng những năm 70 của thế kỉ XX có tác động nào sau đây đến vị thế của Mỹ trong hệ thống tư bản chủ nghĩa?", options: [{ text: "Tạo điều kiện để vươn lên tăng cường ảnh hưởng ở Tây Âu, Nhật Bản.", isCorrect: false }, { text: "Làm suy giảm vị thế dẫn đầu của Mỹ trong hệ thống tư bản chủ nghĩa.", isCorrect: true }, { text: "Buộc Mỹ phải điều chỉnh toàn bộ chính sách kinh tế ở các quốc gia này.", isCorrect: false }, { text: "Dẫn đến sự đối đầu trực tiếp giữa Mỹ và Tây Âu trong lĩnh vực quân sự.", isCorrect: false }] },
+            { id: 22, question: "Trong thời gian tồn tại của trật tự thế giới hai cực, hai phe, sự kiện nào sau đây của Việt Nam không chịu sự tác động của xu thế hoà hoãn Đông - Tây?", options: [{ text: "Đàm phán và kí kết Hiệp định Pa-ri (1973).", isCorrect: false }, { text: "Công cuộc Đổi mới đất nước (từ năm 1986).", isCorrect: false }, { text: "Cuộc Tổng tiến công và nổi dậy Xuân 1975.", isCorrect: true }, { text: "Giải quyết vấn đề Cam-pu-chia (1989 - 1991).", isCorrect: false }] },
+            { id: 23, question: "Trong quá trình tồn tại của trật tự thế giới hai cực Ianta, cuộc chiến tranh cục bộ lớn nhất phản ánh mâu thuẫn giữa hai cực, hai phe là", options: [{ text: "cuộc Chiến tranh thế giới thứ hai (1939 - 1945).", isCorrect: false }, { text: "Chiến tranh trên bán đảo Triều Tiên (1950 - 1953).", isCorrect: false }, { text: "Chiến tranh xâm lược Đông Dương của Pháp (1945 - 1954).", isCorrect: false }, { text: "Chiến tranh xâm lược Việt Nam của Mỹ (1954 - 1975).", isCorrect: true }] },
+            { id: 24, question: "Từ sau khi Chiến tranh lạnh kết thúc (1991), thế giới phát triển theo một trong những xu thế nào sau đây?", options: [{ text: "Lấy chính trị làm nền tảng.", isCorrect: false }, { text: "Thoả hiệp để ổn định toàn cầu.", isCorrect: false }, { text: "Hạn chế phổ biến vũ khí hạt nhân.", isCorrect: false }, { text: "Đa cực, nhiều trung tâm.", isCorrect: true }] },
+            // ===== PHẦN I - LẦN 2 (Câu 1-24) =====
+            { id: 25, question: "Sau Chiến tranh lạnh, các quốc gia nào sau đây là những trung tâm quyền lực đang vươn lên khẳng định sức mạnh về kinh tế, quân sự và chính trị đối với quốc tế?", options: [{ text: "Trung Quốc và Ấn Độ.", isCorrect: true }, { text: "Nhật Bản và Nam Phi.", isCorrect: false }, { text: "Mỹ, Anh và Tây Ban Nha.", isCorrect: false }, { text: "Liên bang Nga và Mông Cổ.", isCorrect: false }] },
+            { id: 26, question: "Từ sau Chiến tranh lạnh, các nước trên thế giới có sự điều chỉnh quan hệ theo hướng đối thoại, thoả hiệp và tránh xung đột trực tiếp, chủ yếu vì lí do nào sau đây?", options: [{ text: "Cần tập trung vào cuộc đấu tranh chống lại chủ nghĩa khủng bố.", isCorrect: false }, { text: "Từng bước giảm bớt số lượng vũ khí hạt nhân của các cường quốc.", isCorrect: false }, { text: "Muốn có môi trường thuận lợi để vươn lên xác lập vị thế quốc tế.", isCorrect: true }, { text: "Hợp tác địa-chính trị trở thành nội dung căn bản giữa các nước.", isCorrect: false }] },
+            { id: 27, question: "Nội dung nào sau đây là xu thế phát triển của thế giới sau Chiến tranh lạnh được nhân dân các nước hi vọng, mong muốn trở thành hiện thực?", options: [{ text: "Hoà bình, ổn định để cùng phát triển.", isCorrect: true }, { text: "Phát triển kinh tế, quân sự là trung tâm.", isCorrect: false }, { text: "Đa cực, đa phe trong đối ngoại quốc tế.", isCorrect: false }, { text: "Liên kết và hội nhập giữa các nước lớn.", isCorrect: false }] },
+            { id: 28, question: "Nhận xét nào đúng về quan hệ quốc tế trong đầu thế kỷ XXI?", options: [{ text: "Có biến động nhưng vẫn giữ được môi trường hòa bình tuyệt đối.", isCorrect: false }, { text: "Các quốc gia có quan hệ phức tạp, đan xen và phụ thuộc lẫn nhau.", isCorrect: true }, { text: "Mâu thuẫn lợi ích được hóa giải khi các nước gia nhập vào NATO.", isCorrect: false }, { text: "Những xung đột tôn giáo, sắc tộc không còn trong quan hệ quốc tế.", isCorrect: false }] },
+            { id: 29, question: "Trong bối cảnh quốc tế đang diễn ra theo nhiều xu thế mới với những diễn biến phức tạp, chủ trương nhất quán của Đảng và Nhà nước Việt Nam là", options: [{ text: "tham gia liên minh chính trị với Mỹ và các nước phương Tây.", isCorrect: false }, { text: "chủ động nắm bắt thời cơ, đi tắt đón đầu để vượt qua thách thức.", isCorrect: true }, { text: "hội nhập quốc tế để thu hút vốn đầu tư bên ngoài bằng mọi giá.", isCorrect: false }, { text: "chủ động kết nối các cường quốc để nâng tầm đối tác chiến lược.", isCorrect: false }] },
+            { id: 30, question: "Sau khi Trật tự thế giới hai cực I-an-ta sụp đổ (1991), quốc gia nào sau đây ra sức thiết lập trật tự thế giới đơn cực?", options: [{ text: "Nga.", isCorrect: false }, { text: "Ấn Độ.", isCorrect: false }, { text: "Mỹ.", isCorrect: true }, { text: "Nhật Bản.", isCorrect: false }] },
+            { id: 31, question: "Xu thế toàn cầu hóa phát triển không dẫn đến hệ quả nào sau đây?", options: [{ text: "Làm giảm tuyệt đối mọi mâu thuẫn và cạnh tranh.", isCorrect: true }, { text: "Tăng cường tính liên kết giữa khu vực và quốc tế.", isCorrect: false }, { text: "Thúc đẩy sự hợp tác và chia sẻ nguồn lực toàn cầu.", isCorrect: false }, { text: "Gia tăng sự phụ thuộc lẫn nhau giữa các quốc gia.", isCorrect: false }] },
+            { id: 32, question: "Chiến tranh Lạnh kết thúc dẫn đến sự thay đổi nào sau đây trong quan hệ quốc tế?", options: [{ text: "Các nước phát triển không cần điều chỉnh chính sách đối ngoại.", isCorrect: false }, { text: "Thế giới vẫn duy trì hai phe đối lập nhưng với hình thức khác.", isCorrect: false }, { text: "Ý thức hệ vẫn là tiêu chí duy nhất để phân chia quan hệ quốc tế.", isCorrect: false }, { text: "Các nước không còn dựa trên ý thức hệ để tập hợp lực lượng.", isCorrect: true }] },
+            { id: 33, question: "Sau Chiến tranh lạnh, quốc gia nào sau đây ở châu Á nỗ lực vươn lên trở thành một cực trong trật tự thế giới đa cực?", options: [{ text: "Anh.", isCorrect: false }, { text: "Nhật Bản.", isCorrect: true }, { text: "Pháp.", isCorrect: false }, { text: "Mỹ.", isCorrect: false }] },
+            { id: 34, question: "Trong quan hệ quốc tế sau Chiến tranh lạnh, xu thế nào đã thay thế cho xu thế đối đầu?", options: [{ text: "Xung đột vũ trang cục bộ.", isCorrect: false }, { text: "Giao lưu văn hoá đơn thuần.", isCorrect: false }, { text: "Đối thoại, hợp tác.", isCorrect: true }, { text: "Chạy đua vũ trang.", isCorrect: false }] },
+            { id: 35, question: "Nhân tố nào sau đây đóng vai trò quyết định để các cường quốc tham gia xác lập trật tự thế giới mới sau Chiến tranh lạnh?", options: [{ text: "Sức mạnh tổng hợp của quốc gia, trong đó kinh tế vẫn là trụ cột.", isCorrect: true }, { text: "Sức mạnh quân sự của quốc gia với lực lượng quân sự hùng hậu.", isCorrect: false }, { text: "Sự ra đời và ngày càng mở rộng của các tổ chức liên kết khu vực.", isCorrect: false }, { text: "Là 1 trong 5 cường quốc của Hội đồng Bảo an Liên hợp quốc.", isCorrect: false }] },
+            { id: 36, question: "Một trật tự thế giới mà ở đó các nước lớn, các trung tâm kinh tế - tài chính lớn như Mỹ, Nhật Bản, Trung Quốc, Ấn Độ, Liên bang Nga,... có vị thế quan trọng đối với quan hệ quốc tế được gọi là trật tự", options: [{ text: "đơn cực, nhất siêu.", isCorrect: false }, { text: "đa phương hoá.", isCorrect: false }, { text: "tam cường, đa phương.", isCorrect: false }, { text: "đa cực, nhiều trung tâm.", isCorrect: true }] },
+            { id: 37, question: "Sau Chiến tranh lạnh, quan hệ giữa các quốc gia có chế độ chính trị-xã hội khác nhau có một trong những đặc điểm nào sau đây?", options: [{ text: "Được mở rộng hợp tác trên cơ sở tôn trọng lẫn nhau.", isCorrect: true }, { text: "Căng thẳng với đối đầu vì có sự khác biệt về thể chế.", isCorrect: false }, { text: "Phụ thuộc vào sự can thiệp của các tổ chức quốc tế.", isCorrect: false }, { text: "Bị cắt đứt hoàn toàn do sự cạnh tranh kinh tế gay gắt.", isCorrect: false }] },
+            { id: 38, question: "Mỹ và quốc gia nào dưới đây được đánh giá là hai cực có tầm ảnh hưởng lớn nhất trong xu thế đa cực hiện nay?", options: [{ text: "Trung Quốc.", isCorrect: true }, { text: "Ấn Độ.", isCorrect: false }, { text: "Nhật Bản.", isCorrect: false }, { text: "Liên bang Nga.", isCorrect: false }] },
+            { id: 39, question: "Nhận xét nào sau đây không đúng về vị thế của Mỹ sau Chiến tranh lạnh?", options: [{ text: "Là nước có ảnh hưởng lớn nhất đến quan hệ quốc tế.", isCorrect: false }, { text: "Vươn lên thành một cực trong trật tự thế giới đa cực.", isCorrect: false }, { text: "Là quốc gia có quy mô kinh tế lớn nhất trên thế giới.", isCorrect: false }, { text: "Là nước luôn có tốc độ tăng trưởng nhanh và ổn định nhất thế giới.", isCorrect: true }] },
+            { id: 40, question: "Nội dung nào sau đây không phải là biểu hiện của xu thế đa cực trong quan hệ quốc tế sau Chiến tranh lạnh?", options: [{ text: "Mỹ vẫn là cường quốc số 1 thế giới, nhưng đã suy giảm so với trước.", isCorrect: false }, { text: "Bên cạnh Mỹ, nhiều trung tâm quyền lực cũng xuất hiện và phát triển.", isCorrect: false }, { text: "Các trung tâm, tổ chức kinh tế, tài chính quốc tế và khu vực có vai trò lớn.", isCorrect: false }, { text: "Các công ty xuyên quốc gia của Mỹ vươn ra chi phối nền kinh tế toàn cầu.", isCorrect: true }] },
+            { id: 41, question: "Khái niệm \"đa cực\" được hiểu là", options: [{ text: "trạng thái địa - văn hóá toàn cầu với nhiều trung tâm quyền lực chi phối.", isCorrect: false }, { text: "trạng thái địa - chính trị toàn cầu với nhiều trung tâm quyền lực chi phối.", isCorrect: true }, { text: "một trật tự thể giới mà các nước vừa và nhỏ có vai trò quyết định.", isCorrect: false }, { text: "một trật tự mới với vai trò vượt trội của Mỹ, chi phối các nước khác.", isCorrect: false }] },
+            { id: 42, question: "Năm 1999, nhóm 20 nền kinh tế lớn nhất thế giới (G20) được thành lập, trở thành trung tâm điều phối các nỗ lực quốc tế nhằm mục đích", options: [{ text: "thúc đẩy sự phát triển kinh tế thế giới.", isCorrect: true }, { text: "chi phối các hoạt động kinh tế thế giới.", isCorrect: false }, { text: "thúc đẩy hòa bình và ổn định khu vực.", isCorrect: false }, { text: "tăng cường hợp tác an ninh, chính trị.", isCorrect: false }] },
+            { id: 43, question: "Sự sụp đổ của chế độ xã hội chủ nghĩa ở Đông Âu và Liên Xô (1989 - 1991) đã tạo cho Mỹ lợi thế nào sau đây?", options: [{ text: "Chi phối được các nước tư bản đồng minh đi theo Mỹ.", isCorrect: false }, { text: "Thực hiện thành công mục tiêu chiến lược toàn cầu.", isCorrect: false }, { text: "Đẩy mạnh việc triển khai chiến lược đa phương hoá.", isCorrect: false }, { text: "Tận dụng cơ hội để thiết lập trật tự thế giới đơn cực.", isCorrect: true }] },
+            { id: 44, question: "Nội dung nào sau đây phản ánh đúng tác động của sự sụp đổ Trật tự hai cực I-an-ta đối với tình hình thế giới?", options: [{ text: "Các nước ra sức chạy đua vũ trang để khẳng định vị thế của mình.", isCorrect: false }, { text: "Làm gia tăng sự phụ thuộc của các quốc gia vào Liên Xô và Mỹ.", isCorrect: false }, { text: "Làm gia tăng sự đối đầu của khối NATO và Hiệp ước Vác-sa-va.", isCorrect: false }, { text: "Đưa tới sự phát triển của những xu thế mới trong quan hệ quốc tế.", isCorrect: true }] },
+            { id: 45, question: "Nội dung nào sau đây là đặc điểm nổi bật trong xu thế hợp tác quốc tế sau Chiến tranh lạnh?", options: [{ text: "Gắn chặt việc hợp tác kinh tế với các hoạt động quân sự đa phương.", isCorrect: false }, { text: "Ưu tiên lợi ích của quốc gia, dân tộc dẫn đến sự cạnh tranh gay gắt.", isCorrect: false }, { text: "Có sự nhất thể hóa thể chế chính trị giữa các nước hợp tác với nhau.", isCorrect: false }, { text: "Hợp tác dựa trên cơ sở hai bên đều có lợi và cùng tồn tại hòa bình.", isCorrect: true }] },
+            { id: 46, question: "Nội dung nào sau đâu không phải là biểu hiện của xu thế đa cực?", options: [{ text: "Mỹ bị suy giảm sức mạnh tương đối trong tương quan so sánh với các cường quốc khác.", isCorrect: false }, { text: "Cách mạng công nghiệp lần thứ ba ngày càng đạt được nhiều thành tựu, đặc biệt là về kinh tế.", isCorrect: true }, { text: "Các trung tâm quyền lực ngày càng vươn lên, khẳng định sức mạnh về kinh tế, quân sự, chính trị đối với thế giới.", isCorrect: false }, { text: "Vai trò của các trung tâm, tổ chức kinh tế, tài chính quốc tế và khu vực ngày càng lớn.", isCorrect: false }] },
+            { id: 47, question: "Bản chất của quá trình toàn cầu hoá là gì?", options: [{ text: "Là sự cô lập nền kinh tế của từng quốc gia để tự cung tự cấp.", isCorrect: false }, { text: "Sự áp đặt văn hóa phương Tây lên các quốc gia đang phát triển.", isCorrect: false }, { text: "Quá trình xóa bỏ hoàn toàn đường biên giới địa lý giữa các nước.", isCorrect: false }, { text: "Quá trình gia tăng mạnh mẽ mối liên hệ, sự phụ thuộc, tác động lẫn nhau giữa các quốc gia.", isCorrect: true }] },
+            { id: 48, question: "Nội dung nào sau đây là biểu hiện của xu thế đa cực?", options: [{ text: "Các nước tăng cường chạy đua về kinh tế và quân sự, hình thành các liên minh xuyên lục địa.", isCorrect: false }, { text: "Các nước trong khối NATO liên kết với nhau tạo ra sức mạnh quân sự vượt trội.", isCorrect: false }, { text: "Các trung tâm quyền lực vươn lên, khẳng định sức mạnh về kinh tế, quân sự, chính trị đối với thế giới.", isCorrect: true }, { text: "Sự lớn mạnh của Trung Quốc trước cải cách, mở cửa, đe doạ đến vị trí số 1 của Mỹ.", isCorrect: false }] },
+            // ===== PHẦN I - LẦN 3 (Câu 1-40) =====
+            { id: 49, question: "Việc các quốc gia điều chỉnh chiến lược lấy phát triển kinh tế làm trọng tâm nhằm mục đích cốt lõi gì?", options: [{ text: "Xây dựng quân đội hùng mạnh để xâm chiếm lãnh thổ.", isCorrect: false }, { text: "Tăng cường sức mạnh, tiềm lực quốc gia và nâng cao đời sống nhân dân.", isCorrect: true }, { text: "Cạnh tranh ảnh hưởng ý thức hệ trên toàn cầu.", isCorrect: false }, { text: "Hình thành các liên minh quân sự đối đầu với Mỹ.", isCorrect: false }] },
+            { id: 50, question: "Sau Chiến tranh lạnh, tổ chức nào sau đây nỗ lực vươn lên trở thành một cực trong Trật tự thế giới đa cực?", options: [{ text: "Liên minh châu Âu.", isCorrect: true }, { text: "Diễn đàn hợp tác Á - Âu.", isCorrect: false }, { text: "Hiệp ước Bắc Đại Tây Dương.", isCorrect: false }, { text: "Hội đồng tương trợ kinh tế.", isCorrect: false }] },
+            { id: 51, question: "Trong xu thế đa cực, trung tâm quyền lực nào đã vươn lên mạnh mẽ để trở thành nền kinh tế lớn thứ hai thế giới (từ năm 2010)?", options: [{ text: "Ấn Độ.", isCorrect: false }, { text: "Liên bang Nga.", isCorrect: false }, { text: "Nhật Bản.", isCorrect: false }, { text: "Trung Quốc.", isCorrect: true }] },
+            { id: 52, question: "Hành động nào sau đây của một quốc gia là phù hợp nhất với nguyên tắc của xu thế đối thoại, hợp tác?", options: [{ text: "Đưa tàu chiến vào vùng biển tranh chấp để răn đe quốc gia láng giềng.", isCorrect: false }, { text: "Tham gia các hiệp định thương mại tự do và giải quyết tranh chấp qua tòa án quốc tế.", isCorrect: true }, { text: "Tài trợ vũ khí cho các lực lượng phiến quân ở một quốc gia khác.", isCorrect: false }, { text: "Đơn phương tăng thuế quan để bảo hộ sản xuất trong nước mà không thương lượng.", isCorrect: false }] },
+            { id: 53, question: "Sau Chiến tranh lạnh, các quốc gia nào sau đây là một trong các trung tâm quyền lực đang vươn lên khẳng định sức mạnh về kinh tế, quân sự và chính trị đối với quốc tế?", options: [{ text: "Xi-ga-po và Nam Phi.", isCorrect: false }, { text: "Nga và Nhật Bản.", isCorrect: true }, { text: "Đan Mạch và Tây Ban Nha.", isCorrect: false }, { text: "I-ta-li-a và Mông Cổ.", isCorrect: false }] },
+            { id: 54, question: "Nội dung nào sau đây không đúng về khái niệm \"đa cực\" trong quan hệ quốc tế?", options: [{ text: "Không có một trung tâm quyền lực duy nhất thống trị trên phạm vi toàn thế giới.", isCorrect: false }, { text: "Nhiều quốc gia, khu vực tạo ra thế cân bằng kinh tế, chính trị, quân sự toàn cầu.", isCorrect: false }, { text: "Trạng thái địa - chính trị toàn cầu với một trung tâm quyền lực duy nhất chi phối.", isCorrect: true }, { text: "Trạng thái địa - chính trị toàn cầu với nhiều trung tâm quyền lực cùng chi phối.", isCorrect: false }] },
+            { id: 55, question: "Trong số các trung tâm quyền lực của thế giới đầu thế kỉ XXI, Mỹ vẫn là", options: [{ text: "Cường quốc số một, có sức mạnh vượt trội trên nhiều lĩnh vực.", isCorrect: true }, { text: "Siêu cường duy nhất, giữ vai trò thống trị các nước trên thế giới.", isCorrect: false }, { text: "Siêu cường toàn cầu, quyết định mọi vấn đề của Liên hợp quốc.", isCorrect: false }, { text: "Quốc gia duy nhất trên thế giới sở hữu các loại vũ khí hạt nhân.", isCorrect: false }] },
+            { id: 56, question: "Sau Chiến tranh lạnh, nội dung chủ yếu trong cuộc cạnh tranh giữa các cường quốc là", options: [{ text: "Xây dựng sức mạnh quốc gia tổng hợp, đặc biệt là về kinh tế.", isCorrect: true }, { text: "Tăng cường chạy đua quân sự và đối đầu bằng vũ khí hạt nhân.", isCorrect: false }, { text: "Mở rộng sự ảnh hưởng tư tưởng xã hội chủ nghĩa ra toàn cầu.", isCorrect: false }, { text: "Thiết lập lại hệ thống thuộc địa kiểu cũ ở châu Á và châu Phi.", isCorrect: false }] },
+            { id: 57, question: "Việc Việt Nam thực hiện công cuộc Đổi mới từ năm 1986 là minh chứng rõ nét cho việc nắm bắt kịp thời xu thế phát triển nào của thế giới?", options: [{ text: "Xu thế phát triển vũ khí công nghệ cao.", isCorrect: false }, { text: "Xu thế liên minh quân sự bảo vệ lãnh thổ.", isCorrect: false }, { text: "Xu thế phát triển lấy kinh tế làm trọng tâm.", isCorrect: true }, { text: "Xu thế đối đầu chính trị giữa các quốc gia.", isCorrect: false }] },
+            { id: 58, question: "Nhận xét nào sau đây phản ánh đúng tác động của các trung tâm, các tổ chức kinh tế, tài chính quốc tế và khu vực đối với quan hệ quốc tế sau Chiến tranh lạnh?", options: [{ text: "Hạn chế sự phát triển của xu thế toàn cầu hóa.", isCorrect: false }, { text: "Làm giảm sự phụ thuộc lẫn nhau giữa các nước.", isCorrect: false }, { text: "Làm suy giảm ảnh hưởng của các cường quốc.", isCorrect: false }, { text: "Góp phần củng cố xu thế đa cực, nhiều trung tâm.", isCorrect: true }] },
+            { id: 59, question: "Nhận định nào dưới đây giải thích đúng nhất lý do tại sao một trật tự thế giới \"đơn cực\" (chỉ do Mỹ lãnh đạo) khó có thể tồn tại lâu dài sau Chiến tranh lạnh?", options: [{ text: "Do Mỹ đã tự nguyện từ bỏ vị trí cường quốc số một của mình.", isCorrect: false }, { text: "Do Liên Hợp Quốc cấm bất kỳ quốc gia nào đứng đầu thế giới.", isCorrect: false }, { text: "Do sự vươn lên mạnh mẽ về kinh tế của nhiều quốc gia và trung tâm khác đã san sẻ quyền lực toàn cầu.", isCorrect: true }, { text: "Do sức mạnh quân sự của Mỹ bị tiêu diệt hoàn toàn trong các cuộc chiến tranh cục bộ.", isCorrect: false }] },
+            { id: 60, question: "Nội dung nào sau đây phản ánh đúng mối quan hệ giữa các quốc gia trong xu thế toàn cầu hoá sau Chiến tranh lạnh?", options: [{ text: "Hợp nhất và xóa bỏ chủ quyền.", isCorrect: false }, { text: "Độc lập và không liên quan nhau.", isCorrect: false }, { text: "Xung đột và triệt tiêu lẫn nhau.", isCorrect: false }, { text: "Phụ thuộc và tác động lẫn nhau.", isCorrect: true }] },
+            { id: 61, question: "Từ khái niệm \"Toàn cầu hoá\" là sự gia tăng mối liên hệ, phụ thuộc lẫn nhau, có thể rút ra hệ quả nào về mặt rủi ro đối với an ninh kinh tế quốc gia?", options: [{ text: "Nguy cơ khủng hoảng kinh tế toàn cầu sẽ bị loại bỏ hoàn toàn.", isCorrect: false }, { text: "Các quốc gia sẽ được miễn nhiễm với mọi biến động tiêu cực từ bên ngoài.", isCorrect: false }, { text: "Mỗi quốc gia sẽ tự giải quyết triệt để được lạm phát mà không cần quốc tế can thiệp.", isCorrect: false }, { text: "Một cuộc khủng hoảng tài chính tại một trung tâm lớn sẽ nhanh chóng gây hiệu ứng dây chuyền toàn cầu.", isCorrect: true }] },
+            { id: 62, question: "Nhận xét nào sau đây đúng về quan hệ quốc tế trong đầu thế kỷ XXI?", options: [{ text: "Có nhiều biến động nhưng vẫn giữ được hòa bình tuyệt đối để phát triển.", isCorrect: false }, { text: "Các nước đã điều chỉnh quan hệ đối ngoại theo hướng hợp tác cùng có lợi.", isCorrect: true }, { text: "Những xung đột tôn giáo và sắc tộc không còn trong các liên minh kinh tế.", isCorrect: false }, { text: "Mâu thuẫn lợi ích được hóa giải khi các nước gia nhập các tổ chức quốc tế.", isCorrect: false }] },
+            { id: 63, question: "Nếu xuất hiện tình trạng một quốc gia cố tình phớt lờ luật pháp quốc tế, lấy sức mạnh quân sự chèn ép nước nhỏ, thì hành vi này đang vi phạm trực tiếp đặc trưng nào của thế giới sau Chiến tranh lạnh?", options: [{ text: "Xu thế toàn cầu hóa về văn hóa.", isCorrect: false }, { text: "Quá trình phát triển khoa học - kỹ thuật.", isCorrect: false }, { text: "Biểu hiện vươn lên của Liên minh châu Âu (EU).", isCorrect: false }, { text: "Cơ sở tồn tại hòa bình, tôn trọng lẫn nhau của xu thế đối thoại, hợp tác.", isCorrect: true }] },
+            { id: 64, question: "Xu thế toàn cầu hóa là hệ quả của", options: [{ text: "Sự ra đời các công ty xuyên quốc gia.", isCorrect: false }, { text: "Quá trình thống nhất thị trường thế giới.", isCorrect: false }, { text: "Cuộc cách mạng khoa học - công nghệ.", isCorrect: true }, { text: "Sự phụ thuộc giữa các quốc gia trên thế giới.", isCorrect: false }] },
+            { id: 65, question: "Xét về bản chất, toàn cầu hóa là", options: [{ text: "Sự ra đời của các tổ chức liên kết kinh tế, thương mại, tài chính quốc tế và khu vực.", isCorrect: false }, { text: "Sự tăng lên mạnh mẽ những mối liên hệ, tác động, phụ thuộc lẫn nhau giữa các nước.", isCorrect: true }, { text: "Sự phát triển nhanh chóng của quan hệ thương mại giữa các quốc gia trên thế giới.", isCorrect: false }, { text: "Sự tăng cường sáp nhập, hợp nhất các công ty thành những tập đoàn lớn trên toàn cầu.", isCorrect: false }] },
+            { id: 66, question: "Trong bối cảnh quốc tế sau Chiến tranh lạnh diễn biến phức tạp, chủ trương nhất quán của Đảng và Nhà nước Việt Nam là", options: [{ text: "Mở rộng việc hội nhập quốc tế toàn diện bằng mọi giá.", isCorrect: false }, { text: "Nhượng bộ các nước lớn để nâng tầm đối tác chiến lược.", isCorrect: false }, { text: "Gia nhập vào các liên minh chính trị quốc tế và khu vực.", isCorrect: false }, { text: "Chủ động đi tắt đón đầu và nắm bắt thời cơ để phát triển.", isCorrect: true }] },
+            { id: 67, question: "Nội dung nào sau đây không phải là nhân tố tác động đến sự hình thành Trật tự thế giới mới sau khi Chiến tranh lạnh chấm dứt?", options: [{ text: "Sự lớn mạnh của các lực lượng hòa bình, dân chủ, tiến bộ.", isCorrect: false }, { text: "Sự lớn mạnh và ảnh hưởng của hệ thống xã hội chủ nghĩa.", isCorrect: true }, { text: "Sự phát triển mạnh mẽ của cách mạng khoa học công nghệ.", isCorrect: false }, { text: "Thực lực kinh tế, chính trị và quân sự của các cường quốc.", isCorrect: false }] },
+            { id: 68, question: "Đặc điểm nổi bật trong quan hệ quốc tế sau khi Chiến tranh lạnh chấm dứt là", options: [{ text: "Liên Xô - Mỹ tiếp tục tăng cường hợp tác kinh tế, xã hội.", isCorrect: false }, { text: "Quan hệ giữa Liên Xô - Mỹ ngày càng trở nên căng thẳng.", isCorrect: false }, { text: "Hòa bình, hợp tác trở thành xu thế chủ đạo của thế giới.", isCorrect: true }, { text: "Có sự đối đầu giữa hai hệ thống chính trị xã hội đối lập.", isCorrect: false }] },
+            { id: 69, question: "Quan điểm của Đại hội XII Đảng Cộng sản Việt Nam: \"Cục diện thế giới theo xu hướng đa cực, đa trung tâm diễn ra nhanh hơn\" đòi hỏi đường lối ngoại giao của Việt Nam phải ưu tiên chiến lược nào?", options: [{ text: "Đóng cửa nền kinh tế để tránh bị các trung tâm lớn chi phối.", isCorrect: false }, { text: "Đa phương hóa, đa dạng hóa quan hệ quốc tế, làm bạn với tất cả các nước.", isCorrect: true }, { text: "Chọn một siêu cường duy nhất để liên minh quân sự nhằm tự vệ.", isCorrect: false }, { text: "Tập trung toàn lực chạy đua vũ trang với các nước láng giềng.", isCorrect: false }] },
+            { id: 70, question: "Việc các quốc gia hợp tác trên cơ sở \"hai bên cùng có lợi, tôn trọng lẫn nhau, cùng tồn tại hòa bình\" có ý nghĩa nào trong quan hệ quốc tế sau Chiến tranh lạnh?", options: [{ text: "Hạn chế hoàn toàn nguy cơ xung đột vũ trang và căng thẳng.", isCorrect: false }, { text: "Là động lực để thúc đẩy quan hệ hợp tác toàn cầu bền vững.", isCorrect: true }, { text: "Tạo ra những khối đối đầu mới giữa các nước đang phát triển.", isCorrect: false }, { text: "Thúc đẩy chiến lược cạnh tranh ảnh hưởng giữa các nước lớn.", isCorrect: false }] },
+            { id: 71, question: "Trong xu thế đa cực, quyền lực toàn cầu được phân bổ như thế nào?", options: [{ text: "Bị chi phối bởi hai quốc gia có vũ khí hạt nhân mạnh nhất.", isCorrect: false }, { text: "Tập trung hoàn toàn vào tay một siêu cường duy nhất.", isCorrect: false }, { text: "Không một quốc gia nào có quyền lực áp đảo đối với các quốc gia khác.", isCorrect: true }, { text: "Do Liên minh châu Âu (EU) độc quyền quản lý.", isCorrect: false }] },
+            { id: 72, question: "Sau Chiến tranh lạnh, nhiều tổ chức kinh tế -tài chính khu vực, liên khu vực có vai trò ngày càng lớn đối với sự phát triển của thế giới, ngoại trừ", options: [{ text: "Diễn đàn hợp tác Á Âu (ASEM).", isCorrect: false }, { text: "Hiệp hội các quốc gia Đông Nam Á (ASEAN).", isCorrect: false }, { text: "Hội đồng Tương trợ kinh tế (SEV).", isCorrect: true }, { text: "Liên minh châu Âu (EU).", isCorrect: false }] },
+            { id: 73, question: "Xu thế đối thoại, hợp tác sau Chiến tranh lạnh phản ánh điều nào sau đây?", options: [{ text: "Sự quay trở lại của chính sách ngoại giao pháo hạm của các nước lớn.", isCorrect: false }, { text: "Nguyện vọng kiến tạo một môi trường hòa bình của nhân loại tiến bộ.", isCorrect: true }, { text: "Tình trạng phân cực quyền lực giữa các nước lớn tồn tại trên thế giới.", isCorrect: false }, { text: "Xung đột ngày càng gay gắt giữa các nền văn minh lớn của nhân loại.", isCorrect: false }] },
+            { id: 74, question: "Xu thế nào sau đây là xu thế phát triển chính của thế giới sau Chiến tranh lạnh và là hệ quả cuộc cách mạng khoa học - công nghệ?", options: [{ text: "Toàn cầu hoá.", isCorrect: true }, { text: "Lấy kinh tế làm trung tâm.", isCorrect: false }, { text: "Đối thoại giữa các nước lớn.", isCorrect: false }, { text: "Xu thế đa cực.", isCorrect: false }] },
+            { id: 75, question: "Nội dung nào sau đây là đặc điểm nổi bật của quan hệ quốc tế trong giai đoạn từ năm 1945 đến đầu những năm 70 của thế kỉ XX?", options: [{ text: "Chủ yếu giải quyết tranh chấp bằng đối thoại, hòa hoãn.", isCorrect: false }, { text: "Xu thế toàn cầu hóa ra đời và phát triển mạnh mẽ.", isCorrect: false }, { text: "Sự căng thẳng, chạy đua vũ trang giữa Mỹ và Liên Xô.", isCorrect: true }, { text: "Các nước lớn tăng cường hợp tác kinh tế, văn hóa.", isCorrect: false }] },
+            { id: 76, question: "Trong xu thế đa cực, quốc gia nào sau đây đang phục hồi mạnh mẽ và trở thành một trong những cường quốc hàng đầu thế giới về quân sự, khoa học, kỹ thuật?", options: [{ text: "Bô-li-vi-a.", isCorrect: false }, { text: "Mi-an-ma.", isCorrect: false }, { text: "Xu-đăng.", isCorrect: false }, { text: "Liên bang Nga.", isCorrect: true }] },
+            { id: 77, question: "Nguyên tắc căn bản để duy trì xu thế đối thoại, hợp tác giữa các quốc gia là gì?", options: [{ text: "Hai bên cùng có lợi, tôn trọng lẫn nhau, cùng tồn tại hoà bình.", isCorrect: true }, { text: "Các nước lớn được quyền áp đặt luật lệ cho nước nhỏ.", isCorrect: false }, { text: "Sử dụng vũ lực để giải quyết triệt để các tranh chấp.", isCorrect: false }, { text: "Buộc các quốc gia phải có cùng một thể chế chính trị.", isCorrect: false }] },
+            { id: 78, question: "Sau khi Chiến tranh lạnh kết thúc, các quốc gia trên thế giới đều ra sức điều chỉnh chiến lược phát triển lấy kinh tế làm trọng tâm vì một trong những lí do nào sau đây?", options: [{ text: "Sự chỉ đạo trực tiếp, thống nhất của tổ chức Liên hợp quốc.", isCorrect: false }, { text: "Kinh tế phát triển tạo nên sức mạnh thực sự cho quốc gia.", isCorrect: true }, { text: "Hòa bình và an ninh thế giới được bảo vệ ở mức cao nhất.", isCorrect: false }, { text: "Giữa các cường quốc đã chấm dứt việc chạy đua vũ trang.", isCorrect: false }] },
+            { id: 79, question: "Tổ chức ASEM bao gồm các nước thuộc Liên minh châu Âu (EU) và các quốc gia thuộc tổ chức nào ở Đông Nam Á?", options: [{ text: "Tổ chức Hiệp ước Bắc Đại Tây Dương (NATO).", isCorrect: false }, { text: "Tổ chức Thương mại Thế giới (WTO).", isCorrect: false }, { text: "Diễn đàn Hợp tác Kinh tế Châu Á - Thái Bình Dương (APEC).", isCorrect: false }, { text: "Hiệp hội các quốc gia Đông Nam Á (ASEAN).", isCorrect: true }] },
+            { id: 80, question: "Trong xu thế hội nhập và toàn cầu hóa, việc đẩy mạnh hợp tác trên cơ sở tôn trọng độc lập, chủ quyền, toàn vẹn lãnh thổ, không can dự vào công việc nội bộ của nhau và cùng có lợi là", options: [{ text: "Con đường cách mạng duy nhất.", isCorrect: false }, { text: "Đích đến cuối cùng mọi nước.", isCorrect: false }, { text: "Lựa chọn duy nhất của thế giới.", isCorrect: false }, { text: "Nguyên tắc mang tính tất yếu.", isCorrect: true }] },
+            { id: 81, question: "Đứng trước cơ hội và thách thức của cục diện đa cực, \"vũ khí\" quan trọng nhất để các nước đang phát triển bảo vệ được lợi ích cốt lõi của mình là gì?", options: [{ text: "Giao toàn quyền quyết định đối ngoại cho Liên Hợp Quốc.", isCorrect: false }, { text: "Xây dựng một liên minh quân sự hạt nhân mạnh mẽ.", isCorrect: false }, { text: "Nâng cao tiềm lực tổng hợp quốc gia dựa trên nền tảng kinh tế và khoa học công nghệ.", isCorrect: true }, { text: "Từ chối tham gia vào các diễn đàn như G20 hay ASEM.", isCorrect: false }] },
+            { id: 82, question: "Yếu tố nào sau đây là một trong những nguyên nhân thúc đẩy mạnh mẽ xu thế toàn cầu hoá sau Chiến tranh lạnh?", options: [{ text: "Cách mạng khoa học - công nghệ.", isCorrect: true }, { text: "Sự duy trì Trật tự hai cực I-an-ta.", isCorrect: false }, { text: "Sự đối đầu giữa các cường quốc.", isCorrect: false }, { text: "Các cuộc xung đột vũ trang cục bộ.", isCorrect: false }] },
+            { id: 83, question: "Nội dung nào sau đây phản ánh không đúng biểu hiện của xu thế đa cực trong quan hệ quốc tế sau khi Chiến tranh lạnh chấm dứt?", options: [{ text: "Sự cạnh tranh sức mạnh tổng hợp giữa hệ thống tư bản chủ nghĩa và xã hội chủ nghĩa.", isCorrect: true }, { text: "Mỹ suy giảm sức mạnh tương đối trong tương quan so sánh với các cường quốc khác.", isCorrect: false }, { text: "Sự gia tăng sức mạnh, tầm ảnh hưởng và vị thế kinh tế và chính trị của các nước lớn.", isCorrect: false }, { text: "Vai trò ngày càng tăng của các trung tâm, tổ chức kinh tế, tài chính khu vực, quốc tế.", isCorrect: false }] },
+            { id: 84, question: "Từ thập niên 90 của thế kỉ XX, xu thế nào ngày càng chiếm ưu thế trong quan hệ quốc tế?", options: [{ text: "Hòa hoãn Đông Tây.", isCorrect: false }, { text: "Chạy đua vũ trang.", isCorrect: false }, { text: "Nhất siêu, nhất cường.", isCorrect: false }, { text: "Đối thoại, hợp tác.", isCorrect: true }] },
+            { id: 85, question: "Sau Chiến tranh lạnh, quốc gia nào sau đây ở châu Á là một trong những trung tâm quyền lực đang vươn lên khẳng định vị thế trong quan hệ quốc tế?", options: [{ text: "Ấn Độ.", isCorrect: true }, { text: "Mi-an-ma.", isCorrect: false }, { text: "Campuchia.", isCorrect: false }, { text: "Ma-lai-xi-a.", isCorrect: false }] },
+            { id: 86, question: "Động lực cốt lõi nào đã thúc đẩy mạnh mẽ quá trình toàn cầu hoá sau Chiến tranh lạnh?", options: [{ text: "Cuộc chạy đua vũ trang trên không gian.", isCorrect: false }, { text: "Sự kết thúc Chiến tranh lạnh và cách mạng khoa học - công nghệ.", isCorrect: true }, { text: "Sự suy yếu hoàn toàn của nền kinh tế Mỹ.", isCorrect: false }, { text: "Sự ra đời của các loại vũ khí hạt nhân mới.", isCorrect: false }] },
+            { id: 87, question: "Trong thời kỳ hậu Chiến tranh lạnh, trụ cột đóng vai trò trung tâm trong sức mạnh quốc gia tổng hợp là", options: [{ text: "Văn hóa - xã hội.", isCorrect: false }, { text: "Kinh tế - khoa học kỹ thuật.", isCorrect: true }, { text: "Chính trị - tư tưởng.", isCorrect: false }, { text: "Quốc phòng - an ninh.", isCorrect: false }] },
+            { id: 88, question: "Mỹ, Nhật Bản, Liên bang Nga, Trung Quốc và Ấn Độ là các cường quốc trong xu thế đa cực nhiều trung tâm vào đầu thế kỉ XXI vì một trong những lí do nào sau đây?", options: [{ text: "Đều là các Ủy viên thường trực của Hội đồng Bảo an Liên hợp quốc.", isCorrect: false }, { text: "Có nền văn hóa truyền thống và giáo dục tiên tiến hàng đầu thế giới.", isCorrect: false }, { text: "Tham gia nhiều tổ chức, liên minh chính trị và quân sự trên thế giới.", isCorrect: false }, { text: "Có sức mạnh tổng hợp, đặc biệt là kinh tế và khoa học - công nghệ.", isCorrect: true }] }
+        ];
+
+        let currentIndex = 0;
+        let score = 0;
+        let userAttempts = {};
+        let questionStatus = {};
+        let activeQuestions = [];
+
+        function initApp() {
+            currentIndex = 0;
+            score = 0;
+            userAttempts = {};
+            questionStatus = {};
+            activeQuestions = JSON.parse(JSON.stringify(rawQuestions));
+            activeQuestions.forEach((q, idx) => {
+                userAttempts[idx] = 0;
+                questionStatus[idx] = null;
+                shuffleArray(q.options);
+            });
+            renderQuiz();
+        }
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        function renderQuiz() {
+            const container = document.getElementById('quiz-container');
+            const progressText = document.getElementById('progress-text');
+            const progressBar = document.getElementById('progress-bar');
+            const scoreDisplay = document.getElementById('score-display');
+
+            scoreDisplay.innerText = `Điểm (Lần 1): ${score}`;
+            const total = activeQuestions.length;
+
+            if (currentIndex >= total) {
+                renderResultScreen();
+                return;
+            }
+
+            progressText.innerText = `Câu ${currentIndex + 1} / ${total}`;
+            progressBar.style.width = `${((currentIndex + 1) / total) * 100}%`;
+
+            const q = activeQuestions[currentIndex];
+            let html = `
+                <div class="space-y-3 flex-1 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-1.5">
+                            <span class="text-[11px] font-bold px-2.5 py-0.5 bg-blue-50 text-blue-700 rounded-full uppercase">Câu hỏi số ${q.id}</span>
+                        </div>
+                        <h2 class="text-sm sm:text-base font-semibold text-slate-800 leading-snug mb-3">${q.question}</h2>
+                        <div class="space-y-2 mt-2" id="options-list">
+            `;
+
+            q.options.forEach((opt, oIdx) => {
+                html += `
+                    <button onclick="handleSelect(${oIdx})" class="w-full text-left p-3 rounded-xl border border-slate-200 bg-white hover:bg-blue-50/70 hover:border-blue-300 text-xs sm:text-sm font-medium text-slate-700 transition-all flex items-center shadow-xs active:scale-[0.99]">
+                        <span class="w-6 h-6 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center text-xs font-bold mr-3 flex-shrink-0">${String.fromCharCode(65 + oIdx)}</span>
+                        <span class="flex-1">${opt.text}</span>
+                    </button>
+                `;
+            });
+
+            html += `
+                        </div>
+                    </div>
+                    <div class="pt-3 border-t border-slate-100 flex justify-between items-center text-[11px] text-slate-500 mt-2">
+                        <span>Số lần thử câu này: <strong id="attempt-counter" class="text-blue-600">${userAttempts[currentIndex]}</strong></span>
+                        <span class="italic text-rose-500 font-medium">Đúng mới được qua câu!</span>
+                    </div>
+                </div>
+            `;
+            container.innerHTML = html;
+        }
+
+        function handleSelect(optionIndex) {
+            const q = activeQuestions[currentIndex];
+            const selectedOpt = q.options[optionIndex];
+            
+            userAttempts[currentIndex]++;
+            const attempts = userAttempts[currentIndex];
+            document.getElementById('attempt-counter').innerText = attempts;
+
+            if (selectedOpt.isCorrect) {
+                if (attempts === 1) {
+                    score += 1;
+                    questionStatus[currentIndex] = 'green';
+                } else {
+                    questionStatus[currentIndex] = 'yellow';
+                }
+
+                showToast("Chính xác! Đang chuyển câu...", "success");
+                setTimeout(() => {
+                    hideToast();
+                    currentIndex++;
+                    renderQuiz();
+                }, 700);
+
+            } else {
+                if (attempts === 1) questionStatus[currentIndex] = 'red1';
+                else if (attempts === 2) questionStatus[currentIndex] = 'red2';
+                else questionStatus[currentIndex] = 'red3';
+
+                const optList = document.getElementById('options-list');
+                optList.classList.add('animate-shake');
+                setTimeout(() => optList.classList.remove('animate-shake'), 400);
+
+                showToast("VUI LÒNG THỬ LẠI", "error");
+            }
+        }
+
+        function showToast(message, type) {
+            const container = document.getElementById('toast-container');
+            const msgBox = document.getElementById('toast-message');
+            container.classList.remove('hidden');
+            msgBox.innerText = message;
+
+            if (type === 'success') {
+                msgBox.className = "p-2.5 rounded-xl text-xs sm:text-sm font-semibold text-center bg-emerald-100 text-emerald-800 border border-emerald-200 shadow-sm";
+            } else {
+                msgBox.className = "p-2.5 rounded-xl text-xs sm:text-sm font-semibold text-center bg-rose-100 text-rose-800 border border-rose-200 shadow-sm";
+            }
+        }
+
+        function hideToast() {
+            document.getElementById('toast-container').classList.add('hidden');
+        }
+
+        function renderResultScreen() {
+            const container = document.getElementById('quiz-container');
+            document.getElementById('progress-text').innerText = "Hoàn thành";
+            document.getElementById('progress-bar').style.width = "100%";
+
+            let matrixHtml = '<div class="grid grid-cols-6 gap-1.5 my-3">';
+            activeQuestions.forEach((q, idx) => {
+                let colorClass = 'bg-slate-200 text-slate-600';
+                const status = questionStatus[idx];
+                
+                if (status === 'green') colorClass = 'bg-emerald-500 text-white font-bold';
+                else if (status === 'yellow') colorClass = 'bg-amber-400 text-white font-bold';
+                else if (status === 'red1') colorClass = 'bg-rose-400 text-white font-bold';
+                else if (status === 'red2') colorClass = 'bg-rose-600 text-white font-bold';
+                else if (status === 'red3') colorClass = 'bg-rose-950 text-white font-bold';
+
+                matrixHtml += `<div class="${colorClass} rounded-lg py-1.5 text-center text-[11px] flex flex-col items-center justify-center shadow-xs">Câu ${q.id}</div>`;
+            });
+            matrixHtml += '</div>';
+
+            container.innerHTML = `
+                <div class="flex flex-col items-center justify-center text-center py-4 space-y-3">
+                    <div class="w-14 h-14 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center text-2xl font-bold shadow-inner">
+                        🏆
+                    </div>
+                    <div>
+                        <h2 class="text-base sm:text-lg font-bold text-slate-800 uppercase">CHÚC MỪNG BẠN ĐÃ ĐƯỢC ${score} ĐIỂM</h2>
+                        <p class="text-[11px] text-slate-500 mt-0.5">Tổng số điểm đạt được khi người chơi nhấp đúng câu trả lời đúng lần đầu (Màu xanh lá).</p>
+                    </div>
+
+                    <div class="w-full text-left bg-slate-50 p-3 rounded-2xl border border-slate-200">
+                        <p class="text-[11px] font-bold text-slate-700 mb-1">Bảng thống kê trạng thái (88 câu):</p>
+                        ${matrixHtml}
+                        <div class="grid grid-cols-2 gap-1 text-[10px] text-slate-600 mt-2 border-t border-slate-200 pt-2">
+                            <span class="flex items-center"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block mr-1.5"></span> Xanh lá (Đúng lần 1)</span>
+                            <span class="flex items-center"><span class="w-2.5 h-2.5 rounded-full bg-amber-400 inline-block mr-1.5"></span> Vàng (Đúng lần 2+)</span>
+                            <span class="flex items-center"><span class="w-2.5 h-2.5 rounded-full bg-rose-400 inline-block mr-1.5"></span> Đỏ (Sai lần 1)</span>
+                            <span class="flex items-center"><span class="w-2.5 h-2.5 rounded-full bg-rose-600 inline-block mr-1.5"></span> Đỏ đậm (Sai lần 2)</span>
+                            <span class="flex items-center col-span-2 justify-center"><span class="w-2.5 h-2.5 rounded-full bg-rose-950 inline-block mr-1.5"></span> Đỏ đen (Sai từ lần 3+)</span>
+                        </div>
+                    </div>
+
+                    <button onclick="initApp()" class="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-md transition-all text-xs sm:text-sm mt-2 flex items-center justify-center gap-1.5">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                        Làm lại bộ 88 câu này
+                    </button>
+                </div>
+            `;
+        }
+
+        window.onload = initApp;
+    </script>
+</body>
+</html>

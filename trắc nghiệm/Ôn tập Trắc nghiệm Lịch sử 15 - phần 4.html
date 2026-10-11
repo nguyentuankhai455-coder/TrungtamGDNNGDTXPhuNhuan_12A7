@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trắc Nghiệm Lịch Sử - Mã 1 (Câu 1-29)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f1f5f9; }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-6px); }
+            40%, 80% { transform: translateX(6px); }
+        }
+        .animate-shake { animation: shake 0.4s ease-in-out; }
+    </style>
+</head>
+<body class="min-h-screen bg-slate-100 flex flex-col items-center justify-start py-3 px-2 sm:px-4">
+
+    <div id="app" class="w-full max-w-md bg-white rounded-3xl shadow-xl overflow-hidden flex flex-col min-h-[90vh] border border-slate-200">
+        
+        <div class="bg-gradient-to-r from-blue-700 to-indigo-600 text-white p-4 text-center relative shadow-md">
+            <h1 class="text-base sm:text-lg font-bold">ÔN TẬP TRẮC NGHIỆM LỊCH SỬ</h1>
+            <p class="text-[11px] text-blue-100 mt-0.5">Mã 1 • Câu 1 – 29</p>
+        </div>
+
+        <div class="bg-slate-50 px-4 py-3 border-b border-slate-200">
+            <div class="flex justify-between items-center text-xs font-semibold text-slate-600 mb-1.5">
+                <span id="progress-text">Câu 1 / 29</span>
+                <span id="score-display" class="text-blue-700 font-bold">Điểm (Lần 1): 0</span>
+            </div>
+            <div class="w-full bg-slate-200 h-2.5 rounded-full overflow-hidden">
+                <div id="progress-bar" class="bg-blue-600 h-2.5 transition-all duration-300 w-[3.4%]"></div>
+            </div>
+        </div>
+
+        <div id="toast-container" class="px-4 pt-3 hidden">
+            <div id="toast-message" class="p-3 rounded-xl text-xs sm:text-sm font-semibold text-center transition-all"></div>
+        </div>
+
+        <div id="quiz-container" class="p-4 flex-1 flex flex-col justify-between"></div>
+
+    </div>
+
+    <footer class="mt-3 text-center text-[11px] text-slate-400">
+        Mã 1 • 29 Câu trắc nghiệm
+    </footer>
+
+    <script>
+        const rawQuestions = [
+            { id: 1, question: "Tại sao thắng lợi của phong trào giải phóng dân tộc lại góp phần làm sụp đổ trật tự I-an-ta?", options: [{ text: "Vì các nước mới độc lập sở hữu vũ khí hạt nhân đe dọa Mỹ.", isCorrect: false }, { text: "Vì phong trào này trực tiếp làm sụp đổ chủ nghĩa xã hội ở Liên Xô.", isCorrect: false }, { text: "Vì sự ra đời của các quốc gia độc lập làm thay đổi khuôn khổ áp đặt của trật tự hai cực.", isCorrect: true }, { text: "Vì các nước này gia nhập khối Na-tô để chống lại Liên Xô.", isCorrect: false }] },
+            { id: 2, question: "Nội dung nào sau đây không phải xu thế phát triển của thế giới sau Chiến tranh lạnh?", options: [{ text: "Lấy phát triển kinh tế làm trung tâm.", isCorrect: false }, { text: "Đa quốc gia, đa bản sắc văn hoá.", isCorrect: true }, { text: "Quốc tế hoá - toàn cầu hoá.", isCorrect: false }, { text: "Đối thoại, hợp tác cùng phát triển.", isCorrect: false }] },
+            { id: 3, question: "Sự vươn lên của Nhật Bản và các nước Tây Âu những năm 70 thế kỉ XX có tác động như thế nào đến trật tự thế giới hai cực?", options: [{ text: "Trực tiếp tiêu diệt hệ thống xã hội chủ nghĩa ở Đông Âu.", isCorrect: false }, { text: "Củng cố vững chắc vị thế thống trị tuyệt đối của Mỹ.", isCorrect: false }, { text: "Đưa thế giới bước vào cuộc Chiến tranh thế giới thứ ba.", isCorrect: false }, { text: "Tạo ra các trung tâm kinh tế mới, làm thay đổi cán cân kinh tế thế giới.", isCorrect: true }] },
+            { id: 4, question: "Bản chất của Trật tự thế giới hai cực I-an-ta là gì?", options: [{ text: "Sự phân chia phạm vi ảnh hưởng và thiết lập sự đối đầu Xô - Mỹ.", isCorrect: true }, { text: "Sự hợp tác toàn diện giữa Mỹ và Liên Xô để phát triển kinh tế.", isCorrect: false }, { text: "Sự thống trị tuyệt đối của chủ nghĩa tư bản trên toàn cầu.", isCorrect: false }, { text: "Sự ra đời của một chính phủ thế giới thống nhất.", isCorrect: false }] },
+            { id: 5, question: "Nội dung nào sau đây phản ánh đúng tác động của sự sụp đổ Trật tự thế giới hai cực I-an-ta (1991) đến các quốc gia trên thế giới?", options: [{ text: "Các quốc gia chạy đua vũ trang để có vị trí trong trật tự thế giới mới.", isCorrect: false }, { text: "Một số cường quốc có vị trí ngày càng cao trong quan hệ quốc tế.", isCorrect: true }, { text: "Các nước tư bản chủ nghĩa và xã hội chủ nghĩa xung đột gay gắt.", isCorrect: false }, { text: "Mỹ vươn lên thiết lập trật tự thế giới \"đơn cực\" do Mỹ làm bá chủ.", isCorrect: false }] },
+            { id: 6, question: "Mâu thuẫn cốt lõi nhất, mang tính quy luật dẫn đến sự sụp đổ tất yếu của Trật tự thế giới hai cực I-an-ta là gì?", options: [{ text: "Sự phát triển không đồng đều về kinh tế dẫn đến khủng hoảng thừa ở nước Mỹ.", isCorrect: false }, { text: "Sự khác biệt về văn hóa, tôn giáo giữa các quốc gia châu Âu và châu Á.", isCorrect: false }, { text: "Sự đối lập giữa khuôn khổ cứng nhắc của trật tự hai cực với xu hướng vươn lên đa dạng, độc lập của các quốc gia trên thế giới.", isCorrect: true }, { text: "Mâu thuẫn trong việc phân chia lợi nhuận kinh tế giữa Liên Xô và các nước Đông Âu.", isCorrect: false }] },
+            { id: 7, question: "Sau Chiến tranh thế giới thứ hai, mối quan hệ đồng minh chống phát xít giữa Liên Xô và Mỹ không còn tồn tại vì một trong những nguyên nhân nào sau đây?", options: [{ text: "Lợi ích và ý thức hệ của hai bên không có sự đối lập với nhau.", isCorrect: false }, { text: "Sự lo ngại của trước chủ nghĩa cộng sản của Tổng thống Mỹ.", isCorrect: true }, { text: "Không còn có chung kẻ thù là chủ nghĩa đế quốc và thực dân.", isCorrect: false }, { text: "Các cường quốc có ý thức hệ khác nhau nên không thể hợp tác.", isCorrect: false }] },
+            { id: 8, question: "Đánh giá một cách khách quan, bản chất của Hội nghị I-an-ta (1945) phản ánh điều gì trong quan hệ quốc tế?", options: [{ text: "Sự bình đẳng tuyệt đối giữa các quốc gia dù lớn hay nhỏ.", isCorrect: false }, { text: "Tinh thần vị tha, hy sinh quyền lợi quốc gia của ba nước lớn vì nền hòa bình nhân loại.", isCorrect: false }, { text: "Sự thắng lợi vĩ đại của công lý và luật pháp quốc tế đối với sức mạnh bạo lực.", isCorrect: false }, { text: "Sự thỏa hiệp, phân chia quyền lợi và không gian sinh tồn dựa trên tương quan sức mạnh quân sự thực tế của các cường quốc.", isCorrect: true }] },
+            { id: 9, question: "Việc hai siêu cường Mỹ và Liên Xô trực tiếp hỗ trợ các phe đối lập trong Chiến tranh Triều Tiên và Chiến tranh Việt Nam chứng tỏ điều gì về Trật tự I-an-ta?", options: [{ text: "Sự bất lực của Mỹ trước sự mở rộng lãnh thổ của Liên Xô.", isCorrect: false }, { text: "Tính chất hòa bình và hợp tác của trật tự này.", isCorrect: false }, { text: "Sự kết thúc của cuộc chạy đua vũ trang trên quy mô toàn cầu.", isCorrect: false }, { text: "Sự đối đầu ý thức hệ Xô - Mỹ được chuyển hóa thành các cuộc chiến tranh ủy nhiệm (cục bộ).", isCorrect: true }] },
+            { id: 10, question: "Nội dung nào sau đây là yếu tố quyết định dẫn đến Trật tự thế giới hai cực I-an-ta sụp đổ?", options: [{ text: "Chủ nghĩa xã hội ở Liên Xô lâm vào khủng hoảng và tan rã.", isCorrect: true }, { text: "Liên Xô và Mỹ bị suy giảm vị thế do phải chạy đua vũ trang.", isCorrect: false }, { text: "Tác động của cuộc Cách mạng công nghiệp lần thứ ba.", isCorrect: false }, { text: "Sự vươn lên mạnh mẽ của các nước và tổ chức quốc tế.", isCorrect: false }] },
+            { id: 11, question: "Sự chuyển dịch từ Trật tự hai cực I-an-ta sang một trật tự thế giới mới chứng minh quy luật nào trong lịch sử quan hệ quốc tế?", options: [{ text: "Tương quan lực lượng kinh tế giữa các cường quốc thay đổi sẽ kéo theo sự thay đổi của trật tự thế giới.", isCorrect: true }, { text: "Hệ tư tưởng chính trị luôn là yếu tố bất biến và quyết định sự tồn vong của một quốc gia.", isCorrect: false }, { text: "Quan hệ quốc tế luôn được định hình bởi những cá nhân lãnh đạo kiệt xuất, không phụ thuộc vào nền tảng vật chất.", isCorrect: false }, { text: "Các tổ chức quân sự là nhân tố duy nhất duy trì sự ổn định của quan hệ quốc tế.", isCorrect: false }] },
+            { id: 12, question: "Sự tồn tại của Trật tự thế giới hai cực Ianta trong phần lớn nửa sau thế kỉ XX không phù hợp với lợi ích chung của cộng đồng quốc tế vì", options: [{ text: "Giúp Mỹ thiết lập trật tự thế giới \"đơn cực\", chi phối thế giới.", isCorrect: false }, { text: "Làm cho Liên Xô không thể giúp đỡ phong trào cách mạng thế giới.", isCorrect: false }, { text: "Làm cho các cuộc chiến tranh cục bộ diễn ra không có hồi kết.", isCorrect: false }, { text: "Chủ quyền lãnh thổ của nhiều quốc gia bị xâm phạm nghiêm trọng.", isCorrect: true }] },
+            { id: 13, question: "Tại sao nói sự tồn tại của Trật tự thế giới hai cực I-an-ta \"không phù hợp với lợi ích chung của cộng đồng quốc tế\"?", options: [{ text: "Vì nó ngăn cản hoàn toàn sự giao thương kinh tế giữa các quốc gia cùng một khối.", isCorrect: false }, { text: "Vì nó xóa bỏ hoàn toàn nền văn hóa truyền thống của các quốc gia thuộc thế giới thứ ba.", isCorrect: false }, { text: "Vì nó đẩy nhân loại vào trạng thái luôn đối diện với nguy cơ hủy diệt của Chiến tranh thế giới thứ ba và vũ khí hạt nhân.", isCorrect: true }, { text: "Vì nó thủ tiêu vai trò của mọi tổ chức quốc tế, bao gồm cả Liên hợp quốc.", isCorrect: false }] },
+            { id: 14, question: "Nội dung nào sau đây góp phần duy trì sự ổn định tương đối của Trật tự thế giới hai cực Ianta trong phần lớn nửa sau thế kỉ XX?", options: [{ text: "Không có sự khác biệt giữa hai cực, hai phe về lợi ích.", isCorrect: false }, { text: "Sự cân bằng trong lợi ích giữa hai cực, hai phe đế quốc.", isCorrect: false }, { text: "Sự cân bằng sức mạnh tương đối giữa hai phe, hai cực.", isCorrect: true }, { text: "Sự thống nhất về mục tiêu và chiến lược giữa hai phe.", isCorrect: false }] },
+            { id: 15, question: "Nhận định nào sau đây phản ánh đúng về quan hệ quốc tế trong thời kỳ Chiến tranh lạnh?", options: [{ text: "Các nước cùng tồn tại, hợp tác, cạnh tranh với sự áp đặt của Liên hợp quốc.", isCorrect: false }, { text: "Các nước vừa hợp tác, vừa đấu tranh trong bối cảnh thế giới đầy biến động.", isCorrect: true }, { text: "Chịu sự chi phối với tác động của trật tự thế giới đa cực và nhiều trung tâm.", isCorrect: false }, { text: "Liên Xô và Mỹ từ hậu thuẫn đến xung đột quân sự trực tiếp ở Đông Dương.", isCorrect: false }] },
+            { id: 16, question: "Từ sự thay đổi trạng thái quan hệ quốc tế (từ đối đầu sang đối thoại) vào cuối những năm 80, nhân tố nào được khẳng định là động lực chính chi phối chính sách đối ngoại của các siêu cường?", options: [{ text: "Sự thù hận về ý thức hệ tư tưởng.", isCorrect: false }, { text: "Lợi ích quốc gia, dân tộc và yêu cầu ổn định nội tại để phát triển kinh tế.", isCorrect: true }, { text: "Áp lực từ các tổ chức hòa bình phi chính phủ.", isCorrect: false }, { text: "Yêu cầu mở rộng lãnh thổ và thuộc địa kiểu mới.", isCorrect: false }] },
+            { id: 17, question: "Sự kiện cách mạng Trung Quốc thắng lợi (1949) là mốc đánh dấu bước đột phá, góp phần làm xói mòn trật tự hai cực Ianta, vì đã làm cho", options: [{ text: "Hệ thống thuộc địa của chủ nghĩa thực dân ở Châu Á tan rã.", isCorrect: false }, { text: "Thế giới xuất hiện thêm một cực bên cạnh hai cực Xô - Mĩ.", isCorrect: false }, { text: "Âm mưu khống chế Trung Quốc của đế quốc Mỹ bị phá sản.", isCorrect: true }, { text: "Chủ nghĩa xã hội trở thành một hệ thống trên toàn thế giới.", isCorrect: false }] },
+            { id: 18, question: "Từ cuộc Chiến tranh lạnh (1947 - 1989), Việt Nam rút ra được bài học kinh nghiệm nào sau đây cho việc xây dựng chính sách quốc phòng - an ninh hiện nay?", options: [{ text: "Phải tích cực tham gia vào các liên minh quân sự do các cường quốc thành lập.", isCorrect: false }, { text: "Đối đầu quân sự với nhau không phải là giải pháp tối ưu trong quan hệ quốc tế.", isCorrect: true }, { text: "Muốn tự lực tự cường đất nước chỉ có con đường tập trung phát triển quân sự.", isCorrect: false }, { text: "Chiếm ưu thế về quân sự sẽ giải quyết được tất cả các vấn đề an ninh quốc gia.", isCorrect: false }] },
+            { id: 19, question: "Trật tự thế giới hai cực I-an-ta sụp đổ (1991) có tác động nào sau đây đến quốc tế?", options: [{ text: "Mỹ chuyển sang ủng hộ xu thế đa cực, nhiều trung tâm.", isCorrect: false }, { text: "Trung Quốc đã vươn lên trở thành nền kinh tế số 1 thế giới.", isCorrect: false }, { text: "Mở rộng quan hệ quốc tế, thúc đẩy xu thế toàn cầu hoá.", isCorrect: true }, { text: "Đưa tới sự ra đời của Hiệp hội các quốc gia Đông Nam Á.", isCorrect: false }] },
+            { id: 20, question: "Sự suy giảm sức mạnh tương đối của Mỹ và sự sụp đổ của Liên Xô sau Chiến tranh lạnh để lại bài học chiến lược lớn nhất nào cho các cường quốc đương đại?", options: [{ text: "Việc bành trướng lãnh thổ vật lý là giải pháp duy nhất để duy trì vị thế siêu cường.", isCorrect: false }, { text: "Sức mạnh quân sự không thể bù đắp được sự yếu kém về kinh tế; phát triển kinh tế là nền tảng cốt lõi của an ninh quốc gia.", isCorrect: true }, { text: "Cần phải khép kín nền kinh tế, hạn chế giao thương để tránh bị ảnh hưởng bởi khủng hoảng toàn cầu.", isCorrect: false }, { text: "An ninh quốc gia chỉ được bảo đảm vững chắc bằng việc sở hữu kho vũ khí hạt nhân lớn nhất.", isCorrect: false }] },
+            { id: 21, question: "Sự lớn mạnh của các nước Tây Âu và Nhật Bản vào khoảng những năm 70 của thế kỉ XX có tác động nào sau đây đến vị thế của Mỹ trong hệ thống tư bản chủ nghĩa?", options: [{ text: "Tạo điều kiện để vươn lên tăng cường ảnh hưởng ở Tây Âu, Nhật Bản.", isCorrect: false }, { text: "Làm suy giảm vị thế dẫn đầu của Mỹ trong hệ thống tư bản chủ nghĩa.", isCorrect: true }, { text: "Buộc Mỹ phải điều chỉnh toàn bộ chính sách kinh tế ở các quốc gia này.", isCorrect: false }, { text: "Dẫn đến sự đối đầu trực tiếp giữa Mỹ và Tây Âu trong lĩnh vực quân sự.", isCorrect: false }] },
+            { id: 22, question: "Trong thời gian tồn tại của trật tự thế giới hai cực, hai phe, sự kiện nào sau đây của Việt Nam không chịu sự tác động của xu thế hoà hoãn Đông - Tây?", options: [{ text: "Đàm phán và kí kết Hiệp định Pa-ri (1973).", isCorrect: false }, { text: "Công cuộc Đổi mới đất nước (từ năm 1986).", isCorrect: false }, { text: "Cuộc Tổng tiến công và nổi dậy Xuân 1975.", isCorrect: true }, { text: "Giải quyết vấn đề Cam-pu-chia (1989 - 1991).", isCorrect: false }] },
+            { id: 23, question: "Trong quá trình tồn tại của trật tự thế giới hai cực Ianta, cuộc chiến tranh cục bộ lớn nhất phản ánh mâu thuẫn giữa hai cực, hai phe là", options: [{ text: "cuộc Chiến tranh thế giới thứ hai (1939 - 1945).", isCorrect: false }, { text: "Chiến tranh trên bán đảo Triều Tiên (1950 - 1953).", isCorrect: false }, { text: "Chiến tranh xâm lược Đông Dương của Pháp (1945 - 1954).", isCorrect: false }, { text: "Chiến tranh xâm lược Việt Nam của Mỹ (1954 - 1975).", isCorrect: true }] },
+            { id: 24, question: "Từ sau khi Chiến tranh lạnh kết thúc (1991), thế giới phát triển theo một trong những xu thế nào sau đây?", options: [{ text: "Lấy chính trị làm nền tảng.", isCorrect: false }, { text: "Thoả hiệp để ổn định toàn cầu.", isCorrect: false }, { text: "Hạn chế phổ biến vũ khí hạt nhân.", isCorrect: false }, { text: "Đa cực, nhiều trung tâm.", isCorrect: true }] },
+            { id: 25, question: "Sau Chiến tranh lạnh, các quốc gia nào sau đây là những trung tâm quyền lực đang vươn lên khẳng định sức mạnh về kinh tế, quân sự và chính trị đối với quốc tế?", options: [{ text: "Trung Quốc và Ấn Độ.", isCorrect: true }, { text: "Nhật Bản và Nam Phi.", isCorrect: false }, { text: "Mỹ, Anh và Tây Ban Nha.", isCorrect: false }, { text: "Liên bang Nga và Mông Cổ.", isCorrect: false }] },
+            { id: 26, question: "Từ sau Chiến tranh lạnh, các nước trên thế giới có sự điều chỉnh quan hệ theo hướng đối thoại, thoả hiệp và tránh xung đột trực tiếp, chủ yếu vì lí do nào sau đây?", options: [{ text: "Cần tập trung vào cuộc đấu tranh chống lại chủ nghĩa khủng bố.", isCorrect: false }, { text: "Từng bước giảm bớt số lượng vũ khí hạt nhân của các cường quốc.", isCorrect: false }, { text: "Muốn có môi trường thuận lợi để vươn lên xác lập vị thế quốc tế.", isCorrect: true }, { text: "Hợp tác địa-chính trị trở thành nội dung căn bản giữa các nước.", isCorrect: false }] },
+            { id: 27, question: "Nội dung nào sau đây là xu thế phát triển của thế giới sau Chiến tranh lạnh được nhân dân các nước hi vọng, mong muốn trở thành hiện thực?", options: [{ text: "Hoà bình, ổn định để cùng phát triển.", isCorrect: true }, { text: "Phát triển kinh tế, quân sự là trung tâm.", isCorrect: false }, { text: "Đa cực, đa phe trong đối ngoại quốc tế.", isCorrect: false }, { text: "Liên kết và hội nhập giữa các nước lớn.", isCorrect: false }] },
+            { id: 28, question: "Nhận xét nào đúng về quan hệ quốc tế trong đầu thế kỷ XXI?", options: [{ text: "Có biến động nhưng vẫn giữ được môi trường hòa bình tuyệt đối.", isCorrect: false }, { text: "Các quốc gia có quan hệ phức tạp, đan xen và phụ thuộc lẫn nhau.", isCorrect: true }, { text: "Mâu thuẫn lợi ích được hóa giải khi các nước gia nhập vào NATO.", isCorrect: false }, { text: "Những xung đột tôn giáo, sắc tộc không còn trong quan hệ quốc tế.", isCorrect: false }] },
+            { id: 29, question: "Trong bối cảnh quốc tế đang diễn ra theo nhiều xu thế mới với những diễn biến phức tạp, chủ trương nhất quán của Đảng và Nhà nước Việt Nam là", options: [{ text: "tham gia liên minh chính trị với Mỹ và các nước phương Tây.", isCorrect: false }, { text: "chủ động nắm bắt thời cơ, đi tắt đón đầu để vượt qua thách thức.", isCorrect: true }, { text: "hội nhập quốc tế để thu hút vốn đầu tư bên ngoài bằng mọi giá.", isCorrect: false }, { text: "chủ động kết nối các cường quốc để nâng tầm đối tác chiến lược.", isCorrect: false }] }
+        ];
+
+        let currentIndex = 0;
+        let score = 0;
+        let userAttempts = {};
+        let questionStatus = {};
+        let activeQuestions = [];
+
+        function initApp() {
+            currentIndex = 0;
+            score = 0;
+            userAttempts = {};
+            questionStatus = {};
+            activeQuestions = JSON.parse(JSON.stringify(rawQuestions));
+            activeQuestions.forEach((q, idx) => {
+                userAttempts[idx] = 0;
+                questionStatus[idx] = null;
+                shuffleArray(q.options);
+            });
+            renderQuiz();
+        }
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        function renderQuiz() {
+            const container = document.getElementById('quiz-container');
+            const progressText = document.getElementById('progress-text');
+            const progressBar = document.getElementById('progress-bar');
+            const scoreDisplay = document.getElementById('score-display');
+
+            scoreDisplay.innerText = `Điểm (Lần 1): ${score}`;
+            const total = activeQuestions.length;
+
+            if (currentIndex >= total) {
+                renderResultScreen();
+                return;
+            }
+
+            progressText.innerText = `Câu ${currentIndex + 1} / ${total}`;
+            progressBar.style.width = `${((currentIndex + 1) / total) * 100}%`;
+
+            const q = activeQuestions[currentIndex];
+            let html = `
+                <div class="space-y-3 flex-1 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-1.5">
+                            <span class="text-[11px] font-bold px-2.5 py-0.5 bg-blue-50 text-blue-700 rounded-full uppercase">Câu hỏi số ${q.id}</span>
+                        </div>
+                        <h2 class="text-sm sm:text-base font-semibold text-slate-800 leading-snug mb-3">${q.question}</h2>
+                        <div class="space-y-2 mt-2" id="options-list">
+            `;
+
+            q.options.forEach((opt, oIdx) => {
+                html += `
+                    <button onclick="handleSelect(${oIdx})" class="w-full text-left p-3 rounded-xl border border-slate-200 bg-white hover:bg-blue-50/70 hover:border-blue-300 text-xs sm:text-sm font-medium text-slate-700 transition-all flex items-center shadow-xs active:scale-[0.99]">
+                        <span class="w-6 h-6 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center text-xs font-bold mr-3 flex-shrink-0">${String.fromCharCode(65 + oIdx)}</span>
+                        <span class="flex-1">${opt.text}</span>
+                    </button>
+                `;
+            });
+
+            html += `
+                        </div>
+                    </div>
+                    <div class="pt-3 border-t border-slate-100 flex justify-between items-center text-[11px] text-slate-500 mt-2">
+                        <span>Số lần thử câu này: <strong id="attempt-counter" class="text-blue-600">${userAttempts[currentIndex]}</strong></span>
+                        <span class="italic text-rose-500 font-medium">Đúng mới được qua câu!</span>
+                    </div>
+                </div>
+            `;
+            container.innerHTML = html;
+        }
+
+        function handleSelect(optionIndex) {
+            const q = activeQuestions[currentIndex];
+            const selectedOpt = q.options[optionIndex];
+            
+            userAttempts[currentIndex]++;
+            const attempts = userAttempts[currentIndex];
+            document.getElementById('attempt-counter').innerText = attempts;
+
+            if (selectedOpt.isCorrect) {
+                if (attempts === 1) {
+                    score += 1;
+                    questionStatus[currentIndex] = 'green';
+                } else {
+                    questionStatus[currentIndex] = 'yellow';
+                }
+
+                showToast("Chính xác! Đang chuyển câu...", "success");
+                setTimeout(() => {
+                    hideToast();
+                    currentIndex++;
+                    renderQuiz();
+                }, 700);
+
+            } else {
+                if (attempts === 1) questionStatus[currentIndex] = 'red1';
+                else if (attempts === 2) questionStatus[currentIndex] = 'red2';
+                else questionStatus[currentIndex] = 'red3';
+
+                const optList = document.getElementById('options-list');
+                optList.classList.add('animate-shake');
+                setTimeout(() => optList.classList.remove('animate-shake'), 400);
+
+                showToast("VUI LÒNG THỬ LẠI", "error");
+            }
+        }
+
+        function showToast(message, type) {
+            const container = document.getElementById('toast-container');
+            const msgBox = document.getElementById('toast-message');
+            container.classList.remove('hidden');
+            msgBox.innerText = message;
+
+            if (type === 'success') {
+                msgBox.className = "p-2.5 rounded-xl text-xs sm:text-sm font-semibold text-center bg-emerald-100 text-emerald-800 border border-emerald-200 shadow-sm";
+            } else {
+                msgBox.className = "p-2.5 rounded-xl text-xs sm:text-sm font-semibold text-center bg-rose-100 text-rose-800 border border-rose-200 shadow-sm";
+            }
+        }
+
+        function hideToast() {
+            document.getElementById('toast-container').classList.add('hidden');
+        }
+
+        function renderResultScreen() {
+            const container = document.getElementById('quiz-container');
+            document.getElementById('progress-text').innerText = "Hoàn thành";
+            document.getElementById('progress-bar').style.width = "100%";
+
+            let matrixHtml = '<div class="grid grid-cols-6 gap-1.5 my-3">';
+            activeQuestions.forEach((q, idx) => {
+                let colorClass = 'bg-slate-200 text-slate-600';
+                const status = questionStatus[idx];
+                
+                if (status === 'green') colorClass = 'bg-emerald-500 text-white font-bold';
+                else if (status === 'yellow') colorClass = 'bg-amber-400 text-white font-bold';
+                else if (status === 'red1') colorClass = 'bg-rose-400 text-white font-bold';
+                else if (status === 'red2') colorClass = 'bg-rose-600 text-white font-bold';
+                else if (status === 'red3') colorClass = 'bg-rose-950 text-white font-bold';
+
+                matrixHtml += `<div class="${colorClass} rounded-lg py-1.5 text-center text-[11px] flex flex-col items-center justify-center shadow-xs">Câu ${q.id}</div>`;
+            });
+            matrixHtml += '</div>';
+
+            container.innerHTML = `
+                <div class="flex flex-col items-center justify-center text-center py-4 space-y-3">
+                    <div class="w-14 h-14 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center text-2xl font-bold shadow-inner">
+                        🏆
+                    </div>
+                    <div>
+                        <h2 class="text-base sm:text-lg font-bold text-slate-800 uppercase">CHÚC MỪNG BẠN ĐÃ ĐƯỢC ${score} ĐIỂM</h2>
+                        <p class="text-[11px] text-slate-500 mt-0.5">Tổng số điểm đạt được khi người chơi nhấp đúng câu trả lời đúng lần đầu (Màu xanh lá).</p>
+                    </div>
+
+                    <div class="w-full text-left bg-slate-50 p-3 rounded-2xl border border-slate-200">
+                        <p class="text-[11px] font-bold text-slate-700 mb-1">Bảng thống kê trạng thái (29 câu):</p>
+                        ${matrixHtml}
+                        <div class="grid grid-cols-2 gap-1 text-[10px] text-slate-600 mt-2 border-t border-slate-200 pt-2">
+                            <span class="flex items-center"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block mr-1.5"></span> Xanh lá (Đúng lần 1)</span>
+                            <span class="flex items-center"><span class="w-2.5 h-2.5 rounded-full bg-amber-400 inline-block mr-1.5"></span> Vàng (Đúng lần 2+)</span>
+                            <span class="flex items-center"><span class="w-2.5 h-2.5 rounded-full bg-rose-400 inline-block mr-1.5"></span> Đỏ (Sai lần 1)</span>
+                            <span class="flex items-center"><span class="w-2.5 h-2.5 rounded-full bg-rose-600 inline-block mr-1.5"></span> Đỏ đậm (Sai lần 2)</span>
+                            <span class="flex items-center col-span-2 justify-center"><span class="w-2.5 h-2.5 rounded-full bg-rose-950 inline-block mr-1.5"></span> Đỏ đen (Sai từ lần 3+)</span>
+                        </div>
+                    </div>
+
+                    <button onclick="initApp()" class="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-md transition-all text-xs sm:text-sm mt-2 flex items-center justify-center gap-1.5">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                        Làm lại bộ 29 câu này
+                    </button>
+                </div>
+            `;
+        }
+
+        window.onload = initApp;
+    </script>
+</body>
+</html>
