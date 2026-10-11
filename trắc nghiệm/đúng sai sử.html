@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trắc Nghiệm Lịch Sử - Đúng / Sai</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f1f5f9; }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-6px); }
+            40%, 80% { transform: translateX(6px); }
+        }
+        .animate-shake { animation: shake 0.4s ease-in-out; }
+    </style>
+</head>
+<body class="min-h-screen bg-slate-100 flex flex-col items-center justify-start py-3 px-2 sm:px-4">
+
+    <!-- Mobile Frame -->
+    <div id="app" class="w-full max-w-md bg-white rounded-3xl shadow-xl overflow-hidden flex flex-col min-h-[90vh] border border-slate-200">
+        
+        <!-- Header -->
+        <div class="bg-gradient-to-r from-red-800 to-amber-700 text-white p-4 text-center relative shadow-md">
+            <h1 class="text-base sm:text-lg font-bold">ÔN TẬP TRẮC NGHIỆM LỊCH SỬ</h1>
+            <p class="text-[11px] text-amber-100 mt-0.5">Phần Trắc Nghiệm Đúng / Sai (Hiện Lần Lượt Từng Ý)</p>
+        </div>
+
+        <!-- Progress Bar & Score -->
+        <div class="bg-slate-50 px-4 py-3 border-b border-slate-200">
+            <div class="flex justify-between items-center text-xs font-semibold text-slate-600 mb-1.5">
+                <span id="progress-text">Câu 1 - Ý a)</span>
+                <span id="score-display" class="text-red-700 font-bold">Điểm tổng: 0.00</span>
+            </div>
+            <div class="w-full bg-slate-200 h-2.5 rounded-full overflow-hidden">
+                <div id="progress-bar" class="bg-red-600 h-2.5 transition-all duration-300 w-[3.125%]"></div>
+            </div>
+        </div>
+
+        <!-- Toast Notification -->
+        <div id="toast-container" class="px-4 pt-3 hidden">
+            <div id="toast-message" class="p-3 rounded-xl text-xs sm:text-sm font-semibold text-center transition-all"></div>
+        </div>
+
+        <!-- Main Quiz Area -->
+        <div id="quiz-container" class="p-4 flex-1 flex flex-col justify-between"></div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="mt-3 text-center text-[11px] text-slate-400">
+        Ứng dụng ôn tập Lịch sử di động • Chuẩn thang điểm thi THPT
+    </footer>
+
+    <script>
+        // RAW DATA STRICTLY EXTRACTED FROM DOCX
+        const rawTF = [
+            {
+                doc: "Cho đoạn tư liệu: 'Ngay từ những năm tháng Chiến tranh thế giới diễn ra ác liệt, các nước trong phe Đồng minh đều đã nhận thức được sự cần thiết phải thành lập một tổ chức quốc tế mới rộng lớn hơn, hiệu quả hơn để thay thế cho Hội Quốc liên trong sứ mệnh gìn giữ hòa bình, an ninh quốc tế, ngăn ngừa Chiến tranh thế giới, thúc đẩy sự hợp tác giữa các dân tộc...'",
+                items: [
+                    { statement: "a) Ý tưởng thành lập Liên hợp quốc được đưa ra khi cuộc Chiến tranh thế giới thứ hai bước vào giai đoạn kết thúc.", isCorrect: false },
+                    { statement: "b) Trong quá trình hình thành Liên hợp quốc, ba nước Liên Xô, Mỹ, Anh đóng vai trò là những lực lượng nòng cốt, chủ yếu.", isCorrect: true },
+                    { statement: "c) So với Hội nghị Tê-hê-ran (1943) và Hội nghị Dumbarton (1944), Hội nghị Ianta (2/1945) đã đánh dấu Liên hợp quốc chính thức thành lập.", isCorrect: false },
+                    { statement: "d) Nhu cầu thành lập Liên hợp quốc xuất phát từ chính sự thất bại của Hội Quốc liên trong việc ngăn chặn Chiến tranh thế giới thứ nhất bùng nổ.", isCorrect: false }
+                ]
+            },
+            {
+                doc: "Đọc đoạn thông tin: Tháng 6-1941, tại Luân Đôn (Anh), các nước Đồng minh ra tuyên bố cam kết cùng hợp tác cả trong chiến tranh và hoà bình. Sự kiện này đã đặt cơ sở cho việc hướng tới thành lập Liên hợp quốc...",
+                items: [
+                    { statement: "a) Cho đến nay, Liên hợp quốc vẫn là tổ chức liên kết quốc tế lớn nhất hành tinh, có nhiệm vụ hàng đầu là tập trung vào ổn định nền kinh tế toàn cầu.", isCorrect: false },
+                    { statement: "b) Việt Nam là một trong những quốc gia sớm gia nhập Liên hợp quốc, sau khi nước Việt Nam Dân chủ Cộng hoà ra đời (9-1945).", isCorrect: false },
+                    { statement: "c) Quá trình hình thành Liên hợp quốc kéo dài từ năm 1941 đến năm 1945, phù hợp với khát vọng được sống trong hoà bình của nhân dân thế giới.", isCorrect: true },
+                    { statement: "d) Liên Xô, Mỹ và Anh là những nước có vị thế hàng đầu trong việc đặt cơ sở và tích cực trong quá trình thành lập Liên hợp quốc.", isCorrect: true }
+                ]
+            },
+            {
+                doc: "Đọc tư liệu: 'Không có nội dung nào trong Hiến chương này cho phép Liên hợp quốc can thiệp vào các vấn đề về thực chất thuộc quyền nội bộ của bất kì quốc gia nào hoặc yêu cầu các thành viên đưa những vấn đề đó ra giải quyết theo Hiến chương hiện tại...'",
+                items: [
+                    { statement: "a) Liên hợp quốc quy định các nước thành viên phải tôn trọng toàn vẹn lãnh thổ và độc lập chính trị của 5 cường quốc (Liên Xô, Mỹ, Anh, Pháp và Trung Quốc).", isCorrect: false },
+                    { statement: "b) Theo tư liệu, nguyên tắc hoạt động của Liên hợp quốc được thể hiện tại Điều 2 của Hiến chương Liên hợp quốc.", isCorrect: true },
+                    { statement: "c) Một nguyên tắc quan trọng trong quá trình hoạt động của Liên hợp quốc là nếu có tranh chấp quốc tế thì các bên phải giải quyết bằng biện pháp hoà bình.", isCorrect: true },
+                    { statement: "d) Hiến chương Liên hợp quốc có nhiều nguyên tắc, trong đó nhấn mạnh việc không can thiệp vào công việc nội bộ của các quốc gia.", isCorrect: true }
+                ]
+            },
+            {
+                doc: "Cho đoạn tư liệu: 'Liên hợp quốc được thành lập vào lúc Chiến tranh thế giới thứ hai chuẩn bị kết thúc và ngay sau đó là sự bắt đầu cuộc Chiến tranh lạnh giữa hai khối Đông – Tây...'",
+                items: [
+                    { statement: "a) Mâu thuẫn Đông - Tây và cục diện Chiến tranh lạnh là nhân tố khách quan làm ảnh hưởng đến hiệu quả của Liên hợp quốc.", isCorrect: true },
+                    { statement: "b) Liên hợp quốc chính thức thành lập trong bối cảnh cục diện Chiến tranh bùng nổ, hai cực, hai phe được xác lập.", isCorrect: false },
+                    { statement: "c) Sự đối kháng gay gắt giữa Liên Xô và Mỹ trong Chiến tranh lạnh đã làm tê liệt hoàn toàn hoạt động của Liên hợp quốc.", isCorrect: false },
+                    { statement: "d) Trong trật tự thế giới hai cực Ianta, Liên hợp quốc đóng vai trò là nhân tố hàng đầu chi phối cục diện quốc tế.", isCorrect: false }
+                ]
+            },
+            {
+                doc: "Đọc đoạn tư liệu: 'Mọi người sinh ra đều được tự do và bình đẳng về nhân quyền và các quyền. Mọi người đều được tạo hoá ban cho lí trí và lương tâm, và cần phải đối xử với nhau bằng tình anh em...'",
+                items: [
+                    { statement: "a) Tuyên ngôn Quốc tế Nhân quyền của Liên hợp quốc là tuyên ngôn về các quyền của con người nói chung, không có sự phân biệt nước lớn, nước nhỏ.", isCorrect: true },
+                    { statement: "b) Tuyên ngôn Quốc tế Nhân quyền đã góp phần xây dựng một thế giới công bằng hơn, tạo cơ hội phát triển cho tất cả mọi người ở mọi quốc gia trên thế giới.", isCorrect: true },
+                    { statement: "c) Theo Điều 1 của Tuyên ngôn Quốc tế Nhân quyền, chỉ các dân tộc trên thế giới sau khi giành được độc lập mới có quyền tự do và bình đẳng.", isCorrect: false },
+                    { statement: "d) Trong việc bảo đảm quyền con người, Liên hợp quốc chỉ tập trung bảo vệ quyền phụ nữ và trẻ em ở các nước đang chịu 'di chứng' của chủ nghĩa thực dân.", isCorrect: false }
+                ]
+            },
+            {
+                doc: "Cho đoạn tư liệu: '…Duy trì hòa bình và an ninh quốc tế, và để đạt được mục đích đó, thi hành những biện pháp tập thể có hiệu quả để phòng ngừa và loại trừ các mối đe dọa hòa bình...'",
+                items: [
+                    { statement: "a) Để duy trì hòa bình và an ninh quốc tế, Liên hợp quốc chủ trương giải quyết các tranh chấp quốc tế bằng biện pháp vũ lực.", isCorrect: false },
+                    { statement: "b) Đoạn tư liệu trên đề cập đến mục đích và nguyên tắc hoạt động của Liên hợp quốc.", isCorrect: false },
+                    { statement: "c) Việc giải quyết các tranh chấp quốc tế theo tinh thần Hiến chương phải tuân thủ nghiêm ngặt nguyên tắc đồng thuận.", isCorrect: false },
+                    { statement: "d) Duy trì hòa bình và an ninh quốc tế là mục đích hoạt động chủ yếu của Liên hợp quốc.", isCorrect: true }
+                ]
+            },
+            {
+                doc: "Đọc đoạn tư liệu: 'Đại hội đồng Liên hợp quốc đã thông qua bản Tuyên ngôn về thủ tiêu hoàn toàn chủ nghĩa thực dân, trao trả độc lập cho các quốc gia và dân tộc thuộc địa...'",
+                items: [
+                    { statement: "a) Mỹ và các nước phương Tây là những quốc gia dân chủ và tiên tiến, đi tiên phong trong việc ủng hộ thúc đẩy quá trình phi thực dân hoá trên thế giới.", isCorrect: false },
+                    { statement: "b) Việt Nam trở thành biểu tượng thúc đẩy quá trình phi thực dân hoá trên thế giới.", isCorrect: true },
+                    { statement: "c) Cuộc đấu tranh xoá bỏ thuộc địa do các nước đế quốc lập ra trước Chiến tranh thế giới thứ hai ở châu Á, châu Phi và Mỹ La-tinh được gọi là quá trình phi thực dân hoá.", isCorrect: true },
+                    { statement: "d) Liên hợp quốc đóng vai trò quyết định vào quá trình giải trừ chủ nghĩa thực dân.", isCorrect: false }
+                ]
+            },
+            {
+                doc: "Cho đoạn tư liệu: 'Với tư cách là một tổ chức đa phương toàn cầu lớn nhất, với sự tham gia của hầu hết các quốc gia trên thế giới, Liên hợp quốc là diễn đàn toàn cầu duy nhất để thúc đẩy đối thoại...'",
+                items: [
+                    { statement: "a) Sự gia tăng số lượng thành viên của Liên hợp quốc chủ yếu xuất phát từ sự bành trướng, mở rộng tầm ảnh hưởng thuộc địa của các cường quốc phương Tây.", isCorrect: false },
+                    { statement: "b) Sự lớn mạnh về số lượng và ý thức tự chủ của khối các nước đang phát triển giữ vai trò quan trọng đến sự cải tổ bộ máy và phương thức làm việc của Liên hợp quốc.", isCorrect: true },
+                    { statement: "c) Những hạn chế về 'đổi mới bộ máy và phương thức làm việc' đang cản trở Liên hợp quốc thực hiện chức năng, mục tiêu của mình.", isCorrect: true },
+                    { statement: "d) Việc Liên hợp quốc 'đổi mới bộ máy và phương thức làm việc' cho thấy so sánh tương quan lực lượng trong thập niên đầu sau thế chiến thứ hai không còn phù hợp.", isCorrect: true }
+                ]
+            }
+        ];
+
+        let currentDocIndex = 0;
+        let currentItemIndex = 0;
+        let userAttempts = {};
+        let questionStatus = {};
+        let activeTF = [];
+
+        function initApp() {
+            currentDocIndex = 0;
+            currentItemIndex = 0;
+            userAttempts = {};
+            questionStatus = {};
+            activeTF = JSON.parse(JSON.stringify(rawTF));
+            
+            activeTF.forEach((doc, docIdx) => {
+                doc.items.forEach((_, itemIdx) => {
+                    const key = `${docIdx}_${itemIdx}`;
+                    userAttempts[key] = 0;
+                    questionStatus[key] = null;
+                });
+            });
+            renderQuiz();
+        }
+
+        // Calculate score according to THPT exam standards
+        function calculateTotalScore() {
+            let totalScore = 0;
+            activeTF.forEach((doc, docIdx) => {
+                let firstTryCorrectInDoc = 0;
+                doc.items.forEach((_, itemIdx) => {
+                    const key = `${docIdx}_${itemIdx}`;
+                    if (questionStatus[key] === 'green') {
+                        firstTryCorrectInDoc++;
+                    }
+                });
+                
+                if (firstTryCorrectInDoc === 1) totalScore += 0.25;
+                else if (firstTryCorrectInDoc === 2) totalScore += 0.50;
+                else if (firstTryCorrectInDoc === 3) totalScore += 0.75;
+                else if (firstTryCorrectInDoc === 4) totalScore += 1.00;
+            });
+            return totalScore.toFixed(2);
+        }
+
+        function renderQuiz() {
+            const container = document.getElementById('quiz-container');
+            const progressText = document.getElementById('progress-text');
+            const progressBar = document.getElementById('progress-bar');
+            const scoreDisplay = document.getElementById('score-display');
+
+            scoreDisplay.innerText = `Điểm tổng: ${calculateTotalScore()}`;
+            const totalDocs = activeTF.length;
+
+            if (currentDocIndex >= totalDocs) {
+                renderResultScreen();
+                return;
+            }
+
+            const currentDoc = activeTF[currentDocIndex];
+            const currentItem = currentDoc.items[currentItemIndex];
+            const itemLetter = String.fromCharCode(97 + currentItemIndex);
+
+            // Progress tracking
+            const totalItems = totalDocs * 4;
+            const currentGlobalItem = (currentDocIndex * 4) + currentItemIndex + 1;
+            progressText.innerText = `Câu ${currentDocIndex + 1} - Ý ${itemLetter})`;
+            progressBar.style.width = `${(currentGlobalItem / totalItems) * 100}%`;
+
+            const key = `${currentDocIndex}_${currentItemIndex}`;
+            const attempts = userAttempts[key] || 0;
+
+            let html = `
+                <div class="space-y-4 flex-1 flex flex-col justify-between" id="item-card">
+                    <div>
+                        <!-- Question Header -->
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-[11px] font-bold px-2.5 py-0.5 bg-red-100 text-red-800 rounded-full uppercase">Câu Hỏi ${currentDocIndex + 1} / ${totalDocs}</span>
+                            <span class="text-xs font-semibold text-slate-500">Ý ${currentItemIndex + 1} / 4</span>
+                        </div>
+
+                        <!-- Main Document Text -->
+                        <div class="p-3.5 bg-amber-50/70 border border-amber-200/80 rounded-2xl text-xs sm:text-sm text-slate-800 font-medium leading-relaxed mb-4 shadow-xs">
+                            ${currentDoc.doc}
+                        </div>
+
+                        <!-- Current Single Sub-Question (Sub-Item) -->
+                        <div class="p-4 rounded-2xl border-2 border-red-100 bg-white shadow-xs">
+                            <span class="text-xs font-bold text-red-600 uppercase tracking-wide block mb-1">Đoạn ý cần xác định:</span>
+                            <p class="text-sm sm:text-base font-bold text-slate-800 leading-snug">${currentItem.statement}</p>
+                        </div>
+                    </div>
+
+                    <!-- Answer Action Buttons -->
+                    <div class="space-y-3">
+                        <div class="grid grid-cols-2 gap-3" id="action-buttons">
+                            <button onclick="handleSelectTF(true)" class="py-3.5 rounded-xl border-2 border-emerald-500 bg-emerald-500 hover:bg-emerald-600 text-white font-extrabold text-sm sm:text-base shadow-md active:scale-95 transition-all flex items-center justify-center gap-1">
+                                ✓ ĐÚNG
+                            </button>
+                            <button onclick="handleSelectTF(false)" class="py-3.5 rounded-xl border-2 border-rose-500 bg-rose-500 hover:bg-rose-600 text-white font-extrabold text-sm sm:text-base shadow-md active:scale-95 transition-all flex items-center justify-center gap-1">
+                                ✕ SAI
+                            </button>
+                        </div>
+
+                        <div class="pt-2 border-t border-slate-100 flex justify-between items-center text-[11px] text-slate-500">
+                            <span>Số lần thử ý này: <strong id="attempt-counter" class="text-red-600">${attempts}</strong></span>
+                            <span class="italic text-rose-500 font-medium">Đúng mới được qua ý tiếp!</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+            container.innerHTML = html;
+        }
+
+        function handleSelectTF(userChoice) {
+            const currentDoc = activeTF[currentDocIndex];
+            const currentItem = currentDoc.items[currentItemIndex];
+            const key = `${currentDocIndex}_${currentItemIndex}`;
+
+            userAttempts[key] = (userAttempts[key] || 0) + 1;
+            const attempts = userAttempts[key];
+
+            if (userChoice === currentItem.isCorrect) {
+                if (attempts === 1) {
+                    questionStatus[key] = 'green';
+                } else {
+                    questionStatus[key] = 'yellow';
+                }
+
+                showToast("Chính xác! Chuyển sang ý tiếp theo...", "success");
+
+                setTimeout(() => {
+                    hideToast();
+                    // Advance to next sub-item or next document question
+                    if (currentItemIndex < 3) {
+                        currentItemIndex++;
+                    } else {
+                        currentItemIndex = 0;
+                        currentDocIndex++;
+                    }
+                    renderQuiz();
+                }, 600);
+
+            } else {
+                // Wrong answer triggers shake and progressive red feedback
+                if (attempts === 1) questionStatus[key] = 'red1';
+                else if (attempts === 2) questionStatus[key] = 'red2';
+                else questionStatus[key] = 'red3';
+
+                const card = document.getElementById('action-buttons');
+                card.classList.add('animate-shake');
+                setTimeout(() => card.classList.remove('animate-shake'), 400);
+
+                showToast("VUI LÒNG THỬ LẠI", "error");
+                document.getElementById('attempt-counter').innerText = attempts;
+            }
+        }
+
+        function showToast(message, type) {
+            const container = document.getElementById('toast-container');
+            const msgBox = document.getElementById('toast-message');
+            container.classList.remove('hidden');
+            msgBox.innerText = message;
+
+            if (type === 'success') {
+                msgBox.className = "p-2.5 rounded-xl text-xs sm:text-sm font-semibold text-center bg-emerald-100 text-emerald-800 border border-emerald-200 shadow-sm";
+            } else {
+                msgBox.className = "p-2.5 rounded-xl text-xs sm:text-sm font-semibold text-center bg-rose-100 text-rose-800 border border-rose-200 shadow-sm";
+            }
+        }
+
+        function hideToast() {
+            document.getElementById('toast-container').classList.add('hidden');
+        }
+
+        function renderResultScreen() {
+            const container = document.getElementById('quiz-container');
+            document.getElementById('progress-text').innerText = "Hoàn thành";
+            document.getElementById('progress-bar').style.width = "100%";
+
+            const finalScore = calculateTotalScore();
+
+            let matrixHtml = '<div class="grid grid-cols-4 gap-1.5 my-3">';
+            activeTF.forEach((doc, docIdx) => {
+                doc.items.forEach((_, itemIdx) => {
+                    const key = `${docIdx}_${itemIdx}`;
+                    let colorClass = 'bg-slate-200 text-slate-600';
+                    const status = questionStatus[key];
+                    
+                    if (status === 'green') colorClass = 'bg-emerald-500 text-white font-bold';
+                    else if (status === 'yellow') colorClass = 'bg-amber-400 text-white font-bold';
+                    else if (status === 'red1') colorClass = 'bg-rose-400 text-white font-bold';
+                    else if (status === 'red2') colorClass = 'bg-rose-600 text-white font-bold';
+                    else if (status === 'red3') colorClass = 'bg-rose-950 text-white font-bold';
+
+                    const itemLetter = String.fromCharCode(97 + itemIdx);
+                    matrixHtml += `<div class="${colorClass} rounded-lg py-1.5 text-center text-[11px] flex items-center justify-center shadow-xs">C${docIdx+1}.${itemLetter}</div>`;
+                });
+            });
+            matrixHtml += '</div>';
+
+            container.innerHTML = `
+                <div class="flex flex-col items-center justify-center text-center py-3 space-y-3">
+                    <div class="w-14 h-14 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center text-2xl font-bold shadow-inner">
+                        🏆
+                    </div>
+                    <div>
+                        <h2 class="text-base sm:text-lg font-bold text-slate-800 uppercase">CHÚC MỪNG BẠN ĐÃ ĐƯỢC ${finalScore} ĐIỂM</h2>
+                        <p class="text-[11px] text-slate-500 mt-1 px-2">Điểm tính theo chuẩn THPT: Đúng lần đầu 1 ý = 0.25đ, 2 ý = 0.5đ, 3 ý = 0.75đ, 4 ý = 1.0đ.</p>
+                    </div>
+
+                    <div class="w-full text-left bg-slate-50 p-3 rounded-2xl border border-slate-200">
+                        <p class="text-[11px] font-bold text-slate-700 mb-1">Bảng thống kê trạng thái các ý:</p>
+                        ${matrixHtml}
+                        <div class="grid grid-cols-2 gap-1 text-[10px] text-slate-600 mt-2">
+                            <span class="flex items-center"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block mr-1.5"></span> Xanh lá (Đúng lần 1)</span>
+                            <span class="flex items-center"><span class="w-2.5 h-2.5 rounded-full bg-amber-400 inline-block mr-1.5"></span> Vàng (Đúng từ lần 2+)</span>
+                            <span class="flex items-center"><span class="w-2.5 h-2.5 rounded-full bg-rose-400 inline-block mr-1.5"></span> Đỏ (Sai lần 1)</span>
+                            <span class="flex items-center"><span class="w-2.5 h-2.5 rounded-full bg-rose-600 inline-block mr-1.5"></span> Đỏ đậm (Sai lần 2)</span>
+                            <span class="flex items-center col-span-2 justify-center"><span class="w-2.5 h-2.5 rounded-full bg-rose-950 inline-block mr-1.5"></span> Đỏ đen (Sai từ lần 3+)</span>
+                        </div>
+                    </div>
+
+                    <button onclick="initApp()" class="w-full py-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl shadow-md transition-all text-xs sm:text-sm mt-2 flex items-center justify-center gap-1.5">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                        Quay lại để Reset lại tất cả
+                    </button>
+                </div>
+            `;
+        }
+
+        window.onload = initApp;
+    </script>
+</body>
+</html>
