@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trắc Nghiệm Lịch Sử - Full 88 Câu</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f1f5f9; }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-6px); }
+            40%, 80% { transform: translateX(6px); }
+        }
+        .animate-shake { animation: shake 0.4s ease-in-out; }
+    </style>
+</head>
+<body class="min-h-screen bg-slate-100 flex flex-col items-center justify-start py-3 px-2 sm:px-4">
+
+    <div id="app" class="w-full max-w-md bg-white rounded-3xl shadow-xl overflow-hidden flex flex-col min-h-[90vh] border border-slate-200">
+        
+        <!-- Header -->
+        <div class="bg-gradient-to-r from-red-700 to-amber-600 text-white p-4 text-center relative shadow-md">
+            <h1 class="text-base sm:text-lg font-bold">ÔN TẬP TRẮC NGHIỆM LỊCH SỬ</h1>
+            <p class="text-[11px] text-amber-100 mt-0.5">Phần Trắc Nghiệm (Tổng hợp 88 Câu)</p>
+        </div>
+
+        <!-- Progress Bar & Score -->
+        <div class="bg-slate-50 px-4 py-3 border-b border-slate-200">
+            <div class="flex justify-between items-center text-xs font-semibold text-slate-600 mb-1.5">
+                <span id="progress-text">Câu 1 / 88</span>
+                <span id="score-display" class="text-red-700 font-bold">Điểm (Lần 1): 0</span>
+            </div>
+            <div class="w-full bg-slate-200 h-2.5 rounded-full overflow-hidden">
+                <div id="progress-bar" class="bg-red-600 h-2.5 transition-all duration-300 w-[1.1%]"></div>
+            </div>
+        </div>
+
+        <!-- Toast -->
+        <div id="toast-container" class="px-4 pt-3 hidden">
+            <div id="toast-message" class="p-3 rounded-xl text-xs sm:text-sm font-semibold text-center transition-all"></div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div id="quiz-container" class="p-4 flex-1 flex flex-col justify-between"></div>
+
+    </div>
+
+    <footer class="mt-3 text-center text-[11px] text-slate-400">
+        Ứng dụng ôn tập Lịch sử di động • Trắc nghiệm 4 lựa chọn (88 Câu)
+    </footer>
+
+    <script>
+        const rawQuestions = [
+            // Phần 1 (Câu 1 - 40)
+            { id: 1, question: "Văn kiện nào sau đây quy định mục tiêu và nguyên tắc hoạt động của Liên hợp quốc?", options: [{ text: "Công ước Liên hợp quốc về Luật biển.", isCorrect: false }, { text: "Công ước cấm vũ khí hóa học.", isCorrect: false }, { text: "Hiến chương Liên hợp quốc.", isCorrect: true }, { text: "Tuyên ngôn Quốc tế Nhân quyền.", isCorrect: false }] },
+            { id: 2, question: "Nội dung nào sau đây phản ánh đúng vai trò của Liên hợp quốc trong việc bảo đảm quyền con người, phát triển văn hóa và xã hội?", options: [{ text: "Chấm dứt hoàn toàn các hình thức và tàn dư của chế độ phân biệt chủng tộc.", isCorrect: false }, { text: "Ngăn chặn sự đối đầu Đông - Tây và mọi xung đột, tranh chấp trên thế giới.", isCorrect: false }, { text: "Công nhận và hỗ trợ tài chính để bảo tồn các di sản văn hóa của nhân loại.", isCorrect: true }, { text: "Thúc đẩy sự thành lập các liên minh chính trị, quân sự để bảo vệ con người.", isCorrect: false }] },
+            { id: 3, question: "Nhận xét nào sau đây phản ánh đúng hạn chế của tổ chức Liên hợp quốc trong quá trình hoạt động từ khi được thành lập đến năm 2000?", options: [{ text: "Chỉ xây dựng được một văn kiện đề cao quyền con người.", isCorrect: false }, { text: "Không ngăn chặn được tình trạng căng thẳng trên thế giới.", isCorrect: true }, { text: "Sự hợp tác còn lỏng lẻo, chưa mở rộng trên nhiều lĩnh vực.", isCorrect: false }, { text: "Các cơ quan chuyên môn hoạt động chưa thực sự hiệu quả.", isCorrect: false }] },
+            { id: 4, question: "Hội nghị nào sau đây không có tác động đến đến sự ra đời của Liên hợp quốc?", options: [{ text: "Hội nghị Véc-xai (1921).", isCorrect: true }, { text: "Hội nghị Ianta (1945).", isCorrect: false }, { text: "Hội nghị Teheran (1943).", isCorrect: false }, { text: "Hội nghị Xan Phranxixco (1945).", isCorrect: false }] },
+            { id: 5, question: "Việt Nam đã vận dụng nguyên tắc nào sau đây của Hiến chương Liên hợp quốc để giải quyết vấn đề phức tạp ở Biển Đông hiện nay?", options: [{ text: "Giải quyết các tranh chấp quốc tế bằng biện pháp hoà bình.", isCorrect: true }, { text: "Không cần sự hỗ trợ của các tổ chức ở khu vực và quốc tế.", isCorrect: false }, { text: "Chủ động thương lượng, nhân nhượng để bảo đảm hoà bình.", isCorrect: false }, { text: "Tôn trọng chủ quyền và quyền tự quyết của các nước lớn.", isCorrect: false }] },
+            { id: 6, question: "Nội dung nào sau đây là một trong những yếu tố góp phần nâng cao tính hiệu quả trong hoạt động gìn giữ hòa bình của Liên hợp quốc?", options: [{ text: "Sử dụng vũ khí hạt nhân nhằm dập tắt các cuộc xung đột.", isCorrect: false }, { text: "Tập trung mở rộng quyền phủ quyết của các cường quốc.", isCorrect: false }, { text: "Hạn chế hợp tác với các tổ chức nhân quyền trên thế giới.", isCorrect: false }, { text: "Kết hợp vấn đề nhân quyền với duy trì hòa bình thế giới.", isCorrect: true }] },
+            { id: 7, question: "Đối với Liên hợp quốc, duy trì hòa bình và an ninh thế giới không phải là mục tiêu", options: [{ text: "Hàng đầu.", isCorrect: false }, { text: "Thứ yếu.", isCorrect: true }, { text: "Chiến lược.", isCorrect: false }, { text: "Chủ yếu.", isCorrect: false }] },
+            { id: 8, question: "“Duy trì hoà bình và an ninh thế giới; thúc đẩy quan hệ hữu nghị giữa các quốc gia dựa trên sự tôn trọng nguyên tắc bình đẳng và quyền tự quyết của các dân tộc, củng cố hoà bình thế giới” là mục tiêu chính của tổ chức quốc tế nào sau đây?", options: [{ text: "Tổ chức ASEAN.", isCorrect: false }, { text: "Liên minh châu Âu.", isCorrect: false }, { text: "Tổ chức NATO.", isCorrect: false }, { text: "Liên hợp quốc.", isCorrect: true }] },
+            { id: 9, question: "Từ cuối tháng 4 đến cuối tháng 6-1945, 50 nước họp tại Xan Phran-xi-xcô (Mỹ thông qua nội dung nào sau đây?", options: [{ text: "Hiệp định đình chiến ở Đông Dương.", isCorrect: false }, { text: "Xét xử tội phạm chiến tranh thế giới.", isCorrect: false }, { text: "Kết thúc chiến tranh Triều Tiên.", isCorrect: false }, { text: "Hiến chương Liên hợp quốc.", isCorrect: true }] },
+            { id: 10, question: "Liên hợp quốc được thành lập (1945) không nhằm mục tiêu nào sau đây?", options: [{ text: "Hợp tác quốc tế giữa các nước thành viên.", isCorrect: false }, { text: "Phát triển quan hệ hữu nghị giữa các dân tộc.", isCorrect: false }, { text: "Duy trì nền hoà bình và an ninh trên thế giới.", isCorrect: false }, { text: "Duy trì Trật tự thế giới hai cực I-an-ta.", isCorrect: true }] },
+            { id: 11, question: "Nội dung nào sau đây phản ánh không đúng về giá trị của bản “Tuyên ngôn Quốc tế Nhân quyền” (1948) của Liên hợp quốc?", options: [{ text: "Khẳng định các quyền tự do và cơ bản của con người.", isCorrect: false }, { text: "Đề cao tư tưởng mang tính dân tộc hẹp hòi, cực đoan.", isCorrect: true }, { text: "Trở thành mục tiêu vươn tới của các quốc gia, dân tộc.", isCorrect: false }, { text: "Là một “văn kiện đột phá”, có tính pháp lý quốc tế cao.", isCorrect: false }] },
+            { id: 12, question: "Liên hợp quốc thúc đẩy sự hợp tác và phát triển giữa các nước thành viên thông qua việc", options: [{ text: "Cung cấp viện trợ kinh tế, tài chính cho các liên minh quân sự.", isCorrect: false }, { text: "Chỉ can thiệp vào công việc nội bộ các quốc gia đang phát triển.", isCorrect: false }, { text: "Thành lập các tổ chức, cơ quan chuyên môn trên nhiều lĩnh vực.", isCorrect: true }, { text: "Ngăn chặn được mọi cuộc tranh chấp với xung đột trên thế giới.", isCorrect: false }] },
+            { id: 13, question: "Mục tiêu chính của Chương trình nghị sự 2030 được Đại hội đồng Liên hợp quốc thông qua (SDGs) không bao gồm nội dung nào sau đây?", options: [{ text: "Bảo vệ hành tinh.", isCorrect: false }, { text: "Chấm dứt đói nghèo.", isCorrect: false }, { text: "Đảm bảo hoà bình và thịnh vượng.", isCorrect: false }, { text: "Thúc đẩy xung đột vũ trang.", isCorrect: true }] },
+            { id: 14, question: "Nguyên nhân sâu xa và trực tiếp nào dẫn đến yêu cầu cấp bách phải thành lập Liên hợp quốc?", options: [{ text: "Sự sụp đổ của chủ nghĩa thực dân ở châu Á và châu Phi.", isCorrect: false }, { text: "Sự phát minh ra vũ khí hạt nhân vào cuối Chiến tranh thế giới thứ hai.", isCorrect: false }, { text: "Sự tàn khốc của Chiến tranh thế giới thứ hai và sự bất lực của Hội Quốc liên.", isCorrect: true }, { text: "Mong muốn mở rộng thị trường thương mại toàn cầu của các nước lớn.", isCorrect: false }] },
+            { id: 15, question: "Quá trình hình thành Liên hợp quốc gắn liền với vai trò quan trọng của các quốc gia nào?", options: [{ text: "Đức, Trung Quốc, Nhật Bản.", isCorrect: false }, { text: "Đức, Ý, Nhật Bản.", isCorrect: false }, { text: "Liên Xô, Mỹ, Anh.", isCorrect: true }, { text: "Việt Nam, Nhật Bản, Cuba.", isCorrect: false }] },
+            { id: 16, question: "Tổ chức nào trực thuộc Liên hợp quốc có vai trò quan trọng trong việc bảo tồn di sản văn hoá của nhân loại?", options: [{ text: "Tổ chức Y tế thế giới.", isCorrect: false }, { text: "Tổ chức Giáo dục, Văn hoá, Khoa học (UNESCO).", isCorrect: true }, { text: "Lực lượng gìn giữ hoà bình.", isCorrect: false }, { text: "Hội nghị Thương mại và Phát triển.", isCorrect: false }] },
+            { id: 17, question: "Nội dung nào sau đây phản ánh đúng về quá trình thành lập của Liên hợp quốc?", options: [{ text: "Phản ánh tham vọng chi phối thế giới của các quốc gia mới nổi.", isCorrect: false }, { text: "Có ý nghĩa quyết định đến sự ra đời của trật tự thế giới hai cực.", isCorrect: false }, { text: "Được thành lập dựa trên thỏa thuận của những hội nghị quốc tế.", isCorrect: true }, { text: "Các nước phát xít đóng vai trò tiên phong trong việc thành lập.", isCorrect: false }] },
+            { id: 18, question: "Năm 1948, văn kiện nào sau đây đã được Đại hội đồng Liên hợp quốc thông qua, khẳng định những quyền cơ bản của con người?", options: [{ text: "Công ước quốc tế về kinh tế.", isCorrect: false }, { text: "Tuyên ngôn Nhân quyền.", isCorrect: true }, { text: "Hiệp ước cấm vũ khí hạt nhân.", isCorrect: false }, { text: "Hiến chương Liên hợp quốc.", isCorrect: false }] },
+            { id: 19, question: "Sự đóng góp của Liên hợp quốc trong việc duy trì hòa bình và an ninh thế giới từ sau Chiến tranh thế giới thứ hai chủ yếu dựa trên cơ sở nào sau đây?", options: [{ text: "Tiềm lực và sức mạnh kinh tế với tài chính của các tổ chức quốc tế.", isCorrect: false }, { text: "Vai trò của các cường quốc và ý thức ngày càng cao của các dân tộc.", isCorrect: true }, { text: "Hành động đơn phương của các tổ chức phi chính phủ trên thế giới.", isCorrect: false }, { text: "Sự phát triển vượt bậc của các tổ chức kinh tế, văn hóa trên thế giới.", isCorrect: false }] },
+            { id: 20, question: "Một trong những cơ quan chính của Liên hợp quốc được quy định trong Hiến chương Liên hợp quốc (năm 1945) là", options: [{ text: "Hội đồng Bảo an.", isCorrect: true }, { text: "Tổ chức Thương mại Thế giới.", isCorrect: false }, { text: "Quỹ Nhi đồng.", isCorrect: false }, { text: "Ngân hàng Thế giới.", isCorrect: false }] },
+            { id: 21, question: "Việc Hiến chương Liên hợp quốc được thông qua và có hiệu lực năm 1945 có ý nghĩa nào?", options: [{ text: "Mở đường cho việc chia sẻ ảnh hưởng giữa các cường quốc thế giới.", isCorrect: false }, { text: "Tạo điều kiện để mở rộng liên minh quân sự giữa những cường quốc.", isCorrect: false }, { text: "Bảo đảm quyền lực tuyệt đối của các quốc gia Đồng minh thắng trận.", isCorrect: false }, { text: "Đặt nền tảng pháp lý cho hòa bình và an ninh quốc tế sau chiến tranh.", isCorrect: true }] },
+            { id: 22, question: "Những quốc gia nào sau đây đóng vai trò quyết định, đồng thời là sáng lập viên của tổ chức Liên hợp quốc?", options: [{ text: "Liên Xô, Mỹ và Đức.", isCorrect: false }, { text: "Mỹ, Anh và Đức.", isCorrect: false }, { text: "Liên Xô, Mỹ và Anh.", isCorrect: true }, { text: "Liên Xô, Anh và Ba Lan.", isCorrect: false }] },
+            { id: 23, question: "Hiến chương Liên hợp quốc được thông qua tại hội nghị quốc tế nào sau đây?", options: [{ text: "Hội nghị Pari (1973).", isCorrect: false }, { text: "Hội nghị Xan Phranxixco (1945).", isCorrect: true }, { text: "Hội nghị Giơ-ne-vơ (1954).", isCorrect: false }, { text: "Hội nghị Ianta (1945).", isCorrect: false }] },
+            { id: 24, question: "Nội dung nào sau đây thể hiện vai trò của Liên hợp quốc trong việc bảo đảm quyền con người, phát triển văn hóa, xã hội?", options: [{ text: "Tăng cường bình đẳng giới và vị thế, năng lực của phụ nữ.", isCorrect: true }, { text: "Ngăn chặn thành công tình trạng xung đột lợi ích các nước.", isCorrect: false }, { text: "Ngăn chặn phong giải phóng dân tộc ở các nước châu Á.", isCorrect: false }, { text: "Hạn chế cạnh tranh của các nền công nghiệp mới ở châu Mỹ.", isCorrect: false }] },
+            { id: 25, question: "Trong quá trình hoạt động (từ năm 1945), Liên hợp quốc đã thực hiện được vai trò quan trọng nào sau đây?", options: [{ text: "Góp phần chấm dứt tình trạng đói nghèo ở châu Phi.", isCorrect: false }, { text: "Ngăn chặn được mọi cuộc chiến tranh ở các khu vực.", isCorrect: false }, { text: "Góp phần vào chấm dứt nạn khủng bố trên toàn cầu.", isCorrect: false }, { text: "Ngăn chặn không để xảy ra cuộc chiến tranh thế giới mới.", isCorrect: true }] },
+            { id: 26, question: "Trong bối cảnh thế giới phân chia thành “hai cực”, “hai phe” (1945 – 1991), nguyên tắc hoạt động nào sau đây đang được xem là có ý nghĩa thực tiễn đối với Liên hợp quốc?", options: [{ text: "Chung sống hoà bình và cần có sự nhất trí của 5 cường quốc.", isCorrect: true }, { text: "Ra nghị quyết yêu cầu các nước dừng việc chạy đua vũ trang.", isCorrect: false }, { text: "Bình đẳng chủ quyền và quyền tự quyết của các cường quốc.", isCorrect: false }, { text: "Không can thiệp vào công việc nội bộ của các cường quốc.", isCorrect: false }] },
+            { id: 27, question: "Trong quá trình hoạt động (1945 – nay), Liên hợp quốc đã góp phần chấm dứt nhiều cuộc xung đột trên thế giới, ngoại trừ", options: [{ text: "Dải Gaza.", isCorrect: true }, { text: "En Xan-va-do.", isCorrect: false }, { text: "Goa-tê-ma-la.", isCorrect: false }, { text: "Mô-dăm-bích.", isCorrect: false }] },
+            { id: 28, question: "Vì sao \"duy trì hoà bình và an ninh quốc tế\" lại được xem là mục tiêu cơ sở của Liên hợp quốc?", options: [{ text: "Vì đây là mục tiêu duy nhất mà 5 nước Ủy viên thường trực quan tâm.", isCorrect: false }, { text: "Vì nếu có chiến tranh, mọi thành tựu kinh tế, xã hội và quyền con người đều bị phá hủy.", isCorrect: true }, { text: "Vì việc duy trì hòa bình mang lại nguồn lợi tài chính lớn nhất cho tổ chức.", isCorrect: false }, { text: "Vì Liên hợp quốc chỉ có quân đội mà không có các tổ chức kinh tế.", isCorrect: false }] },
+            { id: 29, question: "Liên hợp quốc xem việc bảo đảm quyền con người và thúc đẩy sự phát triển là", options: [{ text: "Những yếu tố có mối liên hệ chặt chẽ với hòa bình, an ninh thế giới.", isCorrect: true }, { text: "Công cụ chủ yếu để can thiệp vào công việc nội bộ của cường quốc.", isCorrect: false }, { text: "Những vấn đề độc lập, không liên quan đến vấn đề an ninh toàn cầu.", isCorrect: false }, { text: "Trách nhiệm riêng của từng quốc gia, dân tộc với tổ chức chính phủ.", isCorrect: false }] },
+            { id: 30, question: "Năm 2015, Liên hợp quốc thông qua Chương trình nghị sự 2030 vì sự phát triển bền vững nhằm thực hiện mục tiêu nào sau đây?", options: [{ text: "Duy trì nguyên trạng trật tự lưỡng cực.", isCorrect: false }, { text: "Thúc đẩy việc chế tạo vũ khí nguyên tử.", isCorrect: false }, { text: "Hạn chế sự hợp tác kinh tế của các nước.", isCorrect: false }, { text: "Hành động ứng phó với biến đổi khí hậu.", isCorrect: true }] },
+            { id: 31, question: "Sự gia tăng số lượng thành viên từ 51 nước (1945) lên 193 nước hiện nay minh chứng rõ nét nhất cho vai trò nào của Liên hợp quốc?", options: [{ text: "Giải quyết triệt để vấn đề đói nghèo ở châu Phi.", isCorrect: false }, { text: "Mở rộng ranh giới lãnh thổ toàn cầu.", isCorrect: false }, { text: "Thúc đẩy quá trình giành độc lập dân tộc của các nước thuộc địa và phụ thuộc.", isCorrect: true }, { text: "Chấm dứt hoàn toàn vũ khí hạt nhân.", isCorrect: false }] },
+            { id: 32, question: "Một trong những nguyên tắc hoạt động của Liên hợp quốc được quy định trong Hiến chương Liên hợp quốc (năm 1945) là", options: [{ text: "tôn trọng quyết định của 5 nước Uỷ viên thường trực.", isCorrect: false }, { text: "tôn trọng các nghĩa vụ và luật pháp quốc tế.", isCorrect: true }, { text: "tôn trọng độc lập của 50 nước sáng lập Liên hợp quốc.", isCorrect: false }, { text: "không đưa quân đội Liên hợp quốc vào các khu vực.", isCorrect: false }] },
+            { id: 33, question: "Mối quan hệ giữa các thành viên của Liên hợp quốc dựa trên nền tảng nào sau đây?", options: [{ text: "Bình đẳng chủ quyền, tôn trọng toàn vẹn lãnh thổ và độc lập chính trị các nước.", isCorrect: true }, { text: "Chỉ coi trọng lợi ích quốc gia và quyền lợi dân tộc trong quan hệ quốc tế.", isCorrect: false }, { text: "Không can thiệp vào cuộc xung đột trên thế giới, đặc biệt ở Trung Đông.", isCorrect: false }, { text: "Chung sống hòa bình và đảm bảo sự nhất trí của các quốc gia tư bản chủ nghĩa.", isCorrect: false }] },
+            { id: 34, question: "Bản Hiến chương được đánh giá là văn kiện quan trọng hàng đầu của tổ chức Liên hợp quốc vì lí do nào sau đây?", options: [{ text: "Là cơ sở pháp lí để các nước tham gia Liên hợp quốc.", isCorrect: false }, { text: "Nêu rõ các mục đích hoạt động của Liên hợp quốc.", isCorrect: false }, { text: "Đề ra các nguyên tắc hoạt động của Liên hợp quốc.", isCorrect: true }, { text: "Quy định các tổ chức, cơ chế hoạt động của Liên hợp quốc.", isCorrect: false }] },
+            { id: 35, question: "Liên hợp quốc có hoạt động nào sau đây để bảo đảm quyền con người?", options: [{ text: "Can thiệp trực tiếp vào các nước để thi hành triệt để quyền con người.", isCorrect: false }, { text: "Xây dựng và kí kết các văn bản, điều ước quốc tế về quyền con người.", isCorrect: true }, { text: "Thành lập khối phòng thủ chung dựa trên cơ sở nguyên tắc đồng thuận.", isCorrect: false }, { text: "Xây dựng thể chế chính trị thống nhất cho các nước mới nổi ở châu Á.", isCorrect: false }] },
+            { id: 36, question: "Nhằm duy trì hoà bình và an ninh thế giới sau chiến tranh, Hội nghị I-an-ta (2-1945) có quyết định quan trọng nào sau đây?", options: [{ text: "Thành lập Ban Thư kí Liên hợp quốc.", isCorrect: false }, { text: "Thành lập tổ chức Hội Quốc liên.", isCorrect: false }, { text: "Duy trì và mở rộng Hội Quốc liên.", isCorrect: false }, { text: "Thành lập tổ chức Liên hợp quốc.", isCorrect: true }] },
+            { id: 37, question: "Nội dung nào sau đây đã khiến ý tưởng thành lập Liên hợp quốc ngày càng trở nên cấp thiết trong giai đoạn cuối của Chiến tranh thế giới thứ hai?", options: [{ text: "Nhu cầu hợp tác để ngăn chặn sự phát triển của các nước chủ nghĩa xã hội.", isCorrect: false }, { text: "Sự xuất hiện của hàng loạt quốc gia độc lập ở châu Á, châu Phi, Mĩ Latinh.", isCorrect: false }, { text: "Mong muốn của các nước lớn về việc phân chia lại thị trường và thuộc địa.", isCorrect: false }, { text: "Hậu quả nghiêm trọng của chiến tranh và khát vọng hòa bình của nhân loại.", isCorrect: true }] },
+            { id: 38, question: "Nội dung nào sau đây phản ánh đúng vai trò của Liên hợp quốc trong việc thúc đẩy sự phát triển kinh tế, tài chính, thương mại quốc tế và nâng cao đời sống người dân?", options: [{ text: "Ngăn chặn thành công tình trạng xung đột lợi ích giữa các quốc gia.", isCorrect: false }, { text: "Góp phần thúc đẩy cuộc đấu tranh giành độc lập dân tộc trên thế giới.", isCorrect: false }, { text: "Thực thi quyền con người, xây dựng một thế giới không có cạnh tranh.", isCorrect: false }, { text: "Tạo môi trường kinh tế bình đẳng, hỗ trợ các nền kinh tế kém phát triển.", isCorrect: true }] },
+            { id: 39, question: "Để duy trì nền hoà bình và an ninh trên thế giới, Liên hợp quốc đã có nỗ lực và hành động nào sau đây trong suốt quá trình hoạt động?", options: [{ text: "Hỗ trợ các nước Đông Nam Á đạt được sự đồng đều về kinh tế.", isCorrect: false }, { text: "Xây dựng hệ thống các công ước quốc tế về giải trừ quân bị.", isCorrect: true }, { text: "Thúc đẩy thành lập các tổ chức liên kết khu vực trên thế giới.", isCorrect: false }, { text: "Buộc Mĩ và Liên Xô phải tuyên bố chấm dứt Chiến tranh lạnh.", isCorrect: false }] },
+            { id: 40, question: "Xây dựng và soạn thảo được một hệ thống các công ước quốc tế về giải trừ quân bị chống chạy đua vũ trang là hoạt động thể hiện vai trò nào của Liên hợp quốc?", options: [{ text: "Duy trì hòa bình và an ninh quốc tế.", isCorrect: true }, { text: "Hạn chế vai trò của các tổ chức quốc tế.", isCorrect: false }, { text: "Ngăn chặn sự cạnh tranh kinh tế của các nước.", isCorrect: false }, { text: "Thúc đẩy phát triển kinh tế, tài chính các nước.", isCorrect: false }] },
+            
+            // Phần 2 (Câu 41 - 64 / Block 2)
+            { id: 41, question: "Quan hệ Mỹ – Liên Xô trong và sau Chiến tranh thế giới thứ hai đã chuyển biến từ", options: [{ text: "đồng minh sang đối đầu.", isCorrect: true }, { text: "đối đầu sang thoả hiệp.", isCorrect: false }, { text: "đối đầu sang đối thoại.", isCorrect: false }, { text: "đồng minh sang đối tác.", isCorrect: false }] },
+            { id: 42, question: "Cuộc chiến tranh nào sau đây đã trở thành cuộc chiến tranh cục bộ lớn nhất phản ánh mâu thuẫn giữa hai cực, hai phe – tư bản chủ nghĩa và xã hội chủ nghĩa?", options: [{ text: "Cuộc chiến tranh trên bán đảo Triều Tiên (1950 – 1953).", isCorrect: false }, { text: "Nội chiến Quốc – Cộng ở Trung Quốc (1946 – 1949).", isCorrect: false }, { text: "Chiến tranh của Pháp ở Đông Dương (1945 – 1954).", isCorrect: false }, { text: "Cuộc chiến tranh của Mỹ ở Việt Nam (1954 – 1975).", isCorrect: true }] },
+            { id: 43, question: "Nội dung nào sau đây là một trong những quyết định của Hội nghị I-an-ta (2-1945)?", options: [{ text: "Tiêu diệt tận gốc chủ nghĩa phát xít Đức và chủ nghĩa quân phiệt Nhật Bản.", isCorrect: true }, { text: "Xây dựng một trật tự thế giới mới nhằm giải quyết dứt điểm các vấn đề hậu chiến tranh.", isCorrect: false }, { text: "Thoả thuận việc phân chia phạm vi ảnh hưởng của Mỹ và Liên Xô ở châu Phi.", isCorrect: false }, { text: "Đồng ý thành lập tổ chức Hội Quốc liên để duy trì hoà bình và an ninh thế giới.", isCorrect: false }] },
+            { id: 44, question: "Gần đây, UNICEF và các tổ chức của Liên hợp quốc nỗ lực cung cấp vắc-xin miễn phí cho trẻ em vùng sâu vùng xa trên thế giới. Đây là biểu hiện cho mục tiêu nào của Hiến chương?", options: [{ text: "Duy trì quyền phủ quyết của các cường quốc.", isCorrect: false }, { text: "Giải quyết các vấn đề nhân đạo và đảm bảo quyền con người.", isCorrect: true }, { text: "Ngăn chặn chạy đua vũ trang.", isCorrect: false }, { text: "Phân định lại biên giới các quốc gia.", isCorrect: false }] },
+            { id: 45, question: "Nhận định nào sau đây đánh giá đúng nhất về bản chất quyền lực của Liên hợp quốc so với một nhà nước có chủ quyền?", options: [{ text: "Liên hợp quốc không phải là một siêu nhà nước, không có quyền lập pháp và hành pháp để cưỡng chế trực tiếp mọi công dân trên thế giới.", isCorrect: true }, { text: "Liên hợp quốc là nhà nước duy nhất có quyền tuyên chiến hợp pháp.", isCorrect: false }, { text: "Liên hợp quốc sở hữu hệ thống tài chính thống nhất thay thế hoàn toàn ngân hàng trung ương các nước.", isCorrect: false }, { text: "Liên hợp quốc có quyền lực tuyệt đối, có thể giải tán quốc hội của bất kì quốc gia thành viên nào.", isCorrect: false }] },
+            { id: 46, question: "Nội dung nào sau đây là nhân tố hàng đầu chi phối toàn bộ đời sống chính trị thế giới trong phần lớn thời gian nửa sau thế kỉ XX?", options: [{ text: "Các cuộc “chiến tranh nóng” ở châu Á liên tiếp diễn ra không có hồi kết.", isCorrect: false }, { text: "Cục diện trật tự hai cực, hai phe: tư bản chủ nghĩa và xã hội chủ nghĩa.", isCorrect: true }, { text: "Hai hệ thống xã hội đối lập ra đời: tư bản chủ nghĩa và xã hội chủ nghĩa.", isCorrect: false }, { text: "Xu hướng liên kết khu vực và xu thế toàn cầu hoá diễn ra mạnh mẽ.", isCorrect: false }] },
+            { id: 47, question: "Nội dung nào sau đây không phải là cơ sở để Liên hợp quốc đưa ra nguyên tắc “Bình đẳng về chủ quyền quốc gia”?", options: [{ text: "Là cơ sở để thúc đẩy quan hệ hữu nghị giữa các quốc gia.", isCorrect: false }, { text: "Nguyên tắc cơ bản để đảm bảo hoà bình, an ninh thế giới.", isCorrect: false }, { text: "Là quyền tự nhiên vốn có, thiêng liêng của các quốc gia.", isCorrect: false }, { text: "Duy trì sự bình đẳng giữa các nước trong trật tự hai cực.", isCorrect: true }] },
+            { id: 48, question: "Thực hiện Chương trình nghị sự 2030 về thích ứng với biến đổi khí hậu, Liên hợp quốc đang tích cực hỗ trợ kĩ thuật nông nghiệp cho các vùng ngập mặn tại Đồng bằng sông Cửu Long, tiêu biểu như triển khai tại địa bàn Cà Mau (Bạc Liêu). Hoạt động hỗ trợ địa phương này thực chất hướng tới giải quyết vấn đề lớn nào của Liên hợp quốc?", options: [{ text: "Xây dựng căn cứ quân sự bảo vệ hòa bình tại khu vực Đông Nam Á.", isCorrect: false }, { text: "Đảm bảo an ninh lương thực, xóa đói giảm nghèo và phát triển kinh tế bền vững.", isCorrect: true }, { text: "Chống phổ biến vũ khí sinh học trong sản xuất nông nghiệp.", isCorrect: false }, { text: "Thay đổi đường biên giới hành chính quốc gia do nước biển dâng.", isCorrect: false }] },
+            { id: 49, question: "Theo thoả thuận của các cường quốc tại Hội nghị I-an-ta (2-1945), địa bàn nào sau đây ở châu Âu sẽ thuộc phạm vi ảnh hưởng của Mỹ?", options: [{ text: "Tây Âu.", isCorrect: true }, { text: "Đông Đức.", isCorrect: false }, { text: "Béc-lin.", isCorrect: false }, { text: "Đông Âu.", isCorrect: false }] },
+            { id: 50, question: "Nội dung nào sau đây là đặc điểm nổi bật của trật tự thế giới mới được hình thành sau Chiến tranh thế giới thứ hai?", options: [{ text: "Xác lập trật tự thế giới mới của các nước tư bản chủ nghĩa do Mỹ đứng đầu, chi phối.", isCorrect: false }, { text: "Trật tự thế giới được thiết lập trên cơ sở các nước thắng trận đoàn kết, đồng thuận.", isCorrect: false }, { text: "Hình thành trật tự thế giới hai cực đối lập: cực Liên Xô và cực Mỹ đứng đầu mỗi bên.", isCorrect: true }, { text: "Một trật tự thế giới được thiết lập trên cơ sở nước thắng trận thống trị nước bại trận.", isCorrect: false }] },
+            { id: 51, question: "Hiệp ước của Liên hợp quốc cấm vũ khí hạt nhân (2017) thể hiện vai trò gì của tổ chức này?", options: [{ text: "Giải quyết tranh chấp thương mại quốc tế.", isCorrect: false }, { text: "Bảo tồn các di sản văn hóa phi vật thể.", isCorrect: false }, { text: "Xây dựng các công ước quốc tế về giải trừ quân bị.", isCorrect: true }, { text: "Chống biến đổi khí hậu.", isCorrect: false }] },
+            { id: 52, question: "Nội dung nào sau đây không phải là tác động của Trật tự thế giới hai cực I-an-ta?", options: [{ text: "Chiến tranh giữa hai miền Triều Tiên.", isCorrect: false }, { text: "Cuộc chiến tranh của Mỹ ở Việt Nam.", isCorrect: false }, { text: "Sự xuất hiện của chủ nghĩa khủng bố.", isCorrect: true }, { text: "Bức tường Béc-lin chia đôi nước Đức.", isCorrect: false }] },
+            { id: 53, question: "Theo quyết định của các cường quốc tại Hội nghị I-an-ta (2-1945), vùng ảnh hưởng của Liên Xô ở châu Á sẽ là", options: [{ text: "khu vực Tây Á, Nam Á và Đông Nam Á.", isCorrect: false }, { text: "phía nam vĩ tuyến 38 trên bán đảo Triều Tiên.", isCorrect: false }, { text: "phía bắc vĩ tuyến 38 trên bán đảo Triều Tiên.", isCorrect: true }, { text: "khu vực Trung Đông và bán đảo Triều Tiên.", isCorrect: false }] },
+            { id: 54, question: "Những quyết định của Hội nghị I-an-ta cùng sự thoả thuận của Liên Xô, Mỹ và Anh ở Hội nghị Pốt-xđam (1945) đã trở thành khuôn khổ của một trật tự thế giới mới, vì", options: [{ text: "khép lại trật tự thế giới cũ và xác lập trật tự thế giới “hai cực” đối lập.", isCorrect: true }, { text: "đã phân chia xong phạm vi ảnh hưởng giữa các nước thắng trận.", isCorrect: false }, { text: "mở đầu quá trình giải thể chủ nghĩa thực dân mới ở các thuộc địa.", isCorrect: false }, { text: "các nước tham chiến được hưởng nhiều quyền lợi sau chiến tranh.", isCorrect: false }] },
+            { id: 55, question: "Trong lịch sử tồn tại từ 1945 đến nay, đối mặt với sự phát triển mạnh mẽ của vũ khí hủy diệt hàng loạt, thành tựu vĩ đại nhất chứng minh sự hiệu quả của cơ chế Liên hợp quốc là gì?", options: [{ text: "Đã xóa bỏ thành công 100% vũ khí hạt nhân trên toàn cầu.", isCorrect: false }, { text: "Tiêu diệt hoàn toàn mọi mầm mống xung đột sắc tộc, tôn giáo ở quy mô địa phương.", isCorrect: false }, { text: "Giữ được sự cân bằng chiến lược, ngăn ngừa không để một cuộc chiến tranh thế giới mới bùng nổ.", isCorrect: true }, { text: "Khắc phục được hoàn toàn tình trạng suy thoái kinh tế ở mọi quốc gia.", isCorrect: false }] },
+            { id: 56, question: "Liên hợp quốc được coi là 'trung tâm điều hòa các nỗ lực quốc tế' vì lý do nào dưới đây?", options: [{ text: "Tổ chức này nắm toàn quyền quyết định ai làm lãnh đạo các quốc gia thành viên.", isCorrect: false }, { text: "Đây là nơi duy nhất in tiền để lưu thông trên toàn cầu.", isCorrect: false }, { text: "Liên hợp quốc trực tiếp thu thuế của mọi người dân trên Trái Đất.", isCorrect: false }, { text: "Đây là nơi các quốc gia thảo luận, thương lượng để tìm ra giải pháp chung cho các vấn đề toàn cầu.", isCorrect: true }] },
+            { id: 57, question: "Sự khác biệt căn bản về khả năng duy trì trật tự thế giới giữa Liên hợp quốc và Hội Quốc liên là gì?", options: [{ text: "Hội Quốc liên có nhiều quốc gia thành viên tham gia hơn Liên hợp quốc.", isCorrect: false }, { text: "Liên hợp quốc chỉ tập trung vào kinh tế, còn Hội Quốc liên chỉ lo an ninh.", isCorrect: false }, { text: "Hội Quốc liên có lực lượng quân đội thường trực đông đảo hơn.", isCorrect: false }, { text: "Liên hợp quốc có cơ cấu tổ chức mạnh mẽ và hệ thống pháp lý chặt chẽ hơn để thực thi các quyết định hòa bình.", isCorrect: true }] },
+            { id: 58, question: "Khu vực Đông Nam Á, Nam Á, Tây Á thuộc phạm vi ảnh hưởng của lực lượng nào sau CTTG 2?", options: [{ text: "Các nước trung lập.", isCorrect: false }, { text: "Các nước phương Tây.", isCorrect: false }, { text: "Liên Xô.", isCorrect: false }, { text: "Mỹ.", isCorrect: true }] },
+            { id: 59, question: "Trong giai đoạn từ năm 1945 đến đầu những năm 70 của thế kỉ XX, Trật tự thế giới hai cực I-an-ta có biểu hiện nào sau đây?", options: [{ text: "Từ đối kháng chuyển sang đối đầu giữa hai hệ thống xã hội đối lập.", isCorrect: false }, { text: "Từ đối đầu căng thẳng chuyển sang hoà dịu và hoà hoãn Đông – Tây.", isCorrect: false }, { text: "Xác lập và phát triển nhanh với sự đối đầu diễn ra trên nhiều lĩnh vực.", isCorrect: true }, { text: "Phát triển mạnh và dẫn tới các cuộc chiến tranh cục bộ giữa Liên Xô – Mỹ.", isCorrect: false }] },
+            { id: 60, question: "Kế hoạch Mác-san (1947) của Mỹ và Hội đồng tương trợ kinh tế (SEV) do Liên Xô và các nước Đông Âu thành lập (1949) là một trong những biểu hiện về sự đối đầu của hai cực thế giới I-an-ta trên lĩnh vực", options: [{ text: "văn hoá.", isCorrect: false }, { text: "pháp lí.", isCorrect: false }, { text: "quân sự.", isCorrect: false }, { text: "kinh tế.", isCorrect: true }] },
+            { id: 61, question: "Nếu một cường quốc tự ý đưa quân đội vượt biên giới vào một quốc gia nhỏ hơn để can thiệp bầu cử, hành động này vi phạm trực tiếp nguyên tắc cốt lõi nào của Liên hợp quốc?", options: [{ text: "Thúc đẩy tự do thương mại quốc tế.", isCorrect: false }, { text: "Bảo vệ môi trường sinh thái.", isCorrect: false }, { text: "Giải trừ quân bị toàn cầu.", isCorrect: false }, { text: "Tôn trọng toàn vẹn lãnh thổ và không can thiệp vào công việc nội bộ các nước.", isCorrect: true }] },
+            { id: 62, question: "Quyết định nào sau đây của Hội nghị I-an-ta (2-1945) tạo nên những bất lợi cho cách mạng Việt Nam trong những năm 1945 – 1946?", options: [{ text: "Đông Nam Á vẫn thuộc phạm vi ảnh hưởng của các nước phương Tây.", isCorrect: true }, { text: "Liên Xô có phạm vi ảnh hưởng và kiểm soát ở các nước Đông Dương.", isCorrect: false }, { text: "Quân Anh và quân Trung Hoa Dân quốc vào kiểm soát Đông Dương.", isCorrect: false }, { text: "Quân Anh cùng với quân Pháp làm nhiệm vụ giải giáp quân đội Nhật.", isCorrect: false }] },
+            { id: 63, question: "Nguyên tắc 'Bình đẳng về chủ quyền quốc gia' mang ý nghĩa thực tiễn như thế nào đối với các nước đang phát triển?", options: [{ text: "Xóa bỏ hoàn toàn biên giới lãnh thổ giữa các quốc gia.", isCorrect: false }, { text: "Bảo vệ vị thế pháp lý độc lập của các nước nhỏ trước sự áp đặt của các nước lớn.", isCorrect: true }, { text: "Cho phép các nước nghèo tự động vay vốn không hoàn lại từ các nước giàu.", isCorrect: false }, { text: "Đảm bảo dân số các nước phải ngang bằng nhau.", isCorrect: false }] },
+            { id: 64, question: "Nhận xét nào sau đây là tác động của Hội nghị I-an-ta và Hội nghị Pốt-xđam (1945) đối với tình hình quốc tế?", options: [{ text: "Tạo nên khuôn khổ của trật tự thế giới – trật tự nhất siêu, nhiều cực.", isCorrect: false }, { text: "Giải quyết được mâu thuẫn về vấn đề thị trường cho các cường quốc.", isCorrect: false }, { text: "Tạo nên một trật tự thế giới mới giữa các nước thắng trận và bại trận.", isCorrect: false }, { text: "Làm thay đổi sâu sắc quan hệ quốc tế, đặc biệt là quan hệ Xô – Mỹ.", isCorrect: true }] },
+
+            // Phần 3 (Câu 65 - 88 / Block 3)
+            { id: 65, question: "Từ đầu những năm 70 của thế kỉ XX, quan hệ Mỹ – Liên Xô chuyển dần sang hoà dịu, sau đó kết thúc Chiến tranh lạnh (1989) là do", options: [{ text: "trật tự nhất siêu, nhiều cường đang trong quá trình mở rộng.", isCorrect: false }, { text: "chịu nhiều tốn kém và bị suy giảm thế mạnh về nhiều mặt.", isCorrect: true }, { text: "quá trình mở rộng không ngừng của Liên minh châu Âu (EU).", isCorrect: false }, { text: "xu thế liên kết khu vực và toàn cầu hoá diễn ra mạnh mẽ.", isCorrect: false }] },
+            { id: 66, question: "Sự ra đời của kế hoạch Mác-san và Hội đồng tương trợ kinh tế (SEV) là biểu hiện rõ rệt của sự đối đầu trong Trật tự thế giới hai cực Ianta trên lĩnh vực nào sau đây?", options: [{ text: "Quân sự.", isCorrect: false }, { text: "Kinh tế.", isCorrect: true }, { text: "Văn hoá.", isCorrect: false }, { text: "Giáo dục.", isCorrect: false }] },
+            { id: 67, question: "Trật tự thế giới hai cực Ianta được xác lập sau Chiến tranh thế giới thế giới thứ hai khẳng định vị thế hàng đầu của hai cường quốc nào sau đây?", options: [{ text: "Liên Xô và Mỹ.", isCorrect: true }, { text: "Anh và Pháp.", isCorrect: false }, { text: "Mỹ và Anh.", isCorrect: false }, { text: "Liên Xô và Anh.", isCorrect: false }] },
+            { id: 68, question: "Những quyết định quan trọng của Hội nghị Ianta (2/1945) đã có ảnh hưởng tích cực đến tình hình thế giới sau Chiến tranh thế giới thứ hai, ngoại trừ việc", options: [{ text: "Tạo điều kiện thuận lợi cho một số giành độc lập.", isCorrect: false }, { text: "Làm thay đổi mối quan hệ đồng minh Mỹ, Liên Xô.", isCorrect: true }, { text: "Thúc đẩy chiến tranh thế giới thứ hai sớm kết thúc.", isCorrect: false }, { text: "Góp phần thúc đẩy tổ chức quốc tế mới thành lập.", isCorrect: false }] },
+            { id: 69, question: "Nội dung nào sau đây không phải là nhiệm vụ cấp bách đặt ra cần giải quyết cho các nước Đồng minh đầu năm 1945?", options: [{ text: "Phát triển cách mạng khoa học – kĩ thuật.", isCorrect: true }, { text: "Nhanh chóng đánh bại hoàn toàn phát xít.", isCorrect: false }, { text: "Tổ chức lại trật tự thế giới sau chiến tranh.", isCorrect: false }, { text: "Phân chia thành quả chiến thắng với nhau.", isCorrect: false }] },
+            { id: 70, question: "Trong giai đoạn từ năm 1945 đến đầu những năm 70 của thế kỉ XX, Trật tự thế giới hai cực Ianta có biểu hiện nào sau đây?", options: [{ text: "Mỹ và Trung Quốc là siêu cường đứng đầu, chi phối quan hệ quốc tế.", isCorrect: false }, { text: "Xác lập và phát triển nhanh với sự đối đầu diễn ra trên nhiều lĩnh vực.", isCorrect: true }, { text: "Từ đối đầu căng thẳng chuyển sang hoà dịu và hoà hoãn Đông - Tây.", isCorrect: false }, { text: "Căng thẳng và có sự xung đột quân sự trực tiếp giữa Liên Xô và Mỹ.", isCorrect: false }] },
+            { id: 71, question: "Nhận xét nào sau đây phản ánh đúng về quan hệ quốc tế trong thời kỳ Chiến tranh lạnh?", options: [{ text: "Hai phe đế quốc đã đẩy mạnh cuộc chạy đua vũ trang gay gắt.", isCorrect: false }, { text: "Hòa bình, hợp tác là xu thế chủ đạo chi phối quan hệ quốc tế.", isCorrect: false }, { text: "Không diễn ra bất kỳ cuộc xung đột quân sự nào giữa hai phe.", isCorrect: false }, { text: "Phản ánh xu thế vừa hợp tác, vừa đấu tranh giữa các quốc gia.", isCorrect: true }] },
+            { id: 72, question: "Thắng lợi của phong trào giải phóng dân tộc trên thế giới và sự ra đời của hàng loạt các quốc gia độc lập sau Chiến tranh thế giới thứ hai đã", options: [{ text: "Làm sụp đổ hoàn toàn chế độ xã hội chủ nghĩa ở Liên Xô.", isCorrect: false }, { text: "Tăng cường được phạm vi ảnh hưởng của Mỹ và Liên Xô.", isCorrect: false }, { text: "Đánh dấu trật tự thế giới hai cực I-an-ta sụp đổ hoàn toàn.", isCorrect: false }, { text: "Góp phần làm cho trật tự thế giới hai cực I-an-ta suy yếu.", isCorrect: true }] },
+            { id: 73, question: "Từ đầu những năm 70 của thế kỉ XX, quan hệ Mỹ - Liên Xô chuyển dần sang hòa dịu, sau đó kết thúc Chiến tranh lạnh (1989) là do", options: [{ text: "Chịu nhiều tốn kém và bị suy giảm thế mạnh về nhiều mặt.", isCorrect: true }, { text: "Trật tự nhất siêu, đa cường đang trong quá trình mở rộng.", isCorrect: false }, { text: "Xu thế liên kết khu vực và toàn cầu hóa diễn ra mạnh mẽ.", isCorrect: false }, { text: "Quá trình mở rộng quy mô của Liên minh châu Âu (EU).", isCorrect: false }] },
+            { id: 74, question: "Nội dung nào sau đây phản ánh đúng nguyên nhân khách quan dẫn đến sự sụp đổ của Trật tự thế giới hai cực Ianta?", options: [{ text: "Mỹ bị tốn kém tài chính do chạy đua vũ trang.", isCorrect: false }, { text: "Sự suy giảm kinh tế của Liên Xô.", isCorrect: false }, { text: "Sự ổn định vị thế của Mỹ, Liên Xô.", isCorrect: false }, { text: "Sự vươn lên của Nhật Bản và Tây Âu.", isCorrect: true }] },
+            { id: 75, question: "Nội dung nào sau đây không phải là biểu hiện của Trật tự thế giới hai cực I-an-ta giai đoạn từ năm 1945 đến đầu những năm 70 của thế kỷ XX?", options: [{ text: "Các liên minh quân sự được ra đời ở nhiều khu vực trên thế giới.", isCorrect: false }, { text: "Có sự đối lập giữa hai cực, hai phe về kinh tế, quân sự với nhau.", isCorrect: false }, { text: "Các cuộc chiến tranh cục bộ, xung đột diễn ra ở nhiều khu vực.", isCorrect: false }, { text: "Mỹ và Liên Xô đẩy mạnh sự hợp tác kinh tế, quân sự với nhau.", isCorrect: true }] },
+            { id: 76, question: "Theo thỏa thuận tại Hội nghị Ianta (tháng 2/1945), các quốc gia nào sau đây sẽ trung lập?", options: [{ text: "Áo và Phần Lan.", isCorrect: true }, { text: "Cuba và Việt Nam.", isCorrect: false }, { text: "Mỹ và Liên Xô.", isCorrect: false }, { text: "Pháp và Phần Lan.", isCorrect: false }] },
+            { id: 77, question: "Quan hệ giữa hai nước Liên Xô và Mỹ chuyển sang căng thẳng sau sự kiện nào sau đây?", options: [{ text: "Các điều khoản trong Hiệp định Giơ-ne-vơ (1954).", isCorrect: false }, { text: "Các điều khoản trong Hiệp định Pa-ri về Việt Nam (1973).", isCorrect: false }, { text: "Những quyết định của Hội nghị Pốt-xđam (1945).", isCorrect: false }, { text: "Thông điệp của Tổng thống Mỹ Tơ-ru-man (12-3-1947).", isCorrect: true }] },
+            { id: 78, question: "Trong giai đoạn 1945 đến những năm 70 của thế kỉ XX, quan hệ quốc tế trong trật tự thế giới hai cực Ianta dần trở nên căng thẳng sau khi", options: [{ text: "Liên minh châu Âu được thành lập.", isCorrect: false }, { text: "Sự xuất hiện của xu thế toàn cầu hóa.", isCorrect: false }, { text: "Mĩ phát động cuộc Chiến tranh lạnh.", isCorrect: true }, { text: "Chủ nghĩa khủng bố quốc tế ra đời.", isCorrect: false }] },
+            { id: 79, question: "Yếu tố nào sau đây quyết định dẫn tới sự xuất hiện xu thế hòa hoãn Đông - Tây trong quan hệ quốc tế từ đầu những năm 70 của thế kỷ XX?", options: [{ text: "Mỹ, Canada, 33 nước Châu Âu cùng ký định ước Henxinki.", isCorrect: false }, { text: "Sự thay đổi tích cực trong quan hệ giữa Liên Xô và Mỹ.", isCorrect: true }, { text: "Yêu cầu hợp tác giải quyết các vấn đề thách thức toàn cầu.", isCorrect: false }, { text: "Liên Xô và Mỹ tuyên bố chấm dứt cuộc Chiến tranh lạnh.", isCorrect: false }] },
+            { id: 80, question: "Theo quyết định của Hội nghị Ianta (tháng 2/1945), quân đội của quốc gia nào sau đây kiểm soát phía Nam vĩ tuyến 38 ở bán đảo Triều Tiên?", options: [{ text: "Ba Lan.", isCorrect: false }, { text: "Mỹ.", isCorrect: true }, { text: "Bỉ.", isCorrect: false }, { text: "Liên Xô.", isCorrect: false }] },
+            { id: 81, question: "Vào nửa sau những năm 40 của thế kỉ XX, Mỹ có hoạt động nào để tập hợp lực lượng đồng minh cùng tham gia chống Liên Xô và các nước xã hội chủ nghĩa?", options: [{ text: "Tăng cường viện trợ không hoàn lại cho các nước Đông Âu.", isCorrect: false }, { text: "Hợp tác chặt chẽ với Liên Xô để kiến tạo môi trường hòa bình.", isCorrect: false }, { text: "Gây dựng hệ thống tư bản chủ nghĩa để đối trọng với Liên Xô.", isCorrect: false }, { text: "Thông qua Kế hoạch Mác-san và thành lập tổ chức NATO.", isCorrect: true }] },
+            { id: 82, question: "Nhận xét nào sau đây phản ánh đúng về Trật tự thế giới hai cực Ianta (1945 - 1991)?", options: [{ text: "Hình thành trên cơ sở thỏa thuận giữa các nước có cùng chế độ chính trị.", isCorrect: false }, { text: "Giải quyết được mọi mâu thuẫn giữa các quốc gia tham gia chiến tranh.", isCorrect: false }, { text: "Phản ánh quá trình thỏa hiệp và đấu tranh giữa các cường quốc với nhau.", isCorrect: true }, { text: "Hình thành trên cơ sở đảm bảo quyền lợi của tất cả các nước tham chiến.", isCorrect: false }] },
+            { id: 83, question: "Nội dung nào sau đây không phản ánh đúng nguyên nhân sụp đổ của Trật tự hai cực Ianta?", options: [{ text: "Sự xác lập của trật tự đa cực trong quan hệ quốc tế.", isCorrect: true }, { text: "Liên Xô lâm vào cuộc khủng hoảng nghiêm trọng.", isCorrect: false }, { text: "Sự vươn lên cạnh tranh của Tây Âu và Nhật Bản.", isCorrect: false }, { text: "Mỹ và Liên Xô bị suy giảm thế mạnh về kinh tế.", isCorrect: false }] },
+            { id: 84, question: "Sự sụp đổ của Trật tự thế giới hai cực Ianta (1991) không có tác động nào sau đây?", options: [{ text: "Tạo điều kiện cho các cường quốc mới nổi có vị trí, vai trò lớn hơn trong quan hệ quốc tế.", isCorrect: false }, { text: "Phạm vi ảnh hưởng của hai siêu cường Mỹ và Liên Xô bị thu hẹp ở nhiều nơi trên thế giới.", isCorrect: true }, { text: "Mở ra chiều hướng và điều kiện để giải quyết hòa bình các cuộc tranh chấp với xung đột.", isCorrect: false }, { text: "Tạo điều kiện cho trật tự thế giới mới dần hình thành theo xu thế đa cực, nhiều trung tâm.", isCorrect: false }] },
+            { id: 85, question: "Nội dung nào sau đây là quyết định gây tranh cãi nhiều nhất giữa các nước cường quốc Liên Xô, Mỹ và Anh tại Hội nghị Ianta (tháng 2/1945)?", options: [{ text: "Thành lập Liên hợp quốc để duy trì nền hòa bình, an ninh trên thế giới.", isCorrect: false }, { text: "Tiêu diệt tận gốc chủ nghĩa phát xít Đức và chủ nghĩa quân phiệt Nhật.", isCorrect: false }, { text: "Thống nhất dùng vũ khí hạt nhân để tiêu diệt tận gốc quân đội phát xít.", isCorrect: false }, { text: "Thỏa thuận việc phân chia phạm vi ảnh hưởng tại châu Âu và châu Á.", isCorrect: true }] },
+            { id: 86, question: "Yêu cầu bức thiết nào sau đây được đặt ra cho các nước Đồng minh khi cuộc Chiến tranh thế giới thứ hai (1939 - 1945) bước vào giai đoạn cuối?", options: [{ text: "Tạo điều kiện để xu thế toàn cầu hóa xuất hiện và phát triển.", isCorrect: false }, { text: "Tiêu diệt hoàn toàn chủ nghĩa phát xít và tổ chức lại thế giới.", isCorrect: true }, { text: "Thành lập Hội Quốc liên để ngăn chặn nguy cơ chiến tranh.", isCorrect: false }, { text: "Thủ tiêu tất cả các hình thức của chế độ phân biệt chủng tộc.", isCorrect: false }] },
+            { id: 87, question: "Nội dung nào sau đây là nhân tố hàng đầu chi phối toàn bộ đời sống chính trị thế giới trong phần lớn thời gian nửa sau thế kỉ XX?", options: [{ text: "Cục diện trật tự hai cực, hai phe: tư bản chủ nghĩa và xã hội chủ nghĩa.", isCorrect: true }, { text: "Xu hướng liên kết khu vực và xu thế toàn cầu hoá đang diễn ra mạnh mẽ.", isCorrect: false }, { text: "Hai hệ thống xã hội đối lập ra đời: tư bản chủ nghĩa và xã hội chủ nghĩa.", isCorrect: false }, { text: "Các cuộc “chiến tranh nóng” ở châu Á liên tiếp diễn ra không có hồi kết.", isCorrect: false }] },
+            { id: 88, question: "Nhận xét nào sau đây phản ánh đúng Trật tự thế giới hai cực Ianta (1945 – 1991)?", options: [{ text: "Nhật Bản vươn lên trở thành cường quốc chính trị ở châu Á.", isCorrect: false }, { text: "Mỹ giữ vai trò quyết định chi phối mọi mối quan hệ quốc tế.", isCorrect: false }, { text: "Liên Xô đã có lợi thế khi được phân chia các vùng thuộc địa.", isCorrect: false }, { text: "Có sự phân tuyến giữa hai hệ thống chính trị - xã hội đối lập.", isCorrect: true }] }
+        ];
+
+        let currentIndex = 0;
+        let score = 0;
+        let userAttempts = {};
+        let questionStatus = {};
+        let activeQuestions = [];
+
+        function initApp() {
+            currentIndex = 0;
+            score = 0;
+            userAttempts = {};
+            questionStatus = {};
+            activeQuestions = JSON.parse(JSON.stringify(rawQuestions));
+            activeQuestions.forEach((q, idx) => {
+                userAttempts[idx] = 0;
+                questionStatus[idx] = null;
+                shuffleArray(q.options);
+            });
+            renderQuiz();
+        }
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        function renderQuiz() {
+            const container = document.getElementById('quiz-container');
+            const progressText = document.getElementById('progress-text');
+            const progressBar = document.getElementById('progress-bar');
+            const scoreDisplay = document.getElementById('score-display');
+
+            scoreDisplay.innerText = `Điểm (Lần 1): ${score}`;
+            const total = activeQuestions.length;
+
+            if (currentIndex >= total) {
+                renderResultScreen();
+                return;
+            }
+
+            progressText.innerText = `Câu ${currentIndex + 1} / ${total}`;
+            progressBar.style.width = `${((currentIndex + 1) / total) * 100}%`;
+
+            const q = activeQuestions[currentIndex];
+            let html = `
+                <div class="space-y-3 flex-1 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-1.5">
+                            <span class="text-[11px] font-bold px-2.5 py-0.5 bg-red-50 text-red-700 rounded-full uppercase">Câu hỏi ${currentIndex + 1}</span>
+                        </div>
+                        <h2 class="text-sm sm:text-base font-semibold text-slate-800 leading-snug mb-3">${q.question}</h2>
+                        <div class="space-y-2 mt-2" id="options-list">
+            `;
+
+            q.options.forEach((opt, oIdx) => {
+                html += `
+                    <button onclick="handleSelect(${oIdx})" class="w-full text-left p-3 rounded-xl border border-slate-200 bg-white hover:bg-red-50/70 hover:border-red-300 text-xs sm:text-sm font-medium text-slate-700 transition-all flex items-center shadow-xs active:scale-[0.99]">
+                        <span class="w-6 h-6 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center text-xs font-bold mr-3 flex-shrink-0">${String.fromCharCode(65 + oIdx)}</span>
+                        <span class="flex-1">${opt.text}</span>
+                    </button>
+                `;
+            });
+
+            html += `
+                        </div>
+                    </div>
+                    <div class="pt-3 border-t border-slate-100 flex justify-between items-center text-[11px] text-slate-500 mt-2">
+                        <span>Số lần thử câu này: <strong id="attempt-counter" class="text-red-600">${userAttempts[currentIndex]}</strong></span>
+                        <span class="italic text-rose-500 font-medium">Đúng mới được qua câu!</span>
+                    </div>
+                </div>
+            `;
+            container.innerHTML = html;
+        }
+
+        function handleSelect(optionIndex) {
+            const q = activeQuestions[currentIndex];
+            const selectedOpt = q.options[optionIndex];
+            
+            userAttempts[currentIndex]++;
+            const attempts = userAttempts[currentIndex];
+            document.getElementById('attempt-counter').innerText = attempts;
+
+            if (selectedOpt.isCorrect) {
+                if (attempts === 1) {
+                    score += 1;
+                    questionStatus[currentIndex] = 'green';
+                } else {
+                    questionStatus[currentIndex] = 'yellow';
+                }
+
+                showToast("Chính xác! Đang chuyển câu...", "success");
+                setTimeout(() => {
+                    hideToast();
+                    currentIndex++;
+                    renderQuiz();
+                }, 700);
+
+            } else {
+                if (attempts === 1) questionStatus[currentIndex] = 'red1';
+                else if (attempts === 2) questionStatus[currentIndex] = 'red2';
+                else questionStatus[currentIndex] = 'red3';
+
+                const optList = document.getElementById('options-list');
+                optList.classList.add('animate-shake');
+                setTimeout(() => optList.classList.remove('animate-shake'), 400);
+
+                showToast("VUI LÒNG THỬ LẠI", "error");
+            }
+        }
+
+        function showToast(message, type) {
+            const container = document.getElementById('toast-container');
+            const msgBox = document.getElementById('toast-message');
+            container.classList.remove('hidden');
+            msgBox.innerText = message;
+
+            if (type === 'success') {
+                msgBox.className = "p-2.5 rounded-xl text-xs sm:text-sm font-semibold text-center bg-emerald-100 text-emerald-800 border border-emerald-200 shadow-sm";
+            } else {
+                msgBox.className = "p-2.5 rounded-xl text-xs sm:text-sm font-semibold text-center bg-rose-100 text-rose-800 border border-rose-200 shadow-sm";
+            }
+        }
+
+        function hideToast() {
+            document.getElementById('toast-container').classList.add('hidden');
+        }
+
+        function renderResultScreen() {
+            const container = document.getElementById('quiz-container');
+            document.getElementById('progress-text').innerText = "Hoàn thành";
+            document.getElementById('progress-bar').style.width = "100%";
+
+            // Sửa hiển thị ma trận sao cho phù hợp với 88 câu
+            let matrixHtml = '<div class="grid grid-cols-8 sm:grid-cols-10 gap-1.5 my-3 max-h-48 overflow-y-auto p-1">';
+            activeQuestions.forEach((_, idx) => {
+                let colorClass = 'bg-slate-200 text-slate-600';
+                const status = questionStatus[idx];
+                
+                if (status === 'green') colorClass = 'bg-emerald-500 text-white font-bold';
+                else if (status === 'yellow') colorClass = 'bg-amber-400 text-white font-bold';
+                else if (status === 'red1') colorClass = 'bg-rose-400 text-white font-bold';
+                else if (status === 'red2') colorClass = 'bg-rose-600 text-white font-bold';
+                else if (status === 'red3') colorClass = 'bg-rose-950 text-white font-bold';
+
+                matrixHtml += `<div class="${colorClass} rounded-lg py-1 text-center text-[10px] flex items-center justify-center shadow-xs" title="Câu ${idx+1}">${idx+1}</div>`;
+            });
+            matrixHtml += '</div>';
+
+            container.innerHTML = `
+                <div class="flex flex-col items-center justify-center text-center py-4 space-y-3">
+                    <div class="w-14 h-14 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center text-2xl font-bold shadow-inner">
+                        🏆
+                    </div>
+                    <div>
+                        <h2 class="text-base sm:text-lg font-bold text-slate-800 uppercase">CHÚC MỪNG BẠN ĐÃ ĐƯỢC ${score} ĐIỂM</h2>
+                        <p class="text-[11px] text-slate-500 mt-0.5">Tổng số điểm đạt được khi người chơi nhấp đúng câu trả lời đúng lần đầu (Màu xanh lá).</p>
+                    </div>
+
+                    <div class="w-full text-left bg-slate-50 p-3 rounded-2xl border border-slate-200">
+                        <p class="text-[11px] font-bold text-slate-700 mb-1">Bảng thống kê trạng thái 88 câu:</p>
+                        ${matrixHtml}
+                        <div class="grid grid-cols-2 gap-1 text-[10px] text-slate-600 mt-2 border-t border-slate-200 pt-2">
+                            <span class="flex items-center"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block mr-1.5"></span> Xanh lá (Đúng lần 1)</span>
+                            <span class="flex items-center"><span class="w-2.5 h-2.5 rounded-full bg-amber-400 inline-block mr-1.5"></span> Vàng (Đúng lần 2+)</span>
+                            <span class="flex items-center"><span class="w-2.5 h-2.5 rounded-full bg-rose-400 inline-block mr-1.5"></span> Đỏ (Sai lần 1)</span>
+                            <span class="flex items-center"><span class="w-2.5 h-2.5 rounded-full bg-rose-600 inline-block mr-1.5"></span> Đỏ đậm (Sai lần 2)</span>
+                            <span class="flex items-center col-span-2 justify-center"><span class="w-2.5 h-2.5 rounded-full bg-rose-950 inline-block mr-1.5"></span> Đỏ đen (Sai từ lần 3+)</span>
+                        </div>
+                    </div>
+
+                    <button onclick="initApp()" class="w-full py-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl shadow-md transition-all text-xs sm:text-sm mt-2 flex items-center justify-center gap-1.5">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                        Quay lại để Reset lại tất cả
+                    </button>
+                </div>
+            `;
+        }
+
+        window.onload = initApp;
+    </script>
+</body>
+</html>
