@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Trắc Nghiệm Sinh Học 12 - Mobile Edition</title>
+  <style>
+    :root {
+      --bg-color: #0b132b;
+      --card-bg: #1c2541;
+      --card-bg-light: #2a3759;
+      --text-main: #ffffff;
+      --text-muted: #a5adbb;
+      --accent-green: #10b981;
+      --accent-green-hover: #059669;
+      --red-1: #ef4444;       /* Sai lần 1: Đỏ nhạt */
+      --red-2: #b91c1c;       /* Sai lần 2: Đỏ đậm */
+      --red-3: #450a0a;       /* Sai lần 3+: Đỏ đen */
+      --yellow: #f59e0b;      /* Bỏ qua: Vàng */
+      --border-color: #374151;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      padding-bottom: 20px;
+    }
+
+    /* Header */
+    .header {
+      position: sticky;
+      top: 0;
+      background-color: rgba(11, 19, 43, 0.95);
+      backdrop-filter: blur(10px);
+      z-index: 100;
+      border-bottom: 1px solid var(--border-color);
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .header-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--accent-green);
+      text-align: center;
+      flex: 1;
+    }
+
+    .header-subtitle {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-align: center;
+      display: block;
+    }
+
+    .back-btn {
+      background: var(--card-bg-light);
+      border: none;
+      color: white;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 18px;
+    }
+
+    .back-btn.hidden {
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    /* Progress Bar */
+    .progress-container {
+      width: 100%;
+      background-color: var(--card-bg-light);
+      height: 6px;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background-color: var(--accent-green);
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+
+    /* Container Main */
+    .container {
+      padding: 16px;
+      max-width: 500px;
+      margin: 0 auto;
+      width: 100%;
+      flex: 1;
+    }
+
+    /* Toast notification */
+    .toast-error {
+      position: fixed;
+      top: 70px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-20px);
+      background-color: #dc2626;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 20px;
+      font-weight: bold;
+      font-size: 14px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s ease;
+      z-index: 200;
+    }
+
+    .toast-error.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* Home View - Menu Select Lesson */
+    .menu-card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 16px;
+      border: 1px solid var(--border-color);
+      cursor: pointer;
+      transition: transform 0.2s, background-color 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .menu-card:active {
+      transform: scale(0.98);
+      background: var(--card-bg-light);
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 700;
+      background: rgba(16, 185, 129, 0.2);
+      color: var(--accent-green);
+      margin-bottom: 8px;
+    }
+
+    .menu-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .menu-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* Question Container */
+    .question-card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 20px;
+      border: 1px solid var(--border-color);
+      margin-bottom: 20px;
+    }
+
+    .q-number {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent-green);
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .q-text {
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 1.5;
+      margin-bottom: 16px;
+    }
+
+    .q-img {
+      width: 100%;
+      max-height: 220px;
+      object-fit: contain;
+      border-radius: 8px;
+      margin-bottom: 16px;
+      background: #fff;
+      padding: 4px;
+    }
+
+    /* Options */
+    .options-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .option-btn {
+      background: var(--card-bg-light);
+      border: 2px solid transparent;
+      color: white;
+      padding: 14px 16px;
+      border-radius: 12px;
+      font-size: 14px;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: all 0.2s;
+      line-height: 1.4;
+    }
+
+    .option-btn:active {
+      transform: scale(0.99);
+    }
+
+    /* Color States for Options */
+    .option-btn.correct-first {
+      background-color: var(--accent-green) !important;
+      border-color: #059669 !important;
+      color: white !important;
+    }
+
+    .option-btn.wrong-1 {
+      background-color: var(--red-1) !important;
+      border-color: #dc2626 !important;
+      color: white !important;
+    }
+
+    .option-btn.wrong-2 {
+      background-color: var(--red-2) !important;
+      border-color: #991b1b !important;
+      color: white !important;
+    }
+
+    .option-btn.wrong-3 {
+      background-color: var(--red-3) !important;
+      border-color: #000000 !important;
+      color: #f87171 !important;
+    }
+
+    .option-btn.skipped {
+      background-color: var(--yellow) !important;
+      border-color: #d97706 !important;
+      color: white !important;
+    }
+
+    /* Part II - True/False */
+    .tf-table {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .tf-item {
+      background: var(--card-bg-light);
+      border-radius: 12px;
+      padding: 12px;
+      border: 1px solid var(--border-color);
+    }
+
+    .tf-text {
+      font-size: 13px;
+      margin-bottom: 10px;
+      line-height: 1.4;
+    }
+
+    .tf-buttons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .tf-btn {
+      flex: 1;
+      padding: 8px;
+      border: none;
+      border-radius: 8px;
+      font-weight: 700;
+      background: var(--card-bg);
+      color: white;
+      cursor: pointer;
+      font-size: 13px;
+    }
+
+    /* Part III - Short Answer */
+    .short-input-group {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .short-input {
+      flex: 1;
+      background: var(--card-bg-light);
+      border: 2px solid var(--border-color);
+      border-radius: 10px;
+      padding: 12px;
+      color: white;
+      font-size: 15px;
+      outline: none;
+    }
+
+    .short-input:focus {
+      border-color: var(--accent-green);
+    }
+
+    .short-submit-btn {
+      background: var(--accent-green);
+      border: none;
+      color: white;
+      padding: 0 16px;
+      border-radius: 10px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    /* Controls Bottom */
+    .control-panel {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .btn-action {
+      flex: 1;
+      padding: 14px;
+      border-radius: 12px;
+      border: none;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn-next {
+      background-color: var(--accent-green);
+      color: white;
+    }
+
+    .btn-next:disabled {
+      background-color: var(--card-bg-light);
+      color: var(--text-muted);
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+
+    .btn-skip {
+      background-color: var(--yellow);
+      color: white;
+    }
+
+    /* Result Banner Screen */
+    .result-screen {
+      text-align: center;
+      padding: 30px 10px;
+    }
+
+    .result-box {
+      background: var(--card-bg);
+      border-radius: 20px;
+      padding: 30px 20px;
+      border: 2px solid var(--accent-green);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    }
+
+    .congrats-text {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--accent-green);
+      margin-bottom: 16px;
+    }
+
+    .score-text {
+      font-size: 32px;
+      font-weight: 900;
+      color: #ffffff;
+      margin: 15px 0;
+    }
+
+    .restart-btn {
+      background: var(--accent-green);
+      color: white;
+      border: none;
+      padding: 14px 28px;
+      border-radius: 30px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 20px;
+      width: 100%;
+    }
+
+    .hidden-view {
+      display: none !important;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Toast Error -->
+  <div id="toast" class="toast-error">VUI LÒNG THỬ LẠI</div>
+
+  <!-- Header -->
+  <div class="header">
+    <button id="back-btn" class="back-btn hidden" onclick="goHome()">&#8592;</button>
+    <div class="header-title">
+      TRẮC NGHIỆM SINH HỌC 12
+      <span class="header-subtitle" id="sub-title">Chọn Bài Học Để Bắt Đầu</span>
+    </div>
+    <div style="width:36px;"></div>
+  </div>
+
+  <!-- Progress Bar -->
+  <div class="progress-container">
+    <div class="progress-bar" id="progress-bar"></div>
+  </div>
+
+  <!-- Main Container -->
+  <div class="container">
+
+    <!-- MENU chọn bài -->
+    <div id="menu-view">
+      <div style="text-align: center; margin: 20px 0 30px;">
+        <h1 style="font-size: 24px; font-weight: 800; margin-bottom: 6px;">ÔN TẬP SINH HỌC 12</h1>
+        <p style="font-size: 13px; color: var(--text-muted);">Đúng mới qua câu • Đúng lần đầu tính điểm Xanh lá • Mobile Edition</p>
+      </div>
+
+      <div class="menu-card" onclick="startQuiz(3)">
+        <div>
+          <span class="badge">BÀI 3</span>
+          <div class="menu-title">Điều Hòa Biểu Hiện Gene</div>
+          <div class="menu-desc">Phần I (18c) • Phần II (4c) • Phần III (6c)</div>
+        </div>
+        <div style="font-size: 20px;">&#10095;</div>
+      </div>
+
+      <div class="menu-card" onclick="startQuiz(4)">
+        <div>
+          <span class="badge">BÀI 4</span>
+          <div class="menu-title">Đột Biến Gene</div>
+          <div class="menu-desc">Phần I (15c) • Phần II (4c) • Phần III (6c)</div>
+        </div>
+        <div style="font-size: 20px;">&#10095;</div>
+      </div>
+
+      <div class="menu-card" onclick="startQuiz(5)">
+        <div>
+          <span class="badge">BÀI 5</span>
+          <div class="menu-title">Công Nghệ Gene</div>
+          <div class="menu-desc">Phần I (18c) • Phần II (4c) • Phần III (6c)</div>
+        </div>
+        <div style="font-size: 20px;">&#10095;</div>
+      </div>
+    </div>
+
+    <!-- QUIZ VIEW -->
+    <div id="quiz-view" class="hidden-view">
+      <div class="question-card">
+        <div class="q-number">
+          <span id="q-part-title">PHẦN I - CÂU 1</span>
+          <span id="q-counter">1/28</span>
+        </div>
+        <div class="q-text" id="q-text">Nội dung câu hỏi...</div>
+        <img id="q-image" class="q-img hidden-view" src="" alt="Sơ đồ minh họa">
+
+        <!-- Danh sách đáp án cho Phần I -->
+        <div id="part1-options" class="options-list"></div>
+
+        <!-- Danh sách mệnh đề cho Phần II -->
+        <div id="part2-options" class="tf-table hidden-view"></div>
+
+        <!-- Ô nhập câu trả lời cho Phần III -->
+        <div id="part3-options" class="hidden-view">
+          <div class="short-input-group">
+            <input type="text" id="short-answer-input" class="short-input" placeholder="Nhập đáp án của bạn...">
+            <button class="short-submit-btn" onclick="checkShortAnswer()">Gửi</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="control-panel">
+        <button class="btn-action btn-skip" id="skip-btn" onclick="skipQuestion()">Bỏ Qua</button>
+        <button class="btn-action btn-next" id="next-btn" onclick="nextQuestion()" disabled>Câu Tiếp Theo &#10095;</button>
+      </div>
+    </div>
+
+    <!-- RESULT VIEW -->
+    <div id="result-view" class="result-screen hidden-view">
+      <div class="result-box">
+        <div style="font-size: 50px; margin-bottom: 10px;">🎉</div>
+        <div class="congrats-text" id="congrats-banner">CHÚC MỪNG BẠN ĐÃ ĐƯỢC XX ĐIỂM</div>
+        <p style="font-size: 14px; color: var(--text-muted); margin-top: 10px;">
+          Đã hoàn thành toàn bộ bài tập ôn tập!
+        </p>
+        <button class="restart-btn" onclick="goHome()">LÀM BÀI KHÁC / RESET</button>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // DỮ LIỆU CÂU HỎI BÀI 3, 4, 5
+    const quizData = {
+      3: {
+        title: "Bài 3: Điều Hòa Biểu Hiện Gene",
+        part1: [
+          { q: "Thí nghiệm phát hiện operon lac ở vi khuẩn E.coli, Monod và Jacob sử dụng môi trường nào sau đây để nuôi vi khuẩn E.coli trong lô thí nghiệm?", options: ["Môi trường không có lactose và có các amino acid đánh dấu phóng xạ.", "Môi trường có lactose và không có các amino acid đánh dấu phóng xạ.", "Môi trường có lactose và có các amino acid đánh dấu phóng xạ.", "Môi trường không có lactose và không có các amino acid đánh dấu phóng xạ."], answer: 2 },
+          { q: "Trong cơ chế điều hòa hoạt động của operon lac, sự kiện nào sau đây diễn ra cả khi môi trường có lactose và khi môi trường không có lactose?", options: ["Một số phân tử lactose liên kết với protein ức chế.", "Gene điều hòa lacI tổng hợp protein ức chế.", "Các gene cấu trúc Z, Y, A phiên mã tạo ra các phân tử RNA tương ứng.", "RNA polymerase liên kết với vùng khởi động của operon lac và tiến hành phiên mã."], answer: 1 },
+          { q: "Cấu trúc của operon lac ở vi khuẩn E.coli không bao gồm", options: ["Vùng operator.", "Các gene cấu trúc lacZ, lacY, lacA.", "Vùng promoter.", "Gene điều hòa lacI."], answer: 3 },
+          { q: "Hình mô tả hoạt động của Operon Lac ở vi khuẩn E.coli trong môi trường nuôi cấy. Phát biểu nào sau đây đúng?", options: ["Vi khuẩn đang được nuôi cấy trong môi trường có đường lactose.", "Chất X là enzyme β-galactosidase.", "Hai vùng (P) luôn ở trạng thái liên kết với enzyme RNA polymerase.", "Operon Lac của vi khuẩn E.coli đang ở trạng thái không hoạt động."], answer: 3 },
+          { q: "Khi nói về quá trình điều hòa hoạt động của gene, phát biểu nào sau đây sai?", options: ["Điều hòa hoạt động của gene ở sinh vật nhân sơ xảy ra chủ yếu ở mức phiên mã.", "Điều hòa hoạt động của gene chính là điều hòa lượng sản phẩm do gene tạo ra.", "Khi môi trường có lactose, gene điều hòa không thực hiện phiên mã.", "Quá trình điều hòa hoạt động gene ở sinh vật có thể xảy ra ở nhiều mức độ khác nhau."], answer: 2 },
+          { q: "Cấu trúc operon lac bao gồm", options: ["vùng điều hòa gồm trình tự P (promoter), O (operator) và ba gene cấu trúc lacZ, lacY, lacA.", "vùng điều hòa gồm trình tự P (promoter), O (operator) và ba gene cấu trúc lacI, lacY, lacA.", "vùng điều hòa gồm trình tự P (promoter), O (operator) và ba gene cấu trúc lacZ, lacI, lacA.", "vùng điều hòa gồm trình tự P (promoter), O (operator) và ba gene cấu trúc lacZ, lacY, lacI."], answer: 0 },
+          { q: "Gene lacZ quy định tổng hợp sản phẩm nào sau đây?", options: ["Enzyme β-galactosidase.", "Enzyme permease.", "Enzyme transacetylase.", "Enzyme RNA polymerase."], answer: 0 },
+          { q: "Gene lacY quy định tổng hợp sản phẩm nào sau đây?", options: ["Enzyme permease.", "Enzyme β-galactosidase.", "Enzyme transacetylase.", "Enzyme RNA polymerase."], answer: 0 },
+          { q: "Gene lacA quy định tổng hợp sản phẩm nào sau đây?", options: ["Enzyme transacetylase.", "Enzyme β-galactosidase.", "Enzyme permease.", "Enzyme RNA polymerase."], answer: 0 },
+          { q: "Gene điều hòa lacI quy định tổng hợp sản phẩm nào sau đây?", options: ["Protein ức chế lacI.", "Enzyme β-galactosidase.", "Enzyme transacetylase.", "Enzyme RNA polymerase."], answer: 0 },
+          { q: "Enzyme RNA polymerase liên kết với trình tự nào sau đây của operon lac để khởi động quá trình phiên mã?", options: ["P (promoter).", "O (operator).", "Gene điều hòa lacI.", "Gene cấu trúc lacZ."], answer: 0 },
+          { q: "Protein ức chế lacI liên kết với trình tự nào sau đây để ngăn cản quá trình phiên mã?", options: ["O (operator).", "P (promoter).", "Gene cấu trúc lacZ.", "Gene cấu trúc lacY."], answer: 0 },
+          { q: "Ý nghĩa của sự điều hòa biểu hiện gene đối với tế bào là", options: ["tiết kiệm được năng lượng và thích nghi được với sự thay đổi của môi trường.", "tiết kiệm được năng lượng nhưng không thích nghi được với sự thay đổi của môi trường.", "không tiết kiệm được năng lượng nhưng thích nghi được với sự thay đổi của môi trường.", "không tiết kiệm được năng lượng và không thích nghi được với sự thay đổi của môi trường."], answer: 0 },
+          { q: "Chất đóng vai trò như tín hiệu điều hòa biểu hiện gene của operon lac ở vi khuẩn E. coli là", options: ["Đường lactose.", "Enzim RNA-polymerase.", "mRNA.", "Protein ức chế lacI."], answer: 0 },
+          { q: "Giả sử có đột biến E.coli không thể phân giải lactose, đột biến nào sau đây KHÔNG phải nguyên nhân?", options: ["Đột biến ở gene điều hòa lacI làm gene mất khả năng phiên mã, không tạo protein ức chế.", "Đột biến ở gene lacZ làm phân tử protein hỏng chức năng.", "Đột biến ở gene lacA làm phân tử protein hỏng chức năng.", "Đột biến ở gene lacY làm phân tử protein hỏng chức năng."], answer: 0 },
+          { q: "Khi nói về operon lac ở vi khuẩn E. coli, phát biểu nào sau đây đúng?", options: ["Khi gene cấu trúc lacA và lacZ phiên mã 12 lần thì lacY cũng phiên mã 12 lần.", "Gene điều hòa (lacI) nằm trong thành phần của operon lac.", "Vùng vận hành (operator) là nơi RNA polymerase bám vào và khởi đầu phiên mã.", "Khi môi trường không có lactose thì gene điều hòa (lacI) không phiên mã."], answer: 0 },
+          { q: "Nhận xét nào sau đây không đúng với cấu trúc operon lac ở vi khuẩn E. coli?", options: ["Mỗi gene cấu trúc lacZ, lacY, lacA đều có một vùng khởi động và vùng vận hành riêng.", "Vùng vận hành là trình tự nucleotide liên kết với protein ức chế.", "Vùng khởi động là trình tự nucleotide mà RNA polymerase bám vào.", "Khi môi trường có hoặc không có lactose, gene điều hoà đều tổng hợp protein ức chế."], answer: 0 },
+          { q: "Phát biểu sau đây về mô hình điều hòa hoạt động của operon lac ở vi khuẩn E. coli là đúng?", options: ["Gene điều hòa (lacI) hoạt động không phụ thuộc vào sự có mặt của lactose.", "Vùng khởi động phân bố ở đầu 5’ của mạch mã gốc.", "Sản phẩm phiên mã là ba phân tử mRNA riêng biệt cho 3 gene cấu trúc.", "Chất cảm ứng là sản phẩm của gene điều hòa lacI."], answer: 0 }
+        ],
+        part2: [
+          { q: "Xét cơ chế hoạt động của Operon Lac ở chủng E. coli bình thường và đột biến:", items: [
+            { text: "a) Operon lac hoạt động do lactose bất hoạt protein ức chế. RNA polymerase liên kết vùng P để phiên mã.", ans: false },
+            { text: "b) Do đột biến làm protein ức chế thay đổi cấu hình không bám O. Operon hoạt động kể cả khi không có lactose.", ans: true },
+            { text: "c) Nếu đột biến xảy ra ở các gene cấu trúc Z, Y, A thì sẽ ảnh hưởng đến cả phiên mã và dịch mã.", ans: true },
+            { text: "d) Nếu dùng 5-BU gây đột biến ở giữa vùng mã hóa gene lacY chắc chắn làm thay đổi sản phẩm các gene Z, Y, A.", ans: false }
+          ]},
+          { q: "Khi môi trường không có lactose nhưng enzyme chuyển hóa lactose vẫn được tạo ra:", items: [
+            { text: "a) Do vùng khởi động (P) của operon bị bất hoạt.", ans: false },
+            { text: "b) Do gene điều hòa lacI bị đột biến nên không tạo được protein ức chế.", ans: true },
+            { text: "c) Do vùng vận hành (O) bị đột biến nên không liên kết được với protein ức chế.", ans: true },
+            { text: "d) Do vùng gene cấu trúc (Z, Y, A) bị đột biến làm tăng khả năng biểu hiện của gene.", ans: false }
+          ]},
+          { q: "Khi nói về hoạt động của các operon lac ở vi khuẩn E. coli:", items: [
+            { text: "a) Nếu đột biến xảy ra ở gene cấu trúc Y thì có thể làm cho protein do gene này quy định bị bất hoạt.", ans: true },
+            { text: "b) Đột biến xảy ra ở gene điều hòa lacI có thể làm cho gene này không được phiên mã dẫn đến Z, Y, A phiên mã liên tục.", ans: true },
+            { text: "c) Khi protein ức chế liên kết với vùng vận hành thì các gene cấu trúc Z, Y, A không được phiên mã.", ans: true },
+            { text: "d) Nếu đột biến mất 1 cặp nucleotide ở giữa gene lacI có thể làm Z, Y, A phiên mã ngay cả khi không có lactose.", ans: true }
+          ]},
+          { q: "Giải thích hiện tượng enzyme phân giải lactose vẫn tạo ra khi không có lactose:", items: [
+            { text: "a) Do vùng khởi động (P) của operon bị bất hoạt.", ans: false },
+            { text: "b) Do gene điều hòa lacI bị đột biến nên không tạo ra được protein ức chế.", ans: true },
+            { text: "c) Do vùng vận hành (O) bị đột biến nên không liên kết được với protein ức chế.", ans: true },
+            { text: "d) Do gene cấu trúc Z, Y, A bị đột biến làm tăng khả năng biểu hiện gene.", ans: false }
+          ]}
+        ],
+        part3: [
+          { q: "Cho biết Operon lac tương ứng với vị trí số mấy trên sơ đồ mô hình cấu trúc?", ans: ["2"] },
+          { q: "Vùng khởi động, vị trí enzyme RNA polymerase bám vào để phiên mã tương ứng vị trí số mấy?", ans: ["4"] },
+          { q: "Khi có lactose, chất cảm ứng gắn vào đâu làm protein ức chế bị bất hoạt (vị trí số mấy)?", ans: ["Lactose", "6", "lactose"] },
+          { q: "Vùng điều hòa operon lac gồm bao nhiêu vùng trình tự?", ans: ["2"] },
+          { q: "Theo cấu trúc operon lac, các gene cấu trúc quy định tổng hợp bao nhiêu loại enzyme?", ans: ["3"] },
+          { q: "Nếu gene điều hòa lacI nhân đôi 10 lần thì các gene cấu trúc nhân đôi bao nhiêu lần?", ans: ["10"] }
+        ]
+      },
+      4: {
+        title: "Bài 4: Đột Biến Gene",
+        part1: [
+          { q: "Thể đột biến là", options: ["cơ thể mang đột biến chưa biểu hiện ra kiểu hình.", "cơ thể mang đột biến đã được biểu hiện ra kiểu hình.", "cơ thể mang biến dị tổ hợp đã được biểu hiện ra kiểu hình.", "cơ thể mang biến dị tổ hợp chưa được biểu hiện ra kiểu hình."], answer: 1 },
+          { q: "Đột biến nào khi xảy ra không làm thay đổi số nucleotide nhưng lại thay đổi số liên kết hydrogen trong gene?", options: ["Đột biến thay thế cặp A – T bằng G – C.", "Đột biến mất một cặp nucleotide.", "Đột biến thay thế cặp G – C bằng C – G.", "Đột biến thêm một cặp nucleotide."], answer: 0 },
+          { q: "Vai trò của đột biến gene trong tiến hóa là", options: ["giúp đào thải các cá thể có hại.", "tạo nguyên liệu cho quá trình tiến hóa.", "tạo các biến dị tổ hợp.", "giảm nguyên liệu cho quá trình tiến hóa."], answer: 1 },
+          { q: "Phát biểu nào sau đây về đột biến gene là đúng?", options: ["Đột biến gene luôn làm biến đổi cấu trúc của protein.", "Các dạng đột biến điểm gồm: mất, thêm, thay thế một cặp nucleotide.", "Đột biến gene không phải là nguyên liệu cho quá trình tiến hóa.", "Mức độ gây hại của allele đột biến chỉ phụ thuộc vào điều kiện môi trường."], answer: 1 },
+          { q: "Đột biến điểm làm thay thế 1 nucleotide ở vị trí bất kì của triplet nào sau đây KHÔNG xuất hiện codon kết thúc?", options: ["3’AGG5’", "3’ACC5’", "3’ACA5’", "3’AAT5’"], answer: 0 },
+          { q: "Dạng đột biến nào sau đây làm cho gene ban đầu ít hơn gene đột biến 2 liên kết hydrogen?", options: ["Mất một cặp A-T.", "Thay thế cặp A-T bằng cặp G-C.", "Thay thế cặp G-C bằng cặp A-T.", "Thêm một cặp A-T."], answer: 3 },
+          { q: "Đột biến thay thế một cặp nucleotide được gọi là đột biến đồng nghĩa xảy ra khi", options: ["có sự thay đổi amino acid tương ứng.", "thể đột biến được xuất hiện ở thế hệ sau.", "thay đổi toàn bộ amino acid.", "không làm thay đổi amino acid nào trong chuỗi polypeptide."], answer: 3 },
+          { q: "Nếu có một nitrogenous base dạng hiếm tham gia tái bản DNA thì phát sinh đột biến nào?", options: ["Thay thế một cặp nucleotide.", "Thêm một cặp nucleotide.", "Mất một cặp nucleotide.", "Đảo một cặp nucleotide."], answer: 0 },
+          { q: "Những biến đổi trong cấu trúc của gene liên quan đến một cặp nucleotide gọi là", options: ["Đột biến số lượng NST.", "Đột biến cấu trúc NST.", "Đột biến điểm.", "Thể đột biến."], answer: 2 },
+          { q: "Đột biến điểm thay thế một nucleotide ở vị trí bất kì của triplet nào sau đây đều KHÔNG làm xuất hiện codon kết thúc?", options: ["3’ACC5’", "3’TTT5’", "3’ACA5’", "3’GGA5’"], answer: 3 },
+          { q: "Ở sinh vật nhân sơ, gene bị đột biến nhưng chuỗi polypeptide không bị thay đổi vì", options: ["Mã di truyền có tính thoái hoá.", "DNA của vi khuẩn có dạng vòng.", "Mã di truyền có tính đặc hiệu.", "Mã di truyền có tính liên tục."], answer: 0 },
+          { q: "Allele B biến đổi thành allele b làm codon 5’UGG3’ thành 5’UGA3’. Dự đoán nào đúng?", options: ["Allele B ít hơn allele b một liên kết hydrogen.", "Dạng đột biến này còn gọi là đột biến sai nghĩa.", "Đột biến làm thay đổi chức năng protein và biểu hiện ngay ra kiểu hình.", "Chuỗi polypeptide do allele b dài hơn."], answer: 2 },
+          { q: "Chất 5-BU gây đột biến gene. Phát biểu nào SAI khi nói về cơ chế tác động của 5-BU?", options: ["Chất 5-BU có thể làm thay đổi toàn bộ các bộ ba từ vị trí đột biến đến cuối gene.", "Dạng đột biến này làm tăng 1 liên kết hydrogen.", "Sau khi 5-BU bắt cặp với A cần 2 lần nhân đôi mới xuất hiện cặp G-C.", "Chất 5-BU có thể làm biến đổi A-T thành G-C và ngược lại."], answer: 0 },
+          { q: "Theo lí thuyết, phát biểu nào sau đây là sai khi tạo gene mới bằng đột biến điểm?", options: ["Gene ban đầu và gene đột biến luôn tạo chuỗi polypeptide có trình tự amino acid hoàn toàn giống nhau.", "Chuỗi polynucleotide sau phiên mã có thể có số nucleotide bằng nhau.", "Đột biến có thể không xảy ra trong vùng mã hoá.", "Chuỗi polypeptide tạo ra có thể có số amino acid bằng nhau."], answer: 0 },
+          { q: "Phát biểu nào sau đây về đột biến gene là đúng?", options: ["Trong quá trình tái bản DNA, sự bắt cặp sai sẽ làm phát sinh đột biến gene.", "Mất một cặp nucleotide chỉ làm thay đổi 1 amino acid.", "Đột biến gene không làm thay đổi biểu hiện của gene.", "Thêm hoặc mất 1 cặp nucleotide không làm thay đổi cấu trúc protein."], answer: 0 }
+        ],
+        part2: [
+          { q: "Mã hóa amino acid Valine và Glycine:", items: [
+            { text: "a) Đột biến thay thế T-A thành G-C trong triplet làm thay đổi Valine thành Glycine.", ans: true },
+            { text: "b) Có 4 đột biến thay thế 1 cặp nucleotide khác nhau làm đổi Valine thành Glycine.", ans: true },
+            { text: "c) Đột biến mất 1 cặp nucleotide trong triplet có thể làm đổi Valine thành Glycine.", ans: true },
+            { text: "d) Nếu 2 chuỗi polypeptide chỉ khác nhau ở 1 amino acid thì do đột biến thay thế.", ans: true }
+          ]},
+          { q: "Nhận định về đột biến gene:", items: [
+            { text: "a) Đột biến thay thế một cặp nucleotide luôn dẫn đến kết thúc sớm dịch mã.", ans: false },
+            { text: "b) Đột biến gene tạo ra các allele mới làm phong phú vốn gene quần thể.", ans: true },
+            { text: "c) Đột biến gene có thể có lợi, có hại hoặc trung tính.", ans: true },
+            { text: "d) Mức độ gây hại của allele đột biến phụ thuộc tổ hợp gene và môi trường.", ans: true }
+          ]},
+          { q: "Allele A ở vi khuẩn E. coli bị đột biến điểm thành allele a:", items: [
+            { text: "a) Allele a và allele A có số lượng nucleotide luôn bằng nhau.", ans: false },
+            { text: "b) Nếu đột biến mất cặp nucleotide thì allele a và A có chiều dài bằng nhau.", ans: false },
+            { text: "c) Chuỗi polypeptide do allele a và A quy định có thể có trình tự amino acid giống nhau.", ans: true },
+            { text: "d) Đột biến thay thế 1 cặp nucleotide ở giữa gene làm thay đổi toàn bộ bộ ba từ vị trí đó.", ans: false }
+          ]},
+          { q: "Về nguyên nhân và cơ chế phát sinh đột biến gene:", items: [
+            { text: "a) Đột biến gene có thể do tác động lý, hóa, sinh hoặc rối loạn trao đổi chất.", ans: true },
+            { text: "b) Base hiếm làm phát sinh đột biến mất cặp nucleotide.", ans: false },
+            { text: "c) Hóa chất 5-BrU gây thay thế cặp A-T thành G-C.", ans: true },
+            { text: "d) Tia UV làm 2 nu loại T trên cùng 1 mạch liên kết với nhau.", ans: true }
+          ]}
+        ],
+        part3: [
+          { q: "Chất 5-BU làm thay thế cặp A-T thành G-C qua mấy lần tái bản DNA?", ans: ["2"] },
+          { q: "Cho các kiểu gene: (1) AaBB, (2) AaBb, (3) Aabb, (4) aabb, (5) aaBb, (6) aaBB. Có bao nhiêu kiểu gene là thể đột biến?", ans: ["5"] },
+          { q: "Mất cặp nu thứ 16 G-C ở đoạn gốc mã hóa, phân tử protein tương ứng có bao nhiêu amino acid?", ans: ["5"] },
+          { q: "Đột biến điểm làm gene ít hơn gene đột biến 2 liên kết H (N=3000, H=3900). Tỉ lệ A/G của gene sau đột biến?", ans: ["0.668", "601/900", "0,668"] },
+          { q: "Gene dài 408nm, H=3200 bị thay thế 1 cặp A-T bằng G-C. Số nu loại T sau đột biến?", ans: ["399"] },
+          { q: "Gene dài 408nm, H=3200 bị thêm 1 cặp G-C. Số nu loại G sau đột biến?", ans: ["801"] }
+        ]
+      },
+      5: {
+        title: "Bài 5: Công Nghệ Gene",
+        part1: [
+          { q: "Công nghệ DNA tái tổ hợp là kĩ thuật chuyển", options: ["một đoạn gene từ tế bào cho sang tế bào nhận.", "một đoạn NST từ tế bào cho sang tế bào nhận.", "plasmid từ tế bào cho sang tế bào nhận.", "DNA tái tổ hợp từ tế bào cho sang tế bào nhận."], answer: 3 },
+          { q: "Trong công nghệ gene, các enzyme được sử dụng trong bước tạo DNA tái tổ hợp là", options: ["enzyme restrictase và enzyme DNA polymerase.", "enzyme ligase và enzyme DNA polymerase.", "enzyme restrictase và enzyme ligase.", "enzyme DNA polymerase và enzyme RNA polymerase."], answer: 2 },
+          { q: "Khi cắt vector và gene cần chuyển, người ta phải xử lí bằng enzyme restrictase để", options: ["để nối hai loại DNA tạo ra DNA tái tổ hợp.", "tạo ra cùng một loại “đầu đính” có thể khớp nối.", "để hoạt hoá hai loại DNA.", "để cắt nhỏ hai loại DNA."], answer: 1 },
+          { q: "Sản phẩm hormone insulin có thể được tạo ra nhờ kĩ thuật/công nghệ nào sau đây?", options: ["Công nghệ DNA tái tổ hợp.", "Kĩ thuật cấy truyền phôi.", "Kĩ thuật nhân bản gene.", "Kĩ thuật liệu pháp gene."], answer: 0 },
+          { q: "Đâu là thành tựu của công nghệ DNA tái tổ hợp trong ngành dược phẩm?", options: ["“Lúa vàng” có gene sản xuất β-carotene.", "Cá hồi có gene hormone sinh trưởng.", "Giống ngô Bt kháng sâu.", "Cừu có gene quy định protein antithrombin của người."], answer: 3 },
+          { q: "Công nghệ gene là quy trình tạo ra", options: ["những cơ thể sinh vật mang gene bị biến đổi.", "những tế bào hoặc sinh vật có gene bị biến đổi hoặc có thêm gene mới.", "những tế bào trên cơ thể sinh vật bị biến đổi.", "những tế bào bị đột biến mất cặp nucleotide."], answer: 1 },
+          { q: "Công nghệ DNA tái tổ hợp là", options: ["kĩ thuật đưa gene từ tế bào này sang tế bào khác.", "kĩ thuật lấy gene ra từ một tế bào.", "kĩ thuật đưa gene ngoại lai vào tế bào nhận.", "kĩ thuật làm thay đổi gene trong tế bào."], answer: 0 },
+          { q: "Khi nói về vai trò của vector plasmid trong công nghệ DNA tái tổ hợp, phát biểu nào đúng?", options: ["Nếu không có vector thì gene tạo quá nhiều sản phẩm.", "Nhờ vector plasmid mà gene cần chuyển gắn được vào DNA vùng nhân.", "Nhờ có vector plasmid mà gene cần chuyển được nhân lên trong tế bào nhận.", "Nếu không có vector thì tế bào nhận không phân chia."], answer: 2 },
+          { q: "Người ta không đưa trực tiếp gene vào tế bào nhận mà phải dùng vector vì", options: ["vector có khả năng tự nhân đôi trong tế bào nhận giúp gene nhân lên.", "vector dễ xâm nhập.", "gene không chui vào được.", "gene không tái bản được."], answer: 0 },
+          { q: "Vector là một phân tử DNA có kích thước", options: ["nhỏ, có khả năng tái bản cùng sự phân chia tế bào.", "lớn, hoạt động độc lập.", "nhỏ, có khả năng tái bản độc lập với hệ gene và có thể gắn vào hệ gene.", "lớn, không có khả năng tái bản độc lập."], answer: 2 },
+          { q: "DNA tái tổ hợp là", options: ["phân tử DNA dạng thẳng.", "phân tử DNA lớn.", "một phân tử DNA nhỏ, được lắp ráp từ các đoạn DNA lấy từ các tế bào khác nhau.", "phân tử DNA lắp từ RNA."], answer: 2 },
+          { q: "Plasmid được dùng trong công nghệ DNA tái tổ hợp vì plasmid là DNA vòng kích thước", options: ["nhỏ, trong tế bào chất vi khuẩn, có khả năng tái bản độc lập.", "lớn, trong tế bào chất thực vật.", "nhỏ, trong lục lạp.", "nhỏ, chỉ nhân đôi khi tế bào phân chia."], answer: 0 },
+          { q: "DNA tái tổ hợp là phân tử DNA tạo ra do", options: ["chuyển đoạn tương hỗ.", "lặp đoạn NST.", "lắp ráp gene cần chuyển của tế bào cho vào DNA của vector ở những điểm xác định.", "chèn một đoạn DNA cùng trong nhân."], answer: 2 },
+          { q: "Plasmid là những cấu trúc", options: ["nằm trong tế bào chất của vi khuẩn, là DNA dạng vòng, mạch kép.", "nằm trong nhân vi khuẩn.", "nằm trong tế bào chất, mạch thẳng.", "nằm trong nhân, mạch thẳng."], answer: 0 },
+          { q: "Hai đoạn DNA cho và nhận chỉ có thể kết hợp thành DNA tái tổ hợp khi", options: ["có xúc tác enzyme restrictase.", "có sự xúc tác của enzyme ligase.", "có trình tự nucleotide không bổ sung.", "có muối CaCl2."], answer: 1 },
+          { q: "Khâu nào dưới đây KHÔNG nằm trong các bước của công nghệ DNA tái tổ hợp?", options: ["Tạo DNA tái tổ hợp.", "Đưa DNA tái tổ hợp vào tế bào nhận.", "Phân lập dòng tế bào chứa DNA tái tổ hợp.", "Tạo dòng thuần chủng."], answer: 3 },
+          { q: "Phương pháp tải nạp sử dụng vector là", options: ["vi khuẩn lây nhiễm virus.", "virus lây nhiễm vi khuẩn khi không mang gene.", "vi khuẩn lây nhiễm virus khi không mang gene.", "virus lây nhiễm vi khuẩn khi chúng mang gene cần chuyển."], answer: 3 },
+          { q: "Sau khi DNA tái tổ hợp được đưa vào tế bào nhận, nó sẽ", options: ["thực hiện tiếp cắt nối.", "di chuyển vào nhân.", "tham gia cấu tạo NST.", "tổng hợp protein do gene chuyển quy định."], answer: 3 }
+        ],
+        part2: [
+          { q: "Gắn gene mã hóa insulin người vào plasmid chuyển vào E. coli, sản phẩm tạo ra lớn hơn insulin người:", items: [
+            { text: "a) Sinh vật nhân sơ và nhân thực dùng bộ mã di truyền khác nhau.", ans: false },
+            { text: "b) Vi khuẩn chọn dịch mã mARN chứa thông tin nhiều gene.", ans: false },
+            { text: "c) Vi khuẩn không có khả năng loại bỏ những đoạn intron ở gene của người.", ans: true },
+            { text: "d) DNA polymerase không thực hiện phiên mã đoạn DNA người.", ans: false }
+          ]},
+          { q: "Để plasmid DNA tái tổ hợp dễ xâm nhập màng tế bào E. coli:", items: [
+            { text: "a) Bổ sung vào môi trường enzyme DNA restrictase.", ans: false },
+            { text: "b) Bóc tách màng của vi khuẩn.", ans: false },
+            { text: "c) Xử lý màng tế bào bằng CaCl2.", ans: true },
+            { text: "d) Dùng xung điện để làm dãn màng sinh chất của vi khuẩn.", ans: true }
+          ]},
+          { q: "Các nhận định về công nghệ gene:", items: [
+            { text: "a) Công nghệ gene là tập hợp các kĩ thuật cho phép thay đổi cấu trúc gene.", ans: true },
+            { text: "b) Công nghệ gene chỉ có thể áp dụng cho động vật.", ans: false },
+            { text: "c) Chuyển gene vào cơ thể sinh vật tạo sinh vật biến đổi gene (GMO).", ans: true },
+            { text: "d) Sinh vật biến đổi gene (GMO) luôn có hại cho sức khỏe.", ans: false }
+          ]},
+          { q: "Ứng dụng của công nghệ gene trong y học:", items: [
+            { text: "a) Công nghệ gene có thể được sử dụng để chữa trị bệnh di truyền.", ans: true },
+            { text: "b) Việc sử dụng công nghệ gene có thể dẫn đến một số nguy cơ tiềm ẩn.", ans: true },
+            { text: "c) Công nghệ gene là lĩnh vực đầy tiềm năng mang lại nhiều lợi ích.", ans: true },
+            { text: "d) Ứng dụng công nghệ gene cần thực hiện thận trọng và có trách nhiệm.", ans: true }
+          ]}
+        ],
+        part3: [
+          { q: "Có bao nhiêu cấu trúc sau đây được dùng để chuyển gene (Plasmid, Thực khuẩn thể, Virus, E. coli)?", ans: ["3"] },
+          { q: "Có bao nhiêu thành phần tham gia tạo DNA tái tổ hợp (Restrictase, Ligase, Nucleotide, Plasmid)?", ans: ["3"] },
+          { q: "Có bao nhiêu sinh vật được tạo ra từ công nghệ gene?", ans: ["4"] },
+          { q: "Cho các thành tựu (Bông kháng sâu, Cà chua bất hoạt ethylene, Chuột nhắt mang gen chuột cống, Dê tơ nhện, Cừu gen người). Có bao nhiêu thành tựu công nghệ gene?", ans: ["5"] },
+          { q: "Trong các thành tựu trên, có bao nhiêu thành tựu KHÔNG thuộc công nghệ gene?", ans: ["2"] },
+          { q: "Có bao nhiêu phương pháp tạo sinh vật biến đổi gene?", ans: ["3"] }
+        ]
+      }
+    };
+
+    // BIẾN TRẠNG THÁI APP
+    let currentLesson = 3;
+    let currentQuestions = [];
+    let currentIndex = 0;
+    
+    // Thống kê điểm
+    let greenScore = 0;
+    let questionAttempt = 0; // Số lần chọn sai ở câu hiện tại
+    let isQuestionSolved = false;
+    let tfAnswers = {}; // Lưu trạng thái trả lời đúng cho Phần II
+
+    // Chuyển đổi màn hình
+    function goHome() {
+      document.getElementById("menu-view").classList.remove("hidden-view");
+      document.getElementById("quiz-view").classList.add("hidden-view");
+      document.getElementById("result-view").classList.add("hidden-view");
+      document.getElementById("back-btn").classList.add("hidden");
+      document.getElementById("sub-title").innerText = "Chọn Bài Học Để Bắt Đầu";
+      document.getElementById("progress-bar").style.width = "0%";
+    }
+
+    // Khởi tạo bài thi
+    function startQuiz(lessonId) {
+      currentLesson = lessonId;
+      const data = quizData[lessonId];
+      
+      // Tổng hợp tất cả câu hỏi của bài học
+      currentQuestions = [];
+
+      // Phần I
+      data.part1.forEach((q, idx) => {
+        // Đảo ngẫu nhiên vị trí đáp án Phần I
+        let shuffledOpts = q.options.map((opt, i) => ({ text: opt, originalIndex: i }));
+        shuffledOpts.sort(() => Math.random() - 0.5);
+        let correctNewIdx = shuffledOpts.findIndex(item => item.originalIndex === q.answer);
+
+        currentQuestions.push({
+          type: 1,
+          partName: "PHẦN I - CÂU " + (idx + 1),
+          text: q.q,
+          options: shuffledOpts.map(o => o.text),
+          answer: correctNewIdx
+        });
+      });
+
+      // Phần II
+      data.part2.forEach((q, idx) => {
+        currentQuestions.push({
+          type: 2,
+          partName: "PHẦN II - CÂU " + (idx + 1),
+          text: q.q,
+          items: q.items
+        });
+      });
+
+      // Phần III
+      data.part3.forEach((q, idx) => {
+        currentQuestions.push({
+          type: 3,
+          partName: "PHẦN III - CÂU " + (idx + 1),
+          text: q.q,
+          ans: q.ans
+        });
+      });
+
+      currentIndex = 0;
+      greenScore = 0;
+
+      document.getElementById("menu-view").classList.add("hidden-view");
+      document.getElementById("quiz-view").classList.remove("hidden-view");
+      document.getElementById("result-view").classList.add("hidden-view");
+      document.getElementById("back-btn").classList.remove("hidden");
+      document.getElementById("sub-title").innerText = data.title;
+
+      loadQuestion();
+    }
+
+    // Tải câu hỏi hiện tại
+    function loadQuestion() {
+      questionAttempt = 0;
+      isQuestionSolved = false;
+      tfAnswers = {};
+
+      const q = currentQuestions[currentIndex];
+      const total = currentQuestions.length;
+
+      // Cập nhật thanh tiến độ
+      document.getElementById("progress-bar").style.width = ((currentIndex / total) * 100) + "%";
+
+      // Cập nhật thông tin câu hỏi
+      document.getElementById("q-part-title").innerText = q.partName;
+      document.getElementById("q-counter").innerText = (currentIndex + 1) + "/" + total;
+      document.getElementById("q-text").innerText = q.text;
+
+      // Disable nút Next
+      document.getElementById("next-btn").disabled = true;
+
+      // Bật/tắt các vùng hiển thị tùy loại câu
+      const p1Box = document.getElementById("part1-options");
+      const p2Box = document.getElementById("part2-options");
+      const p3Box = document.getElementById("part3-options");
+
+      p1Box.classList.add("hidden-view");
+      p2Box.classList.add("hidden-view");
+      p3Box.classList.add("hidden-view");
+
+      if (q.type === 1) {
+        p1Box.classList.remove("hidden-view");
+        p1Box.innerHTML = "";
+        q.options.forEach((optText, i) => {
+          const btn = document.createElement("button");
+          btn.className = "option-btn";
+          btn.innerHTML = `<strong style="min-width:20px;">${String.fromCharCode(65 + i)}.</strong> <span>${optText}</span>`;
+          btn.onclick = () => selectPart1(i, btn);
+          p1Box.appendChild(btn);
+        });
+      } else if (q.type === 2) {
+        p2Box.classList.remove("hidden-view");
+        p2Box.innerHTML = "";
+        q.items.forEach((item, i) => {
+          const itemDiv = document.createElement("div");
+          itemDiv.className = "tf-item";
+          itemDiv.innerHTML = `
+            <div class="tf-text">${item.text}</div>
+            <div class="tf-buttons">
+              <button class="tf-btn" id="tf-true-${i}" onclick="selectTF(${i}, true)">ĐÚNG</button>
+              <button class="tf-btn" id="tf-false-${i}" onclick="selectTF(${i}, false)">SAI</button>
+            </div>
+          `;
+          p2Box.appendChild(itemDiv);
+        });
+      } else if (q.type === 3) {
+        p3Box.classList.remove("hidden-view");
+        document.getElementById("short-answer-input").value = "";
+        document.getElementById("short-answer-input").disabled = false;
+      }
+    }
+
+    // Toast Lỗi
+    function showToast() {
+      const toast = document.getElementById("toast");
+      toast.classList.add("show");
+      setTimeout(() => {
+        toast.classList.remove("show");
+      }, 1500);
+    }
+
+    // Xử lý Phần I
+    function selectPart1(index, btnEl) {
+      if (isQuestionSolved) return;
+
+      const q = currentQuestions[currentIndex];
+      if (index === q.answer) {
+        // ĐÚNG
+        isQuestionSolved = true;
+
+        if (questionAttempt === 0) {
+          btnEl.classList.add("correct-first");
+          greenScore++;
+        } else {
+          btnEl.classList.add("correct-first");
+        }
+
+        document.getElementById("next-btn").disabled = false;
+      } else {
+        // SAI
+        questionAttempt++;
+        showToast();
+
+        if (questionAttempt === 1) {
+          btnEl.classList.add("wrong-1");
+        } else if (questionAttempt === 2) {
+          btnEl.classList.add("wrong-2");
+        } else {
+          btnEl.classList.add("wrong-3");
+        }
+      }
+    }
+
+    // Xử lý Phần II (Đúng/Sai)
+    function selectTF(itemIndex, userChoice) {
+      if (isQuestionSolved) return;
+
+      const q = currentQuestions[currentIndex];
+      const correctChoice = q.items[itemIndex].ans;
+
+      const btnTrue = document.getElementById(`tf-true-${itemIndex}`);
+      const btnFalse = document.getElementById(`tf-false-${itemIndex}`);
+
+      if (userChoice === correctChoice) {
+        tfAnswers[itemIndex] = true;
+
+        if (userChoice) {
+          btnTrue.style.background = "var(--accent-green)";
+          btnFalse.style.background = "var(--card-bg)";
+        } else {
+          btnFalse.style.background = "var(--accent-green)";
+          btnTrue.style.background = "var(--card-bg)";
+        }
+      } else {
+        questionAttempt++;
+        showToast();
+
+        let wrongClass = questionAttempt === 1 ? "var(--red-1)" : (questionAttempt === 2 ? "var(--red-2)" : "var(--red-3)");
+        if (userChoice) {
+          btnTrue.style.background = wrongClass;
+        } else {
+          btnFalse.style.background = wrongClass;
+        }
+      }
+
+      // Kiểm tra hoàn thành tất cả 4 ý
+      if (Object.keys(tfAnswers).length === q.items.length) {
+        isQuestionSolved = true;
+        if (questionAttempt === 0) {
+          greenScore++;
+        }
+        document.getElementById("next-btn").disabled = false;
+      }
+    }
+
+    // Xử lý Phần III (Trả lời ngắn)
+    function checkShortAnswer() {
+      if (isQuestionSolved) return;
+
+      const inputVal = document.getElementById("short-answer-input").value.trim().toLowerCase();
+      const q = currentQuestions[currentIndex];
+
+      const isCorrect = q.ans.some(a => a.toLowerCase() === inputVal);
+
+      if (isCorrect) {
+        isQuestionSolved = true;
+        document.getElementById("short-answer-input").style.borderColor = "var(--accent-green)";
+        document.getElementById("short-answer-input").disabled = true;
+
+        if (questionAttempt === 0) {
+          greenScore++;
+        }
+        document.getElementById("next-btn").disabled = false;
+      } else {
+        questionAttempt++;
+        showToast();
+        document.getElementById("short-answer-input").style.borderColor = "var(--red-1)";
+      }
+    }
+
+    // Bỏ Qua Câu Hỏi
+    function skipQuestion() {
+      if (isQuestionSolved) {
+        nextQuestion();
+        return;
+      }
+
+      const q = currentQuestions[currentIndex];
+      isQuestionSolved = true;
+
+      if (q.type === 1) {
+        const btns = document.getElementById("part1-options").children;
+        if (btns[q.answer]) {
+          btns[q.answer].classList.add("skipped");
+        }
+      } else if (q.type === 2) {
+        q.items.forEach((item, i) => {
+          const btnTrue = document.getElementById(`tf-true-${i}`);
+          const btnFalse = document.getElementById(`tf-false-${i}`);
+          if (item.ans) {
+            btnTrue.style.background = "var(--yellow)";
+          } else {
+            btnFalse.style.background = "var(--yellow)";
+          }
+        });
+      } else if (q.type === 3) {
+        const input = document.getElementById("short-answer-input");
+        input.value = "Đáp án: " + q.ans[0];
+        input.style.borderColor = "var(--yellow)";
+        input.disabled = true;
+      }
+
+      document.getElementById("next-btn").disabled = false;
+    }
+
+    // Sang câu tiếp theo
+    function nextQuestion() {
+      if (currentIndex < currentQuestions.length - 1) {
+        currentIndex++;
+        loadQuestion();
+      } else {
+        showResults();
+      }
+    }
+
+    // Hiển thị kết quả cuối cùng
+    function showResults() {
+      document.getElementById("quiz-view").classList.add("hidden-view");
+      document.getElementById("result-view").classList.remove("hidden-view");
+      document.getElementById("progress-bar").style.width = "100%";
+
+      document.getElementById("congrats-banner").innerText = `CHÚC MỪNG BẠN ĐÃ ĐƯỢC ${greenScore} ĐIỂM`;
+    }
+  </script>
+</body>
+</html>
