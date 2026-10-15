@@ -1,0 +1,833 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Trắc Nghiệm Vật Lí Nhiệt - Mobile Edition</title>
+<style>
+:root {
+  --bg-color: #0b132b;
+  --card-bg: #1c2541;
+  --card-bg-light: #2a3759;
+  --text-main: #ffffff;
+  --text-muted: #a5adbb;
+  --accent-green: #10b981;
+  --red-1: #ef4444;
+  --red-2: #b91c1c;
+  --red-3: #450a0a;
+  --yellow: #f59e0b;
+  --border-color: #374151;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, Helvetica, Arial, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  background: var(--bg-color);
+  color: var(--text-main);
+  min-height: 100vh;
+  padding-bottom: 24px;
+}
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(11, 19, 43, .96);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border-color);
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.header-title {
+  flex: 1;
+  text-align: center;
+  color: var(--accent-green);
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1.4;
+}
+
+.header-subtitle {
+  display: block;
+  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: 400;
+}
+
+.back-btn {
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--card-bg-light);
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.progress-container {
+  width: 100%;
+  height: 6px;
+  background: var(--card-bg-light);
+}
+
+.progress-bar {
+  height: 100%;
+  width: 0;
+  background: var(--accent-green);
+  transition: width .3s ease;
+}
+
+.container {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+.progress-info {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 2px 0 10px;
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 18px;
+  margin-bottom: 16px;
+  box-shadow: 0 8px 24px #0002;
+}
+
+.question-number {
+  color: var(--accent-green);
+  font-size: 13px;
+  font-weight: 800;
+  margin-bottom: 9px;
+}
+
+.question-text {
+  font-size: 16px;
+  font-weight: 650;
+  line-height: 1.55;
+  margin-bottom: 18px;
+  overflow-wrap: anywhere;
+}
+
+.option {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+  padding: 13px 12px;
+  margin: 10px 0;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  background: var(--card-bg-light);
+  color: white;
+  font-size: 14px;
+  line-height: 1.5;
+  text-align: left;
+  cursor: pointer;
+  transition: background .2s, border-color .2s;
+}
+
+.option-letter {
+  width: 27px;
+  height: 27px;
+  flex: 0 0 27px;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  background: #17213b;
+  color: #dce5f2;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.option.correct {
+  background: var(--accent-green) !important;
+  border-color: #059669 !important;
+  color: white !important;
+}
+
+.option.correct .option-letter {
+  background: #047857;
+  color: white;
+}
+
+.option.wrong1 {
+  background: var(--red-1) !important;
+  border-color: #dc2626 !important;
+  color: white !important;
+}
+
+.option.wrong2 {
+  background: var(--red-2) !important;
+  border-color: #991b1b !important;
+  color: white !important;
+}
+
+.option.wrong3 {
+  background: var(--red-3) !important;
+  border-color: #000 !important;
+  color: #fff !important;
+}
+
+.option.wrong3 .option-letter {
+  background: #310000;
+  color: white;
+}
+
+.option.skipped {
+  background: var(--yellow) !important;
+  border-color: #d97706 !important;
+  color: #211500 !important;
+}
+
+.option.skipped .option-letter {
+  background: #d97706;
+  color: white;
+}
+
+.option:disabled {
+  opacity: 1;
+  cursor: default;
+}
+
+.feedback {
+  min-height: 22px;
+  margin: 12px 0;
+  color: #f87171;
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1.5;
+}
+
+.controls {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.btn {
+  min-height: 46px;
+  padding: 12px;
+  border: 0;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 750;
+  cursor: pointer;
+}
+
+.btn-primary {
+  flex: 1;
+  background: var(--accent-green);
+  color: white;
+}
+
+.btn-secondary {
+  background: var(--card-bg-light);
+  color: white;
+}
+
+.btn:disabled {
+  opacity: .35;
+  cursor: not-allowed;
+}
+
+.note {
+  margin: 14px 2px 0;
+  color: var(--text-muted);
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.toast-error {
+  position: fixed;
+  top: 70px;
+  left: 50%;
+  transform: translate(-50%, -12px);
+  z-index: 200;
+  background: #dc2626;
+  color: white;
+  padding: 11px 20px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 800;
+  box-shadow: 0 4px 12px #0005;
+  opacity: 0;
+  pointer-events: none;
+  transition: .2s;
+  white-space: nowrap;
+}
+
+.toast-error.show {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.result-card {
+  text-align: center;
+  padding: 28px 18px;
+}
+
+.result-title {
+  color: var(--accent-green);
+  font-size: 22px;
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+
+.result-score {
+  color: var(--accent-green);
+  font-size: 42px;
+  font-weight: 900;
+  margin: 10px 0;
+}
+
+.hidden {
+  display: none !important;
+}
+
+@media (max-width: 360px) {
+  .container {
+    padding: 12px;
+  }
+
+  .card {
+    padding: 14px;
+  }
+
+  .question-text {
+    font-size: 15px;
+  }
+
+  .option {
+    font-size: 13px;
+    padding: 11px 9px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+  <button class="back-btn" id="backBtn" aria-label="Làm lại">↶</button>
+  <div class="header-title">
+    TRẮC NGHIỆM VẬT LÍ NHIỆT
+    <span class="header-subtitle">Vật lí nhiệt • Mobile Edition</span>
+  </div>
+  <div style="width:36px"></div>
+</header>
+
+<div class="progress-container">
+  <div class="progress-bar" id="progressBar"></div>
+</div>
+
+<div class="toast-error" id="toast">
+  VUI LÒNG THỬ LẠI
+</div>
+
+<main class="container">
+
+  <div class="progress-info">
+    <span id="progressText">CÂU 1 / 28</span>
+    <span id="scoreText">Điểm: 0</span>
+  </div>
+
+  <section class="card" id="quizCard">
+    <div class="question-number" id="questionNumber"></div>
+    <div class="question-text" id="questionText"></div>
+    <div id="options"></div>
+    <div class="feedback" id="feedback" aria-live="polite"></div>
+
+    <div class="controls">
+      <button class="btn btn-secondary" id="skipBtn">Bỏ qua</button>
+      <button class="btn btn-primary" id="nextBtn" disabled>
+        Câu tiếp theo →
+      </button>
+    </div>
+
+    <p class="note">
+      Đúng ngay lần đầu: xanh lá, được 1 điểm.
+      Sai lần 1: đỏ; sai lần 2: đỏ đậm; sai lần 3: đỏ đen.
+      Bỏ qua: vàng. Đúng sau khi đã sai không được cộng điểm.
+    </p>
+  </section>
+
+  <section class="card result-card hidden" id="resultCard">
+    <h2 class="result-title" id="resultTitle"></h2>
+    <div class="result-score" id="resultScore"></div>
+    <p id="resultDetail"></p>
+    <button class="btn btn-primary" id="resetBtn" style="width:100%;margin-top:20px">
+      ↶ Quay lại và làm lại từ đầu
+    </button>
+  </section>
+
+</main>
+
+<script>
+const questions = [
+  {
+    n:"1.1",
+    q:"Hãy tìm ý không đúng với mô hình động học phân tử trong các ý sau:",
+    o:[
+      "Các chất được cấu tạo từ các hạt riêng biệt là phân tử.",
+      "Các phân tử chuyển động không ngừng.",
+      "Tốc độ chuyển động của các phân tử cấu tạo nên vật càng lớn thì thể tích của vật càng lớn.",
+      "Giữa các phân tử có lực tương tác gọi là lực liên kết phân tử."
+    ],
+    a:2
+  },
+  {
+    n:"1.2",
+    q:"Hãy chỉ ra câu sai trong các câu sau:",
+    o:[
+      "Lực liên kết giữa các phân tử càng mạnh thì khoảng cách giữa chúng càng lớn.",
+      "Khi các phân tử sắp xếp càng có trật tự thì lực liên kết giữa chúng càng mạnh.",
+      "Lực liên kết giữa các phân tử một chất ở thể rắn sẽ lớn hơn lực liên kết giữa các phân tử chất đó khi ở thể khí.",
+      "Lực liên kết giữa các phân tử gồm cả lực hút và lực đẩy."
+    ],
+    a:0
+  },
+  {
+    n:"1.3",
+    q:"Khi nấu ăn những món như: luộc, ninh, nấu cơm,... đến lúc sôi thì cần chỉnh nhỏ lửa lại bởi vì:",
+    o:[
+      "Để lửa to làm cho nhiệt độ trong nồi tăng nhanh sẽ làm hỏng đồ nấu trong nồi.",
+      "Để lửa nhỏ sẽ vẫn giữ cho trong nồi có nhiệt độ ổn định bằng nhiệt độ sôi của nước.",
+      "Lúc này để lửa nhỏ vì cần giảm nhiệt độ trong nồi xuống.",
+      "Lúc này cần làm cho nước trong nồi không bị sôi và hoá hơi."
+    ],
+    a:1
+  },
+  {
+    n:"1.4",
+    q:"Hãy chỉ ra phương án sai trong các câu sau: Cùng một khối lượng của một chất nhưng khi ở các thể khác nhau thì sẽ khác nhau về",
+    o:[
+      "thể tích.",
+      "khối lượng riêng.",
+      "kích thước của các nguyên tử.",
+      "trật tự của các nguyên tử."
+    ],
+    a:2
+  },
+  {
+    n:"1.5a",
+    q:"Một chất ở thể rắn có các phân tử được sắp xếp trật tự hơn khi ở thể lỏng.",
+    o:["Đúng","Sai"],
+    a:0
+  },
+  {
+    n:"1.5b",
+    q:"Các phân tử chất rắn kết tinh không có chuyển động hỗn loạn.",
+    o:["Đúng","Sai"],
+    a:1
+  },
+  {
+    n:"1.5c",
+    q:"Khối lượng riêng của một chất khi ở thể khí sẽ lớn hơn khi ở thể lỏng.",
+    o:["Đúng","Sai"],
+    a:1
+  },
+  {
+    n:"1.5d",
+    q:"Khối lượng riêng của một chất khi ở thể khí sẽ lớn hơn khi ở thể rắn.",
+    o:["Đúng","Sai"],
+    a:1
+  },
+  {
+    n:"1.5e",
+    q:"Một vật rắn có thể tự nóng chảy mà không cần được cung cấp năng lượng.",
+    o:["Đúng","Sai"],
+    a:1
+  },
+  {
+    n:"1.5g",
+    q:"Một chất lỏng có thể tự bay hơi ở nhiệt độ trong phòng mà không cần cung cấp năng lượng.",
+    o:["Đúng","Sai"],
+    a:0
+  },
+  {
+    n:"1.6",
+    q:"Lực liên kết giữa các phân tử",
+    o:[
+      "là lực hút.",
+      "là lực đẩy.",
+      "tuỳ thuộc vào thể của nó, ở thể rắn là lực hút còn ở thể khí lại là lực đẩy.",
+      "gồm cả lực hút và lực đẩy."
+    ],
+    a:3
+  },
+  {
+    n:"1.7",
+    q:"Một lượng xác định của một chất trong điều kiện áp suất bình thường khi ở thể lỏng và khi ở thể khí sẽ không khác nhau về",
+    o:[
+      "khối lượng riêng.",
+      "kích thước phân tử (nguyên tử).",
+      "tốc độ của các phân tử (nguyên tử).",
+      "khoảng cách giữa các phân tử (nguyên tử)."
+    ],
+    a:1
+  },
+  {
+    n:"2.1",
+    q:"Nội năng của một vật là",
+    o:[
+      "tổng động năng của các phân tử cấu tạo nên vật.",
+      "tổng thế năng của các phân tử cấu tạo nên vật.",
+      "năng lượng nhiệt của vật.",
+      "tổng động năng và thế năng của các phân tử cấu tạo nên vật."
+    ],
+    a:3
+  },
+  {
+    n:"2.2",
+    q:"Nội năng của một vật phụ thuộc vào",
+    o:[
+      "nhiệt độ và thể tích của vật.",
+      "nhiệt độ, áp suất và thể tích của vật.",
+      "khoảng cách trung bình giữa các phân tử cấu tạo nên vật.",
+      "tốc độ trung bình của các phân tử cấu tạo nên vật."
+    ],
+    a:0
+  },
+  {
+    n:"2.3a",
+    q:"Động năng của các phân tử trong một khối khí xác định là như nhau.",
+    o:["Đúng","Sai"],
+    a:1
+  },
+  {
+    n:"2.3b",
+    q:"Thế năng của mỗi phân tử khí trong một bình kín là giống nhau.",
+    o:["Đúng","Sai"],
+    a:1
+  },
+  {
+    n:"2.3c",
+    q:"Nội năng của một khối khí không liên quan tới năng lượng của các nguyên tử tạo thành khối khí đó.",
+    o:["Đúng","Sai"],
+    a:1
+  },
+  {
+    n:"2.3d",
+    q:"Nội năng của một khối khí phụ thuộc vào nhiệt độ và thể tích của khối khí đó.",
+    o:["Đúng","Sai"],
+    a:0
+  },
+  {
+    n:"2.3e",
+    q:"Trong quá trình đun nóng một ấm nước, nội năng của lượng nước trong ấm tăng dần.",
+    o:["Đúng","Sai"],
+    a:0
+  },
+  {
+    n:"2.3g",
+    q:"Khi ta thực hiện công để nén một khối khí mà không làm thay đổi nhiệt độ của nó thì nội năng của khối khí không thay đổi.",
+    o:["Đúng","Sai"],
+    a:0
+  },
+  {
+    n:"2.5",
+    q:"Khi nội năng của một vật tăng lên thì năng lượng trung bình của các phân tử cấu tạo nên vật cũng tăng lên. Khi đó",
+    o:[
+      "chỉ có động năng của các phân tử tăng lên.",
+      "chỉ có thế năng các phân tử tăng lên.",
+      "động năng của các phân tử chắc chắn tăng lên còn thế năng của chúng có thể thay đổi không đáng kể.",
+      "động năng và thế năng của các phân tử chắc chắn cùng tăng lên."
+    ],
+    a:2
+  },
+  {
+    n:"2.6",
+    q:"Hãy tìm câu sai trong các câu sau: Để làm thay đổi nội năng của một vật, ta",
+    o:[
+      "cung cấp nhiệt lượng cho vật.",
+      "thực hiện công nhấc vật lên theo phương vuông góc với mặt đất một đoạn 1 m.",
+      "cho vật trượt từ độ cao 1 m xuống mặt đất bằng mặt phẳng nghiêng có góc nghiêng 60° so với mặt đất.",
+      "cho vật truyền nhiệt lượng sang một vật khác có nhiệt độ thấp hơn."
+    ],
+    a:2
+  },
+  {
+    n:"2.7",
+    q:"Một bạn học sinh dùng ấm điện cung cấp nhiệt lượng 334 000 J cho 1 kg nước đá ở 0 °C để nó nóng chảy hoàn toàn thành nước lỏng ở 0 °C. Khi đó",
+    o:[
+      "nội năng của nước lỏng cao hơn nội năng của nước đá lúc đầu 334 000 J.",
+      "tổng thế năng của các phân tử nước lỏng cao hơn nội năng của nước đá lúc đầu là 334 000 J.",
+      "tổng động năng của các phân tử nước lỏng cao hơn nội năng của nước đá là 334 000 J.",
+      "nhiệt năng của nước lỏng cao hơn nội năng của nước đá lúc đầu là 334 000 J."
+    ],
+    a:0
+  },
+  {
+    n:"3.1",
+    q:"Hãy tìm câu sai trong các câu sau:",
+    o:[
+      "Nhiệt độ là đại lượng được dùng để mô tả mức độ nóng, lạnh của vật.",
+      "Nhiệt độ của một vật phụ thuộc vào tốc độ chuyển động của các phân tử cấu tạo nên vật.",
+      "Nhiệt độ cho biết trạng thái cân bằng nhiệt của các vật tiếp xúc nhau và chiều truyền nhiệt năng.",
+      "Nhiệt độ của một vật là số đo nội năng của vật đó."
+    ],
+    a:3
+  },
+  {
+    n:"3.2",
+    q:"Chỉ số nhiệt độ của một vật khi ở trạng thái cân bằng nhiệt tính theo thang Celsius so với nhiệt độ của vật đó tính theo thang Kelvin sẽ",
+    o:[
+      "thấp hơn chính xác là 273,15 độ.",
+      "cao hơn chính xác là 273,15 độ.",
+      "thấp hơn chính xác là 273,16 độ.",
+      "cao hơn chính xác là 273,16 độ."
+    ],
+    a:0
+  },
+  {
+    n:"3.3",
+    q:"Trong nhiều nghiên cứu khoa học về nhiệt hay về sự phụ thuộc của các đại lượng đặc trưng của các vật liệu vào nhiệt độ,... người ta thường tính toán ở các nhiệt độ khác nhau nhưng nhiệt độ 300 K được chọn tính rất nhiều vì",
+    o:[
+      "300 K là nhiệt độ mà nhiều chất xảy ra sự chuyển thể.",
+      "300 K là nhiệt độ thực nghiệm dễ đo đạc và quan sát.",
+      "300 K là nhiệt độ được coi như nhiệt độ phòng trong điều kiện bình thường.",
+      "300 K là nhiệt độ chuẩn nên dễ tính toán."
+    ],
+    a:2
+  },
+  {
+    n:"3.4",
+    q:"Tìm câu sai trong các câu sau: Cho hai vật A và B làm bằng cùng một loại vật liệu tiếp xúc nhau, sẽ có sự truyền năng lượng nhiệt giữa hai vật nếu",
+    o:[
+      "nội năng của vật A lớn hơn của vật B.",
+      "nhiệt độ của vật A lớn hơn của vật B.",
+      "tốc độ trung bình của các nguyên tử cấu tạo nên vật A lớn hơn của vật B.",
+      "lực tương tác giữa các phân tử cấu tạo nên vật A lớn hơn của vật B."
+    ],
+    a:0
+  },
+  {
+    n:"3.5",
+    q:"Khi đi tham quan trên các vùng núi cao sẽ có nhiệt độ thấp hơn nhiều dưới đồng bằng, chúng ta cần mang theo áo ấm để sử dụng vì",
+    o:[
+      "mặc áo ấm để ngăn nhiệt độ cơ thể truyền ra ngoài môi trường.",
+      "mặc áo ấm để ngăn cơ thể mất nhiệt lượng quá nhanh.",
+      "mặc áo ấm để ngăn hơi lạnh truyền vào trong cơ thể.",
+      "mặc áo ấm để ngăn tia cực tím từ Mặt Trời."
+    ],
+    a:1
+  }
+];
+
+let index = 0;
+let score = 0;
+let attempts = {};
+let answered = {};
+let finished = false;
+let toastTimer;
+
+const $ = id => document.getElementById(id);
+
+function showToast() {
+  const toast = $("toast");
+  toast.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove("show"), 1500);
+}
+
+function renderQuestion() {
+  if (index >= questions.length) {
+    finishQuiz();
+    return;
+  }
+
+  const q = questions[index];
+
+  $("questionNumber").textContent = "CÂU " + q.n;
+  $("questionText").textContent = q.q;
+  $("progressText").textContent =
+    `CÂU ${index + 1} / ${questions.length}`;
+  $("scoreText").textContent = `Điểm: ${score}`;
+  $("progressBar").style.width =
+    (index / questions.length * 100) + "%";
+
+  $("feedback").textContent = "";
+  $("nextBtn").disabled = true;
+  $("skipBtn").disabled = false;
+  $("options").innerHTML = "";
+
+  // Đảo thứ tự đáp án nhưng vẫn giữ nguyên đáp án đúng.
+  const order = q.o.map((_, i) => i);
+  for (let i = order.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [order[i], order[j]] = [order[j], order[i]];
+  }
+
+  q.displayOrder = order;
+
+  order.forEach((originalIndex, displayIndex) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "option";
+    button.dataset.answer = originalIndex;
+
+    const letter = document.createElement("span");
+    letter.className = "option-letter";
+    letter.textContent = q.o.length === 2
+      ? (displayIndex === 0 ? "Đ" : "S")
+      : String.fromCharCode(65 + displayIndex);
+
+    const text = document.createElement("span");
+    text.textContent = q.o[originalIndex];
+
+    button.append(letter, text);
+    button.addEventListener("click", () =>
+      chooseAnswer(originalIndex, button)
+    );
+
+    $("options").appendChild(button);
+  });
+
+  if (answered[index]) {
+    lockQuestion();
+    $("nextBtn").disabled = false;
+    $("skipBtn").disabled = true;
+    $("feedback").textContent = "Bạn đã hoàn thành câu này.";
+  }
+}
+
+function chooseAnswer(answerIndex, button) {
+  if (finished || answered[index] || button.disabled) return;
+
+  const q = questions[index];
+  const count = (attempts[index] || 0) + 1;
+  attempts[index] = count;
+
+  if (answerIndex === q.a) {
+    answered[index] = true;
+
+    if (count === 1) {
+      score++;
+      button.classList.add("correct");
+      $("feedback").style.color = "#10b981";
+      $("feedback").textContent = "CHÍNH XÁC! +1 ĐIỂM";
+    } else {
+      button.classList.add("correct");
+      $("feedback").style.color = "#10b981";
+      $("feedback").textContent =
+        "ĐÁP ÁN ĐÚNG! Không cộng điểm lần đầu.";
+    }
+
+    lockQuestion();
+    $("nextBtn").disabled = false;
+    $("skipBtn").disabled = true;
+    $("scoreText").textContent = `Điểm: ${score}`;
+    return;
+  }
+
+  button.classList.add(
+    count === 1 ? "wrong1" :
+    count === 2 ? "wrong2" : "wrong3"
+  );
+  button.disabled = true;
+  showToast();
+
+  if (count >= 3) {
+    answered[index] = true;
+    lockQuestion();
+    $("nextBtn").disabled = false;
+    $("skipBtn").disabled = true;
+    $("feedback").textContent = "Đã hết lượt trả lời câu này.";
+  }
+}
+
+function lockQuestion() {
+  document.querySelectorAll(".option").forEach(button => {
+    button.disabled = true;
+  });
+}
+
+function skipQuestion() {
+  if (finished || answered[index]) return;
+
+  answered[index] = true;
+
+  document.querySelectorAll(".option").forEach(button => {
+    button.disabled = true;
+
+    if (Number(button.dataset.answer) === questions[index].a) {
+      button.classList.add("skipped");
+    }
+  });
+
+  $("feedback").style.color = "#f59e0b";
+  $("feedback").textContent = "ĐÃ BỎ QUA CÂU NÀY";
+  $("nextBtn").disabled = false;
+  $("skipBtn").disabled = true;
+}
+
+function finishQuiz() {
+  finished = true;
+
+  $("quizCard").classList.add("hidden");
+  $("resultCard").classList.remove("hidden");
+
+  $("progressText").textContent =
+    `HOÀN THÀNH ${questions.length}/${questions.length}`;
+  $("progressBar").style.width = "100%";
+  $("scoreText").textContent = `Điểm: ${score}`;
+
+  $("resultTitle").textContent =
+    `CHÚC MỪNG BẠN ĐÃ ĐƯỢC ${score} ĐIỂM`;
+  $("resultScore").textContent =
+    `${score} / ${questions.length}`;
+  $("resultDetail").textContent =
+    `Bạn đã trả lời đúng ngay lần đầu ${score} câu.`;
+}
+
+function resetQuiz() {
+  index = 0;
+  score = 0;
+  attempts = {};
+  answered = {};
+  finished = false;
+
+  $("quizCard").classList.remove("hidden");
+  $("resultCard").classList.add("hidden");
+  $("toast").classList.remove("show");
+
+  renderQuestion();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+$("nextBtn").addEventListener("click", () => {
+  index++;
+  renderQuestion();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+});
+
+$("skipBtn").addEventListener("click", skipQuestion);
+$("backBtn").addEventListener("click", resetQuiz);
+$("resetBtn").addEventListener("click", resetQuiz);
+
+renderQuestion();
+</script>
+</body>
+</html>
