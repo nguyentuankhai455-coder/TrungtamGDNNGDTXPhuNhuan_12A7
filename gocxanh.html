@@ -55,15 +55,14 @@
         .nav-container { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; }
         .nav-container a {
             color: white; padding: 12px 18px; text-decoration: none;
-            font-size: 14px; font-weight: 600; text-transform: uppercase; transition: background 0.3s;
+            font-size: 14px; font-weight: 600; text-transform: uppercase; transition: background 0.3s, color 0.3s;
         }
-        .nav-container a:hover, .nav-container a.active { background-color: var(--secondary-color); }
-        .nav-container a.green-tab { background-color: #28a745; color: #fff; }
-        .nav-container a.green-tab:hover { background-color: #218838; }
+        .nav-container a:hover, .nav-container a.active { background-color: var(--secondary-color); color: white; }
+        .nav-container a.green-tab { color: #28a745; font-weight: bold; }
+        .nav-container a.green-tab:hover { background-color: #28a745 !important; color: #ffffff !important; }
 
         .main-wrapper { max-width: 1200px; width: 100%; margin: 30px auto; padding: 0 15px; flex: 1; }
         
-        /* Đồng bộ bo tròn card */
         .card { 
             background: white; 
             border-radius: 12px; 
@@ -92,7 +91,6 @@
         .title-green { color: var(--green-color); }
         .title-orange { color: var(--orange-color); }
 
-        /* Tối ưu chống khựng khi chuyển tab bằng opacity thay vì display block/none đột ngột */
         .tab-content { display: none; opacity: 0; transition: opacity 0.15s ease-in-out; }
         .tab-content.active { display: block; opacity: 1; }
 
@@ -115,7 +113,6 @@
         }
         .green-card:hover .green-card-overlay { opacity: 1; }
 
-        /* DANH SÁCH BÀI VIẾT PHONG TRÀO */
         .post-list-container { display: flex; flex-direction: column; gap: 15px; }
         .post-item {
             border: 1px solid #e0e0e0; border-radius: 10px; padding: 18px; background: #fff;
@@ -148,11 +145,11 @@
         @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
         .empty-state { text-align: center; padding: 40px 0; color: #777; font-style: italic; }
 
-        /* WIDGET TRỢ LÝ AI BẢO TRÌ */
+        /* WIDGET TRỢ LÝ AI GÓC XANH (BẢO TRÌ) */
         #gemini-chat-widget { position: fixed; bottom: 20px; right: 20px; z-index: 9999; }
         #gemini-chat-btn { 
             width: 60px; height: 60px; border-radius: 50%; 
-            background: linear-gradient(135deg, #003366, #0055a5); color: white; 
+            background: linear-gradient(135deg, #28a745, #218838); color: white; 
             border: none; box-shadow: 0 4px 15px rgba(0,0,0,0.2); cursor: pointer; 
             font-size: 28px; display: flex; align-items: center; justify-content: center; 
             transition: transform 0.3s; 
@@ -166,7 +163,7 @@
             transition: opacity 0.3s ease, transform 0.3s ease; transform: translateY(20px); 
         }
         #gemini-chat-box.show { opacity: 1; pointer-events: all; transform: translateY(0); display: flex; }
-        .chat-header { background: linear-gradient(135deg, #003366, #0055a5); color: white; padding: 12px 15px; font-weight: bold; font-size: 15px; display: flex; justify-content: space-between; align-items: center; }
+        .chat-header { background: linear-gradient(135deg, #28a745, #218838); color: white; padding: 12px 15px; font-weight: bold; font-size: 15px; display: flex; justify-content: space-between; align-items: center; }
         .chat-close { cursor: pointer; font-size: 18px; }
         .chat-messages { flex: 1; padding: 20px; overflow-y: auto; background: #f9f9f9; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
         .maintenance-notice { background: #fff3cd; color: #856404; border: 1px solid #ffeeba; padding: 15px; border-radius: 8px; font-size: 14px; font-weight: 500; line-height: 1.5; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
@@ -205,7 +202,7 @@
             <a href="index.html">Trang chủ</a>
             <a href="baobai.html">Báo Bài</a>
             <a href="index.html#tin-tuc">Tin tức & Sự kiện</a>
-            <a href="index.html#hoc-tap">Góc học tập</a>
+            <a href="gochoc-tap.html">Góc học tập</a>
             <a href="giaovien.html">Giáo viên</a>
             <a href="gocxanh.html" class="green-tab active">Góc Xanh</a>
             <a href="thanhvien.html">Thành viên</a>
@@ -239,11 +236,11 @@
         </div>
     </div>
 
-    <!-- WIDGET TRỢ LÝ AI BẢO TRÌ -->
+    <!-- WIDGET TRỢ LÝ AI GÓC XANH (BẢO TRÌ) -->
     <div id="gemini-chat-widget">
         <div id="gemini-chat-box">
             <div class="chat-header">
-                <span>🤖 Trợ lý AI Góc Xanh 12A7</span>
+                <span>🌱 Trợ lý AI Góc Xanh 12A7</span>
                 <span class="chat-close" onclick="toggleChat()">✖</span>
             </div>
             <div class="chat-messages">
@@ -252,7 +249,7 @@
                 </div>
             </div>
         </div>
-        <button id="gemini-chat-btn" onclick="toggleChat()">✨</button>
+        <button id="gemini-chat-btn" onclick="toggleChat()">🌱</button>
     </div>
 
     <div id="imageModal" class="modal" onclick="closeModal(event)">
@@ -270,7 +267,6 @@
 
     <footer>
         <p>&copy; 2026 Cổng thông tin Lớp 12A7 - Trung tâm Giáo dục nghề nghiệp - Giáo dục thường xuyên Tân Bình (Phân hiệu Phú Nhuận)</p>
-        <p>📧 Email liên hệ: <a href="mailto:12a7.phanhieuttgdnngdtxtanbinh@gmail.com">12a7.phanhieuttgdnngdtxtanbinh@gmail.com</a></p>
         <p>Phát triển và vận hành bởi Tập thể Lớp 12A7</p>
     </footer>
 
@@ -278,7 +274,6 @@
         const SHEET_ID = '10WZAkfTsUhEsTRADxZ3JX869kLV_Sen45r4BeSrxDZY';
         const GID_GOCXANH = '940791294';
         
-        // Đường dẫn TSV Hoạt động phong trào
         const TSV_PHONGTRAO = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQzikJgQA99tZH8THj1ecKZBDbxH4GMM3snKPtovgaGdr_vVNv72F63qPl_epUs0rVSedCqx5elaJvB/pub?gid=2104947705&single=true&output=tsv';
 
         function switchSection(type) {
@@ -316,7 +311,6 @@
             return url;
         }
 
-        /* 1. XỬ LÝ DỮ LIỆU GÓC XANH (JSONP) */
         function handleGreenData(json) {
             const container = document.getElementById('green-container');
             try {
@@ -382,7 +376,6 @@
             document.body.appendChild(script);
         }
 
-        /* 2. XỬ LÝ DỮ LIỆU HOẠT ĐỘNG PHONG TRÀO (TSV) - FIX ĐÚNG UID */
         async function loadPhongTraoData() {
             const container = document.getElementById('phongtrao-container');
             try {
@@ -398,7 +391,6 @@
                 let html = '';
                 for (let i = lines.length - 1; i >= 1; i--) {
                     const cols = lines[i].split('\t');
-                    // Lấy chính xác cột uid (cột số 0) để trỏ đúng id sang trang chi tiết
                     const uid = cols[0] ? cols[0].trim() : '';
                     const ngay = cols[1] ? cols[1].trim() : '';
                     const tacGia = cols[2] ? cols[2].trim() : 'Ban Phong Trào';

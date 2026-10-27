@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Góc Học Tập & Tài Liệu - Lớp 12A7</title>
+
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="shortcut icon" type="image/png" href="logo.png">
+
+    <style>
+        :root {
+            --primary-color: #003366;
+            --secondary-color: #0055a5;
+            --green-color: #28a745;
+            --bg-light: #f4f6f9;
+            --text-color: #333;
+            --accent-gold: #ffcc00;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
+        html { scroll-behavior: smooth; }
+        body { background-color: var(--bg-light); color: var(--text-color); line-height: 1.6; display: flex; flex-direction: column; min-height: 100vh; }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 20px 0;
+            border-bottom: 4px solid var(--accent-gold);
+        }
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .logo-box {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background-color: #fff;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            overflow: hidden;
+            border: 2px solid #fff;
+            flex-shrink: 0;
+        }
+        .logo-box img { width: 100%; height: 100%; object-fit: cover; }
+        /* ĐÃ ĐỔI CHỮ VỀ MÀU TRẮNG CHUẨN */
+        .header-text h1 { font-size: 24px; text-transform: uppercase; letter-spacing: 1px; color: #ffffff; }
+        .header-text p { font-size: 14px; opacity: 0.9; }
+
+        nav { background-color: #002244; position: sticky; top: 0; z-index: 100; border-bottom: 3px solid var(--accent-gold); }
+        .nav-container { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; }
+        .nav-container a {
+            color: white;
+            padding: 12px 18px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            transition: background 0.3s, color 0.3s;
+        }
+        .nav-container a:hover, .nav-container a.active { background-color: var(--secondary-color); color: var(--accent-gold); }
+        .nav-container a.green-tab { color: #28a745; font-weight: bold; }
+        .nav-container a.green-tab:hover { background-color: #28a745 !important; color: #fff !important; }
+
+        .main-wrapper {
+            max-width: 1200px;
+            width: 100%;
+            margin: 30px auto;
+            padding: 0 15px;
+            flex: 1;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+            border: 1px solid #eaeaea;
+        }
+        .section-title {
+            color: var(--primary-color);
+            font-size: 20px;
+            border-bottom: 2px solid var(--accent-gold);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .tab-buttons { display: flex; gap: 10px; margin-bottom: 20px; }
+        .tab-btn { padding: 10px 20px; border: none; background: #eef2f7; cursor: pointer; border-radius: 6px; font-size: 14px; font-weight: 600; color: #555; transition: all 0.2s; }
+        .tab-btn.active { background: var(--primary-color); color: var(--accent-gold); }
+
+        .tkb-img-container {
+            width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+            background: #fff;
+        }
+        .tkb-img-container img { width: 100%; height: auto; display: block; }
+
+        .doc-list { list-style: none; padding: 0; }
+        .doc-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 15px;
+            border-bottom: 1px solid #eee;
+            gap: 15px;
+            border-radius: 8px;
+            transition: background 0.2s;
+        }
+        .doc-item:hover { background-color: #f9fbfd; }
+        .doc-info { font-size: 15px; color: #333; }
+        .doc-link {
+            padding: 8px 18px;
+            background-color: var(--green-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 13.5px;
+            font-weight: bold;
+            white-space: nowrap;
+            transition: background 0.2s;
+        }
+        .doc-link:hover { background-color: #218838; }
+
+        .empty-state {
+            text-align: center;
+            padding: 30px 0;
+            color: #777;
+            font-style: italic;
+            font-size: 14.5px;
+        }
+
+        footer {
+            background-color: #001529;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            font-size: 13px;
+            border-top: 3px solid var(--accent-gold);
+        }
+        footer p { margin: 4px 0; }
+        footer a { color: #66b3ff; text-decoration: none; }
+        footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .header-container { flex-direction: column; text-align: center; }
+            .doc-item { flex-direction: column; align-items: flex-start; }
+            .doc-link { width: 100%; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-container">
+            <div class="logo-box" id="logo-container">
+                <img src="logo.png" alt="Logo Lớp 12A7" onerror="document.getElementById('logo-container').innerText='12A7'">
+            </div>
+            <div class="header-text">
+                <h1>CỔNG THÔNG TIN LỚP 12A7</h1>
+                <p>Trung tâm Giáo dục nghề nghiệp - Giáo dục thường xuyên Tân Bình (Phân hiệu Phú Nhuận)<br>Năm học 2026 - 2027</p>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <div class="nav-container">
+            <a href="index.html">Trang chủ</a>
+            <a href="baobai.html">Báo Bài</a>
+            <a href="index.html#tin-tuc">Tin tức & Sự kiện</a>
+            <a href="gochoc-tap.html" class="active">Góc học tập</a>
+            <a href="giaovien.html">Giáo viên</a>
+            <a href="gocxanh.html" class="green-tab">Góc Xanh</a>
+            <a href="thanhvien.html">Thành viên</a>
+            <a href="thuvien.html">Thư viện ảnh</a>
+            <a href="credits.html">Credits</a>
+        </div>
+    </nav>
+
+    <div class="main-wrapper">
+        <div class="card">
+            <h2 class="section-title">📚 Góc Học Tập & Tài Liệu Lớp 12A7</h2>
+            
+            <div class="tab-buttons">
+                <button class="tab-btn active" onclick="switchTab('tkb', event)">🗓️ Thời khóa biểu</button>
+                <button class="tab-btn" onclick="switchTab('tailieu', event)">📂 Tài liệu ôn thi</button>
+            </div>
+
+            <div id="tab-content" style="margin-top: 15px;">
+                <div class="tkb-img-container">
+                    <img src="tkb.png" alt="Thời khóa biểu Lớp 12A7" onerror="this.parentElement.innerHTML='<p class=\\'empty-state\\'>Chưa tìm thấy tệp ảnh tkb.png trên GitHub</p>'">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Cổng thông tin Lớp 12A7 - Trung tâm Giáo dục nghề nghiệp - Giáo dục thường xuyên Tân Bình (Phân hiệu Phú Nhuận)</p>
+        <p>📧 Email liên hệ: <a href="mailto:12a7.phanhieuttgdnngdtxtanbinh@gmail.com">12a7.phanhieuttgdnngdtxtanbinh@gmail.com</a></p>
+        <p>Phát triển và vận hành bởi Tập thể Lớp 12A7</p>
+    </footer>
+
+    <script>
+        const SPREADSHEET_ID = '10WZAkfTsUhEsTRADxZ3JX869kLV_Sen45r4BeSrxDZY';
+        const GID_TAI_LIEU = '782348969'; 
+
+        function handleDocsData(json) {
+            const contentBox = document.getElementById('tab-content');
+            try {
+                if (!json || !json.table || !json.table.rows) {
+                    contentBox.innerHTML = '<p class="empty-state">Không thể lấy dữ liệu tài liệu từ Google Sheets.</p>';
+                    return;
+                }
+
+                const rows = json.table.rows;
+                if (rows.length === 0) {
+                    contentBox.innerHTML = '<p class="empty-state">Chưa có tài liệu ôn thi nào được tải lên.</p>';
+                    return;
+                }
+
+                let html = '<ul class="doc-list">';
+                let count = 0;
+
+                for (let r of rows) {
+                    if (!r.c) continue;
+                    
+                    const moTa = r.c[0] && r.c[0].v !== null ? String(r.c[0].v).trim() : '';
+                    let link = r.c[1] && r.c[1].v !== null ? String(r.c[1].v).trim() : '';
+
+                    if (moTa.toLowerCase() === 'mô tả' || moTa === '') continue;
+
+                    if (link && !link.startsWith('http://') && !link.startsWith('https://')) {
+                        link = 'https://' + link;
+                    }
+
+                    if (moTa && link) {
+                        count++;
+                        html += `
+                            <li class="doc-item">
+                                <div class="doc-info">📄 <b>${moTa}</b></div>
+                                <a href="${link}" target="_blank" rel="noopener noreferrer" class="doc-link">Tải về / Xem ngay &rarr;</a>
+                            </li>
+                        `;
+                    }
+                }
+                html += '</ul>';
+
+                contentBox.innerHTML = count > 0 ? html : '<p class="empty-state">Chưa có tài liệu ôn thi nào được tải lên.</p>';
+            } catch (err) {
+                console.error("Lỗi đọc tài liệu:", err);
+                contentBox.innerHTML = '<p class="empty-state">Lỗi kết nối khi tải danh sách tài liệu.</p>';
+            }
+        }
+
+        function loadDocs() {
+            document.getElementById('tab-content').innerHTML = '<p class="empty-state">⏳ Đang nạp danh sách tài liệu từ Google Sheets...</p>';
+            const oldScript = document.getElementById('docs-jsonp-script');
+            if (oldScript) oldScript.remove();
+
+            const script = document.createElement('script');
+            script.id = 'docs-jsonp-script';
+            script.src = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?gid=${GID_TAI_LIEU}&tqx=responseHandler:handleDocsData`;
+            document.body.appendChild(script);
+        }
+
+        function switchTab(tabName, evt) {
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            evt.target.classList.add('active');
+            
+            const content = document.getElementById('tab-content');
+            if (tabName === 'tkb') {
+                content.innerHTML = `
+                    <div class="tkb-img-container">
+                        <img src="tkb.png" alt="Thời khóa biểu Lớp 12A7" onerror="this.parentElement.innerHTML='<p class=\\'empty-state\\'>Chưa tìm thấy tệp ảnh tkb.png trên GitHub</p>'">
+                    </div>
+                `;
+            } else if (tabName === 'tailieu') {
+                loadDocs();
+            }
+        }
+    </script>
+</body>
+</html>
