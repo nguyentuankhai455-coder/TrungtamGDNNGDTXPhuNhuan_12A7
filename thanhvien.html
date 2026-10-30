@@ -12,166 +12,55 @@
         :root {
             --primary-color: #003366;
             --secondary-color: #0055a5;
-            --accent-color: #d9534f;
             --green-color: #28a745;
             --bg-light: #f4f6f9;
             --text-color: #333;
+            --gold-color: #ffcc00;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
         html { scroll-behavior: smooth; }
-        body { 
-            background-color: var(--bg-light); 
-            color: var(--text-color); 
-            line-height: 1.8;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
+        body { background-color: var(--bg-light); color: var(--text-color); line-height: 1.8; display: flex; flex-direction: column; min-height: 100vh; }
 
-        /* HEADER */
-        header {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            padding: 20px 0;
-            border-bottom: 4px solid #ffcc00;
-        }
-
-        .header-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .logo-box {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            background-color: #fff;
-            color: var(--primary-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 18px;
-            overflow: hidden;
-            border: 2px solid #fff;
-            flex-shrink: 0;
-        }
-
+        header { background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color: white; padding: 20px 0; border-bottom: 4px solid var(--gold-color); }
+        .header-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; align-items: center; gap: 20px; }
+        .logo-box { width: 70px; height: 70px; border-radius: 50%; background-color: #fff; color: var(--primary-color); display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 18px; overflow: hidden; border: 2px solid #fff; flex-shrink: 0; }
         .logo-box img { width: 100%; height: 100%; object-fit: cover; }
         .header-text h1 { font-size: 24px; text-transform: uppercase; letter-spacing: 1px; }
         .header-text p { font-size: 14px; opacity: 0.9; }
 
-        /* NAV MENU */
-        nav { background-color: #002244; position: sticky; top: 0; z-index: 100; }
+        nav { background-color: #002244; position: sticky; top: 0; z-index: 100; border-bottom: 3px solid var(--gold-color); }
         .nav-container { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; }
-        .nav-container a {
-            color: white;
-            padding: 12px 18px;
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 600;
-            text-transform: uppercase;
-            transition: background 0.3s;
-        }
-        .nav-container a:hover, .nav-container a.active { background-color: var(--secondary-color); }
+        .nav-container a { color: white; padding: 12px 18px; text-decoration: none; font-size: 14px; font-weight: 600; text-transform: uppercase; transition: background 0.3s, color 0.3s; }
+        .nav-container a:hover, .nav-container a.active { background-color: var(--secondary-color); color: var(--gold-color); }
         .nav-container a.green-tab { color: #28a745; font-weight: bold; }
-        .nav-container a.green-tab:hover { background-color: var(--green-color); color: #fff; }
+        .nav-container a.green-tab:hover { background-color: #28a745 !important; color: #fff !important; }
 
-        /* LAYOUT 2 CỘT */
-        .main-wrapper {
-            max-width: 1200px;
-            width: 100%;
-            margin: 30px auto;
-            padding: 0 15px;
-            display: grid;
-            grid-template-columns: 3fr 1fr;
-            gap: 20px;
-            flex: 1;
-        }
+        .main-wrapper { max-width: 1200px; width: 100%; margin: 30px auto; padding: 0 15px; display: grid; grid-template-columns: 3fr 1fr; gap: 20px; flex: 1; }
+        .card { background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.06); border: 1px solid #eaeaea; margin-bottom: 20px; }
 
-        .card {
-            background: #fff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-            border: 1px solid #e1e8ed;
-            margin-bottom: 20px;
-        }
+        .section-title { color: var(--primary-color); font-size: 18px; border-bottom: 2px solid var(--primary-color); padding-bottom: 8px; margin-bottom: 20px; text-transform: uppercase; }
 
-        .section-title {
-            color: var(--primary-color);
-            font-size: 18px;
-            border-bottom: 2px solid var(--primary-color);
-            padding-bottom: 8px;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-        }
-
-        /* GRID BAN CÁN SỰ */
-        .bcs-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-        
-        .bcs-card {
-            border: 1px solid #e0e0e0;
-            border-radius: 6px;
-            padding: 15px;
-            text-align: center;
-            background: #fafafa;
-            border-top: 3px solid var(--secondary-color);
-        }
-
-        .bcs-card.gvcn { border-top-color: #ffcc00; background-color: #fffdf0; }
+        .bcs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 30px; }
+        .bcs-card { border: 1px solid #e0e0e0; border-radius: 6px; padding: 15px; text-align: center; background: #fafafa; border-top: 3px solid var(--secondary-color); }
+        .bcs-card.gvcn { border-top-color: var(--gold-color); background-color: #fffdf0; }
         .bcs-card h4 { color: var(--primary-color); font-size: 16px; margin-bottom: 5px; }
         .bcs-card p { font-size: 14px; color: #555; }
 
-        /* BẢNG DANH SÁCH */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
-        }
-
-        th, td {
-            border: 1px solid #ddd;
-            padding: 10px 12px;
-            text-align: left;
-            font-size: 14px;
-        }
-
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { border: 1px solid #ddd; padding: 10px 12px; text-align: left; font-size: 14px; }
         th { background-color: var(--primary-color); color: white; }
         tr:nth-child(even) { background-color: #f9f9f9; }
         tr:hover { background-color: #f1f5f9; }
+        tr.highlight-role { background-color: #eef6ff; font-weight: 600; }
 
-        /* HIGHLIGHT BCS TRONG BẢNG */
-        tr.highlight-role {
-            background-color: #eef6ff;
-            font-weight: 600;
-        }
-
-        /* SIDEBAR LIST */
         .notice-list { list-style: none; }
         .notice-list li { padding: 8px 0; border-bottom: 1px solid #f0f0f0; font-size: 14px; }
 
-        /* FOOTER */
-        footer {
-            background-color: #001529;
-            color: white;
-            text-align: center;
-            padding: 20px;
-            font-size: 13px;
-            margin-top: auto;
-        }
-
-        footer p { margin: 5px 0; color: #aaa; }
+        footer { background-color: #001529; color: white; text-align: center; padding: 20px; font-size: 13px; margin-top: auto; border-top: 3px solid var(--gold-color); }
+        footer p { margin: 4px 0; color: #aaa; }
+        footer a { color: #66b3ff; text-decoration: none; }
+        footer a:hover { text-decoration: underline; }
 
         @media (max-width: 768px) {
             .header-container { flex-direction: column; text-align: center; }
@@ -183,7 +72,6 @@
 </head>
 <body>
 
-    <!-- HEADER -->
     <header>
         <div class="header-container">
             <div class="logo-box" id="logo-container">
@@ -196,7 +84,6 @@
         </div>
     </header>
 
-    <!--<!-- NAV MENU (Đã thêm tab Báo Bài) -->
     <nav>
         <div class="nav-container">
             <a href="index.html">Trang chủ</a>
@@ -205,13 +92,12 @@
             <a href="gochoc-tap.html">Góc học tập</a>
             <a href="giaovien.html">Giáo viên</a>
             <a href="gocxanh.html" class="green-tab">Góc Xanh</a>
-            <a href="thanhvien.html"class="active">Thành viên</a>
+            <a href="thanhvien.html" class="active">Thành viên</a>
             <a href="thuvien.html">Thư viện ảnh</a>
             <a href="credits.html">Credits</a>
         </div>
     </nav>
 
-    <!-- MAIN LAYOUT -->
     <div class="main-wrapper">
         <main>
             <div class="card">
@@ -263,7 +149,7 @@
                         <tr><td style="text-align: center;">16</td><td>TRẦN GIA MINH</td><td>Học sinh</td></tr>
                         <tr><td style="text-align: center;">17</td><td>LÊ VÕ HOÀNG NGHĨA</td><td>Học sinh</td></tr>
                         <tr><td style="text-align: center;">18</td><td>TRƯƠNG MINH NGỌC</td><td>Học sinh</td></tr>
-                        <tr class="highlight-role"><td style="text-align: center;">29</td><td>BÙI THỊ KIM NGUYÊN</td><td>Tổ trưởng Tổ 3</td></tr>    
+                        <tr class="highlight-role"><td style="text-align: center;">19</td><td>BÙI THỊ KIM NGUYÊN</td><td>Tổ trưởng Tổ 3</td></tr>    
                         <tr class="highlight-role"><td style="text-align: center;">20</td><td>NGUYỄN LÊ THẢO NGUYÊN</td><td>Tổ trưởng Tổ 1</td></tr>                   
                         <tr><td style="text-align: center;">21</td><td>LƯU THỊ NGUYỆT</td><td>Học sinh</td></tr>
                         <tr><td style="text-align: center;">22</td><td>NGUYỄN NGỌC TUYẾT</td><td>Học sinh</td></tr>
@@ -279,7 +165,6 @@
             </div>
         </main>
 
-        <!-- SIDEBAR BÊN PHẢI -->
         <aside>
             <div class="card">
                 <h3 class="section-title">Ban cán sự Lớp 12A7</h3>
@@ -293,7 +178,6 @@
         </aside>
     </div>
 
-    <!-- FOOTER -->
     <footer>
         <p>&copy; 2026 Cổng thông tin Lớp 12A7 - Trung tâm Giáo dục nghề nghiệp - Giáo dục thường xuyên Tân Bình (Phân hiệu Phú Nhuận)</p>
         <p>📧 Email liên hệ: <a href="mailto:12a7.phanhieuttgdnngdtxtanbinh@gmail.com">12a7.phanhieuttgdnngdtxtanbinh@gmail.com</a></p>

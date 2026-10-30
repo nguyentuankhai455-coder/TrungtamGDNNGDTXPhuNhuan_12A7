@@ -4,99 +4,71 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Đội Ngũ Giáo Viên - Lớp 12A7</title>
-    
     <link rel="icon" type="image/png" href="logo.png">
-
     <style>
-        :root {
-            --primary-color: #003366;
-            --secondary-color: #0055a5;
-            --green-color: #28a745;
-            --bg-light: #f4f6f9;
-            --text-color: #333;
-        }
-
+        :root { --primary-color: #003366; --secondary-color: #0055a5; --green-color: #28a745; --bg-light: #f4f6f9; --text-color: #333; --gold-color: #ffcc00; }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
         body { background-color: var(--bg-light); color: var(--text-color); line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; }
-
-        header { background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color: white; padding: 20px 0; border-bottom: 4px solid #ffcc00; }
+        header { background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color: white; padding: 20px 0; border-bottom: 4px solid var(--gold-color); }
         .header-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; align-items: center; gap: 20px; }
         .logo-box { width: 70px; height: 70px; border-radius: 50%; background-color: #fff; color: var(--primary-color); display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 18px; overflow: hidden; border: 2px solid #fff; flex-shrink: 0; }
         .logo-box img { width: 100%; height: 100%; object-fit: cover; }
         .header-text h1 { font-size: 24px; text-transform: uppercase; letter-spacing: 1px; }
         .header-text p { font-size: 14px; opacity: 0.9; }
-
-        nav { background-color: #002244; position: sticky; top: 0; z-index: 100; }
+        nav { background-color: #002244; position: sticky; top: 0; z-index: 100; border-bottom: 3px solid var(--gold-color); }
         .nav-container { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; }
         .nav-container a { color: white; padding: 12px 18px; text-decoration: none; font-size: 14px; font-weight: 600; text-transform: uppercase; transition: background 0.3s, color 0.3s; }
-        .nav-container a:hover, .nav-container a.active { background-color: var(--secondary-color); color: white; }
-        
-        .nav-container a.green-tab {
-            color: #28a745;
-            font-weight: bold;
-        }
-        .nav-container a.green-tab:hover {
-            background-color: #28a745 !important;
-            color: #ffffff !important;
-        }
-
+        .nav-container a:hover, .nav-container a.active { background-color: var(--secondary-color); color: var(--gold-color); }
+        .nav-container a.green-tab { color: #28a745; font-weight: bold; }
+        .nav-container a.green-tab:hover { background-color: #28a745 !important; color: #fff !important; }
         .container { max-width: 1200px; margin: 30px auto; padding: 0 15px; flex: 1; width: 100%; }
         .page-title { color: var(--primary-color); font-size: 20px; text-transform: uppercase; border-bottom: 2px solid var(--primary-color); padding-bottom: 8px; margin-bottom: 25px; display: flex; align-items: center; gap: 8px; }
-
         .teachers-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
         .teacher-card { background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.06); text-align: center; padding: 25px 20px; transition: transform 0.2s; display: flex; flex-direction: column; justify-content: space-between; }
         .teacher-card:hover { transform: translateY(-4px); }
-
         .avatar-box { width: 110px; height: 110px; border-radius: 50%; margin: 0 auto 15px; border: 3px solid var(--secondary-color); background-color: #e9ecef; display: flex; align-items: center; justify-content: center; overflow: hidden; font-size: 50px; color: #adb5bd; flex-shrink: 0; }
         .avatar-box img { width: 100%; height: 100%; object-fit: cover; }
         .teacher-name { font-size: 17px; font-weight: bold; color: var(--primary-color); margin-bottom: 6px; text-transform: uppercase; }
         .teacher-subject { display: inline-block; background-color: #e6f0fa; color: var(--secondary-color); padding: 3px 14px; border-radius: 15px; font-size: 12px; font-weight: bold; text-transform: uppercase; margin-bottom: 12px; }
         .view-detail-btn { display: inline-block; color: var(--secondary-color); text-decoration: none; font-size: 13px; font-weight: 600; }
         .view-detail-btn:hover { text-decoration: underline; }
-
-        footer { background-color: #001529; color: white; text-align: center; padding: 20px; margin-top: 40px; font-size: 13px; }
+        footer { background-color: #001529; color: white; text-align: center; padding: 20px; margin-top: 40px; font-size: 13px; border-top: 3px solid var(--gold-color); }
+        footer p { margin: 5px 0; color: #aaa; }
+        footer a { color: #66b3ff; text-decoration: none; }
+        footer a:hover { text-decoration: underline; }
         @media (max-width: 768px) { .header-container { flex-direction: column; text-align: center; } }
     </style>
 </head>
 <body>
-
     <header>
         <div class="header-container">
-            <div class="logo-box" id="logo-container">
-                <img src="logo.png" alt="Logo Lớp 12A7" onerror="document.getElementById('logo-container').innerText='12A7'">
-            </div>
-            <div class="header-text">
-                <h1>CỔNG THÔNG TIN LỚP 12A7</h1>
-                <p>Trung tâm Giáo dục nghề nghiệp - Giáo dục thường xuyên Tân Bình (Phân hiệu Phú Nhuận) | Năm học 2026 - 2027</p>
-            </div>
+            <div class="logo-box" id="logo-container"><img src="logo.png" alt="Logo Lớp 12A7" onerror="document.getElementById('logo-container').innerText='12A7'"></div>
+            <div class="header-text"><h1>CỔNG THÔNG TIN LỚP 12A7</h1><p>Trung tâm Giáo dục nghề nghiệp - Giáo dục thường xuyên Tân Bình (Phân hiệu Phú Nhuận) | Năm học 2026 - 2027</p></div>
         </div>
     </header>
-
     <nav>
         <div class="nav-container">
             <a href="index.html">Trang chủ</a>
             <a href="baobai.html">Báo Bài</a>
             <a href="index.html#tin-tuc">Tin tức & Sự kiện</a>
             <a href="gochoc-tap.html">Góc học tập</a>
-            <a href="giaovien.html"class="active">Giáo viên</a>
+            <a href="giaovien.html" class="active">Giáo viên</a>
             <a href="gocxanh.html" class="green-tab">Góc Xanh</a>
             <a href="thanhvien.html">Thành viên</a>
             <a href="thuvien.html">Thư viện ảnh</a>
             <a href="credits.html">Credits</a>
         </div>
     </nav>
-
     <div class="container">
         <h2 class="page-title">ĐỘI NGŨ GIÁO VIÊN GIẢNG DẠY LỚP 12A7</h2>
         <div id="loading-box" style="text-align: center; padding: 40px; color: #666;">⏳ Đang tải thông tin giáo viên...</div>
         <div class="teachers-grid" id="teachers-list"></div>
     </div>
-
     <footer>
         <p>&copy; 2026 Cổng thông tin Lớp 12A7 - Trung tâm Giáo dục nghề nghiệp - Giáo dục thường xuyên Tân Bình (Phân hiệu Phú Nhuận)</p>
+        <p>📧 Email liên hệ: <a href="mailto:12a7.phanhieuttgdnngdtxtanbinh@gmail.com">12a7.phanhieuttgdnngdtxtanbinh@gmail.com</a></p>
         <p>Phát triển và vận hành bởi Tập thể Lớp 12A7</p>
     </footer>
-
     <script>
         const SPREADSHEET_ID = '10WZAkfTsUhEsTRADxZ3JX869kLV_Sen45r4BeSrxDZY';
         const GID_GIAO_VIEN = '590362463';
@@ -104,17 +76,11 @@
         function handleTeacherData(json) {
             const loadingBox = document.getElementById('loading-box');
             const teachersList = document.getElementById('teachers-list');
-
             try {
-                if (!json || !json.table || !json.table.rows) {
-                    loadingBox.innerHTML = '<span style="color:red;">Không tìm thấy dữ liệu giáo viên!</span>';
-                    return;
-                }
-
+                if (!json || !json.table || !json.table.rows) { loadingBox.innerHTML = '<span style="color:red;">Không tìm thấy dữ liệu giáo viên!</span>'; return; }
                 loadingBox.style.display = 'none';
                 teachersList.innerHTML = '';
                 const rows = json.table.rows;
-
                 rows.forEach((row, index) => {
                     if (!row.c) return;
                     const c = row.c;
@@ -122,9 +88,7 @@
                     const avatar = c[0] && c[0].v !== null ? String(c[0].v).trim() : '';
                     const name = c[1] && c[1].v !== null ? String(c[1].v).trim() : 'Chưa cập nhật';
                     const subject = c[2] && c[2].v !== null ? String(c[2].v).trim() : 'Bộ môn';
-
                     const avatarHtml = avatar ? `<img src="${avatar}" alt="${name}" onerror="this.style.display='none'; this.parentElement.innerText='👤';">` : `👤`;
-
                     teachersList.insertAdjacentHTML('beforeend', `
                         <div class="teacher-card">
                             <div>
@@ -138,9 +102,7 @@
                         </div>
                     `);
                 });
-            } catch (err) {
-                loadingBox.innerHTML = '<span style="color:red;">Lỗi tải dữ liệu giáo viên!</span>';
-            }
+            } catch (err) { loadingBox.innerHTML = '<span style="color:red;">Lỗi tải dữ liệu giáo viên!</span>'; }
         }
 
         window.onload = function() {

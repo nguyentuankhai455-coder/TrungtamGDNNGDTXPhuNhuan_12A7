@@ -4,40 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Báo Bài - Cổng Thông Tin Lớp 12A7</title>
-
     <link rel="icon" type="image/png" href="logo.png">
-    <link rel="shortcut icon" type="image/png" href="logo.png">
-
     <style>
-        :root {
-            --primary-color: #003366;
-            --secondary-color: #0055a5;
-            --green-color: #28a745;
-            --bg-light: #f4f6f9;
-            --text-color: #333;
-        }
-
+        :root { --primary-color: #003366; --secondary-color: #0055a5; --green-color: #28a745; --bg-light: #f4f6f9; --text-color: #333; --gold-color: #ffcc00; }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
         html { scroll-behavior: smooth; }
-        body { background-color: var(--bg-light); color: var(--text-color); line-height: 1.8; display: flex; flex-direction: column; min-height: 100vh; }
-
-        header { background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color: white; padding: 20px 0; border-bottom: 4px solid #ffcc00; }
+        body { background-color: var(--bg-light); color: var(--text-color); line-height: 1.6; display: flex; flex-direction: column; min-height: 100vh; }
+        header { background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color: white; padding: 20px 0; border-bottom: 4px solid var(--gold-color); }
         .header-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; align-items: center; gap: 20px; }
         .logo-box { width: 70px; height: 70px; border-radius: 50%; background-color: #fff; color: var(--primary-color); display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 18px; overflow: hidden; border: 2px solid #fff; flex-shrink: 0; }
         .logo-box img { width: 100%; height: 100%; object-fit: cover; }
         .header-text h1 { font-size: 24px; text-transform: uppercase; letter-spacing: 1px; }
         .header-text p { font-size: 14px; opacity: 0.9; }
-
-        nav { background-color: #002244; position: sticky; top: 0; z-index: 100; }
+        nav { background-color: #002244; position: sticky; top: 0; z-index: 100; border-bottom: 3px solid var(--gold-color); }
         .nav-container { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; }
-        .nav-container a { color: white; padding: 12px 18px; text-decoration: none; font-size: 14px; font-weight: 600; text-transform: uppercase; transition: background 0.3s; }
-        .nav-container a:hover, .nav-container a.active { background-color: var(--secondary-color); }
+        .nav-container a { color: white; padding: 12px 18px; text-decoration: none; font-size: 14px; font-weight: 600; text-transform: uppercase; transition: background 0.3s, color 0.3s; }
+        .nav-container a:hover, .nav-container a.active { background-color: var(--secondary-color); color: var(--gold-color); }
         .nav-container a.green-tab { color: #28a745; font-weight: bold; }
-
+        .nav-container a.green-tab:hover { background-color: #28a745 !important; color: #fff !important; }
         .main-wrapper { max-width: 1200px; width: 100%; margin: 30px auto; padding: 0 15px; display: grid; grid-template-columns: 3fr 1fr; gap: 20px; flex: 1; }
         .card { background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.06); border: 1px solid #eaeaea; margin-bottom: 20px; }
         .section-title { color: var(--primary-color); font-size: 20px; border-bottom: 2px solid var(--primary-color); padding-bottom: 8px; margin-bottom: 20px; text-transform: uppercase; }
-
         .table-responsive { width: 100%; overflow-x: auto; }
         table { width: 100%; border-collapse: collapse; margin-top: 10px; text-align: left; font-size: 14.5px; }
         th, td { padding: 12px 15px; border-bottom: 1px solid #eee; }
@@ -45,35 +32,27 @@
         tr:hover { background-color: #f8f9fa; }
         tr td a { color: var(--secondary-color); text-decoration: none; font-weight: 600; }
         tr td a:hover { text-decoration: underline; color: var(--primary-color); }
-
         .notice-list { list-style: none; }
         .notice-list li { padding: 8px 0; border-bottom: 1px solid #f0f0f0; font-size: 14px; }
         .loading, .empty-state { text-align: center; padding: 40px 0; color: #777; font-style: italic; }
-
-        footer { background-color: #001529; color: white; text-align: center; padding: 20px; font-size: 13px; margin-top: auto; }
+        footer { background-color: #001529; color: white; text-align: center; padding: 20px; font-size: 13px; margin-top: auto; border-top: 3px solid var(--gold-color); }
         footer p { margin: 5px 0; color: #aaa; }
-
+        footer a { color: #66b3ff; text-decoration: none; }
+        footer a:hover { text-decoration: underline; }
         @media (max-width: 768px) { .header-container { flex-direction: column; text-align: center; } .main-wrapper { grid-template-columns: 1fr; } .card { padding: 20px; } }
     </style>
 </head>
 <body>
-
     <header>
         <div class="header-container">
-            <div class="logo-box" id="logo-container">
-                <img src="logo.png" alt="Logo Lớp 12A7" onerror="document.getElementById('logo-container').innerText='12A7'">
-            </div>
-            <div class="header-text">
-                <h1>CỔNG THÔNG TIN LỚP 12A7</h1>
-                <p>Trung tâm Giáo dục nghề nghiệp - Giáo dục thường xuyên Tân Bình (Phân hiệu Phú Nhuận) | Năm học 2026 - 2027</p>
-            </div>
+            <div class="logo-box" id="logo-container"><img src="logo.png" alt="Logo Lớp 12A7" onerror="document.getElementById('logo-container').innerText='12A7'"></div>
+            <div class="header-text"><h1>CỔNG THÔNG TIN LỚP 12A7</h1><p>Trung tâm Giáo dục nghề nghiệp - Giáo dục thường xuyên Tân Bình (Phân hiệu Phú Nhuận) | Năm học 2026 - 2027</p></div>
         </div>
     </header>
-
-<nav>
+    <nav>
         <div class="nav-container">
             <a href="index.html">Trang chủ</a>
-            <a href="baobai.html"class="active">Báo Bài</a>
+            <a href="baobai.html" class="active">Báo Bài</a>
             <a href="index.html#tin-tuc">Tin tức & Sự kiện</a>
             <a href="gochoc-tap.html">Góc học tập</a>
             <a href="giaovien.html">Giáo viên</a>
@@ -83,28 +62,18 @@
             <a href="credits.html">Credits</a>
         </div>
     </nav>
-
     <div class="main-wrapper">
         <main>
             <div class="card">
                 <h2 class="section-title">📌 Bảng Báo Bài Hằng Ngày</h2>
                 <div class="table-responsive">
                     <table id="baobai-table">
-                        <thead>
-                            <tr>
-                                <th style="width: 25%;">Ngày giao</th>
-                                <th style="width: 25%;">Môn học</th>
-                                <th style="width: 50%;">Nội dung tóm tắt</th>
-                            </tr>
-                        </thead>
-                        <tbody id="baobai-body">
-                            <tr><td colspan="3" class="loading">⏳ Đang tải dữ liệu báo bài...</td></tr>
-                        </tbody>
+                        <thead><tr><th style="width: 25%;">Ngày giao</th><th style="width: 25%;">Môn học</th><th style="width: 50%;">Nội dung tóm tắt</th></tr></thead>
+                        <tbody id="baobai-body"><tr><td colspan="3" class="loading">⏳ Đang tải dữ liệu báo bài...</td></tr></tbody>
                     </table>
                 </div>
             </div>
         </main>
-
         <aside>
             <div class="card">
                 <h3 class="section-title">Ban cán sự Lớp 12A7</h3>
@@ -117,12 +86,11 @@
             </div>
         </aside>
     </div>
-
     <footer>
         <p>&copy; 2026 Cổng thông tin Lớp 12A7 - Trung tâm Giáo dục nghề nghiệp - Giáo dục thường xuyên Tân Bình (Phân hiệu Phú Nhuận)</p>
+        <p>📧 Email liên hệ: <a href="mailto:12a7.phanhieuttgdnngdtxtanbinh@gmail.com">12a7.phanhieuttgdnngdtxtanbinh@gmail.com</a></p>
         <p>Phát triển và vận hành bởi Tập thể Lớp 12A7</p>
     </footer>
-
     <script>
         const SPREADSHEET_ID = '10WZAkfTsUhEsTRADxZ3JX869kLV_Sen45r4BeSrxDZY';
         const GID_BAO_BAI = '1447199433';
@@ -133,9 +101,7 @@
             let val = String(cell.v).trim();
             if (val.startsWith('Date(')) {
                 const matches = val.match(/\d+/g);
-                if (matches && matches.length >= 3) {
-                    return `${matches[2].padStart(2, '0')}/${String(parseInt(matches[1]) + 1).padStart(2, '0')}/${matches[0]}`;
-                }
+                if (matches && matches.length >= 3) return `${matches[2].padStart(2, '0')}/${String(parseInt(matches[1]) + 1).padStart(2, '0')}/${matches[0]}`;
             }
             return val;
         }
@@ -143,39 +109,19 @@
         function handleBaoBaiData(json) {
             const tbody = document.getElementById('baobai-body');
             try {
-                if (!json || !json.table || !json.table.rows) {
-                    tbody.innerHTML = '<tr><td colspan="3" class="empty-state">Không thể kết nối dữ liệu báo bài.</td></tr>';
-                    return;
-                }
-
+                if (!json || !json.table || !json.table.rows) { tbody.innerHTML = '<tr><td colspan="3" class="empty-state">Không thể kết nối dữ liệu báo bài.</td></tr>'; return; }
                 const rows = json.table.rows;
-                if (rows.length === 0) {
-                    tbody.innerHTML = '<tr><td colspan="3" class="empty-state">Chưa có thông tin báo bài nào.</td></tr>';
-                    return;
-                }
-
+                if (rows.length === 0) { tbody.innerHTML = '<tr><td colspan="3" class="empty-state">Chưa có thông tin báo bài nào.</td></tr>'; return; }
                 let html = '';
                 for (let i = rows.length - 1; i >= 0; i--) {
                     const r = rows[i].c;
                     if (!r) continue;
-                    const ngayThang = parseCellValue(r[0]);
-                    const monHoc = parseCellValue(r[1]);
-                    const noiDung = parseCellValue(r[2]);
-                    
+                    const ngayThang = parseCellValue(r[0]), monHoc = parseCellValue(r[1]), noiDung = parseCellValue(r[2]);
                     const shortContent = noiDung.length > 60 ? noiDung.substring(0, 60) + '...' : noiDung;
-
-                    html += `
-                        <tr>
-                            <td><b>${ngayThang || 'Chưa cập nhật'}</b></td>
-                            <td><a href="baiviet.html?type=baobai&row=${i}">${monHoc || 'Chung'}</a></td>
-                            <td><a href="baiviet.html?type=baobai&row=${i}">${shortContent || 'Xem chi tiết'}</a></td>
-                        </tr>
-                    `;
+                    html += `<tr><td><b>${ngayThang || 'Chưa cập nhật'}</b></td><td><a href="baiviet.html?type=baobai&row=${i}">${monHoc || 'Chung'}</a></td><td><a href="baiviet.html?type=baobai&row=${i}">${shortContent || 'Xem chi tiết'}</a></td></tr>`;
                 }
                 tbody.innerHTML = html;
-            } catch (err) {
-                tbody.innerHTML = '<tr><td colspan="3" class="empty-state">Đã xảy ra lỗi khi tải dữ liệu.</td></tr>';
-            }
+            } catch (err) { tbody.innerHTML = '<tr><td colspan="3" class="empty-state">Đã xảy ra lỗi khi tải dữ liệu.</td></tr>'; }
         }
 
         window.onload = function() {

@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Thư Viện Ảnh - Lớp 12A7</title>
     
-    <!-- FAVICON TAB TRÌNH DUYỆT -->
     <link rel="icon" type="image/png" href="logo.png">
     <link rel="shortcut icon" type="image/png" href="logo.png">
 
@@ -16,174 +15,63 @@
             --green-color: #28a745;
             --bg-light: #f4f6f9;
             --text-color: #333;
+            --gold-color: #ffcc00;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
         body { background-color: var(--bg-light); color: var(--text-color); line-height: 1.6; }
 
-        /* HEADER */
         header {
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: white;
             padding: 20px 0;
-            border-bottom: 4px solid #ffcc00;
+            border-bottom: 4px solid var(--gold-color);
         }
-        .header-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-        .logo-box {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            background-color: #fff;
-            color: var(--primary-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 18px;
-            overflow: hidden;
-            border: 2px solid #fff;
-            flex-shrink: 0;
-        }
+        .header-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; align-items: center; gap: 20px; }
+        .logo-box { width: 70px; height: 70px; border-radius: 50%; background-color: #fff; color: var(--primary-color); display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 18px; overflow: hidden; border: 2px solid #fff; flex-shrink: 0; }
         .logo-box img { width: 100%; height: 100%; object-fit: cover; }
         .header-text h1 { font-size: 24px; text-transform: uppercase; letter-spacing: 1px; }
         .header-text p { font-size: 14px; opacity: 0.9; }
 
-        /* NAVIGATION */
-        nav { background-color: #002244; position: sticky; top: 0; z-index: 100; }
+        nav { background-color: #002244; position: sticky; top: 0; z-index: 100; border-bottom: 3px solid var(--gold-color); }
         .nav-container { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; }
-        .nav-container a {
-            color: white;
-            padding: 12px 18px;
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 600;
-            text-transform: uppercase;
-            transition: background 0.3s;
-        }
-        .nav-container a:hover, .nav-container a.active { background-color: var(--secondary-color); }
+        .nav-container a { color: white; padding: 12px 18px; text-decoration: none; font-size: 14px; font-weight: 600; text-transform: uppercase; transition: background 0.3s, color 0.3s; }
+        .nav-container a:hover, .nav-container a.active { background-color: var(--secondary-color); color: var(--gold-color); }
         .nav-container a.green-tab { color: #28a745; font-weight: bold; }
-        .nav-container a.green-tab:hover { background-color: var(--green-color); color: #fff; }
+        .nav-container a.green-tab:hover { background-color: #28a745 !important; color: #fff !important; }
 
-        /* MAIN CONTENT */
-        .main-wrapper {
-            max-width: 1200px;
-            margin: 20px auto;
-            padding: 0 15px;
-        }
+        .main-wrapper { max-width: 1200px; margin: 20px auto; padding: 0 15px; }
+        .card { background: white; border-radius: 6px; padding: 25px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .section-title { color: var(--primary-color); font-size: 20px; border-bottom: 2px solid var(--primary-color); padding-bottom: 10px; margin-bottom: 20px; text-transform: uppercase; }
 
-        .card {
-            background: white;
-            border-radius: 6px;
-            padding: 25px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        }
-        .section-title {
-            color: var(--primary-color);
-            font-size: 20px;
-            border-bottom: 2px solid var(--primary-color);
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-        }
-
-        /* LƯỚI ẢNH */
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-            gap: 20px;
-        }
-
-        .gallery-card {
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
-            overflow: hidden;
-            background: #fff;
-            transition: transform 0.2s, box-shadow 0.2s;
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-        }
-        .gallery-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
-        }
-
-        .img-container {
-            width: 100%;
-            height: 200px;
-            background-color: #eee;
-            overflow: hidden;
-        }
-
-        .img-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.3s;
-            display: block;
-        }
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
+        .gallery-card { border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden; background: #fff; transition: transform 0.2s, box-shadow 0.2s; cursor: pointer; display: flex; flex-direction: column; }
+        .gallery-card:hover { transform: translateY(-4px); box-shadow: 0 6px 12px rgba(0,0,0,0.1); }
+        .img-container { width: 100%; height: 200px; background-color: #eee; overflow: hidden; }
+        .img-container img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; display: block; }
         .gallery-card:hover .img-container img { transform: scale(1.05); }
 
-        .gallery-info {
-            padding: 12px 15px;
-            text-align: center;
-            flex-grow: 1;
-        }
-        .gallery-title {
-            font-size: 15px;
-            font-weight: bold;
-            color: var(--primary-color);
-            margin-bottom: 4px;
-        }
-        .gallery-desc {
-            font-size: 13px;
-            color: #666;
-            white-space: pre-line;
-        }
+        .gallery-info { padding: 12px 15px; text-align: center; flex-grow: 1; }
+        .gallery-title { font-size: 15px; font-weight: bold; color: var(--primary-color); margin-bottom: 4px; }
+        .gallery-desc { font-size: 13px; color: #666; white-space: pre-line; }
 
-        .empty-state {
-            text-align: center;
-            padding: 40px 0;
-            color: #777;
-            font-style: italic;
-        }
+        .empty-state { text-align: center; padding: 40px 0; color: #777; font-style: italic; }
 
-        /* MODAL POPUP */
-        .modal {
-            display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%;
-            background-color: rgba(0, 0, 0, 0.85); align-items: center; justify-content: center; padding: 20px;
-        }
-        .modal-content {
-            background-color: #fff; max-width: 800px; width: 100%; border-radius: 8px;
-            overflow: hidden; position: relative; animation: fadeIn 0.3s ease-in-out;
-        }
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.85); align-items: center; justify-content: center; padding: 20px; }
+        .modal-content { background-color: #fff; max-width: 800px; width: 100%; border-radius: 8px; overflow: hidden; position: relative; animation: fadeIn 0.3s ease-in-out; }
         .modal-body { max-height: 85vh; overflow-y: auto; }
         .modal-img { width: 100%; max-height: 500px; object-fit: contain; background: #000; display: block; }
         .modal-caption { padding: 20px; text-align: center; }
         .modal-title { font-size: 18px; font-weight: bold; color: var(--primary-color); margin-bottom: 8px; }
         .modal-desc { font-size: 14px; color: #444; line-height: 1.6; white-space: pre-line; }
-        .close-btn {
-            position: absolute; top: 10px; right: 15px; color: white;
-            font-size: 28px; font-weight: bold; cursor: pointer; text-shadow: 0 0 5px rgba(0,0,0,0.8); z-index: 10;
-        }
+        .close-btn { position: absolute; top: 10px; right: 15px; color: white; font-size: 28px; font-weight: bold; cursor: pointer; text-shadow: 0 0 5px rgba(0,0,0,0.8); z-index: 10; }
 
         @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
 
-        footer {
-            background-color: #001529;
-            color: white;
-            text-align: center;
-            padding: 20px;
-            margin-top: 40px;
-            font-size: 13px;
-        }
+        footer { background-color: #001529; color: white; text-align: center; padding: 20px; margin-top: 40px; font-size: 13px; border-top: 3px solid var(--gold-color); }
+        footer p { margin: 4px 0; color: #aaa; }
+        footer a { color: #66b3ff; text-decoration: none; }
+        footer a:hover { text-decoration: underline; }
 
         @media (max-width: 768px) {
             .header-container { flex-direction: column; text-align: center; }
@@ -193,7 +81,6 @@
 </head>
 <body>
 
-    <!-- HEADER -->
     <header>
         <div class="header-container">
             <div class="logo-box" id="logo-container">
@@ -206,22 +93,20 @@
         </div>
     </header>
 
-    <!-- NAV MENU (Đã thêm tab Báo Bài) -->
     <nav>
         <div class="nav-container">
             <a href="index.html">Trang chủ</a>
             <a href="baobai.html">Báo Bài</a>
             <a href="index.html#tin-tuc">Tin tức & Sự kiện</a>
-            <a href="index.html#hoc-tap">Góc học tập</a>
+            <a href="gochoc-tap.html">Góc học tập</a>
             <a href="giaovien.html">Giáo viên</a>
             <a href="gocxanh.html" class="green-tab">Góc Xanh</a>
             <a href="thanhvien.html">Thành viên</a>
-            <a href="thuvien.html"class="active">Thư viện ảnh</a>
+            <a href="thuvien.html" class="active">Thư viện ảnh</a>
             <a href="credits.html">Credits</a>
         </div>
     </nav>
 
-    <!-- MAIN CONTENT -->
     <div class="main-wrapper">
         <div class="card">
             <h2 class="section-title">Thư viện ảnh kỷ niệm Lớp 12A7</h2>
@@ -236,7 +121,6 @@
         </div>
     </div>
 
-    <!-- MODAL POPUP XEM CHI TIẾT -->
     <div id="imageModal" class="modal" onclick="closeModal(event)">
         <div class="modal-content" onclick="event.stopPropagation()">
             <span class="close-btn" onclick="closeModal()">×</span>
@@ -250,13 +134,12 @@
         </div>
     </div>
 
-    <!-- FOOTER -->
     <footer>
-            <p>&copy; 2026 Cổng thông tin Lớp 12A7 - Trung tâm Giáo dục nghề nghiệp - Giáo dục thường xuyên Tân Bình (Phân hiệu Phú Nhuận)</p>
+        <p>&copy; 2026 Cổng thông tin Lớp 12A7 - Trung tâm Giáo dục nghề nghiệp - Giáo dục thường xuyên Tân Bình (Phân hiệu Phú Nhuận)</p>
+        <p>📧 Email liên hệ: <a href="mailto:12a7.phanhieuttgdnngdtxtanbinh@gmail.com">12a7.phanhieuttgdnngdtxtanbinh@gmail.com</a></p>
         <p>Phát triển và vận hành bởi Tập thể Lớp 12A7</p>
     </footer>
 
-    <!-- JAVASCRIPT ĐỌC DỮ LIỆU TỪ GOOGLE SHEETS -->
     <script>
         const SHEET_ID = '10WZAkfTsUhEsTRADxZ3JX869kLV_Sen45r4BeSrxDZY';
         const GID = '208030591';
@@ -286,7 +169,6 @@
                 let html = '';
                 let count = 0;
 
-                // i = 1: Bỏ qua dòng tiêu đề
                 for (let i = 1; i < rows.length; i++) {
                     const row = rows[i].c;
                     if (!row) continue;

@@ -15,219 +15,55 @@
             --green-color: #28a745;
             --bg-light: #f4f6f9;
             --text-color: #333;
+            --gold-color: #ffcc00;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
         html { scroll-behavior: smooth; }
-        body { 
-            background-color: var(--bg-light); 
-            color: var(--text-color); 
-            line-height: 1.8;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
+        body { background-color: var(--bg-light); color: var(--text-color); line-height: 1.8; display: flex; flex-direction: column; min-height: 100vh; }
 
-        /* HEADER */
         header {
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: white;
             padding: 20px 0;
-            border-bottom: 4px solid #ffcc00;
+            border-bottom: 4px solid var(--gold-color);
         }
+        .header-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; align-items: center; gap: 20px; }
+        .logo-box { width: 70px; height: 70px; border-radius: 50%; background-color: #fff; color: var(--primary-color); display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 18px; overflow: hidden; border: 2px solid #fff; flex-shrink: 0; }
+        .logo-box img { width: 100%; height: 100%; object-fit: cover; }
+        .header-text h1 { font-size: 24px; text-transform: uppercase; letter-spacing: 1px; }
+        .header-text p { font-size: 14px; opacity: 0.9; }
 
-        .header-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
+        nav { background-color: #002244; position: sticky; top: 0; z-index: 100; border-bottom: 3px solid var(--gold-color); }
+        .nav-container { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; }
+        .nav-container a { color: white; padding: 12px 18px; text-decoration: none; font-size: 14px; font-weight: 600; text-transform: uppercase; transition: background 0.3s, color 0.3s; }
+        .nav-container a:hover, .nav-container a.active { background-color: var(--secondary-color); color: var(--gold-color); }
+        .nav-container a.green-tab { color: #28a745; font-weight: bold; }
+        .nav-container a.green-tab:hover { background-color: #28a745 !important; color: #fff !important; }
 
-        .logo-box {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            background-color: #fff;
-            color: var(--primary-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 18px;
-            overflow: hidden;
-            border: 2px solid #fff;
-            flex-shrink: 0;
-        }
+        .main-wrapper { max-width: 1200px; width: 100%; margin: 30px auto; padding: 0 15px; display: grid; grid-template-columns: 3fr 1fr; gap: 20px; flex: 1; }
+        .card { background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); border: 1px solid #e1e8ed; margin-bottom: 20px; }
 
-        .logo-box img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+        .page-title { color: var(--primary-color); font-size: 24px; font-weight: bold; border-bottom: 2px solid var(--primary-color); padding-bottom: 10px; margin-bottom: 20px; text-transform: uppercase; }
 
-        .header-text h1 {
-            font-size: 24px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
+        .credit-group { margin-bottom: 30px; }
+        .credit-role { font-size: 18px; font-weight: bold; color: var(--secondary-color); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+        .credit-list { list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
+        .credit-item { background-color: #f8f9fa; border-left: 4px solid var(--primary-color); padding: 12px 15px; border-radius: 0 6px 6px 0; font-size: 14px; }
+        .credit-item.developer { border-left-color: var(--gold-color); background-color: #fffdf0; }
+        .credit-item strong { display: block; color: #222; font-size: 15px; }
+        .credit-item span { color: #555; font-size: 13px; }
 
-        .header-text p {
-            font-size: 14px;
-            opacity: 0.9;
-        }
+        .thanks-box { background: #eef6ff; border: 1px dashed var(--secondary-color); padding: 20px; border-radius: 8px; text-align: center; margin-top: 20px; font-style: italic; color: #444; }
 
-        /* NAV MENU */
-        nav { 
-            background-color: #002244; 
-            position: sticky; 
-            top: 0; 
-            z-index: 100; 
-        }
-
-        .nav-container { 
-            max-width: 1200px; 
-            margin: 0 auto; 
-            display: flex; 
-            flex-wrap: wrap; 
-        }
-
-        .nav-container a {
-            color: white;
-            padding: 12px 18px;
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 600;
-            text-transform: uppercase;
-            transition: background 0.3s;
-        }
-
-        .nav-container a:hover, .nav-container a.active { 
-            background-color: var(--secondary-color); 
-        }
-
-        .nav-container a.green-tab { 
-            color: #28a745; 
-            font-weight: bold; 
-        }
-
-        .nav-container a.green-tab:hover { 
-            background-color: var(--green-color); 
-            color: #fff; 
-        }
-
-        /* LAYOUT & CARDS */
-        .main-wrapper {
-            max-width: 1200px;
-            width: 100%;
-            margin: 30px auto;
-            padding: 0 15px;
-            display: grid;
-            grid-template-columns: 3fr 1fr;
-            gap: 20px;
-            flex: 1;
-        }
-
-        .card {
-            background: #fff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-            border: 1px solid #e1e8ed;
-            margin-bottom: 20px;
-        }
-
-        .page-title {
-            color: var(--primary-color);
-            font-size: 24px;
-            font-weight: bold;
-            border-bottom: 2px solid var(--primary-color);
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-        }
-
-        /* CREDIT SECTIONS */
-        .credit-group {
-            margin-bottom: 30px;
-        }
-
-        .credit-role {
-            font-size: 18px;
-            font-weight: bold;
-            color: var(--secondary-color);
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .credit-list {
-            list-style: none;
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-            gap: 12px;
-        }
-
-        .credit-item {
-            background-color: #f8f9fa;
-            border-left: 4px solid var(--primary-color);
-            padding: 12px 15px;
-            border-radius: 0 6px 6px 0;
-            font-size: 14px;
-        }
-
-        .credit-item.developer {
-            border-left-color: #ffcc00;
-            background-color: #fffdf0;
-        }
-
-        .credit-item strong {
-            display: block;
-            color: #222;
-            font-size: 15px;
-        }
-
-        .credit-item span {
-            color: #555;
-            font-size: 13px;
-        }
-
-        .thanks-box {
-            background: #eef6ff;
-            border: 1px dashed var(--secondary-color);
-            padding: 20px;
-            border-radius: 8px;
-            text-align: center;
-            margin-top: 20px;
-            font-style: italic;
-            color: #444;
-        }
-
-        .section-title {
-            color: var(--primary-color);
-            font-size: 18px;
-            border-bottom: 2px solid var(--primary-color);
-            padding-bottom: 8px;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-        }
-
+        .section-title { color: var(--primary-color); font-size: 18px; border-bottom: 2px solid var(--primary-color); padding-bottom: 8px; margin-bottom: 15px; text-transform: uppercase; }
         .notice-list { list-style: none; }
         .notice-list li { padding: 8px 0; border-bottom: 1px solid #f0f0f0; font-size: 14px; }
 
-        /* FOOTER */
-        footer {
-            background-color: #001529;
-            color: white;
-            text-align: center;
-            padding: 20px;
-            font-size: 13px;
-            margin-top: auto;
-        }
-
+        footer { background-color: #001529; color: white; text-align: center; padding: 20px; font-size: 13px; margin-top: auto; border-top: 3px solid var(--gold-color); }
         footer p { margin: 5px 0; color: #aaa; }
+        footer a { color: #66b3ff; text-decoration: none; }
+        footer a:hover { text-decoration: underline; }
 
         @media (max-width: 768px) {
             .header-container { flex-direction: column; text-align: center; }
@@ -239,7 +75,6 @@
 </head>
 <body>
 
-    <!-- HEADER -->
     <header>
         <div class="header-container">
             <div class="logo-box" id="logo-container">
@@ -252,7 +87,6 @@
         </div>
     </header>
 
-    <!-- NAV MENU (Đã thêm tab Báo Bài) -->
     <nav>
         <div class="nav-container">
             <a href="index.html">Trang chủ</a>
@@ -263,17 +97,15 @@
             <a href="gocxanh.html" class="green-tab">Góc Xanh</a>
             <a href="thanhvien.html">Thành viên</a>
             <a href="thuvien.html">Thư viện ảnh</a>
-            <a href="credits.html"class="active">Credits</a>
+            <a href="credits.html" class="active">Credits</a>
         </div>
     </nav>
 
-    <!-- LAYOUT CHÍNH -->
     <div class="main-wrapper">
         <main>
             <div class="card">
                 <h2 class="page-title">🎗️ Ghi Nhận Đóng Góp (Credits)</h2>
 
-                <!-- THIẾT KẾ & PHÁT TRIỂN -->
                 <div class="credit-group">
                     <div class="credit-role">💻 Thiết Kế & Phát Triển Hệ Thống</div>
                     <div class="credit-list">
@@ -284,7 +116,6 @@
                     </div>
                 </div>
 
-                <!-- CẬP NHẬT NỘI DUNG -->
                 <div class="credit-group">
                     <div class="credit-role">📝 Quản Lý & Cập Nhật Báo Bài</div>
                     <div class="credit-list">
@@ -295,7 +126,6 @@
                     </div>
                 </div>
 
-                <!-- GIÁO VIÊN CHỦ NHIỆM & BỘ MÔN -->
                 <div class="credit-group">
                     <div class="credit-role">👩‍🏫 Giáo Viên Chủ Nhiệm & Bộ Môn Lớp 12A7</div>
                     <div class="credit-list">
@@ -334,7 +164,6 @@
                     </div>
                 </div>
 
-                <!-- LỜI CẢM ƠN -->
                 <div class="thanks-box">
                     ❤️ Chân thành cảm ơn quý Thầy Cô cùng toàn thể <b>Tập thể Lớp 12A7</b> đã hỗ trợ và đồng hành để hoàn thiện cổng thông tin này!
                 </div>
@@ -354,9 +183,9 @@
         </aside>
     </div>
 
-    <!-- FOOTER -->
     <footer>
         <p>&copy; 2026 Cổng thông tin Lớp 12A7 - Trung tâm Giáo dục nghề nghiệp - Giáo dục thường xuyên Tân Bình (Phân hiệu Phú Nhuận)</p>
+        <p>📧 Email liên hệ: <a href="mailto:12a7.phanhieuttgdnngdtxtanbinh@gmail.com">12a7.phanhieuttgdnngdtxtanbinh@gmail.com</a></p>
         <p>Phát triển và vận hành bởi Tập thể Lớp 12A7</p>
     </footer>
 

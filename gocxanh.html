@@ -29,6 +29,7 @@
             min-height: 100vh;
         }
 
+        /* HEADER */
         header {
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: white;
@@ -51,6 +52,7 @@
         .header-text h1 { font-size: 24px; text-transform: uppercase; letter-spacing: 1px; }
         .header-text p { font-size: 14px; opacity: 0.9; }
 
+        /* NAV MENU */
         nav { background-color: #002244; position: sticky; top: 0; z-index: 100; }
         .nav-container { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; }
         .nav-container a {
@@ -60,20 +62,22 @@
         .nav-container a:hover, .nav-container a.active { background-color: var(--secondary-color); color: white; }
         .nav-container a.green-tab { color: #28a745; font-weight: bold; }
         .nav-container a.green-tab:hover { background-color: #28a745 !important; color: #ffffff !important; }
-
-        .main-wrapper { max-width: 1200px; width: 100%; margin: 30px auto; padding: 0 15px; flex: 1; }
         
-        .card { 
-            background: white; 
-            border-radius: 12px; 
-            padding: 24px; 
-            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-            border: 1px solid #eaeaea;
+        /* Nút Góc Xanh khi đang ở trang hiện tại (active) */
+        .nav-container a.green-tab.active {
+            background-color: var(--green-color) !important;
+            color: #ffffff !important;
         }
 
-        .sub-nav-buttons {
-            display: flex; gap: 12px; margin-bottom: 25px; border-bottom: 2px solid #eaeaea; padding-bottom: 15px;
+        /* MAIN CONTENT */
+        .main-wrapper { max-width: 1200px; width: 100%; margin: 30px auto; padding: 0 15px; flex: 1; }
+        .card { 
+            background: white; border-radius: 12px; padding: 24px; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06); border: 1px solid #eaeaea;
         }
+
+        /* TABS BUTTONS */
+        .sub-nav-buttons { display: flex; gap: 12px; margin-bottom: 25px; border-bottom: 2px solid #eaeaea; padding-bottom: 15px; }
         .tab-btn {
             background-color: #e0e0e0; color: #444; border: none;
             padding: 10px 22px; font-size: 15px; font-weight: bold;
@@ -84,6 +88,7 @@
         .tab-btn.active-green { background-color: var(--green-color); color: white; }
         .tab-btn.active-orange { background-color: var(--orange-color); color: white; }
 
+        /* SECTION TITLE */
         .section-title {
             font-size: 20px; border-bottom: 2px solid currentColor;
             padding-bottom: 10px; margin-bottom: 20px; text-transform: uppercase;
@@ -94,9 +99,8 @@
         .tab-content { display: none; opacity: 0; transition: opacity 0.15s ease-in-out; }
         .tab-content.active { display: block; opacity: 1; }
 
-        .green-grid {
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px;
-        }
+        /* GRID CÂY XANH */
+        .green-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; }
         .green-card {
             position: relative; border-radius: 10px; overflow: hidden;
             background: #e8f5e9; cursor: pointer;
@@ -113,6 +117,7 @@
         }
         .green-card:hover .green-card-overlay { opacity: 1; }
 
+        /* DANH SÁCH PHONG TRÀO */
         .post-list-container { display: flex; flex-direction: column; gap: 15px; }
         .post-item {
             border: 1px solid #e0e0e0; border-radius: 10px; padding: 18px; background: #fff;
@@ -124,6 +129,7 @@
         .post-title a:hover { text-decoration: underline; }
         .post-content { font-size: 14px; color: #444; margin: 6px 0; line-height: 1.5; }
 
+        /* MODAL */
         .modal {
             display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%;
             background-color: rgba(0, 0, 0, 0.85); align-items: center; justify-content: center; padding: 20px;
@@ -145,34 +151,16 @@
         @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
         .empty-state { text-align: center; padding: 40px 0; color: #777; font-style: italic; }
 
-        /* WIDGET TRỢ LÝ AI GÓC XANH (BẢO TRÌ) */
-        #gemini-chat-widget { position: fixed; bottom: 20px; right: 20px; z-index: 9999; }
-        #gemini-chat-btn { 
-            width: 60px; height: 60px; border-radius: 50%; 
-            background: linear-gradient(135deg, #28a745, #218838); color: white; 
-            border: none; box-shadow: 0 4px 15px rgba(0,0,0,0.2); cursor: pointer; 
-            font-size: 28px; display: flex; align-items: center; justify-content: center; 
-            transition: transform 0.3s; 
-        }
-        #gemini-chat-btn:hover { transform: scale(1.1); }
-        #gemini-chat-box { 
-            display: none; position: absolute; bottom: 80px; right: 0; 
-            width: 350px; height: 320px; background: white; border-radius: 12px; 
-            box-shadow: 0 5px 25px rgba(0,0,0,0.2); flex-direction: column; 
-            overflow: hidden; border: 1px solid #ddd; opacity: 0; pointer-events: none; 
-            transition: opacity 0.3s ease, transform 0.3s ease; transform: translateY(20px); 
-        }
-        #gemini-chat-box.show { opacity: 1; pointer-events: all; transform: translateY(0); display: flex; }
-        .chat-header { background: linear-gradient(135deg, #28a745, #218838); color: white; padding: 12px 15px; font-weight: bold; font-size: 15px; display: flex; justify-content: space-between; align-items: center; }
-        .chat-close { cursor: pointer; font-size: 18px; }
-        .chat-messages { flex: 1; padding: 20px; overflow-y: auto; background: #f9f9f9; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
-        .maintenance-notice { background: #fff3cd; color: #856404; border: 1px solid #ffeeba; padding: 15px; border-radius: 8px; font-size: 14px; font-weight: 500; line-height: 1.5; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-
+        /* FOOTER */
         footer {
             background-color: #001529; color: white;
             text-align: center; padding: 20px; margin-top: 40px; font-size: 13px;
         }
+        footer p { margin: 5px 0; color: #aaa; }
+        footer a { color: #66b3ff; text-decoration: none; }
+        footer a:hover { text-decoration: underline; }
 
+        /* RESPONSIVE */
         @media (max-width: 768px) {
             .header-container { flex-direction: column; text-align: center; }
             .header-left { flex-direction: column; }
@@ -183,6 +171,7 @@
 </head>
 <body>
 
+    <!-- HEADER -->
     <header>
         <div class="header-container">
             <div class="header-left">
@@ -197,6 +186,7 @@
         </div>
     </header>
 
+    <!-- NAVIGATION -->
     <nav>
         <div class="nav-container">
             <a href="index.html">Trang chủ</a>
@@ -204,6 +194,7 @@
             <a href="index.html#tin-tuc">Tin tức & Sự kiện</a>
             <a href="gochoc-tap.html">Góc học tập</a>
             <a href="giaovien.html">Giáo viên</a>
+            <!-- Nút Góc Xanh đã có class active -->
             <a href="gocxanh.html" class="green-tab active">Góc Xanh</a>
             <a href="thanhvien.html">Thành viên</a>
             <a href="thuvien.html">Thư viện ảnh</a>
@@ -211,6 +202,7 @@
         </div>
     </nav>
 
+    <!-- MAIN CONTENT -->
     <div class="main-wrapper">
         <div class="card">
             
@@ -219,6 +211,7 @@
                 <button class="tab-btn" id="btn-phongtrao" onclick="switchSection('phongtrao')">🔥 Hoạt Động Phong Trào</button>
             </div>
 
+            <!-- TAB GÓC XANH -->
             <div id="section-gocxanh" class="tab-content active">
                 <h2 class="section-title title-green">🌿 Mảng Cây Xanh & Môi Trường Lớp Học</h2>
                 <div id="green-container" class="green-grid">
@@ -226,6 +219,7 @@
                 </div>
             </div>
 
+            <!-- TAB PHONG TRÀO -->
             <div id="section-phongtrao" class="tab-content">
                 <h2 class="section-title title-orange">🔥 Hoạt Động & Phong Trào Thi Đua Lớp 12A7</h2>
                 <div id="phongtrao-container" class="post-list-container">
@@ -236,22 +230,7 @@
         </div>
     </div>
 
-    <!-- WIDGET TRỢ LÝ AI GÓC XANH (BẢO TRÌ) -->
-    <div id="gemini-chat-widget">
-        <div id="gemini-chat-box">
-            <div class="chat-header">
-                <span>🌱 Trợ lý AI Góc Xanh 12A7</span>
-                <span class="chat-close" onclick="toggleChat()">✖</span>
-            </div>
-            <div class="chat-messages">
-                <div class="maintenance-notice">
-                    🛠️ <b>AI Góc Xanh lớp 12A7 hiện đang bảo trì</b><br>Vui lòng thử lại sau!
-                </div>
-            </div>
-        </div>
-        <button id="gemini-chat-btn" onclick="toggleChat()">🌱</button>
-    </div>
-
+    <!-- MODAL HÌNH ẢNH -->
     <div id="imageModal" class="modal" onclick="closeModal(event)">
         <div class="modal-content" onclick="event.stopPropagation()">
             <span class="close-btn" onclick="closeModal()">&times;</span>
@@ -265,17 +244,20 @@
         </div>
     </div>
 
+    <!-- FOOTER MỚI CẬP NHẬT -->
     <footer>
         <p>&copy; 2026 Cổng thông tin Lớp 12A7 - Trung tâm Giáo dục nghề nghiệp - Giáo dục thường xuyên Tân Bình (Phân hiệu Phú Nhuận)</p>
+        <p>📧 Email liên hệ: <a href="mailto:12a7.phanhieuttgdnngdtxtanbinh@gmail.com">12a7.phanhieuttgdnngdtxtanbinh@gmail.com</a></p>
         <p>Phát triển và vận hành bởi Tập thể Lớp 12A7</p>
     </footer>
 
+    <!-- JAVASCRIPT -->
     <script>
         const SHEET_ID = '10WZAkfTsUhEsTRADxZ3JX869kLV_Sen45r4BeSrxDZY';
         const GID_GOCXANH = '940791294';
-        
         const TSV_PHONGTRAO = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQzikJgQA99tZH8THj1ecKZBDbxH4GMM3snKPtovgaGdr_vVNv72F63qPl_epUs0rVSedCqx5elaJvB/pub?gid=2104947705&single=true&output=tsv';
 
+        // Hàm chuyển đổi giữa 2 tab Góc Xanh và Phong Trào
         function switchSection(type) {
             const btnGocXanh = document.getElementById('btn-gocxanh');
             const btnPhongTrao = document.getElementById('btn-phongtrao');
@@ -295,12 +277,14 @@
             }
         }
 
+        // Kiểm tra xem chuỗi có phải là URL không
         function isUrl(str) {
             if (!str) return false;
             const s = String(str).trim();
             return s.startsWith('http://') || s.startsWith('https://');
         }
 
+        // Chuyển đổi link Google Drive sang link ảnh trực tiếp
         function formatImageUrl(url) {
             if (!url) return '';
             url = String(url).trim();
@@ -311,6 +295,7 @@
             return url;
         }
 
+        // Xử lý dữ liệu Góc Xanh từ Google Sheets
         function handleGreenData(json) {
             const container = document.getElementById('green-container');
             try {
@@ -370,12 +355,14 @@
             }
         }
 
+        // Tải dữ liệu Góc Xanh
         function loadGreenData() {
             const script = document.createElement('script');
             script.src = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?gid=${GID_GOCXANH}&tqx=responseHandler:handleGreenData`;
             document.body.appendChild(script);
         }
 
+        // Tải dữ liệu Phong Trào (từ file TSV)
         async function loadPhongTraoData() {
             const container = document.getElementById('phongtrao-container');
             try {
@@ -418,6 +405,7 @@
             }
         }
 
+        // Mở/Đóng Modal
         function openModal(imgUrl, title, desc, titleColor) {
             document.getElementById('modalImg').src = decodeURIComponent(imgUrl);
             const titleEl = document.getElementById('modalTitle');
@@ -431,11 +419,7 @@
             document.getElementById('imageModal').style.display = 'none';
         }
 
-        const chatBox = document.getElementById('gemini-chat-box');
-        function toggleChat() {
-            chatBox.classList.toggle('show');
-        }
-
+        // Khởi chạy khi tải trang
         window.onload = function() {
             loadGreenData();
             loadPhongTraoData();

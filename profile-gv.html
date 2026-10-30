@@ -3,209 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thông Tin Giáo Viên - Lớp 12A7</title>
-    
+    <title>Góc Xanh & Phong Trào - Lớp 12A7</title>
+
     <link rel="icon" type="image/png" href="logo.png">
+    <link rel="shortcut icon" type="image/png" href="logo.png">
 
     <style>
-        :root {
-            --primary-color: #003366;
-            --secondary-color: #0055a5;
-            --green-color: #28a745;
-            --bg-light: #f4f6f9;
-            --text-color: #333;
-        }
-
+        :root { --primary-color: #003366; --secondary-color: #0055a5; --green-color: #2e7d32; --orange-color: #e65100; --bg-light: #f4f6f9; --text-color: #333; --gold-color: #ffcc00; }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
-        body { 
-            background-color: var(--bg-light); 
-            color: var(--text-color); 
-            line-height: 1.6;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* HEADER */
-        header {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            padding: 20px 0;
-            border-bottom: 4px solid #ffcc00;
-        }
-        .header-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-        .logo-box {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            background-color: #fff;
-            color: var(--primary-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 18px;
-            overflow: hidden;
-            border: 2px solid #fff;
-            flex-shrink: 0;
-        }
+        html { scroll-behavior: smooth; }
+        body { background-color: var(--bg-light); color: var(--text-color); line-height: 1.6; display: flex; flex-direction: column; min-height: 100vh; }
+        
+        header { background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color: white; padding: 20px 0; border-bottom: 4px solid var(--gold-color); }
+        .header-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+        .header-left { display: flex; align-items: center; gap: 20px; }
+        .logo-box { width: 70px; height: 70px; border-radius: 50%; background-color: #fff; color: var(--primary-color); display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 18px; overflow: hidden; border: 2px solid #fff; flex-shrink: 0; }
         .logo-box img { width: 100%; height: 100%; object-fit: cover; }
         .header-text h1 { font-size: 24px; text-transform: uppercase; letter-spacing: 1px; }
         .header-text p { font-size: 14px; opacity: 0.9; }
 
-        /* NAVIGATION MENU - ĐỒNG BỘ CHUẨN GÓC XANH */
-        nav { background-color: #002244; position: sticky; top: 0; z-index: 100; }
+        nav { background-color: #002244; position: sticky; top: 0; z-index: 100; border-bottom: 3px solid var(--gold-color); }
         .nav-container { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; }
-        .nav-container a {
-            color: white;
-            padding: 12px 18px;
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 600;
-            text-transform: uppercase;
-            transition: background 0.3s;
-        }
-        .nav-container a:hover, .nav-container a.active { background-color: var(--secondary-color); }
-        
-        /* Đồng bộ nút Góc Xanh chuẩn theo index.html */
-        .nav-container a.green-tab { 
-            color: #28a745 !important; 
-            font-weight: bold; 
-            background-color: transparent !important;
-        }
-        .nav-container a.green-tab:hover { 
-            background-color: var(--green-color) !important; 
-            color: #fff !important; 
-        }
+        .nav-container a { color: white; padding: 12px 18px; text-decoration: none; font-size: 14px; font-weight: 600; text-transform: uppercase; transition: background 0.3s, color 0.3s; }
+        .nav-container a:hover, .nav-container a.active { background-color: var(--secondary-color); color: var(--gold-color); }
+        .nav-container a.green-tab { color: #28a745; font-weight: bold; }
+        .nav-container a.green-tab:hover { background-color: #28a745 !important; color: #ffffff !important; }
+        .nav-container a.green-tab.active { background-color: var(--green-color) !important; color: #ffffff !important; }
 
-        /* MAIN CONTAINER */
-        .container {
-            max-width: 1000px;
-            margin: 30px auto;
-            padding: 0 15px;
-            flex: 1;
-            width: 100%;
-        }
+        .main-wrapper { max-width: 1200px; width: 100%; margin: 30px auto; padding: 0 15px; flex: 1; }
+        .card { background: white; border-radius: 12px; padding: 24px; box-shadow: 0 4px 12px rgba(0,0,0,0.06); border: 1px solid #eaeaea; }
 
-        .back-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            color: var(--primary-color);
-            text-decoration: none;
-            font-weight: 600;
-            margin-bottom: 20px;
-            font-size: 14px;
-        }
-        .back-btn:hover { text-decoration: underline; }
+        .sub-nav-buttons { display: flex; gap: 12px; margin-bottom: 25px; border-bottom: 2px solid #eaeaea; padding-bottom: 15px; }
+        .tab-btn { background-color: #e0e0e0; color: #444; border: none; padding: 10px 22px; font-size: 15px; font-weight: bold; border-radius: 8px; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; gap: 8px; }
+        .tab-btn:hover { background-color: #ccc; }
+        .tab-btn.active-green { background-color: var(--green-color); color: white; }
+        .tab-btn.active-orange { background-color: var(--orange-color); color: white; }
 
-        /* PROFILE CARD DISPLAY */
-        .profile-card {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            overflow: hidden;
-            padding: 30px;
-        }
+        .section-title { font-size: 20px; border-bottom: 2px solid currentColor; padding-bottom: 10px; margin-bottom: 20px; text-transform: uppercase; }
+        .title-green { color: var(--green-color); }
+        .title-orange { color: var(--orange-color); }
 
-        .profile-header {
-            display: flex;
-            gap: 30px;
-            align-items: center;
-            border-bottom: 2px solid #e9ecef;
-            padding-bottom: 25px;
-            margin-bottom: 25px;
-        }
+        .tab-content { display: none; opacity: 0; transition: opacity 0.15s ease-in-out; }
+        .tab-content.active { display: block; opacity: 1; }
 
-        .profile-avatar {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            border: 4px solid var(--secondary-color);
-            background-color: #e9ecef;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 70px;
-            color: #adb5bd;
-            overflow: hidden;
-            flex-shrink: 0;
-        }
-        .profile-avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+        .green-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; }
+        .green-card { position: relative; border-radius: 10px; overflow: hidden; background: #e8f5e9; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.1); transition: transform 0.2s, box-shadow 0.2s; aspect-ratio: 4/3; }
+        .green-card:hover { transform: scale(1.03); box-shadow: 0 6px 15px rgba(0,0,0,0.2); }
+        .green-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .green-card-overlay { position: absolute; inset: 0; background: rgba(0, 0, 0, 0.4); display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s; color: white; font-weight: bold; font-size: 14px; text-shadow: 0 1px 3px rgba(0,0,0,0.8); }
+        .green-card:hover .green-card-overlay { opacity: 1; }
 
-        .profile-info { flex: 1; }
-        .profile-badge {
-            display: inline-block;
-            background-color: #fff3cd;
-            color: #856404;
-            padding: 4px 10px;
-            border-radius: 4px;
-            font-size: 12px;
-            font-weight: bold;
-            margin-bottom: 8px;
-        }
-        .profile-info h2 {
-            font-size: 26px;
-            color: var(--primary-color);
-            text-transform: uppercase;
-            margin-bottom: 10px;
-        }
-        .info-row {
-            font-size: 15px;
-            margin-bottom: 6px;
-            color: #444;
-        }
-        .info-row strong { color: var(--primary-color); display: inline-block; width: 140px; }
+        .post-list-container { display: flex; flex-direction: column; gap: 15px; }
+        .post-item { border: 1px solid #e0e0e0; border-radius: 10px; padding: 18px; background: #fff; transition: box-shadow 0.2s; }
+        .post-item:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        .post-date { font-size: 12px; color: #888; display: block; margin-bottom: 4px; }
+        .post-title a { font-size: 17px; color: var(--orange-color); text-decoration: none; font-weight: bold; }
+        .post-title a:hover { text-decoration: underline; }
+        .post-content { font-size: 14px; color: #444; margin: 6px 0; line-height: 1.5; }
 
-        .details-section h3 {
-            font-size: 16px;
-            color: var(--primary-color);
-            border-left: 4px solid #ffcc00;
-            padding-left: 10px;
-            margin-bottom: 12px;
-            text-transform: uppercase;
-        }
-        .details-content {
-            background-color: #f8f9fa;
-            padding: 20px;
-            border-radius: 8px;
-            font-size: 15px;
-            line-height: 1.7;
-            white-space: pre-line;
-            color: #333;
-        }
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.85); align-items: center; justify-content: center; padding: 20px; }
+        .modal-content { background-color: #fff; max-width: 700px; width: 100%; border-radius: 12px; overflow: hidden; position: relative; animation: fadeIn 0.3s ease-in-out; }
+        .modal-body { max-height: 85vh; overflow-y: auto; }
+        .modal-img { width: 100%; max-height: 450px; object-fit: contain; background: #000; display: block; }
+        .modal-caption { padding: 20px; }
+        .modal-title { font-size: 18px; font-weight: bold; margin-bottom: 8px; }
+        .modal-desc { font-size: 14px; color: #444; line-height: 1.6; white-space: pre-line; }
+        .close-btn { position: absolute; top: 10px; right: 15px; color: white; font-size: 28px; font-weight: bold; cursor: pointer; text-shadow: 0 0 5px rgba(0,0,0,0.8); z-index: 10; }
 
-        .loading-text {
-            text-align: center;
-            padding: 50px;
-            font-size: 16px;
-            color: #666;
-        }
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        .empty-state { text-align: center; padding: 40px 0; color: #777; font-style: italic; }
 
-        footer {
-            background-color: #001529;
-            color: white;
-            text-align: center;
-            padding: 20px;
-            margin-top: 40px;
-            font-size: 13px;
-        }
+        footer { background-color: #001529; color: white; text-align: center; padding: 20px; margin-top: 40px; font-size: 13px; border-top: 3px solid var(--gold-color); }
+        footer p { margin: 4px 0; color: #aaa; }
+        footer a { color: #66b3ff; text-decoration: none; }
+        footer a:hover { text-decoration: underline; }
 
         @media (max-width: 768px) {
             .header-container { flex-direction: column; text-align: center; }
-            .profile-header { flex-direction: column; text-align: center; }
-            .info-row strong { width: auto; display: block; margin-bottom: 2px; }
+            .header-left { flex-direction: column; }
+            .green-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+            .sub-nav-buttons { flex-direction: column; }
         }
     </style>
 </head>
@@ -213,16 +90,17 @@
 
     <header>
         <div class="header-container">
-            <div class="logo-box" id="logo-container">
-                <img src="logo.png" alt="Logo Lớp 12A7" onerror="document.getElementById('logo-container').innerText='12A7'">
-            </div>
-            <div class="header-text">
-                <h1>CỔNG THÔNG TIN LỚP 12A7</h1>
-                <p>Trung tâm Giáo dục nghề nghiệp - Giáo dục thường xuyên Tân Bình (Phân hiệu Phú Nhuận) | Năm học 2026 - 2027</p>
+            <div class="header-left">
+                <div class="logo-box" id="logo-container">
+                    <img src="logo.png" alt="Logo Lớp 12A7" onerror="document.getElementById('logo-container').innerHTML='12A7'">
+                </div>
+                <div class="header-text">
+                    <h1>CỔNG THÔNG TIN LỚP 12A7</h1>
+                    <p>Trung tâm Giáo dục nghề nghiệp - Giáo dục thường xuyên Tân Bình (Phân hiệu Phú Nhuận) | Năm học 2026 - 2027</p>
+                </div>
             </div>
         </div>
     </header>
-
 
     <nav>
         <div class="nav-container">
@@ -230,109 +108,221 @@
             <a href="baobai.html">Báo Bài</a>
             <a href="index.html#tin-tuc">Tin tức & Sự kiện</a>
             <a href="gochoc-tap.html">Góc học tập</a>
-            <a href="giaovien.html"class="active">Giáo viên</a>
-            <a href="gocxanh.html" class="green-tab">Góc Xanh</a>
+            <a href="giaovien.html">Giáo viên</a>
+            <a href="gocxanh.html" class="green-tab active">Góc Xanh</a>
             <a href="thanhvien.html">Thành viên</a>
             <a href="thuvien.html">Thư viện ảnh</a>
             <a href="credits.html">Credits</a>
         </div>
     </nav>
 
-    <div class="container">
-        <a href="giaovien.html" class="back-btn">&larr; Quay lại danh sách giáo viên</a>
+    <div class="main-wrapper">
+        <div class="card">
+            
+            <div class="sub-nav-buttons">
+                <button class="tab-btn active-green" id="btn-gocxanh" onclick="switchSection('gocxanh')">🌿 Góc Xanh 12A7</button>
+                <button class="tab-btn" id="btn-phongtrao" onclick="switchSection('phongtrao')">🔥 Hoạt Động Phong Trào</button>
+            </div>
 
-        <div id="profile-container">
-            <div class="loading-text">⏳ Đang tải thông tin chi tiết giáo viên...</div>
+            <div id="section-gocxanh" class="tab-content active">
+                <h2 class="section-title title-green">🌿 Mảng Cây Xanh & Môi Trường Lớp Học</h2>
+                <div id="green-container" class="green-grid">
+                    <div class="empty-state" style="grid-column: 1/-1;">Đang tải dữ liệu Góc Xanh...</div>
+                </div>
+            </div>
+
+            <div id="section-phongtrao" class="tab-content">
+                <h2 class="section-title title-orange">🔥 Hoạt Động & Phong Trào Thi Đua Lớp 12A7</h2>
+                <div id="phongtrao-container" class="post-list-container">
+                    <div class="empty-state">Đang tải bài viết phong trào...</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="imageModal" class="modal" onclick="closeModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <div class="modal-body">
+                <img id="modalImg" class="modal-img" src="" alt="">
+                <div class="modal-caption">
+                    <div id="modalTitle" class="modal-title"></div>
+                    <div id="modalDesc" class="modal-desc"></div>
+                </div>
+            </div>
         </div>
     </div>
 
     <footer>
         <p>&copy; 2026 Cổng thông tin Lớp 12A7 - Trung tâm Giáo dục nghề nghiệp - Giáo dục thường xuyên Tân Bình (Phân hiệu Phú Nhuận)</p>
+        <p>📧 Email liên hệ: <a href="mailto:12a7.phanhieuttgdnngdtxtanbinh@gmail.com">12a7.phanhieuttgdnngdtxtanbinh@gmail.com</a></p>
         <p>Phát triển và vận hành bởi Tập thể Lớp 12A7</p>
     </footer>
 
     <script>
-        const SPREADSHEET_ID = '10WZAkfTsUhEsTRADxZ3JX869kLV_Sen45r4BeSrxDZY';
-        const GID_GIAO_VIEN = '590362463';
+        const SHEET_ID = '10WZAkfTsUhEsTRADxZ3JX869kLV_Sen45r4BeSrxDZY';
+        const GID_GOCXANH = '940791294';
+        const TSV_PHONGTRAO = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQzikJgQA99tZH8THj1ecKZBDbxH4GMM3snKPtovgaGdr_vVNv72F63qPl_epUs0rVSedCqx5elaJvB/pub?gid=2104947705&single=true&output=tsv';
 
-        function getTeacherIdFromUrl() {
-            const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get('id');
-        }
+        function switchSection(type) {
+            const btnGocXanh = document.getElementById('btn-gocxanh');
+            const btnPhongTrao = document.getElementById('btn-phongtrao');
+            const secGocXanh = document.getElementById('section-gocxanh');
+            const secPhongTrao = document.getElementById('section-phongtrao');
 
-        function handleProfileData(json) {
-            const container = document.getElementById('profile-container');
-            const targetId = getTeacherIdFromUrl();
-
-            try {
-                if (!json || !json.table || !json.table.rows) {
-                    container.innerHTML = '<div class="loading-text" style="color: #e74c3c;">❌ Không lấy được dữ liệu giáo viên!</div>';
-                    return;
-                }
-
-                const rows = json.table.rows;
-                let foundTeacher = null;
-
-                // Cột G (index 6) là ID Giáo Viên
-                for (let row of rows) {
-                    if (!row.c) continue;
-                    const c = row.c;
-                    const id = c[6] && c[6].v !== null ? String(c[6].v).trim() : '';
-
-                    if (id === targetId) {
-                        foundTeacher = c;
-                        break;
-                    }
-                }
-
-                if (!foundTeacher) {
-                    container.innerHTML = '<div class="loading-text" style="color: #e74c3c;">❌ Không tìm thấy thông tin giáo viên yêu cầu!</div>';
-                    return;
-                }
-
-                // Đọc đúng cấu trúc cột theo Google Sheet
-                const img = foundTeacher[0] && foundTeacher[0].v ? String(foundTeacher[0].v).trim() : '';
-                const name = foundTeacher[1] && foundTeacher[1].v ? String(foundTeacher[1].v).trim() : 'Chưa cập nhật';
-                const subject = foundTeacher[2] && foundTeacher[2].v ? String(foundTeacher[2].v).trim() : 'Bộ môn';
-                const role = foundTeacher[3] && foundTeacher[3].v ? String(foundTeacher[3].v).trim() : 'Giáo viên bộ môn';
-                const unit = foundTeacher[4] && foundTeacher[4].v ? String(foundTeacher[4].v).trim() : 'Trung tâm GDNN - GDTX Phú Nhuận';
-                const quote = foundTeacher[5] && foundTeacher[5].v ? String(foundTeacher[5].v).trim() : 'Chúc các em học sinh lớp 12A7 luôn học tập tốt!';
-
-                const isHomeroom = role.toLowerCase().includes('gvcn') || role.toLowerCase().includes('chủ nhiệm');
-
-                const avatarHtml = img 
-                    ? `<img src="${img}" alt="${name}" onerror="this.style.display='none'; document.getElementById('gv-avatar-box').innerText='👤';">`
-                    : `👤`;
-
-                container.innerHTML = `
-                    <div class="profile-card">
-                        <div class="profile-header">
-                            <div class="profile-avatar" id="gv-avatar-box">${avatarHtml}</div>
-                            <div class="profile-info">
-                                ${isHomeroom ? '<span class="profile-badge">⭐ Giáo Viên Chủ Nhiệm</span>' : ''}
-                                <h2>${name}</h2>
-                                <div class="info-row"><strong>Bộ môn:</strong> ${subject}</div>
-                                <div class="info-row"><strong>Nhiệm vụ:</strong> ${role}</div>
-                                <div class="info-row"><strong>Đơn vị công tác:</strong> ${unit}</div>
-                            </div>
-                        </div>
-
-                        <div class="details-section">
-                            <h3>THÔNG TIN & ĐÁNH GIÁ TỔNG QUAN</h3>
-                            <div class="details-content">${quote}</div>
-                        </div>
-                    </div>
-                `;
-            } catch (err) {
-                console.error("Lỗi:", err);
-                container.innerHTML = '<div class="loading-text" style="color: #e74c3c;">❌ Lỗi kết nối dữ liệu Google Sheets!</div>';
+            if (type === 'gocxanh') {
+                secGocXanh.classList.add('active');
+                secPhongTrao.classList.remove('active');
+                btnGocXanh.className = 'tab-btn active-green';
+                btnPhongTrao.className = 'tab-btn';
+            } else {
+                secPhongTrao.classList.add('active');
+                secGocXanh.classList.remove('active');
+                btnPhongTrao.className = 'tab-btn active-orange';
+                btnGocXanh.className = 'tab-btn';
             }
         }
 
-        window.onload = function() {
+        function isUrl(str) {
+            if (!str) return false;
+            const s = String(str).trim();
+            return s.startsWith('http://') || s.startsWith('https://');
+        }
+
+        function formatImageUrl(url) {
+            if (!url) return '';
+            url = String(url).trim();
+            if (url.includes('drive.google.com')) {
+                const match = url.match(/\/d\/([^\/]+)/) || url.match(/id=([^&]+)/);
+                if (match && match[1]) return `https://drive.google.com/uc?export=view&id=${match[1]}`;
+            }
+            return url;
+        }
+
+        function handleGreenData(json) {
+            const container = document.getElementById('green-container');
+            try {
+                const rows = json.table.rows;
+                if (!rows || rows.length <= 1) {
+                    container.innerHTML = '<div class="empty-state" style="grid-column: 1/-1;">Chưa có dữ liệu nào trong Góc Xanh.</div>';
+                    return;
+                }
+
+                let html = '';
+                let count = 0;
+
+                for (let i = 1; i < rows.length; i++) {
+                    const row = rows[i].c;
+                    if (!row) continue;
+
+                    let cellValues = row.map(cell => cell ? (cell.v || '').toString().trim() : '');
+                    let urlIndex = cellValues.findIndex(val => isUrl(val));
+
+                    let rawImgUrl = '';
+                    let title = `Cây xanh #${i}`;
+                    let desc = '';
+
+                    if (urlIndex !== -1) {
+                        rawImgUrl = cellValues[urlIndex];
+                        let textValues = cellValues.filter((val, index) => index !== urlIndex && val.length > 0);
+                        if (textValues.length > 0) {
+                            if (textValues.length === 1) {
+                                if (textValues[0].length > 60) desc = textValues[0];
+                                else title = textValues[0];
+                            } else {
+                                title = textValues[0];
+                                desc = textValues.slice(1).join('\n\n');
+                            }
+                        }
+                    }
+
+                    const imgUrl = formatImageUrl(rawImgUrl) || 'https://images.unsplash.com/photo-1530587191325-3db32d826c18?w=600&q=80';
+                    count++;
+
+                    const safeImg = encodeURIComponent(imgUrl);
+                    const safeTitle = encodeURIComponent(title);
+                    const safeDesc = encodeURIComponent(desc || 'Mảng cây xanh và chậu cảnh góc lớp 12A7.');
+
+                    html += `
+                        <div class="green-card" onclick="openModal('${safeImg}', '${safeTitle}', '${safeDesc}', 'var(--green-color)')">
+                            <img src="${imgUrl}" alt="${title}" loading="lazy" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1530587191325-3db32d826c18?w=600&q=80'">
+                            <div class="green-card-overlay">🔍 Xem chi tiết</div>
+                        </div>
+                    `;
+                }
+
+                container.innerHTML = count > 0 ? html : '<div class="empty-state" style="grid-column: 1/-1;">Chưa có nội dung hợp lệ.</div>';
+            } catch (err) {
+                console.error("Lỗi dữ liệu:", err);
+                container.innerHTML = '<div class="empty-state" style="grid-column: 1/-1;">Lỗi tải dữ liệu từ Google Sheet.</div>';
+            }
+        }
+
+        function loadGreenData() {
             const script = document.createElement('script');
-            script.src = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?gid=${GID_GIAO_VIEN}&tqx=responseHandler:handleProfileData`;
+            script.src = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?gid=${GID_GOCXANH}&tqx=responseHandler:handleGreenData`;
             document.body.appendChild(script);
+        }
+
+        async function loadPhongTraoData() {
+            const container = document.getElementById('phongtrao-container');
+            try {
+                const response = await fetch(TSV_PHONGTRAO);
+                const text = await response.text();
+                const lines = text.split('\n').filter(line => line.trim() !== '');
+
+                if (lines.length <= 1) {
+                    container.innerHTML = '<div class="empty-state">Chưa có bài viết phong trào nào.</div>';
+                    return;
+                }
+
+                let html = '';
+                for (let i = lines.length - 1; i >= 1; i--) {
+                    const cols = lines[i].split('\t');
+                    const uid = cols[0] ? cols[0].trim() : '';
+                    const ngay = cols[1] ? cols[1].trim() : '';
+                    const tacGia = cols[2] ? cols[2].trim() : 'Ban Phong Trào';
+                    const tieuDe = cols[3] ? cols[3].trim() : '';
+                    const chiTiet = cols[4] ? cols[4].trim() : '';
+
+                    if (tieuDe && uid) {
+                        const preview = chiTiet.length > 150 ? chiTiet.substring(0, 150) + '...' : chiTiet;
+                        html += `
+                            <div class="post-item">
+                                <span class="post-date">🕒 ${ngay} | ✍️ ${tacGia}</span>
+                                <div class="post-title">
+                                    <a href="baiviet.html?type=gocxanh&id=${uid}">${tieuDe}</a>
+                                </div>
+                                <div class="post-content">${preview}</div>
+                            </div>
+                        `;
+                    }
+                }
+
+                container.innerHTML = html || '<div class="empty-state">Chưa có bài viết phong trào nào.</div>';
+            } catch (err) {
+                console.error("Lỗi đọc TSV phong trào:", err);
+                container.innerHTML = '<div class="empty-state">Không thể tải dữ liệu hoạt động phong trào.</div>';
+            }
+        }
+
+        function openModal(imgUrl, title, desc, titleColor) {
+            document.getElementById('modalImg').src = decodeURIComponent(imgUrl);
+            const titleEl = document.getElementById('modalTitle');
+            titleEl.innerText = decodeURIComponent(title);
+            titleEl.style.color = titleColor || 'var(--green-color)';
+            document.getElementById('modalDesc').innerText = decodeURIComponent(desc);
+            document.getElementById('imageModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('imageModal').style.display = 'none';
+        }
+
+        window.onload = function() {
+            loadGreenData();
+            loadPhongTraoData();
         };
     </script>
 </body>
