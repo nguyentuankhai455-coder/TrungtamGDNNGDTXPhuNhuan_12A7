@@ -422,13 +422,16 @@
         window.onload = function() {
             loadNews();
             
+            // Kiểm tra xem URL có chứa hash #tin-tuc không
+            const hasHashTinTuc = window.location.hash === '#tin-tuc';
+
             const expireTime = localStorage.getItem('popup_expire_12a7');
             const now = new Date().getTime();
             
-            if (!expireTime || now > expireTime) {
+            // Chỉ hiện popup nếu KHÔNG phải đang nhảy tới #tin-tuc VÀ chưa hết hạn 24h
+            if (!hasHashTinTuc && (!expireTime || now > expireTime)) {
                 setTimeout(() => {
                     document.getElementById('welcomePopup').classList.add('show');
-                    
                     // Bắn pháo hoa ngay khi popup hiện lên
                     confetti({
                         particleCount: 150,
