@@ -157,7 +157,7 @@
         .notice-list { list-style: none; }
         .notice-list li { padding: 8px 0; border-bottom: 1px solid #f0f0f0; font-size: 14px; }
 
-        /* POPUP CHÀO MỪNG 20/11 */
+        /* POPUP CHÀO MỪNG CHỐNG TRÀN VIỀN */
         .welcome-modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.75); z-index: 10000;
@@ -166,8 +166,15 @@
         }
         .welcome-modal-overlay.show { opacity: 1; pointer-events: auto; }
         .welcome-modal-content {
-            background: #fff; width: 92%; max-width: 520px; border-radius: 14px;
-            overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.3); border: 2px solid var(--gold-color);
+            background: #fff; 
+            width: 92%; 
+            max-width: 650px; /* Nới rộng bề ngang */
+            max-height: 90vh; /* Khống chế chiều cao tối đa bằng 90% màn hình */
+            display: flex; 
+            flex-direction: column;
+            border-radius: 14px;
+            overflow: hidden; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3); border: 2px solid var(--gold-color);
             transform: translateY(30px); transition: transform 0.4s ease;
         }
         .welcome-modal-overlay.show .welcome-modal-content { transform: translateY(0); }
@@ -176,10 +183,15 @@
             padding: 15px 20px; font-weight: bold; font-size: 15px;
             display: flex; justify-content: space-between; align-items: center;
             border-bottom: 3px solid var(--gold-color); text-transform: uppercase;
+            flex-shrink: 0;
         }
         .welcome-close-btn { color: #fff; font-size: 26px; cursor: pointer; transition: color 0.2s; }
         .welcome-close-btn:hover { color: var(--gold-color); }
-        .welcome-modal-body { padding: 20px; text-align: center; }
+        .welcome-modal-body { 
+            padding: 20px; 
+            text-align: center;
+            overflow-y: auto; /* Tự động cuộn bên trong nếu nội dung quá dài */
+        }
         .welcome-icon { font-size: 40px; margin-bottom: 5px; animation: bounce 2s infinite; }
         @keyframes bounce {
             0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
@@ -192,12 +204,18 @@
             padding: 15px; border-radius: 8px; border-left: 4px solid var(--gold-color);
             margin: 12px 0 18px 0; text-align: left;
         }
+        .welcome-message ul {
+            padding-left: 20px; /* Sửa thành padding để không tràn khối */
+            margin-top: 10px; 
+            font-size: 13.5px;
+        }
         
         .popup-btn-group {
             display: flex;
             flex-direction: column;
             gap: 10px;
             align-items: center;
+            margin-top: 10px;
         }
         .welcome-action-btn {
             background: linear-gradient(135deg, #003366, #0055a5); color: white;
@@ -313,10 +331,11 @@
                 <div class="welcome-message">
                     <b>Trân trọng kính chào quý thầy cô cùng toàn thể các bạn học viên!</b><br>
                     Cổng thông tin điện tử lớp 12A7 là ngôi nhà chung trực tuyến được xây dựng nhằm kết nối việc học tập, sinh hoạt và cập nhật các thông tin chính thống của tập thể lớp.
-                    <br><br>
+                    <br>
                     <b>Giới thiệu sơ lược về website:</b>
-                    <ul style="margin-left: 18px; margin-top: 5px; font-size: 13.5px;">
-                        <li>📌 <b>Báo Bài & Tài liệu:</b> Cập nhật nhanh chóng bài tập, lịch học và tài liệu ôn thi chính thống.</li>
+                    <ul>
+                        <li>📌 <b>Tin tức & Sự kiện:</b> Nơi cung cấp các bài viết tuyên truyền, phổ biến kiến thức và thông báo quan trọng liên quan đến học sinh.</li>
+                        <li>📚 <b>Góc Học Tập:</b> Cập nhật nhanh chóng bài tập, lịch học và tài liệu ôn thi chính thống.</li>
                         <li>🌿 <b>Góc Xanh & Phong trào:</b> Lưu giữ các hoạt động bảo vệ môi trường và thi đua sôi nổi của tập thể lớp.</li>
                         <li>📸 <b>Thư viện ảnh:</b> Nơi lưu giữ những khoảnh khắc kỷ niệm đẹp nhất của thầy và trò 12A7.</li>
                     </ul>
