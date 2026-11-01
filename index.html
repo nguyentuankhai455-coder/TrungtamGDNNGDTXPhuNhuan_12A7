@@ -137,6 +137,18 @@
 
         .post-item { border-bottom: 1px dashed #eee; padding: 15px 0; }
         .post-item:last-child { border-bottom: none; }
+        
+        /* CSS CHO BÀI VIẾT ĐÃ GHIM */
+        .post-item.pinned-post { 
+            background-color: #fffcf0; 
+            padding: 15px; 
+            border: 1px solid #ffeeba; 
+            border-left: 4px solid var(--gold-color); 
+            border-radius: 8px; 
+            margin-bottom: 15px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+        
         .post-date { font-size: 12px; color: #888; display: block; margin-bottom: 4px; }
         .post-title a { font-size: 17px; color: var(--primary-color); text-decoration: none; font-weight: bold; }
         .post-title a:hover { color: var(--secondary-color); text-decoration: underline; }
@@ -154,6 +166,16 @@
         }
         .read-more-btn:hover { background-color: var(--secondary-color); }
 
+        /* NÚT XEM THÊM TIN TỨC */
+        .load-more-container { text-align: center; margin-top: 20px; }
+        .load-more-action-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white; border: none; padding: 10px 24px; font-size: 13px; font-weight: bold;
+            border-radius: 20px; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: transform 0.2s, background 0.2s; text-transform: uppercase;
+        }
+        .load-more-action-btn:hover { transform: scale(1.05); background: linear-gradient(135deg, #002244, #003366); }
+
         .notice-list { list-style: none; }
         .notice-list li { padding: 8px 0; border-bottom: 1px solid #f0f0f0; font-size: 14px; }
 
@@ -166,32 +188,19 @@
         }
         .welcome-modal-overlay.show { opacity: 1; pointer-events: auto; }
         .welcome-modal-content {
-            background: #fff; 
-            width: 92%; 
-            max-width: 650px; /* Nới rộng bề ngang */
-            max-height: 90vh; /* Khống chế chiều cao tối đa bằng 90% màn hình */
-            display: flex; 
-            flex-direction: column;
-            border-radius: 14px;
-            overflow: hidden; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3); border: 2px solid var(--gold-color);
+            background: #fff; width: 92%; max-width: 650px; max-height: 90vh; display: flex; flex-direction: column;
+            border-radius: 14px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.3); border: 2px solid var(--gold-color);
             transform: translateY(30px); transition: transform 0.4s ease;
         }
         .welcome-modal-overlay.show .welcome-modal-content { transform: translateY(0); }
         .welcome-modal-header {
             background: linear-gradient(135deg, #003366, #0055a5); color: var(--gold-color);
-            padding: 15px 20px; font-weight: bold; font-size: 15px;
-            display: flex; justify-content: space-between; align-items: center;
-            border-bottom: 3px solid var(--gold-color); text-transform: uppercase;
-            flex-shrink: 0;
+            padding: 15px 20px; font-weight: bold; font-size: 15px; flex-shrink: 0;
+            display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--gold-color); text-transform: uppercase;
         }
         .welcome-close-btn { color: #fff; font-size: 26px; cursor: pointer; transition: color 0.2s; }
         .welcome-close-btn:hover { color: var(--gold-color); }
-        .welcome-modal-body { 
-            padding: 20px; 
-            text-align: center;
-            overflow-y: auto; /* Tự động cuộn bên trong nếu nội dung quá dài */
-        }
+        .welcome-modal-body { padding: 20px; text-align: center; overflow-y: auto; }
         .welcome-icon { font-size: 40px; margin-bottom: 5px; animation: bounce 2s infinite; }
         @keyframes bounce {
             0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
@@ -201,41 +210,20 @@
         .welcome-modal-body h3 { color: #003366; font-size: 18px; margin-bottom: 5px; text-transform: uppercase; }
         .welcome-message {
             font-size: 14px; color: #333; line-height: 1.6; background: #f8f9fa;
-            padding: 15px; border-radius: 8px; border-left: 4px solid var(--gold-color);
-            margin: 12px 0 18px 0; text-align: left;
+            padding: 15px; border-radius: 8px; border-left: 4px solid var(--gold-color); margin: 12px 0 18px 0; text-align: left;
         }
-        .welcome-message ul {
-            padding-left: 20px; /* Sửa thành padding để không tràn khối */
-            margin-top: 10px; 
-            font-size: 13.5px;
-        }
+        .welcome-message ul { padding-left: 20px; margin-top: 10px; font-size: 13.5px; }
         
-        .popup-btn-group {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            align-items: center;
-            margin-top: 10px;
-        }
+        .popup-btn-group { display: flex; flex-direction: column; gap: 10px; align-items: center; margin-top: 10px; }
         .welcome-action-btn {
             background: linear-gradient(135deg, #003366, #0055a5); color: white;
             border: none; padding: 11px 28px; font-size: 14px; font-weight: bold;
             border-radius: 25px; cursor: pointer; box-shadow: 0 4px 12px rgba(0,51,102,0.3);
-            transition: transform 0.2s, background 0.2s; text-transform: uppercase;
-            width: 100%; max-width: 280px;
+            transition: transform 0.2s, background 0.2s; text-transform: uppercase; width: 100%; max-width: 280px;
         }
         .welcome-action-btn:hover { transform: scale(1.02); background: linear-gradient(135deg, #002244, #003366); }
         
-        .dont-show-btn {
-            background: transparent;
-            color: #666;
-            border: none;
-            font-size: 13px;
-            cursor: pointer;
-            text-decoration: underline;
-            transition: color 0.2s;
-            padding: 5px;
-        }
+        .dont-show-btn { background: transparent; color: #666; border: none; font-size: 13px; cursor: pointer; text-decoration: underline; transition: color 0.2s; padding: 5px; }
         .dont-show-btn:hover { color: #003366; }
 
         footer {
@@ -359,6 +347,9 @@
 
     <script>
         const SPREADSHEET_ID = '10WZAkfTsUhEsTRADxZ3JX869kLV_Sen45r4BeSrxDZY';
+        
+        let allPostsData = [];
+        let currentDisplayCount = 5; // Mặc định hiển thị 5 bài đầu tiên
 
         function parseCellValue(cell) {
             if (!cell || cell.v === null || cell.v === undefined) return '';
@@ -376,21 +367,46 @@
             return val;
         }
 
+        function renderPosts() {
+            const container = document.getElementById('posts-list');
+            if (allPostsData.length === 0) {
+                container.innerHTML = '<div class="empty-state">Hiện chưa có bài viết mới nào.</div>';
+                return;
+            }
+
+            // Lấy ra đúng số lượng bài viết đang muốn hiển thị
+            const visiblePosts = allPostsData.slice(0, currentDisplayCount);
+            let html = visiblePosts.join('');
+
+            // Nếu vẫn còn bài viết chưa hiển thị, hiện nút Xem thêm
+            if (currentDisplayCount < allPostsData.length) {
+                html += `
+                    <div class="load-more-container">
+                        <button class="load-more-action-btn" onclick="loadMorePosts()">Xem thêm tin tức ⬇️</button>
+                    </div>
+                `;
+            }
+            container.innerHTML = html;
+        }
+
+        function loadMorePosts() {
+            currentDisplayCount += 5; // Load thêm 5 bài mỗi lần bấm
+            renderPosts();
+        }
+
         function handleNewsData(json) {
             const container = document.getElementById('posts-list');
             try {
-                if (!json || !json.table || !json.table.rows) {
-                    container.innerHTML = '<div class="empty-state">Không thể kết nối tới dữ liệu Tin tức.</div>';
-                    return;
-                }
-
-                const rows = json.table.rows;
-                if (rows.length === 0) {
+                if (!json || !json.table || !json.table.rows || json.table.rows.length === 0) {
                     container.innerHTML = '<div class="empty-state">Hiện chưa có bài viết mới nào.</div>';
                     return;
                 }
 
-                let html = '';
+                const rows = json.table.rows;
+                let pinnedPosts = [];
+                let normalPosts = [];
+
+                // Lặp ngược từ dưới lên (bài mới nhất ở dưới sheet sẽ lên đầu)
                 for (let i = rows.length - 1; i >= 0; i--) {
                     const row = rows[i].c;
                     if (!row) continue;
@@ -400,11 +416,22 @@
                     const tacGia = row[2] ? (row[2].v || 'admin') : 'admin';
                     const tieude = row[3] ? (row[3].v || '') : '';
                     const tomTat = row[4] ? (row[4].v || '') : '';
+                    
+                    let isPinned = false;
+                    if (row[7] && row[7].v) {
+                        const valH = String(row[7].v).trim().toUpperCase();
+                        if (valH === 'GHIM') {
+                            isPinned = true;
+                        }
+                    }
 
                     if (tieude && tieude.trim() !== '') {
-                        html += `
-                            <div class="post-item">
-                                <span class="post-date">🕒 ${ngay} | ✍️ ${tacGia}</span>
+                        const postHtml = `
+                            <div class="post-item ${isPinned ? 'pinned-post' : ''}">
+                                <span class="post-date">
+                                    ${isPinned ? '<span style="color:#d32f2f; font-weight:bold; margin-right:5px;">📌 ĐÃ GHIM</span> | ' : ''}
+                                    🕒 ${ngay} | ✍️ ${tacGia}
+                                </span>
                                 <div class="post-title">
                                     <a href="baiviet.html?id=${id}">${tieude}</a>
                                 </div>
@@ -412,9 +439,20 @@
                                 <a href="baiviet.html?id=${id}" class="read-more-btn">Xem chi tiết &rarr;</a>
                             </div>
                         `;
+                        
+                        if (isPinned) {
+                            pinnedPosts.push(postHtml);
+                        } else {
+                            normalPosts.push(postHtml);
+                        }
                     }
                 }
-                container.innerHTML = html || '<div class="empty-state">Hiện chưa có bài viết mới nào.</div>';
+                
+                // Gộp bài ghim và bài bình thường lại thành một mảng duy nhất
+                allPostsData = [...pinnedPosts, ...normalPosts];
+                
+                // Gọi hàm hiển thị bài viết
+                renderPosts();
             } catch (err) {
                 console.error("Lỗi đọc tin tức:", err);
                 container.innerHTML = '<div class="empty-state">Không thể hiển thị bài viết lúc này.</div>';
