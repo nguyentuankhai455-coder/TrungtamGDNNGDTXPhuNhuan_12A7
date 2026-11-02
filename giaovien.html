@@ -30,8 +30,8 @@
         .avatar-box img { width: 100%; height: 100%; object-fit: cover; }
         .teacher-name { font-size: 17px; font-weight: bold; color: var(--primary-color); margin-bottom: 6px; text-transform: uppercase; }
         .teacher-subject { display: inline-block; background-color: #e6f0fa; color: var(--secondary-color); padding: 3px 14px; border-radius: 15px; font-size: 12px; font-weight: bold; text-transform: uppercase; margin-bottom: 12px; }
-        .view-detail-btn { display: inline-block; color: var(--secondary-color); text-decoration: none; font-size: 13px; font-weight: 600; }
-        .view-detail-btn:hover { text-decoration: underline; }
+        .view-detail-btn { display: inline-block; background: var(--primary-color); color: #fff !important; padding: 8px 16px; border-radius: 6px; text-decoration: none; font-size: 13px; font-weight: 600; border: none; cursor: pointer; transition: background 0.2s; }
+        .view-detail-btn:hover { background: var(--secondary-color); }
         footer { background-color: #001529; color: white; text-align: center; padding: 20px; margin-top: 40px; font-size: 13px; border-top: 3px solid var(--gold-color); }
         footer p { margin: 5px 0; color: #aaa; }
         footer a { color: #66b3ff; text-decoration: none; }
@@ -43,7 +43,10 @@
     <header>
         <div class="header-container">
             <div class="logo-box" id="logo-container"><img src="logo.png" alt="Logo Lớp 12A7" onerror="document.getElementById('logo-container').innerText='12A7'"></div>
-            <div class="header-text"><h1>CỔNG THÔNG TIN LỚP 12A7</h1><p>Trung tâm Giáo dục nghề nghiệp - Giáo dục thường xuyên Tân Bình (Phân hiệu Phú Nhuận) | Năm học 2026 - 2027</p></div>
+            <div class="header-text">
+                <h1>CỔNG THÔNG TIN LỚP 12A7</h1>
+                <p>Trung tâm Giáo dục nghề nghiệp - Giáo dục thường xuyên Tân Bình (Phân hiệu Phú Nhuận) | Năm học 2026 - 2027</p>
+            </div>
         </div>
     </header>
     <nav>
@@ -69,26 +72,58 @@
         <p>📧 Email liên hệ: <a href="mailto:12a7.phanhieuttgdnngdtxtanbinh@gmail.com">12a7.phanhieuttgdnngdtxtanbinh@gmail.com</a></p>
         <p>Phát triển và vận hành bởi Tập thể Lớp 12A7</p>
     </footer>
-    <script>
-        const SPREADSHEET_ID = '10WZAkfTsUhEsTRADxZ3JX869kLV_Sen45r4BeSrxDZY';
-        const GID_GIAO_VIEN = '590362463';
 
-        function handleTeacherData(json) {
+    <script>
+        // Dùng đường link TSV tốc độ cao do Đại vương cung cấp để xử lý dữ liệu sạch tuyệt đối
+        const TSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQzikJgQA99tZH8THj1ecKZBDbxH4GMM3snKPtovgaGdr_vVNv72F63qPl_epUs0rVSedCqx5elaJvB/pub?gid=590362463&single=true&output=tsv';
+
+        async function loadTeachers() {
             const loadingBox = document.getElementById('loading-box');
             const teachersList = document.getElementById('teachers-list');
+            
             try {
-                if (!json || !json.table || !json.table.rows) { loadingBox.innerHTML = '<span style="color:red;">Không tìm thấy dữ liệu giáo viên!</span>'; return; }
+                const response = await fetch(TSV_URL);
+                if (!response.ok) throw new Error('Lỗi mạng');
+                const data = await response.text();
+                
+                const rows = data.split('\n');
+                if (rows.length <= 1) {
+                    loadingBox.innerHTML = '<span style="color:red;">Chưa có dữ liệu giáo viên!</span>';
+                    return;
+                }
+                
                 loadingBox.style.display = 'none';
                 teachersList.innerHTML = '';
-                const rows = json.table.rows;
-                rows.forEach((row, index) => {
-                    if (!row.c) return;
-                    const c = row.c;
-                    const id = c[6] && c[6].v !== null ? String(c[6].v).trim() : `gv_${index + 1}`;
-                    const avatar = c[0] && c[0].v !== null ? String(c[0].v).trim() : '';
-                    const name = c[1] && c[1].v !== null ? String(c[1].v).trim() : 'Chưa cập nhật';
-                    const subject = c[2] && c[2].v !== null ? String(c[2].v).trim() : 'Bộ môn';
-                    const avatarHtml = avatar ? `<img src="${avatar}" alt="${name}" onerror="this.style.display='none'; this.parentElement.innerText='👤';">` : `👤`;
+                
+                // Duyệt các dòng (bỏ qua dòng 0 là Header)
+                for (let i = 1; i < rows.length; i++) {
+                    const cols = rows[i].split('\t');
+                    if (cols.length < 2 || !cols[0].trim()) continue;
+
+                    // Mapping linh hoạt theo các trường hợp cột
+                    let id = cols[0] ? cols[0].trim() : `gv_${i}`;
+                    let name = cols[1] ? cols[1].trim() : 'Chưa cập nhật';
+                    let subject = cols[2] ? cols[2].trim() : 'Bộ môn';
+                    let avatar = cols[3] ? cols[3].trim() : '';
+
+                    // Hỗ trợ lấy chéo nếu cột A đang chứa link ảnh
+                    if (id.startsWith('http')) {
+                        avatar = id;
+                        name = cols[1] ? cols[1].trim() : 'Chưa cập nhật';
+                        subject = cols[2] ? cols[2].trim() : 'Bộ môn';
+                        id = cols[6] ? cols[6].trim() : `gv_${i}`;
+                    } else if (cols[6] && cols[6].trim() !== '') {
+                        // Nếu cột G (index 6) có ID được setup thì ưu tiên lấy
+                        id = cols[6].trim();
+                    }
+
+                    const avatarHtml = avatar.startsWith('http') 
+                        ? `<img src="${avatar}" alt="${name}" onerror="this.style.display='none'; this.parentElement.innerText='👤';">` 
+                        : `👤`;
+                    
+                    // Nút bấm được nâng cấp thành dạng window.location.href để CHỐNG nhảy sai file
+                    const clickAction = `window.location.href='profile-gv.html?id=${encodeURIComponent(id)}'`;
+
                     teachersList.insertAdjacentHTML('beforeend', `
                         <div class="teacher-card">
                             <div>
@@ -97,19 +132,18 @@
                                 <div class="teacher-subject">${subject}</div>
                             </div>
                             <div>
-                                <a href="profile-gv.html?id=${encodeURIComponent(id)}" class="view-detail-btn">Bấm để xem thông tin chi tiết &rarr;</a>
+                                <button onclick="${clickAction}" class="view-detail-btn">Bấm xem thông tin chi tiết &rarr;</button>
                             </div>
                         </div>
                     `);
-                });
-            } catch (err) { loadingBox.innerHTML = '<span style="color:red;">Lỗi tải dữ liệu giáo viên!</span>'; }
+                }
+            } catch (err) {
+                console.error(err);
+                loadingBox.innerHTML = '<span style="color:red;">Lỗi tải dữ liệu. Hãy thử tải lại trang nhé!</span>';
+            }
         }
 
-        window.onload = function() {
-            const script = document.createElement('script');
-            script.src = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?gid=${GID_GIAO_VIEN}&tqx=responseHandler:handleTeacherData`;
-            document.body.appendChild(script);
-        };
+        window.onload = loadTeachers;
     </script>
 </body>
 </html>
