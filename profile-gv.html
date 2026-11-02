@@ -3,63 +3,255 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hồ Sơ Giáo Viên - Lớp 12A7</title>
+    <title>Hồ Sơ Giáo Viên - Tri Ân 20/11 - Lớp 12A7</title>
+    
     <link rel="icon" type="image/png" href="logo.png">
+
     <style>
-        :root { --primary-color: #003366; --secondary-color: #0055a5; --green-color: #28a745; --bg-light: #f4f6f9; --text-color: #333; --gold-color: #ffcc00; }
+        :root {
+            /* TÔNG MÀU CHUẨN CỦA WEB (DÀNH CHO HEADER & MENU) */
+            --primary-color: #003366;
+            --secondary-color: #0055a5;
+            --nav-bg: #002244;
+            --green-color: #28a745;
+            --gold-color: #ffcc00;
+            
+            /* TÔNG MÀU LỄ HỘI 20.11 (DÀNH CHO HỒ SƠ GIÁO VIÊN) */
+            --festive-red: #b71c1c; 
+            --festive-orange: #ff8f00; 
+            --bg-light: #fff8f9;
+            --text-color: #333;
+        }
+
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
-        body { background-color: var(--bg-light); color: var(--text-color); line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; }
         
-        header { background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color: white; padding: 20px 0; border-bottom: 4px solid var(--gold-color); }
-        .header-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; align-items: center; gap: 20px; }
-        .logo-box { width: 70px; height: 70px; border-radius: 50%; background-color: #fff; color: var(--primary-color); display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 18px; overflow: hidden; border: 2px solid #fff; flex-shrink: 0; }
+        body { 
+            background-color: var(--bg-light); 
+            background-image: radial-gradient(#ffcdd2 1px, transparent 1px);
+            background-size: 20px 20px;
+            color: var(--text-color); 
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* HEADER CHUẨN GỐC TỪ TRANG CHỦ */
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 20px 0;
+            border-bottom: 4px solid var(--gold-color);
+        }
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .logo-box {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background-color: #fff;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            overflow: hidden;
+            border: 2px solid #fff;
+            flex-shrink: 0;
+        }
         .logo-box img { width: 100%; height: 100%; object-fit: cover; }
         .header-text h1 { font-size: 24px; text-transform: uppercase; letter-spacing: 1px; }
         .header-text p { font-size: 14px; opacity: 0.9; }
-        
-        nav { background-color: #002244; position: sticky; top: 0; z-index: 100; border-bottom: 3px solid var(--gold-color); }
+
+        /* NAVIGATION MENU CHUẨN GỐC */
+        nav { background-color: var(--nav-bg); position: sticky; top: 0; z-index: 100; border-bottom: 3px solid var(--gold-color); }
         .nav-container { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; }
-        .nav-container a { color: white; padding: 12px 18px; text-decoration: none; font-size: 14px; font-weight: 600; text-transform: uppercase; transition: background 0.3s, color 0.3s; }
-        .nav-container a:hover, .nav-container a.active { background-color: var(--secondary-color); color: var(--gold-color); }
-        .nav-container a.green-tab { color: #28a745; font-weight: bold; }
-        .nav-container a.green-tab:hover { background-color: #28a745 !important; color: #fff !important; }
+        .nav-container a {
+            color: white;
+            padding: 12px 18px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            transition: background 0.3s, color 0.3s;
+        }
+        .nav-container a:hover { background-color: var(--secondary-color); color: var(--gold-color); }
         
-        .container { max-width: 800px; margin: 40px auto; padding: 0 15px; flex: 1; width: 100%; }
-        
-        .profile-card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 8px 24px rgba(0,0,0,0.08); border: 1px solid #eaeaea; }
-        .profile-header { background: linear-gradient(135deg, #f8f9fa, #e9ecef); padding: 40px 20px 20px; text-align: center; border-bottom: 3px solid var(--gold-color); position: relative; }
-        .avatar-box { width: 140px; height: 140px; border-radius: 50%; margin: 0 auto 15px; border: 4px solid #fff; box-shadow: 0 4px 12px rgba(0,0,0,0.1); background-color: #fff; display: flex; align-items: center; justify-content: center; overflow: hidden; font-size: 60px; color: #adb5bd; }
-        .avatar-box img { width: 100%; height: 100%; object-fit: cover; }
-        .teacher-name { font-size: 26px; font-weight: bold; color: var(--primary-color); margin-bottom: 8px; text-transform: uppercase; }
-        .teacher-subject { display: inline-block; background-color: var(--secondary-color); color: white; padding: 5px 20px; border-radius: 20px; font-size: 14px; font-weight: bold; text-transform: uppercase; }
-        
-        .profile-body { padding: 30px; }
-        .info-section-title { font-size: 18px; color: var(--primary-color); border-bottom: 2px solid var(--gold-color); padding-bottom: 8px; margin-bottom: 20px; text-transform: uppercase; display: flex; align-items: center; gap: 8px; }
-        .info-content { background: #fdfdfd; padding: 20px; border-radius: 8px; border: 1px solid #eee; border-left: 4px solid var(--primary-color); font-size: 15px; color: #444; line-height: 1.8; white-space: pre-line; }
-        
-        .back-btn-container { text-align: center; padding: 20px 30px 30px; }
-        .back-btn { display: inline-block; background: var(--primary-color); color: #fff; padding: 10px 24px; border-radius: 25px; text-decoration: none; font-size: 14px; font-weight: bold; transition: background 0.2s, transform 0.2s; text-transform: uppercase; }
-        .back-btn:hover { background: var(--secondary-color); transform: scale(1.05); }
+        /* ĐÃ TÔ VÀNG CHỮ GIÁO VIÊN KHI ĐANG HOẠT ĐỘNG (.active) */
+        .nav-container a.active { 
+            background-color: var(--secondary-color); 
+            color: var(--gold-color) !important; 
+        }
 
-        .empty-state { text-align: center; padding: 60px 20px; color: #777; font-style: italic; font-size: 16px; }
+        .nav-container a.green-tab { color: var(--green-color) !important; font-weight: bold; background-color: transparent !important; }
+        .nav-container a.green-tab:hover { background-color: var(--green-color) !important; color: #fff !important; }
 
-        footer { background-color: #001529; color: white; text-align: center; padding: 20px; margin-top: 40px; font-size: 13px; border-top: 3px solid var(--gold-color); }
-        footer p { margin: 5px 0; color: #aaa; }
-        footer a { color: #66b3ff; text-decoration: none; }
-        footer a:hover { text-decoration: underline; }
-        @media (max-width: 768px) { .header-container { flex-direction: column; text-align: center; } }
+        /* MAIN CONTAINER */
+        .container { max-width: 1000px; margin: 30px auto; padding: 0 15px; flex: 1; width: 100%; }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            color: white;
+            background: var(--festive-red);
+            padding: 8px 16px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 20px;
+            font-size: 14px;
+            transition: 0.3s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .back-btn:hover { background: var(--festive-orange); transform: translateY(-2px); }
+
+        /* PROFILE CARD 20.11 STYLE */
+        .profile-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(183, 28, 28, 0.15);
+            overflow: hidden;
+            border: 2px solid var(--gold-color);
+            position: relative;
+        }
+        
+        .profile-card::before {
+            content: '✿ CHÚC MỪNG NGÀY NHÀ GIÁO VIỆT NAM 20/11 ✿';
+            display: block;
+            background: linear-gradient(90deg, var(--festive-red), var(--festive-orange), var(--festive-red));
+            background-size: 200% auto;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            font-weight: bold;
+            font-size: 15px;
+            letter-spacing: 1px;
+            animation: gradientMove 3s linear infinite;
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% center; }
+            100% { background-position: 200% center; }
+        }
+
+        .profile-header {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+            background: linear-gradient(to bottom, #fff3e0, #fff);
+            padding: 35px 30px;
+            border-bottom: 2px dashed #ffcc80;
+        }
+
+        .profile-avatar {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            border: 5px solid var(--gold-color);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            background-color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 70px;
+            color: #adb5bd;
+            overflow: hidden;
+            flex-shrink: 0;
+            padding: 4px;
+        }
+        .profile-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+
+        .profile-info { flex: 1; }
+        .profile-badge {
+            display: inline-block;
+            background-color: var(--festive-orange);
+            color: #fff;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        .profile-info h2 { font-size: 28px; color: var(--festive-red); text-transform: uppercase; margin-bottom: 10px; }
+        .info-row { font-size: 15px; margin-bottom: 8px; color: #444; }
+        .info-row strong { color: var(--festive-red); display: inline-block; width: 140px; }
+        
+        .dynamic-info { margin-top: 15px; padding-top: 15px; border-top: 1px dashed #ffcc80; }
+
+        .details-section { padding: 30px; }
+        .details-section h3 {
+            font-size: 18px;
+            color: var(--festive-red);
+            border-bottom: 2px solid var(--gold-color);
+            padding-bottom: 8px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            display: inline-block;
+        }
+        
+        .details-content {
+            background-color: #fffaf0;
+            padding: 25px;
+            border-radius: 8px;
+            border-left: 4px solid var(--festive-orange);
+            font-size: 15px;
+            line-height: 1.8;
+            color: #333;
+        }
+
+        .roman-title {
+            color: var(--festive-red);
+            font-size: 16px;
+            font-weight: bold;
+            text-transform: uppercase;
+            display: inline-block;
+            margin-top: 15px;
+            margin-bottom: 5px;
+        }
+        .bullet-point { color: var(--festive-orange); font-weight: bold; font-size: 18px; margin-right: 4px; }
+
+        .loading-text { text-align: center; padding: 50px; font-size: 16px; color: #666; font-style: italic; }
+
+        footer {
+            background-color: #001529;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            font-size: 13px;
+            border-top: 3px solid var(--gold-color);
+        }
+        footer p { margin: 4px 0; color: #aaa; }
+
+        @media (max-width: 768px) {
+            .header-container, .profile-header { flex-direction: column; text-align: center; }
+            .info-row strong { width: auto; display: block; margin-bottom: 2px; }
+        }
     </style>
 </head>
 <body>
+
     <header>
         <div class="header-container">
-            <div class="logo-box" id="logo-container"><img src="logo.png" alt="Logo Lớp 12A7" onerror="document.getElementById('logo-container').innerText='12A7'"></div>
+            <div class="logo-box" id="logo-container">
+                <img src="logo.png" alt="Logo Lớp 12A7" onerror="document.getElementById('logo-container').innerText='12A7'">
+            </div>
             <div class="header-text">
                 <h1>CỔNG THÔNG TIN LỚP 12A7</h1>
                 <p>Trung tâm Giáo dục nghề nghiệp - Giáo dục thường xuyên Tân Bình (Phân hiệu Phú Nhuận) | Năm học 2026 - 2027</p>
             </div>
         </div>
     </header>
+
     <nav>
         <div class="nav-container">
             <a href="index.html">Trang chủ</a>
@@ -73,10 +265,12 @@
             <a href="credits.html">Credits</a>
         </div>
     </nav>
-    
-    <div class="container" id="profile-container">
-        <div class="profile-card">
-            <div class="empty-state" id="loading-msg">⏳ Đang tải thông tin chi tiết giáo viên...</div>
+
+    <div class="container">
+        <a href="giaovien.html" class="back-btn">&larr; Quay lại danh sách</a>
+
+        <div id="profile-container">
+            <div class="loading-text">⏳ Đang chuẩn bị thiệp tri ân chi tiết giáo viên...</div>
         </div>
     </div>
 
@@ -89,17 +283,17 @@
     <script>
         const TSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQzikJgQA99tZH8THj1ecKZBDbxH4GMM3snKPtovgaGdr_vVNv72F63qPl_epUs0rVSedCqx5elaJvB/pub?gid=590362463&single=true&output=tsv';
 
-        async function loadTeacherProfile() {
-            const container = document.getElementById('profile-container');
+        function getTeacherIdFromUrl() {
             const urlParams = new URLSearchParams(window.location.search);
-            const targetId = urlParams.get('id');
+            return urlParams.get('id');
+        }
+
+        async function loadProfileData() {
+            const container = document.getElementById('profile-container');
+            const targetId = getTeacherIdFromUrl();
 
             if (!targetId) {
-                container.innerHTML = `
-                    <div class="profile-card">
-                        <div class="empty-state">❌ Không tìm thấy thông tin giáo viên. Vui lòng quay lại danh sách.</div>
-                        <div class="back-btn-container"><a href="giaovien.html" class="back-btn">&larr; Quay lại danh sách</a></div>
-                    </div>`;
+                container.innerHTML = '<div class="loading-text" style="color: #e74c3c;">❌ Không tìm thấy hồ sơ giáo viên!</div>';
                 return;
             }
 
@@ -109,6 +303,9 @@
                 const data = await response.text();
                 
                 const rows = data.split('\n');
+                if (rows.length < 2) throw new Error('Dữ liệu trống');
+
+                const headers = rows[0].split('\t').map(h => h.trim());
                 let foundTeacher = null;
 
                 for (let i = 1; i < rows.length; i++) {
@@ -116,64 +313,104 @@
                     if (cols.length < 2 || !cols[0].trim()) continue;
 
                     let id = cols[6] && cols[6].trim() !== '' ? cols[6].trim() : `gv_${i}`;
-                    let avatar = cols[0] ? cols[0].trim() : '';
-                    let name = cols[1] ? cols[1].trim() : 'Chưa cập nhật';
-                    let subject = cols[2] ? cols[2].trim() : 'Bộ môn';
-                    let info = cols[3] ? cols[3].trim() : 'Thông tin chi tiết đang được cập nhật.';
-
-                    // Điều chỉnh linh hoạt nếu ID nằm ở cột 0
-                    if (avatar && !avatar.startsWith('http') && id === `gv_${i}`) {
-                        id = avatar;
-                        avatar = '';
-                    } else if (avatar && !avatar.startsWith('http')) {
-                        avatar = '';
-                    }
-
+                    
                     if (id === targetId) {
-                        foundTeacher = { avatar, name, subject, info };
+                        foundTeacher = cols;
                         break;
                     }
                 }
 
-                if (foundTeacher) {
-                    const avatarHtml = foundTeacher.avatar 
-                        ? `<img src="${foundTeacher.avatar}" alt="${foundTeacher.name}" onerror="this.style.display='none'; this.parentElement.innerText='👤';">` 
-                        : `👤`;
-
-                    container.innerHTML = `
-                        <div class="profile-card">
-                            <div class="profile-header">
-                                <div class="avatar-box">${avatarHtml}</div>
-                                <div class="teacher-name">${foundTeacher.name}</div>
-                                <div class="teacher-subject">${foundTeacher.subject}</div>
-                            </div>
-                            <div class="profile-body">
-                                <h3 class="info-section-title">📌 Thông tin & Lời nhắn</h3>
-                                <div class="info-content">${foundTeacher.info}</div>
-                            </div>
-                            <div class="back-btn-container">
-                                <a href="giaovien.html" class="back-btn">&larr; Quay lại danh sách</a>
-                            </div>
-                        </div>
-                    `;
-                } else {
-                    container.innerHTML = `
-                        <div class="profile-card">
-                            <div class="empty-state">❌ Giáo viên này không tồn tại hoặc đã bị gỡ.</div>
-                            <div class="back-btn-container"><a href="giaovien.html" class="back-btn">&larr; Quay lại danh sách</a></div>
-                        </div>`;
+                if (!foundTeacher) {
+                    container.innerHTML = '<div class="loading-text" style="color: #e74c3c;">❌ Không tìm thấy thông tin giáo viên yêu cầu!</div>';
+                    return;
                 }
-            } catch (err) {
-                console.error(err);
+
+                const img = foundTeacher[0] ? foundTeacher[0].trim() : '';
+                const name = foundTeacher[1] ? foundTeacher[1].trim() : 'Chưa cập nhật';
+                const subject = foundTeacher[2] ? foundTeacher[2].trim() : 'Bộ môn';
+                const role = foundTeacher[3] ? foundTeacher[3].trim() : 'Giáo viên bộ môn';
+                const unit = foundTeacher[4] ? foundTeacher[4].trim() : 'Trung tâm GDNN - GDTX Tân Bình (Phân hiệu Phú Nhuận)';
+                
+                let quote = foundTeacher[5] ? foundTeacher[5].trim() : 'Chúc các em học sinh lớp 12A7 luôn học tập tốt!';
+                
+                quote = quote.replace(/\\n/g, '<br>'); 
+                const upperVi = 'A-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠƯẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪỬỮỰỲỴÝỶỸ';
+                const lowerVi = 'a-zàáâãèéêìíòóôõùúăđĩũơưạảấầẩẫậắằẳẵặẹẻẽềềểễệỉịọỏốồổỗộớờởỡợụủứừửữựỳỵỷỹ';
+                
+                const romanRegex = new RegExp(`(^|\\s)(I|II|III|IV|V|VI)\\.\\s+([${upperVi}\\s&,]+)(?=[${upperVi}][${lowerVi}])`, 'g');
+                quote = quote.replace(romanRegex, function(match, space, p1, p2) {
+                    return `<br><br><span class="roman-title">${p1}. ${p2.trim()}</span><br>`;
+                });
+
+                const hardHeadings = [
+                    "I. THÔNG TIN CHUNG",
+                    "II. PHONG CÁCH GIẢNG DẠY & NĂNG LỰC CHUYÊN MÔN",
+                    "III. PHONG CÁCH TƯƠNG TÁC & QUAN TÂM HỌC VIÊN",
+                    "IV. ĐÁNH GIÁ TỔNG QUAN"
+                ];
+                hardHeadings.forEach(h => {
+                    if (!quote.includes(`<span class="roman-title">${h}</span>`)) {
+                        quote = quote.replace(h, `<br><br><span class="roman-title">${h}</span><br>`);
+                    }
+                });
+
+                const bulletRegex = new RegExp(`([${upperVi}][^\\.!?<]{2,80}):\\s`, 'g');
+                quote = quote.replace(bulletRegex, '<br><span class="bullet-point">✿</span> <strong>$1:</strong> ');
+                quote = quote.replace(/^(<br>\s*)+/, '');
+
+                const isHomeroom = role.toLowerCase().includes('gvcn') || role.toLowerCase().includes('chủ nhiệm');
+
+                const avatarHtml = img && img.startsWith('http')
+                    ? `<img src="${img}" alt="${name}" onerror="this.style.display='none'; document.getElementById('gv-avatar-box').innerText='👤';">`
+                    : `👤`;
+
+                let dynamicInfoHtml = '';
+                for (let j = 7; j < foundTeacher.length; j++) {
+                    const cellValue = foundTeacher[j] ? foundTeacher[j].trim() : '';
+                    if (cellValue) {
+                        const headerName = headers[j] ? headers[j] : `Thông tin khác`;
+                        let displayValue = cellValue.replace(/\\n/g, '<br>');
+                        
+                        if (cellValue.startsWith('http')) {
+                            displayValue = `<a href="${cellValue}" target="_blank" style="color: #0055a5; text-decoration: underline; font-weight: 500;">Truy cập liên kết &rarr;</a>`;
+                        }
+                        
+                        dynamicInfoHtml += `<div class="info-row"><strong>${headerName}:</strong> ${displayValue}</div>`;
+                    }
+                }
+                
+                if (dynamicInfoHtml) {
+                    dynamicInfoHtml = `<div class="dynamic-info">${dynamicInfoHtml}</div>`;
+                }
+
                 container.innerHTML = `
                     <div class="profile-card">
-                        <div class="empty-state">❌ Lỗi kết nối dữ liệu. Vui lòng thử lại sau.</div>
-                        <div class="back-btn-container"><a href="giaovien.html" class="back-btn">&larr; Quay lại danh sách</a></div>
-                    </div>`;
+                        <div class="profile-header">
+                            <div class="profile-avatar" id="gv-avatar-box">${avatarHtml}</div>
+                            <div class="profile-info">
+                                ${isHomeroom ? '<span class="profile-badge">⭐ Giáo Viên Chủ Nhiệm</span>' : '<span class="profile-badge">🌸 Tri ân Thầy Cô</span>'}
+                                <h2>${name}</h2>
+                                <div class="info-row"><strong>Bộ môn:</strong> ${subject}</div>
+                                <div class="info-row"><strong>Nhiệm vụ:</strong> ${role}</div>
+                                <div class="info-row"><strong>Đơn vị công tác:</strong> ${unit}</div>
+                                ${dynamicInfoHtml}
+                            </div>
+                        </div>
+
+                        <div class="details-section">
+                            <h3>THÔNG TIN & LỜI TRI ÂN</h3>
+                            <div class="details-content">${quote}</div>
+                        </div>
+                    </div>
+                `;
+
+            } catch (err) {
+                console.error("Lỗi:", err);
+                container.innerHTML = '<div class="loading-text" style="color: #e74c3c;">❌ Lỗi kết nối dữ liệu Google Sheets!</div>';
             }
         }
 
-        window.onload = loadTeacherProfile;
+        window.onload = loadProfileData;
     </script>
 </body>
 </html>
