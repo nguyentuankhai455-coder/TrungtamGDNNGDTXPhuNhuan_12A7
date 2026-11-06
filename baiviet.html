@@ -411,23 +411,77 @@
                     reject(new Error('Chưa cấu hình URL Google Apps Script.'));
                     return;
                 }
-                const callbackName = 'engagement_cb_' + Date.now() + '_' + Math.floor(Math.random() * 100000);
-                const script = document.createElement('script');
-                const timeout = setTimeout(() => finish(new Error('Hết thời gian chờ máy chủ.')), 15000);
-                function cleanup() {
-                    clearTimeout(timeout);
-                    delete window[callbackName];
-                    if (script.parentNode) script.parentNode.removeChild(script);
+
+                let settled = false;
+                let attempt = 0;
+                const maxAttempts = 2;
+
+                function sendAttempt() {
+                    attempt++;
+                    const callbackName = 'a7cb_' + Date.now().toString(36) + '_' +
+                        Math.random().toString(36).slice(2, 10);
+                    const script = document.createElement('script');
+                    let timeoutId;
+
+                    function cleanup() {
+                        if (timeoutId) clearTimeout(timeoutId);
+                        try { delete window[callbackName]; }
+                        catch (_) { window[callbackName] = undefined; }
+                        if (script.parentNode) script.parentNode.removeChild(script);
+                    }
+
+                    function finish(error, data) {
+                        if (settled) return;
+                        if (error && attempt < maxAttempts) {
+                            cleanup();
+                            // Retry once with a fresh JSONP callback and cache-buster.
+                            sendAttempt();
+                            return;
+                        }
+                        settled = true;
+                        cleanup();
+                        if (error) reject(error);
+                        else resolve(data);
+                    }
+
+                    window[callbackName] = function(data) {
+                        finish(null, data);
+                    };
+
+                    const requestUrl = new URL(ENGAGEMENT_API_URL);
+                    Object.entries(params || {}).forEach(([key, value]) => {
+                        if (value !== undefined && value !== null) {
+                            requestUrl.searchParams.set(key, String(value));
+                        }
+                    });
+                    requestUrl.searchParams.set('callback', callbackName);
+                    requestUrl.searchParams.set('_a7', String(Date.now()) + '_' + attempt);
+
+                    script.async = true;
+                    script.type = 'text/javascript';
+                    script.onerror = function() {
+                        finish(new Error(
+                            'Không tải được phản hồi từ Google Apps Script (' +
+                            requestUrl.hostname + '). Lần thử ' + attempt + '/' + maxAttempts + '.'
+                        ));
+                    };
+                    script.onload = function() {
+                        // A successful JSONP response invokes the callback before onload.
+                        // If no callback was invoked, report a more useful error.
+                        if (!settled && typeof window[callbackName] === 'function') {
+                            finish(new Error('Máy chủ đã phản hồi nhưng không trả dữ liệu JSONP hợp lệ.'));
+                        }
+                    };
+
+                    timeoutId = setTimeout(function() {
+                        finish(new Error('Google Apps Script phản hồi quá thời gian chờ.'));
+                    }, 18000);
+
+                    script.src = requestUrl.toString();
+                    (document.head || document.body || document.documentElement).appendChild(script);
                 }
-                function finish(error, data) {
-                    cleanup();
-                    if (error) reject(error); else resolve(data);
-                }
-                window[callbackName] = data => finish(null, data);
-                const query = new URLSearchParams({ ...params, callback: callbackName });
-                script.onerror = () => finish(new Error('Không thể kết nối máy chủ tương tác.'));
-                script.src = ENGAGEMENT_API_URL + (ENGAGEMENT_API_URL.includes('?') ? '&' : '?') + query.toString();
-                document.body.appendChild(script);
+
+                sendAttempt();
             });
         }
 
@@ -477,18 +531,20 @@
 
         function getVisitorId() {
             const storageKey = 'a7_visitor_id';
-            let id = localStorage.getItem(storageKey);
+            let id = '';
+            try { id = localStorage.getItem(storageKey) || ''; } catch (_) {}
             if (!id) {
                 id = 'v_' + (window.crypto && crypto.randomUUID ? crypto.randomUUID() :
                     Date.now().toString(36) + Math.random().toString(36).slice(2));
-                localStorage.setItem(storageKey, id);
+                try { localStorage.setItem(storageKey, id); } catch (_) {}
             }
             return id;
         }
 
         async function recordArticleView() {
             const viewKey = 'a7_view_' + currentEngagementKey;
-            const lastView = Number(localStorage.getItem(viewKey) || 0);
+            let lastView = 0;
+            try { lastView = Number(localStorage.getItem(viewKey) || 0); } catch (_) {}
             const now = Date.now();
             // Mỗi trình duyệt chỉ ghi nhận lại lượt xem sau 30 phút cho cùng một bài.
             if (now - lastView < 30 * 60 * 1000) return;
@@ -497,7 +553,7 @@
                     action: 'view', postKey: currentEngagementKey, visitorId: getVisitorId()
                 });
                 if (data && data.ok) {
-                    localStorage.setItem(viewKey, String(now));
+                    try { localStorage.setItem(viewKey, String(now)); } catch (_) {}
                     await refreshEngagement();
                 }
             } catch (err) {
@@ -524,6 +580,11 @@
             if (!currentEngagementKey || currentEngagementKey === 'unknown') return;
             const section = document.getElementById('engagement-card');
             section.style.display = 'block';
+            if (section.dataset.initialized === 'true') {
+                refreshEngagement();
+                return;
+            }
+            section.dataset.initialized = 'true';
             document.getElementById('reaction-list').addEventListener('click', event => {
                 const btn = event.target.closest('.reaction-btn');
                 if (btn) toggleReaction(btn.dataset.reaction);
@@ -555,7 +616,9 @@
                     submit.textContent = 'Gửi bình luận';
                 }
             });
-            refreshEngagement().then(recordArticleView);
+            refreshEngagement().then(() => recordArticleView()).catch(err => {
+                console.warn('Không thể khởi tạo tương tác:', err);
+            });
         }
 
 
