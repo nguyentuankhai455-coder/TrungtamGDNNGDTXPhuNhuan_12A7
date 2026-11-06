@@ -114,6 +114,33 @@
         .notice-list li { padding: 8px 0; border-bottom: 1px solid #f0f0f0; font-size: 14px; }
         .loading, .empty-state { text-align: center; padding: 50px 0; color: #777; font-style: italic; }
 
+
+        /* ===== TƯƠNG TÁC BÀI VIẾT 12A7 ===== */
+        .engagement-card { margin-top: 28px; padding-top: 24px; border-top: 1px solid #e8edf3; }
+        .engagement-stats { display:flex; flex-wrap:wrap; gap:10px; margin:14px 0 18px; }
+        .engagement-stat { background:#f3f7fb; border:1px solid #e4edf6; border-radius:9px; padding:9px 14px; color:#345; font-size:13px; }
+        .reaction-list { display:flex; flex-wrap:wrap; gap:9px; margin:12px 0 20px; }
+        .reaction-btn { border:1px solid #dce5ef; background:#fff; color:#334; border-radius:22px; padding:8px 13px; cursor:pointer; display:flex; align-items:center; gap:7px; font-size:14px; transition:.2s; }
+        .reaction-btn:hover { border-color:#0055a5; background:#f2f7fc; transform:translateY(-1px); }
+        .reaction-btn.active { border-color:#0055a5; background:#e8f2ff; color:#003366; font-weight:700; }
+        .reaction-emoji { font-size:19px; }
+        .comment-form { display:grid; gap:10px; margin:14px 0 22px; }
+        .comment-form input, .comment-form textarea { width:100%; border:1px solid #d7e0e9; border-radius:8px; padding:11px 13px; font:inherit; font-size:14px; outline:none; }
+        .comment-form input:focus, .comment-form textarea:focus { border-color:#0055a5; box-shadow:0 0 0 3px rgba(0,85,165,.1); }
+        .comment-form textarea { min-height:95px; resize:vertical; }
+        .comment-submit { justify-self:start; background:linear-gradient(135deg,#003366,#0055a5); color:#fff; border:0; border-radius:7px; padding:10px 20px; font-weight:700; cursor:pointer; }
+        .comment-submit:disabled { opacity:.6; cursor:wait; }
+        .comment-item { border-bottom:1px solid #edf0f4; padding:14px 0; }
+        .comment-item:last-child { border-bottom:0; }
+        .comment-author { color:#003366; font-weight:700; font-size:14px; }
+        .comment-time { color:#8993a0; font-size:12px; margin-left:8px; }
+        .comment-text { margin-top:5px; white-space:pre-wrap; overflow-wrap:anywhere; font-size:14px; line-height:1.65; }
+        .comment-empty, .engagement-note { color:#788391; font-size:13px; }
+        .engagement-alert { padding:10px 12px; border-radius:7px; margin:10px 0; font-size:13px; display:none; }
+        .engagement-alert.ok { display:block; background:#eaf7ee; color:#216b37; }
+        .engagement-alert.error { display:block; background:#fff0f0; color:#a12626; }
+        @media(max-width:520px) { .reaction-list { gap:7px; } .reaction-btn { padding:7px 10px; } }
+
         .modal { display: none; position: fixed; z-index: 1000; padding-top: 50px; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.85); backdrop-filter: blur(4px); }
         .modal-content { margin: auto; display: block; max-width: 90%; max-height: 85vh; border-radius: 8px; }
         .close-modal { position: absolute; top: 20px; right: 35px; color: #fff; font-size: 40px; font-weight: bold; cursor: pointer; }
@@ -163,6 +190,31 @@
                 <div id="article-container">
                     <div class="loading">⏳ Đang tải nội dung bài viết...</div>
                 </div>
+                <section class="engagement-card" id="engagement-card" style="display:none">
+                    <h2 class="section-title">TƯƠNG TÁC BÀI VIẾT</h2>
+                    <div class="engagement-stats">
+                        <div class="engagement-stat">👁️ <b id="view-count">0</b> lượt xem</div>
+                        <div class="engagement-stat">💬 <b id="comment-count">0</b> bình luận</div>
+                        <div class="engagement-stat">❤️ <b id="reaction-count">0</b> cảm xúc</div>
+                    </div>
+                    <h3 style="font-size:15px;color:#003366;margin:14px 0 8px">Bạn cảm thấy bài viết này thế nào?</h3>
+                    <div class="reaction-list" id="reaction-list">
+                        <button class="reaction-btn" data-reaction="like"><span class="reaction-emoji">👍</span> Thích <b>0</b></button>
+                        <button class="reaction-btn" data-reaction="love"><span class="reaction-emoji">❤️</span> Yêu thích <b>0</b></button>
+                        <button class="reaction-btn" data-reaction="haha"><span class="reaction-emoji">😂</span> Haha <b>0</b></button>
+                        <button class="reaction-btn" data-reaction="wow"><span class="reaction-emoji">😮</span> Wow <b>0</b></button>
+                        <button class="reaction-btn" data-reaction="support"><span class="reaction-emoji">👏</span> Ủng hộ <b>0</b></button>
+                    </div>
+                    <h3 class="section-title" style="margin-top:24px">BÌNH LUẬN</h3>
+                    <form class="comment-form" id="comment-form">
+                        <input id="comment-name" maxlength="60" placeholder="Tên của bạn" required>
+                        <textarea id="comment-content" maxlength="1000" placeholder="Viết bình luận của bạn..." required></textarea>
+                        <button class="comment-submit" id="comment-submit" type="submit">Gửi bình luận</button>
+                    </form>
+                    <div class="engagement-alert" id="engagement-alert" role="status"></div>
+                    <div id="comments-list"><p class="comment-empty">Đang tải bình luận...</p></div>
+                    <p class="engagement-note" style="margin-top:12px">Vui lòng bình luận văn minh, lịch sự và phù hợp với môi trường học đường.</p>
+                </section>
             </div>
         </main>
 
@@ -269,6 +321,7 @@
                 }
 
                 container.innerHTML = `<h1 class="article-title">${escapeHtml(tieuDe)}</h1><div class="article-meta">🕒 Ngày đăng: <b>${escapeHtml(ngay)}</b> | ✍️ Đăng bởi: <b>${escapeHtml(tacGia)}</b></div><div class="article-body">${linkify(chiTiet)}</div>${imagesHtml}`;
+                initEngagement();
             } catch (err) { container.innerHTML = '<div class="empty-state">Lỗi tải chi tiết bài viết.</div>'; }
         }
 
@@ -307,6 +360,7 @@
                 }
 
                 container.innerHTML = `<h1 class="article-title">${escapeHtml(tieuDe)}</h1><div class="article-meta">🕒 Ngày đăng: <b>${escapeHtml(ngay)}</b> | ✍️ Đăng bởi: <b>${escapeHtml(tacGia)}</b></div>${tomTat ? `<div class="article-summary">${linkify(tomTat)}</div>` : ''}<div class="article-body">${linkify(noiDung)}</div>${imagesHtml}`;
+                initEngagement();
             } catch (err) { container.innerHTML = '<div class="empty-state">Lỗi hiển thị bài viết.</div>'; }
         }
 
@@ -326,6 +380,7 @@
 
                 document.title = `${titleText} - Cổng Thông Tin Lớp 12A7`;
                 container.innerHTML = `<h1 class="article-title">📌 ${escapeHtml(titleText)}</h1><div class="article-meta">🕒 Ngày giao: <b>${escapeHtml(ngayThang)}</b> | 📖 Môn học: <b>${escapeHtml(monHoc)}</b></div><div class="article-body">${linkify(noiDung)}</div>`;
+                initEngagement();
             } catch (err) { container.innerHTML = '<div class="empty-state">Không tìm thấy báo bài.</div>'; }
         }
 
@@ -334,6 +389,175 @@
             document.getElementById("imgFull").src = imgElement.src;
         }
         function closeModal() { document.getElementById("imageModal").style.display = "none"; }
+
+
+        // ===== CẤU HÌNH TƯƠNG TÁC =====
+        // Dán URL Web App của Google Apps Script vào đây sau khi triển khai.
+        const ENGAGEMENT_API_URL = 'https://script.google.com/macros/s/AKfycbwDJ-qZgXn0OOCtcUJE6_eqb0wB3peZSdXbUrXq1cyH/exec';
+        const REACTION_TYPES = ['like', 'love', 'haha', 'wow', 'support'];
+        let currentEngagementKey = '';
+
+        function getEngagementKey() {
+            const p = getUrlParams();
+            if (p.type === 'baobai') return 'baobai_' + (p.row || 'unknown');
+            if (p.type === 'gocxanh') return 'gocxanh_' + (p.id || 'unknown');
+            if (p.id) return 'news_' + p.id;
+            return 'unknown';
+        }
+
+        function jsonpRequest(params) {
+            return new Promise((resolve, reject) => {
+                if (!ENGAGEMENT_API_URL || ENGAGEMENT_API_URL.includes('DAN_URL_')) {
+                    reject(new Error('Chưa cấu hình URL Google Apps Script.'));
+                    return;
+                }
+                const callbackName = 'engagement_cb_' + Date.now() + '_' + Math.floor(Math.random() * 100000);
+                const script = document.createElement('script');
+                const timeout = setTimeout(() => finish(new Error('Hết thời gian chờ máy chủ.')), 15000);
+                function cleanup() {
+                    clearTimeout(timeout);
+                    delete window[callbackName];
+                    if (script.parentNode) script.parentNode.removeChild(script);
+                }
+                function finish(error, data) {
+                    cleanup();
+                    if (error) reject(error); else resolve(data);
+                }
+                window[callbackName] = data => finish(null, data);
+                const query = new URLSearchParams({ ...params, callback: callbackName });
+                script.onerror = () => finish(new Error('Không thể kết nối máy chủ tương tác.'));
+                script.src = ENGAGEMENT_API_URL + (ENGAGEMENT_API_URL.includes('?') ? '&' : '?') + query.toString();
+                document.body.appendChild(script);
+            });
+        }
+
+        function showEngagementAlert(message, type) {
+            const el = document.getElementById('engagement-alert');
+            el.textContent = message;
+            el.className = 'engagement-alert ' + type;
+        }
+
+        function renderEngagement(data) {
+            document.getElementById('view-count').textContent = Number(data.views || 0).toLocaleString('vi-VN');
+            document.getElementById('comment-count').textContent = Number(data.commentsCount || 0).toLocaleString('vi-VN');
+            const reactions = data.reactions || {};
+            const total = REACTION_TYPES.reduce((sum, key) => sum + Number(reactions[key] || 0), 0);
+            document.getElementById('reaction-count').textContent = total.toLocaleString('vi-VN');
+            document.querySelectorAll('.reaction-btn').forEach(btn => {
+                const key = btn.dataset.reaction;
+                btn.querySelector('b').textContent = Number(reactions[key] || 0).toLocaleString('vi-VN');
+                btn.classList.toggle('active', data.myReaction === key);
+                btn.setAttribute('aria-pressed', data.myReaction === key ? 'true' : 'false');
+            });
+            const list = document.getElementById('comments-list');
+            const comments = Array.isArray(data.comments) ? data.comments : [];
+            if (!comments.length) {
+                list.innerHTML = '<p class="comment-empty">Chưa có bình luận nào. Hãy là người đầu tiên chia sẻ nhé!</p>';
+            } else {
+                list.innerHTML = comments.map(c => `
+                    <div class="comment-item">
+                        <span class="comment-author">${escapeHtml(c.name || 'Ẩn danh')}</span>
+                        <span class="comment-time">${escapeHtml(c.time || '')}</span>
+                        <div class="comment-text">${escapeHtml(c.content || '')}</div>
+                    </div>`).join('');
+            }
+        }
+
+        async function refreshEngagement() {
+            try {
+                const data = await jsonpRequest({ action: 'get', postKey: currentEngagementKey, visitorId: getVisitorId() });
+                if (!data || !data.ok) throw new Error(data && data.message ? data.message : 'Không tải được dữ liệu.');
+                renderEngagement(data);
+            } catch (err) {
+                document.getElementById('comments-list').innerHTML =
+                    '<p class="comment-empty">Chưa kết nối được dữ liệu tương tác. Vui lòng thử tải lại trang.</p>';
+                showEngagementAlert(err.message, 'error');
+            }
+        }
+
+        function getVisitorId() {
+            const storageKey = 'a7_visitor_id';
+            let id = localStorage.getItem(storageKey);
+            if (!id) {
+                id = 'v_' + (window.crypto && crypto.randomUUID ? crypto.randomUUID() :
+                    Date.now().toString(36) + Math.random().toString(36).slice(2));
+                localStorage.setItem(storageKey, id);
+            }
+            return id;
+        }
+
+        async function recordArticleView() {
+            const viewKey = 'a7_view_' + currentEngagementKey;
+            const lastView = Number(localStorage.getItem(viewKey) || 0);
+            const now = Date.now();
+            // Mỗi trình duyệt chỉ ghi nhận lại lượt xem sau 30 phút cho cùng một bài.
+            if (now - lastView < 30 * 60 * 1000) return;
+            try {
+                const data = await jsonpRequest({
+                    action: 'view', postKey: currentEngagementKey, visitorId: getVisitorId()
+                });
+                if (data && data.ok) {
+                    localStorage.setItem(viewKey, String(now));
+                    await refreshEngagement();
+                }
+            } catch (err) {
+                console.warn('Không ghi nhận được lượt xem:', err);
+            }
+        }
+
+        async function toggleReaction(reaction) {
+            if (!REACTION_TYPES.includes(reaction)) return;
+            try {
+                const data = await jsonpRequest({
+                    action: 'react', postKey: currentEngagementKey,
+                    visitorId: getVisitorId(), reaction
+                });
+                if (!data || !data.ok) throw new Error(data && data.message ? data.message : 'Không thể lưu cảm xúc.');
+                renderEngagement(data);
+            } catch (err) {
+                showEngagementAlert(err.message, 'error');
+            }
+        }
+
+        function initEngagement() {
+            currentEngagementKey = getEngagementKey();
+            if (!currentEngagementKey || currentEngagementKey === 'unknown') return;
+            const section = document.getElementById('engagement-card');
+            section.style.display = 'block';
+            document.getElementById('reaction-list').addEventListener('click', event => {
+                const btn = event.target.closest('.reaction-btn');
+                if (btn) toggleReaction(btn.dataset.reaction);
+            });
+            document.getElementById('comment-form').addEventListener('submit', async event => {
+                event.preventDefault();
+                const name = document.getElementById('comment-name').value.trim();
+                const content = document.getElementById('comment-content').value.trim();
+                if (!name || !content) {
+                    showEngagementAlert('Vui lòng nhập tên và nội dung bình luận.', 'error');
+                    return;
+                }
+                const submit = document.getElementById('comment-submit');
+                submit.disabled = true;
+                submit.textContent = 'Đang gửi...';
+                try {
+                    const data = await jsonpRequest({
+                        action: 'comment', postKey: currentEngagementKey,
+                        visitorId: getVisitorId(), name, content
+                    });
+                    if (!data || !data.ok) throw new Error(data && data.message ? data.message : 'Gửi bình luận thất bại.');
+                    document.getElementById('comment-content').value = '';
+                    showEngagementAlert('Bình luận đã được gửi thành công!', 'ok');
+                    renderEngagement(data);
+                } catch (err) {
+                    showEngagementAlert(err.message, 'error');
+                } finally {
+                    submit.disabled = false;
+                    submit.textContent = 'Gửi bình luận';
+                }
+            });
+            refreshEngagement().then(recordArticleView);
+        }
+
 
         function init() {
             const { id, type } = getUrlParams();
