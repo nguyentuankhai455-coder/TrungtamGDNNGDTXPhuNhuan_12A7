@@ -271,7 +271,7 @@
             <a href="index.html">Trang chủ</a>
             <a href="baobai.html">Báo Bài</a>
             <a href="index.html#tin-tuc">Tin tức & Sự kiện</a>
-            <a href="gochoc-tap.html">Góc học tập</a>
+            <a href="index.html#hoc-tap">Góc học tập</a>
             <a href="giaovien.html">Giáo viên</a>
             <a href="gocxanh.html" class="green-tab">Góc Xanh</a>
             <a href="thanhvien.html">Thành viên</a>
@@ -361,6 +361,7 @@
     <script>
         const SPREADSHEET_ID = '10WZAkfTsUhEsTRADxZ3JX869kLV_Sen45r4BeSrxDZY';
         const GID_BAO_BAI = '1447199433';
+        const GID_PHONGTRAO = '2104947705'; // Đã thêm GID cho Phong Trào
 
         // ===== FIREBASE REALTIME DATABASE CONFIG =====
         // Điền cấu hình Web App lấy từ Firebase Console > Project settings > Your apps.
@@ -705,8 +706,6 @@
             }
         }
 
-        const TSV_PHONGTRAO = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQzikJgQA99tZH8THj1ecKZBDbxH4GMM3snKPtovgaGdr_vVNv72F63qPl_epUs0rVSedCqx5elaJvB/pub?gid=2104947705&single=true&output=tsv';
-
         function escapeHtml(text) {
             if (!text) return '';
             return String(text)
@@ -763,8 +762,8 @@
             };
         }
 
-        /* 1. XỬ LÝ BÀI VIẾT PHONG TRÀO (TYPE = GOCXANH) */
-        async function loadGocXanhDetail() {
+        /* 1. XỬ LÝ BÀI VIẾT PHONG TRÀO (TYPE = GOCXANH) - SỬ DỤNG GVIZ API THAY VÌ FETCH TSV CHẶN */
+        function loadGocXanhDetail(json) {
             const container = document.getElementById('article-container');
             const { id } = getUrlParams();
             
@@ -773,16 +772,21 @@
             backLink.innerHTML = '&larr; Quay lại Góc Xanh';
 
             try {
-                const response = await fetch(TSV_PHONGTRAO);
-                const text = await response.text();
-                const lines = text.split('\n').filter(line => line.trim() !== '');
+                if (!json || !json.table || !json.table.rows) {
+                     container.innerHTML = '<div class="empty-state">Bài viết phong trào không tồn tại hoặc đã bị xóa.</div>';
+                     return;
+                }
 
+                const rows = json.table.rows;
                 let targetRow = null;
-                for (let i = 1; i < lines.length; i++) {
-                    const cols = lines[i].split('\t');
-                    const rowUid = cols[0] ? cols[0].trim() : '';
+
+                for (let i = 0; i < rows.length; i++) {
+                    const r = rows[i].c;
+                    if (!r) continue;
+                    // uid ở cột 0
+                    const rowUid = r[0] ? (r[0].v !== null ? String(r[0].v).trim() : '') : '';
                     if (rowUid === String(id)) {
-                        targetRow = cols;
+                        targetRow = r;
                         break;
                     }
                 }
@@ -791,12 +795,14 @@
                     container.innerHTML = '<div class="empty-state">Bài viết phong trào không tồn tại hoặc đã bị xóa.</div>';
                     return;
                 }
-
-                const ngay = targetRow[1] ? targetRow[1].trim() : '';
-                const tacGia = targetRow[2] ? targetRow[2].trim() : 'Ban Phong Trào';
-                const tieuDe = targetRow[3] ? targetRow[3].trim() : 'Không có tiêu đề';
-                const chiTiet = targetRow[4] ? targetRow[4].trim() : '';
-                const rawHinhAnh = targetRow[5] ? targetRow[5].trim() : '';
+                
+                // Ánh xạ cột của Sheet Phong Trào[cite: 7]
+                // A(0):uid, B(1):Ngày, C(2):Tác Giả, D(3):Tiêu Đề, E(4):Chi Tiết, F(5):Ảnh, G(6):video
+                const ngay = parseCellValue(targetRow[1]);
+                const tacGia = targetRow[2] && targetRow[2].v ? targetRow[2].v : 'Ban Phong Trào';
+                const tieuDe = targetRow[3] && targetRow[3].v ? targetRow[3].v : 'Không có tiêu đề';
+                const chiTiet = targetRow[4] && targetRow[4].v ? targetRow[4].v : '';
+                const rawHinhAnh = targetRow[5] ? parseCellValue(targetRow[5]) : '';
 
                 document.title = `${tieuDe} - Cổng Thông Tin Lớp 12A7`;
 
@@ -829,6 +835,7 @@
                 container.innerHTML = '<div class="empty-state">Đã xảy ra lỗi khi tải chi tiết bài viết.</div>';
             }
         }
+
 
         /* 2. XỬ LÝ BÀI VIẾT THƯỜNG / TIN TỨC */
         function handleNewsDetail(json) {
@@ -966,7 +973,9 @@
             const script = document.createElement('script');
 
             if (type === 'gocxanh') {
-                loadGocXanhDetail();
+                // Gọi API GVIZ cho Phong trào thay vì fetch
+                script.src = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?gid=${GID_PHONGTRAO}&tqx=responseHandler:loadGocXanhDetail`;
+                document.body.appendChild(script);
             } else if (type === 'baobai') {
                 script.src = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?gid=${GID_BAO_BAI}&tqx=responseHandler:handleBaoBaiDetail`;
                 document.body.appendChild(script);
