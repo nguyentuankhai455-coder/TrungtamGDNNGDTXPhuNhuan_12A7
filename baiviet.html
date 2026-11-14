@@ -1,993 +1,452 @@
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chi Tiết Bài Viết - Cổng Thông Tin Lớp 12A7</title>
+<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#10283f"><title>Chi tiết bài viết | 12A7</title><link rel="stylesheet" href="assets/site.css?v=logo-fix-2"><link rel="icon" type="image/png" href="logo.png">
 
-    <link rel="icon" type="image/png" href="logo.png">
-    <link rel="shortcut icon" type="image/png" href="logo.png">
+<style id="a7-article-lightbox-navigation">
+#a7-lightbox{
+  position:fixed;inset:0;z-index:9999;display:none;align-items:center;justify-content:center;
+  padding:70px 88px 64px;background:rgba(0,0,0,.88);backdrop-filter:blur(4px);
+}
+#a7-lightbox.open{display:flex}
+#a7-lightbox img{
+  display:block;max-width:min(100%,1200px);max-height:calc(100vh - 130px);
+  width:auto;height:auto;object-fit:contain;border-radius:12px;
+  box-shadow:0 18px 55px rgba(0,0,0,.35);user-select:none
+}
+#a7-lightbox .lightbox-nav{
+  position:absolute;top:50%;transform:translateY(-50%);z-index:2;
+  width:54px;height:68px;border:1px solid rgba(255,255,255,.35);border-radius:16px;
+  display:grid;place-items:center;background:rgba(18,40,61,.78);color:#fff;
+  font-size:45px;line-height:1;cursor:pointer;box-shadow:0 6px 22px rgba(0,0,0,.25);
+  transition:background .18s ease,transform .18s ease
+}
+#a7-lightbox .lightbox-nav:hover{background:rgba(33,83,119,.96);transform:translateY(-50%) scale(1.06)}
+#a7-lightbox .lightbox-prev{left:22px}
+#a7-lightbox .lightbox-next{right:22px}
+#a7-lightbox .lightbox-close{
+  position:absolute;right:23px;top:18px;z-index:3;width:42px;height:42px;
+  border:1px solid rgba(255,255,255,.35);border-radius:50%;background:rgba(18,40,61,.8);
+  color:#fff;font-size:27px;line-height:1;cursor:pointer
+}
+#a7-lightbox .lightbox-counter{
+  position:absolute;bottom:18px;left:50%;transform:translateX(-50%);
+  padding:7px 13px;border:1px solid rgba(255,255,255,.22);border-radius:999px;
+  background:rgba(18,40,61,.78);color:#fff;font-size:12px;font-weight:800;
+  letter-spacing:.4px
+}
+@media(max-width:650px){
+  #a7-lightbox{padding:65px 52px 58px}
+  #a7-lightbox img{max-width:100%;max-height:calc(100vh - 130px)}
+  #a7-lightbox .lightbox-nav{width:38px;height:52px;font-size:34px;border-radius:12px}
+  #a7-lightbox .lightbox-prev{left:7px}
+  #a7-lightbox .lightbox-next{right:7px}
+  #a7-lightbox .lightbox-close{right:10px;top:10px;width:36px;height:36px}
+  #a7-lightbox .lightbox-counter{bottom:10px}
+}
+</style>
 
-    <style>
-        :root {
-            --primary-color: #003366;
-            --secondary-color: #0055a5;
-            --green-color: #28a745;
-            --bg-light: #f4f6f9;
-            --text-color: #333;
-        }
+</head><body>
+<div class="site-topline"></div>
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="index.html" aria-label="Cổng thông tin lớp 12A7">
+      <div class="brand-mark" style="width:64px;height:64px;min-width:64px;max-width:64px;flex:0 0 64px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#fff;line-height:0"><img src="logo.png?v=2" alt="Logo lớp 12A7" style="display:block;width:100%;height:100%;max-width:100%;object-fit:contain;position:static" onerror="this.parentElement.textContent='A7'"></div>
+      <div class="brand-copy"><div class="brand-eyebrow">CLASS OF 2027 · THE LAST CHAPTER</div>
+        <h1 class="brand-title">CỔNG THÔNG TIN LỚP 12A7</h1>
+        <p class="brand-subtitle">Trung tâm GDNN – GDTX Tân Bình · Phân hiệu Phú Nhuận</p></div>
+    </a>
+    <div class="header-actions"><button class="auth-btn" type="button" data-auth-open="login">Đăng nhập</button><button class="auth-btn primary" type="button" data-auth-open="register">Đăng ký ↗</button></div>
+  </div>
+</header>
+<nav class="main-nav"><div class="nav-inner">
+<a class="nav-link" href="index.html">Trang chủ</a><a class="nav-link" href="baobai.html">Báo bài</a><a class="nav-link" href="index.html#tin-tuc">Tin tức & sự kiện</a><a class="nav-link" href="hoctap.html">Góc học tập</a><a class="nav-link" href="giaovien.html">Giáo viên</a><a class="nav-link" href="gocxanh.html">Góc xanh</a><a class="nav-link" href="thanhvien.html">Thành viên</a><a class="nav-link" href="thuvien.html">Thư viện ảnh</a><a class="nav-link" href="credits.html">Credits</a>
+</div></nav><main class="page-wrap">
+<section class="page-heading"><div class="section-kicker">12A7 journal</div><h1 id="article-page-title">Chi tiết nội dung</h1><p>Những câu chuyện và dấu ấn của tập thể 12A7.</p></section>
+<a class="btn btn-outline" id="article-back" href="index.html" style="margin-bottom:18px">← Quay lại</a>
+<article class="panel" id="article-detail"><div class="loading-state">Đang tải nội dung…</div></article>
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
-        html { scroll-behavior: smooth; }
-        body { 
-            background-color: var(--bg-light); 
-            color: var(--text-color); 
-            line-height: 1.8;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-
-        /* HEADER */
-        header {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            padding: 20px 0;
-            border-bottom: 4px solid #ffcc00;
-        }
-
-        .header-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .logo-box {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            background-color: #fff;
-            color: var(--primary-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 18px;
-            overflow: hidden;
-            border: 2px solid #fff;
-            flex-shrink: 0;
-        }
-
-        .logo-box img { width: 100%; height: 100%; object-fit: cover; }
-        .header-text h1 { font-size: 24px; text-transform: uppercase; letter-spacing: 1px; }
-        .header-text p { font-size: 14px; opacity: 0.9; }
-
-        /* NAV MENU */
-        nav { background-color: #002244; position: sticky; top: 0; z-index: 100; }
-        .nav-container { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; }
-        .nav-container a {
-            color: white;
-            padding: 12px 18px;
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 600;
-            text-transform: uppercase;
-            transition: background 0.3s;
-        }
-        .nav-container a:hover, .nav-container a.active { background-color: var(--secondary-color); }
-        .nav-container a.green-tab { color: #28a745; font-weight: bold; }
-        .nav-container a.green-tab:hover { background-color: var(--green-color); color: #fff; }
-
-        /* LAYOUT & CARDS */
-        .main-wrapper {
-            max-width: 1200px;
-            width: 100%;
-            margin: 30px auto;
-            padding: 0 15px;
-            display: grid;
-            grid-template-columns: 3fr 1fr;
-            gap: 20px;
-            flex: 1;
-        }
-
-        .card {
-            background: #fff;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-            border: 1px solid #eaeaea;
-            margin-bottom: 20px;
-        }
-
-        .back-btn {
-            display: inline-block;
-            margin-bottom: 20px;
-            color: var(--secondary-color);
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 14px;
-        }
-        .back-btn:hover { text-decoration: underline; }
-
-        .article-title {
-            color: var(--primary-color);
-            font-size: 24px;
-            font-weight: bold;
-            line-height: 1.4;
-            margin-bottom: 12px;
-        }
-
-        .article-meta {
-            font-size: 13px;
-            color: #666;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 15px;
-            margin-bottom: 25px;
-        }
-
-        .article-summary {
-            font-weight: 600;
-            font-size: 15px;
-            color: #444;
-            background-color: #f8f9fa;
-            padding: 12px 15px;
-            border-left: 4px solid var(--primary-color);
-            margin-bottom: 20px;
-            border-radius: 0 6px 6px 0;
-        }
-
-        .article-body {
-            font-size: 16px;
-            color: #333;
-            white-space: pre-line;
-            word-wrap: break-word;
-        }
-
-        .article-body a, .article-summary a {
-            color: var(--secondary-color);
-            text-decoration: underline;
-        }
-        .article-body a:hover, .article-summary a:hover { color: var(--primary-color); }
-
-        /* KHU VỰC LƯỚI HÌNH ẢNH */
-        .article-media-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 15px;
-            margin: 25px 0 10px 0;
-        }
-
-        .article-media-grid img {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-            border-radius: 8px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-            transition: transform 0.2s;
-            cursor: pointer;
-        }
-        .article-media-grid img:hover { transform: scale(1.02); }
-
-        .section-title {
-            color: var(--primary-color);
-            font-size: 18px;
-            border-bottom: 2px solid var(--primary-color);
-            padding-bottom: 8px;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-        }
-
-        .notice-list { list-style: none; }
-        .notice-list li { padding: 8px 0; border-bottom: 1px solid #f0f0f0; font-size: 14px; }
-
-        .loading, .empty-state {
-            text-align: center;
-            padding: 50px 0;
-            color: #777;
-            font-style: italic;
-        }
-
-        /* LIGHTBOX POPUP MODAL */
-
-        /* ===== TƯƠNG TÁC BÀI VIẾT - FIREBASE ===== */
-        .fb-engagement { margin-top:30px; padding-top:24px; border-top:1px solid #e7edf4; }
-        .fb-stats { display:flex; flex-wrap:wrap; gap:10px; margin:14px 0 18px; }
-        .fb-stat { background:#f3f7fb; border:1px solid #e3ebf4; border-radius:9px; padding:9px 13px; color:#345; font-size:13px; }
-        .fb-reactions { display:flex; flex-wrap:wrap; gap:8px; margin:12px 0 22px; }
-        .fb-reaction { display:flex; align-items:center; gap:7px; border:1px solid #d9e3ed; background:#fff; color:#334; border-radius:22px; padding:8px 13px; cursor:pointer; font-size:14px; transition:.18s; }
-        .fb-reaction:hover { background:#f2f7fc; border-color:#0055a5; }
-        .fb-reaction.active { background:#e8f2ff; border-color:#0055a5; color:#003366; font-weight:700; }
-        .fb-reaction .emoji { font-size:19px; }
-        .fb-comment-form { display:grid; gap:10px; margin:14px 0 20px; }
-        .fb-comment-form input,.fb-comment-form textarea,.fb-admin-form input { width:100%; border:1px solid #d7e0e9; border-radius:8px; padding:11px 13px; font:inherit; font-size:14px; outline:none; }
-        .fb-comment-form input:focus,.fb-comment-form textarea:focus,.fb-admin-form input:focus { border-color:#0055a5; box-shadow:0 0 0 3px rgba(0,85,165,.1); }
-        .fb-comment-form textarea { min-height:95px; resize:vertical; }
-        .fb-btn { background:linear-gradient(135deg,#003366,#0055a5); color:#fff; border:0; border-radius:7px; padding:10px 20px; font-weight:700; cursor:pointer; justify-self:start; }
-        .fb-btn:disabled { opacity:.6; cursor:wait; }
-        .fb-comments { margin-top:8px; }
-        .fb-comment { border-bottom:1px solid #edf0f4; padding:14px 0; }
-        .fb-comment:last-child { border-bottom:0; }
-        .fb-comment-head { display:flex; flex-wrap:wrap; align-items:center; gap:8px; }
-        .fb-comment-name { color:#003366; font-weight:700; font-size:14px; }
-        .fb-comment-time { color:#8993a0; font-size:12px; }
-        .fb-comment-text { margin-top:5px; white-space:pre-wrap; overflow-wrap:anywhere; font-size:14px; line-height:1.65; }
-        .fb-delete { margin-left:auto; border:1px solid #f1caca; color:#a12626; background:#fff5f5; border-radius:6px; padding:5px 9px; cursor:pointer; font-size:12px; }
-        .fb-alert { display:none; padding:10px 12px; border-radius:7px; margin:10px 0; font-size:13px; }
-        .fb-alert.ok { display:block; background:#eaf7ee; color:#216b37; }
-        .fb-alert.error { display:block; background:#fff0f0; color:#a12626; }
-        .fb-empty,.fb-note { color:#788391; font-size:13px; }
-        .fb-admin { margin-top:20px; padding:14px; border:1px dashed #cbd7e3; border-radius:9px; background:#fafcff; }
-        .fb-admin summary { color:#003366; font-weight:700; cursor:pointer; }
-        .fb-admin-form { display:grid; gap:9px; margin-top:12px; }
-        .fb-admin-status { font-size:13px; color:#586779; margin-top:8px; }
-        @media(max-width:520px) { .fb-reactions { gap:6px; } .fb-reaction { padding:7px 10px; } }
-
-        .modal {
-            display: none; position: fixed; z-index: 1000; padding-top: 50px; left: 0; top: 0;
-            width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.85); backdrop-filter: blur(4px);
-        }
-        .modal-content {
-            margin: auto; display: block; max-width: 90%; max-height: 85vh; border-radius: 8px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.5); animation: zoom 0.3s ease-in-out;
-        }
-        @keyframes zoom { from { transform: scale(0.7); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-        .close-modal {
-            position: absolute; top: 20px; right: 35px; color: #fff; font-size: 40px; font-weight: bold; cursor: pointer;
-        }
-        .close-modal:hover { color: #bbb; }
-
-        footer {
-            background-color: #001529; color: white; text-align: center; padding: 20px; font-size: 13px; margin-top: auto;
-        }
-        footer p { margin: 5px 0; color: #aaa; }
-
-        @media (max-width: 768px) {
-            .header-container { flex-direction: column; text-align: center; }
-            .main-wrapper { grid-template-columns: 1fr; }
-            .card { padding: 20px; }
-            .article-title { font-size: 20px; }
-        }
-    </style>
-</head>
-<body>
-
-    <header>
-        <div class="header-container">
-            <div class="logo-box" id="logo-container">
-                <img src="logo.png" alt="Logo Lớp 12A7" onerror="document.getElementById('logo-container').innerText='12A7'">
-            </div>
-            <div class="header-text">
-                <h1>CỔNG THÔNG TIN LỚP 12A7</h1>
-                <p>Trung tâm Giáo dục nghề nghiệp - Giáo dục thường xuyên Tân Bình (Phân hiệu Phú Nhuận) | Năm học 2026 - 2027</p>
-            </div>
-        </div>
-    </header>
-
-    <nav>
-        <div class="nav-container">
-            <a href="index.html">Trang chủ</a>
-            <a href="baobai.html">Báo Bài</a>
-            <a href="index.html#tin-tuc">Tin tức & Sự kiện</a>
-            <a href="gochoc-tap.html">Góc học tập</a>
-            <a href="giaovien.html">Giáo viên</a>
-            <a href="gocxanh.html" class="green-tab">Góc Xanh</a>
-            <a href="thanhvien.html">Thành viên</a>
-            <a href="thuvien.html">Thư viện ảnh</a>
-            <a href="credits.html">Credits</a>
-        </div>
-    </nav>
-
-    <div class="main-wrapper">
-        <main>
-            <div class="card">
-                <a href="index.html" class="back-btn" id="back-link">&larr; Quay lại Trang Chủ</a>
-                <div id="article-container">
-                    <div class="loading">⏳ Đang tải nội dung bài viết...</div>
-                </div>
-                <section class="fb-engagement" id="fb-engagement" style="display:none">
-                    <h2 class="section-title">TƯƠNG TÁC BÀI VIẾT</h2>
-                    <div class="fb-stats">
-                        <div class="fb-stat">👁️ <b id="fb-view-count">0</b> lượt xem</div>
-                        <div class="fb-stat">💬 <b id="fb-comment-count">0</b> bình luận</div>
-                        <div class="fb-stat">❤️ <b id="fb-reaction-count">0</b> cảm xúc</div>
-                    </div>
-                    <h3 style="font-size:15px;color:#003366;margin:14px 0 8px">Bạn cảm thấy bài viết này thế nào?</h3>
-                    <div class="fb-reactions" id="fb-reactions">
-                        <button type="button" class="fb-reaction" data-reaction="like"><span class="emoji">👍</span> Thích <b>0</b></button>
-                        <button type="button" class="fb-reaction" data-reaction="love"><span class="emoji">❤️</span> Yêu thích <b>0</b></button>
-                        <button type="button" class="fb-reaction" data-reaction="haha"><span class="emoji">😂</span> Haha <b>0</b></button>
-                        <button type="button" class="fb-reaction" data-reaction="wow"><span class="emoji">😮</span> Wow <b>0</b></button>
-                        <button type="button" class="fb-reaction" data-reaction="support"><span class="emoji">👏</span> Ủng hộ <b>0</b></button>
-                    </div>
-                    <h3 class="section-title" style="margin-top:24px">BÌNH LUẬN</h3>
-                    <form class="fb-comment-form" id="fb-comment-form">
-                        <input id="fb-comment-name" maxlength="60" placeholder="Tên của bạn" required>
-                        <textarea id="fb-comment-content" maxlength="1000" placeholder="Viết bình luận của bạn..." required></textarea>
-                        <button class="fb-btn" id="fb-comment-submit" type="submit">Gửi bình luận</button>
-                    </form>
-                    <div class="fb-alert" id="fb-alert" role="status"></div>
-                    <div class="fb-comments" id="fb-comments"><p class="fb-empty">Đang kết nối Firebase...</p></div>
-                    <p class="fb-note" style="margin-top:12px">Vui lòng bình luận văn minh, lịch sự và phù hợp với môi trường học đường.</p>
-
-                    <details class="fb-admin" id="fb-admin">
-                        <summary>🔐 Quản trị bình luận (GVCN / Admin)</summary>
-                        <div class="fb-admin-form" id="fb-admin-login">
-                            <input id="fb-admin-email" type="email" autocomplete="username" placeholder="Email quản trị">
-                            <input id="fb-admin-password" type="password" autocomplete="current-password" placeholder="Mật khẩu">
-                            <button type="button" class="fb-btn" id="fb-admin-login-btn">Đăng nhập quản trị</button>
-                        </div>
-                        <div class="fb-admin-status" id="fb-admin-status">Chỉ tài khoản được cấp quyền quản trị mới có thể xóa bình luận.</div>
-                        <button type="button" class="fb-btn" id="fb-admin-logout" style="display:none;margin-top:10px">Đăng xuất quản trị</button>
-                    </details>
-                </section>
-            </div>
-        </main>
-
-        <aside>
-            <div class="card">
-                <h3 class="section-title">Ban cán sự Lớp 12A7</h3>
-                <ul class="notice-list">
-                    <li><b>GVCN:</b> Cô Nguyễn Thị Khánh Ly</li>
-                    <li><b>Lớp trưởng:</b> VÕ NGỌC KHANG</li>
-                    <li><b>Lớp phó HT:</b> Cao Cẩm Doanh</li>
-                    <li><b>Lớp phó Phong trào:</b> Lê Thị Kim Hương</li>
-                </ul>
-            </div>
-        </aside>
+<section class="panel" id="fb-engagement" hidden>
+  <div class="section-head">
+    <div><div class="eyebrow">Community response</div><h2 class="engagement-title">Cùng tương tác với bài viết</h2><p class="engagement-subtitle">Cảm xúc, lượt xem và bình luận của thành viên 12A7.</p></div>
+  </div>
+  <div class="fb-stats">
+    <div class="fb-stat">👁️ <b id="fb-view-count">0</b> lượt xem</div>
+    <div class="fb-stat">💬 <b id="fb-comment-count">0</b> bình luận</div>
+    <div class="fb-stat">❤️ <b id="fb-reaction-count">0</b> cảm xúc</div>
+  </div>
+  <h3 class="engagement-subtitle" style="margin-top:18px;color:var(--navy)">Bạn cảm thấy bài viết này thế nào?</h3>
+  <div class="reaction-row" id="fb-reactions">
+    <button type="button" class="reaction-btn" data-reaction="like"><span>👍</span> Thích <b data-count>0</b></button>
+    <button type="button" class="reaction-btn" data-reaction="love"><span>❤️</span> Yêu thích <b data-count>0</b></button>
+    <button type="button" class="reaction-btn" data-reaction="haha"><span>😂</span> Haha <b data-count>0</b></button>
+    <button type="button" class="reaction-btn" data-reaction="wow"><span>😮</span> Wow <b data-count>0</b></button>
+    <button type="button" class="reaction-btn" data-reaction="support"><span>👏</span> Ủng hộ <b data-count>0</b></button>
+  </div>
+  <div class="engagement-panel">
+    <h3 class="engagement-title" style="font-size:16px">💬 Để lại bình luận</h3>
+    <form class="comment-form" id="fb-comment-form">
+      <input name="name" id="fb-comment-name" maxlength="60" required placeholder="Tên của bạn">
+      <textarea name="content" id="fb-comment-content" maxlength="1000" required placeholder="Viết bình luận của bạn..."></textarea>
+      <button class="btn btn-blue" id="fb-comment-submit" type="submit">Gửi bình luận ↗</button>
+    </form>
+    <div class="fb-alert" id="fb-alert" role="status"></div>
+    <h3 style="font-size:15px;color:var(--navy);margin:22px 0 10px">Ý kiến từ thành viên</h3>
+    <div class="comment-list" id="fb-comments"><div class="empty-state">Đang kết nối dữ liệu tương tác…</div></div>
+    <p class="auth-note" style="text-align:left">Vui lòng bình luận văn minh, lịch sự và phù hợp với môi trường học đường.</p>
+  </div>
+  <details class="admin-panel">
+    <summary>🔐 Quản trị bình luận (GVCN / Admin)</summary>
+    <div id="fb-admin-login" class="comment-form" style="margin-top:12px">
+      <input id="fb-admin-email" type="email" autocomplete="username" placeholder="Email quản trị">
+      <input id="fb-admin-password" type="password" autocomplete="current-password" placeholder="Mật khẩu">
+      <button class="btn btn-blue" type="button" id="fb-admin-login-btn">Đăng nhập quản trị</button>
     </div>
-
-    <!-- LIGHTBOX MODAL -->
-    <div id="imageModal" class="modal" onclick="closeModal()">
-        <span class="close-modal">&times;</span>
-        <img class="modal-content" id="imgFull" alt="Phóng to ảnh" onclick="event.stopPropagation()">
-    </div>
-
-<footer>
-        <p>&copy; 2026 Cổng thông tin Lớp 12A7 - Trung tâm Giáo dục nghề nghiệp - Giáo dục thường xuyên Tân Bình (Phân hiệu Phú Nhuận)</p>
-        <p>📧 Email liên hệ: <a href="mailto:12a7.phanhieuttgdnngdtxtanbinh@gmail.com">12a7.phanhieuttgdnngdtxtanbinh@gmail.com</a></p>
-        <p>Phát triển và vận hành bởi Tập thể Lớp 12A7</p>
-    </footer>
-
-
-
-    <!-- Firebase Realtime Database (Compat SDK) -->
-    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
-
-    <script>
-        const SPREADSHEET_ID = '10WZAkfTsUhEsTRADxZ3JX869kLV_Sen45r4BeSrxDZY';
-        const GID_BAO_BAI = '1447199433';
-        const GID_PHONGTRAO = '2104947705'; // Đã thêm GID cho Phong Trào
-
-        // ===== FIREBASE REALTIME DATABASE CONFIG =====
-        // Điền cấu hình Web App lấy từ Firebase Console > Project settings > Your apps.
-        // Không dùng Service Account key hoặc Admin SDK key trong file HTML.
-        const FIREBASE_CONFIG = {
-            apiKey: "AIzaSyD_bg0nSmeOma70PVZSKlW9OxWDqXuzrA0",
-            authDomain: "a7-website-3bd33.firebaseapp.com",
-            databaseURL: "https://a7-website-3bd33-default-rtdb.asia-southeast1.firebasedatabase.app",
-            projectId: "a7-website-3bd33",
-            storageBucket: "a7-website-3bd33.firebasestorage.app",
-            messagingSenderId: "1022960527978",
-            appId: "1:1022960527978:web:c5f8286381710491053813",
-            measurementId: "G-QR9J1DNYV6"
-        };
-
-        const FB_REACTIONS = {
-            like: { label: "Thích", emoji: "👍" },
-            love: { label: "Yêu thích", emoji: "❤️" },
-            haha: { label: "Haha", emoji: "😂" },
-            wow: { label: "Wow", emoji: "😮" },
-            support: { label: "Ủng hộ", emoji: "👏" }
-        };
-
-        let fbApp = null;
-        let fbAuth = null;
-        let fbDb = null;
-        let fbCurrentUser = null;
-        let fbIsAdmin = false;
-        let fbPostKey = "";
-        let fbListenersStarted = false;
-        let fbCommentsRef = null;
-        let fbPostRef = null;
-
-        function firebaseConfigReady() {
-            return FIREBASE_CONFIG.apiKey !== "YOUR_FIREBASE_API_KEY" &&
-                   FIREBASE_CONFIG.projectId === "a7-website-3bd33" &&
-                   FIREBASE_CONFIG.appId !== "YOUR_FIREBASE_APP_ID" &&
-                   FIREBASE_CONFIG.databaseURL !== "PASTE_REALTIME_DATABASE_URL_HERE" &&
-                   FIREBASE_CONFIG.databaseURL.startsWith("https://");
-        }
-
-        function getFirebasePostKey() {
-            const p = getUrlParams();
-            if (p.type === "gocxanh") return "gocxanh_" + String(p.id || "unknown");
-            if (p.type === "baobai") return "baobai_" + String(p.row || "unknown");
-            if (p.id) return "news_" + String(p.id);
-            return "";
-        }
-
-        function fbShowMessage(message, kind) {
-            const el = document.getElementById("fb-alert");
-            if (!el) return;
-            el.textContent = message;
-            el.className = "fb-alert " + (kind || "error");
-        }
-
-        function fbEscape(value) {
-            return escapeHtml(value == null ? "" : String(value));
-        }
-
-        function fbFormatTime(timestamp) {
-            const date = new Date(Number(timestamp || 0));
-            if (!Number.isFinite(date.getTime()) || !timestamp) return "Vừa xong";
-            return date.toLocaleString("vi-VN", {
-                day: "2-digit", month: "2-digit", year: "numeric",
-                hour: "2-digit", minute: "2-digit"
-            });
-        }
-
-        function fbRenderState(snapshot) {
-            const data = snapshot.val() || {};
-            const views = data.views || {};
-            const reactions = data.reactions || {};
-            const comments = data.comments || {};
-
-            const viewTotal = Object.values(views).reduce((sum, item) => sum + Number((item && item.count) || 0), 0);
-            const reactionCounts = { like: 0, love: 0, haha: 0, wow: 0, support: 0 };
-            let myReaction = null;
-
-            Object.entries(reactions).forEach(([uid, item]) => {
-                if (!item || !reactionCounts.hasOwnProperty(item.type)) return;
-                reactionCounts[item.type]++;
-                if (fbCurrentUser && uid === fbCurrentUser.uid) myReaction = item.type;
-            });
-
-            const commentEntries = Object.entries(comments)
-                .filter(([, item]) => item && item.deleted !== true)
-                .sort((a, b) => Number(b[1].createdAt || 0) - Number(a[1].createdAt || 0));
-
-            const reactionTotal = Object.values(reactionCounts).reduce((a, b) => a + b, 0);
-            document.getElementById("fb-view-count").textContent = viewTotal.toLocaleString("vi-VN");
-            document.getElementById("fb-comment-count").textContent = commentEntries.length.toLocaleString("vi-VN");
-            document.getElementById("fb-reaction-count").textContent = reactionTotal.toLocaleString("vi-VN");
-
-            document.querySelectorAll("#fb-reactions .fb-reaction").forEach(button => {
-                const type = button.dataset.reaction;
-                const count = reactionCounts[type] || 0;
-                const countEl = button.querySelector("b");
-                if (countEl) countEl.textContent = count.toLocaleString("vi-VN");
-                button.classList.toggle("active", myReaction === type);
-                button.setAttribute("aria-pressed", myReaction === type ? "true" : "false");
-            });
-
-            const commentsEl = document.getElementById("fb-comments");
-            if (!commentEntries.length) {
-                commentsEl.innerHTML = '<p class="fb-empty">Chưa có bình luận nào. Hãy là người đầu tiên chia sẻ nhé!</p>';
-                return;
-            }
-
-            commentsEl.innerHTML = commentEntries.map(([commentId, item]) => `
-                <article class="fb-comment">
-                    <div class="fb-comment-head">
-                        <span class="fb-comment-name">${fbEscape(item.name || "Ẩn danh")}</span>
-                        <span class="fb-comment-time">${fbEscape(fbFormatTime(item.createdAt))}</span>
-                        ${fbIsAdmin ? `<button type="button" class="fb-delete" data-delete-comment="${fbEscape(commentId)}">Xóa bình luận</button>` : ""}
-                    </div>
-                    <div class="fb-comment-text">${fbEscape(item.content || "")}</div>
-                </article>
-            `).join("");
-        }
-
-        async function fbCheckAdmin(user) {
-            fbIsAdmin = false;
-            if (user && !user.isAnonymous) {
-                try {
-                    const snap = await fbDb.ref("admins/" + user.uid).once("value");
-                    fbIsAdmin = snap.val() === true;
-                } catch (err) {
-                    console.warn("Không kiểm tra được quyền quản trị:", err);
-                }
-            }
-            const loginBox = document.getElementById("fb-admin-login");
-            const status = document.getElementById("fb-admin-status");
-            const logout = document.getElementById("fb-admin-logout");
-            if (loginBox) loginBox.style.display = fbIsAdmin ? "none" : "grid";
-            if (logout) logout.style.display = fbIsAdmin ? "inline-block" : "none";
-            if (status) {
-                status.textContent = fbIsAdmin
-                    ? "Đã đăng nhập quyền quản trị. Bạn có thể xóa bình luận không phù hợp."
-                    : (user && !user.isAnonymous
-                        ? "Tài khoản đã đăng nhập nhưng chưa được cấp quyền quản trị."
-                        : "Chỉ tài khoản được cấp quyền quản trị mới có thể xóa bình luận.");
-            }
-            if (fbPostRef) fbPostRef.once("value").then(fbRenderState).catch(console.error);
-        }
-
-        // Chờ Firebase khôi phục phiên đã lưu trước khi tạo tài khoản ẩn danh.
-        // Nếu không chờ bước này, trang mới có thể thấy currentUser = null tạm thời
-        // và tạo phiên anonymous, khiến Admin tưởng như bị đăng xuất.
-        function fbWaitForInitialAuthState() {
-            return new Promise((resolve, reject) => {
-                let unsubscribe = null;
-                unsubscribe = fbAuth.onAuthStateChanged(
-                    user => {
-                        if (unsubscribe) unsubscribe();
-                        resolve(user || null);
-                    },
-                    error => {
-                        if (unsubscribe) unsubscribe();
-                        reject(error);
-                    }
-                );
-            });
-        }
-
-        async function fbEnsureUserSession() {
-            // Lưu phiên đăng nhập trên trình duyệt qua các lần chuyển trang / tải lại.
-            await fbAuth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
-
-            // Đợi Firebase khôi phục tài khoản email/password hoặc anonymous hiện có.
-            let user = await fbWaitForInitialAuthState();
-
-            // Chỉ tạo anonymous khi trình duyệt thực sự chưa có phiên nào.
-            if (!user) {
-                const credential = await fbAuth.signInAnonymously();
-                user = credential.user;
-            }
-            return user;
-        }
-
-        async function fbRecordView() {
-            if (!fbCurrentUser || !fbPostRef) return;
-            const ref = fbPostRef.child("views/" + fbCurrentUser.uid);
-            const now = Date.now();
-            await ref.transaction(current => {
-                const previous = current || { count: 0, lastAt: 0 };
-                const lastAt = Number(previous.lastAt || 0);
-                if (now - lastAt < 30 * 60 * 1000) return previous;
-                return { count: Number(previous.count || 0) + 1, lastAt: now };
-            });
-        }
-
-        async function fbToggleReaction(type) {
-            if (!FB_REACTIONS[type] || !fbCurrentUser || !fbPostRef) return;
-            const ref = fbPostRef.child("reactions/" + fbCurrentUser.uid);
-            try {
-                await ref.transaction(current => {
-                    if (current && current.type === type) return null;
-                    return { type, updatedAt: firebase.database.ServerValue.TIMESTAMP };
-                });
-                fbShowMessage("Đã cập nhật cảm xúc của bạn.", "ok");
-            } catch (err) {
-                console.error("Firebase reaction error:", err);
-                fbShowMessage("Không thể lưu cảm xúc. Kiểm tra cấu hình và quyền Firebase.", "error");
-            }
-        }
-
-        async function fbSubmitComment(event) {
-            event.preventDefault();
-            const nameInput = document.getElementById("fb-comment-name");
-            const contentInput = document.getElementById("fb-comment-content");
-            const button = document.getElementById("fb-comment-submit");
-            const name = nameInput.value.trim();
-            const content = contentInput.value.trim();
-
-            if (!name || !content) {
-                fbShowMessage("Vui lòng nhập tên và nội dung bình luận.", "error");
-                return;
-            }
-            if (name.length > 60 || content.length > 1000) {
-                fbShowMessage("Tên tối đa 60 ký tự và bình luận tối đa 1.000 ký tự.", "error");
-                return;
-            }
-
-            button.disabled = true;
-            button.textContent = "Đang gửi...";
-            try {
-                const newComment = fbCommentsRef.push();
-                await newComment.set({
-                    uid: fbCurrentUser.uid,
-                    name,
-                    content,
-                    createdAt: firebase.database.ServerValue.TIMESTAMP
-                });
-                contentInput.value = "";
-                fbShowMessage("Bình luận đã được gửi thành công!", "ok");
-            } catch (err) {
-                console.error("Firebase comment error:", err);
-                fbShowMessage("Không thể gửi bình luận. Vui lòng kiểm tra quyền Firebase.", "error");
-            } finally {
-                button.disabled = false;
-                button.textContent = "Gửi bình luận";
-            }
-        }
-
-        async function fbDeleteComment(commentId) {
-            if (!fbIsAdmin || !commentId || !fbCommentsRef) return;
-            if (!confirm("Bạn có chắc muốn xóa bình luận này?")) return;
-            try {
-                await fbCommentsRef.child(commentId).remove();
-                fbShowMessage("Đã xóa bình luận.", "ok");
-            } catch (err) {
-                console.error("Firebase delete comment error:", err);
-                fbShowMessage("Không thể xóa bình luận. Tài khoản chưa có quyền quản trị trong Database Rules.", "error");
-            }
-        }
-
-        async function fbAdminLogin() {
-            const email = document.getElementById("fb-admin-email").value.trim();
-            const password = document.getElementById("fb-admin-password").value;
-            if (!email || !password) {
-                fbShowMessage("Vui lòng nhập email và mật khẩu quản trị.", "error");
-                return;
-            }
-            try {
-                await fbAuth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
-                await fbAuth.signInWithEmailAndPassword(email, password);
-                fbCurrentUser = fbAuth.currentUser;
-                await fbCheckAdmin(fbCurrentUser);
-                if (!fbIsAdmin) fbShowMessage("Tài khoản chưa được cấp quyền Admin trong Firebase Database.", "error");
-                else fbShowMessage("Đăng nhập quản trị thành công.", "ok");
-            } catch (err) {
-                console.error("Firebase admin login error:", err);
-                fbShowMessage("Đăng nhập thất bại. Kiểm tra email, mật khẩu và bật Email/Password trong Firebase Authentication.", "error");
-            }
-        }
-
-        async function fbAdminLogout() {
-            try {
-                await fbAuth.signOut();
-                await fbAuth.signInAnonymously();
-                fbShowMessage("Đã đăng xuất quản trị.", "ok");
-            } catch (err) {
-                fbShowMessage("Không thể đăng xuất: " + (err.message || err), "error");
-            }
-        }
-
-        async function initFirebaseEngagement() {
-            fbPostKey = getFirebasePostKey();
-            if (!fbPostKey) return;
-
-            const section = document.getElementById("fb-engagement");
-            section.style.display = "block";
-
-            if (!firebaseConfigReady()) {
-                document.getElementById("fb-comments").innerHTML =
-                    '<p class="fb-empty">Cần điền Firebase Web App Config vào file baiviet.html trước khi sử dụng.</p>';
-                fbShowMessage("Chưa cấu hình Firebase. Xem file hướng dẫn đi kèm.", "error");
-                return;
-            }
-
-            if (!firebase.apps.length) fbApp = firebase.initializeApp(FIREBASE_CONFIG);
-            else fbApp = firebase.app();
-            fbAuth = firebase.auth();
-            fbDb = firebase.database();
-            fbPostRef = fbDb.ref("articleInteractions/" + fbPostKey);
-            fbCommentsRef = fbPostRef.child("comments");
-
-            try {
-                fbCurrentUser = await fbEnsureUserSession();
-                await fbCheckAdmin(fbCurrentUser);
-
-                if (!fbListenersStarted) {
-                    fbListenersStarted = true;
-                    fbPostRef.on("value", fbRenderState, error => {
-                        console.error("Firebase read error:", error);
-                        fbShowMessage("Không đọc được dữ liệu Firebase. Kiểm tra Database Rules.", "error");
-                    });
-
-                    document.getElementById("fb-reactions").addEventListener("click", event => {
-                        const button = event.target.closest("[data-reaction]");
-                        if (button) fbToggleReaction(button.dataset.reaction);
-                    });
-                    document.getElementById("fb-comment-form").addEventListener("submit", fbSubmitComment);
-                    document.getElementById("fb-comments").addEventListener("click", event => {
-                        const button = event.target.closest("[data-delete-comment]");
-                        if (button) fbDeleteComment(button.dataset.deleteComment);
-                    });
-                    document.getElementById("fb-admin-login-btn").addEventListener("click", fbAdminLogin);
-                    document.getElementById("fb-admin-logout").addEventListener("click", fbAdminLogout);
-
-                    fbAuth.onAuthStateChanged(async user => {
-                        fbCurrentUser = user;
-                        if (user) await fbCheckAdmin(user);
-                    });
-                }
-
-                await fbRecordView();
-            } catch (err) {
-                console.error("Firebase initialization error:", err);
-                fbShowMessage("Không thể kết nối Firebase: " + (err.message || err), "error");
-            }
-        }
-
-        function escapeHtml(text) {
-            if (!text) return '';
-            return String(text)
-                .replace(/&/g, "&amp;")
-                .replace(/</g, "&lt;")
-                .replace(/>/g, "&gt;")
-                .replace(/"/g, "&quot;")
-                .replace(/'/g, "&#039;");
-        }
-
-        function linkify(text) {
-            if (!text) return '';
-            const safeText = escapeHtml(text);
-            const urlRegex = /(https?:\/\/[^\s]+)/g;
-            return safeText.replace(urlRegex, function(url) {
-                return `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`;
-            });
-        }
-
-        function parseCellValue(cell) {
-            if (!cell || cell.v === null || cell.v === undefined) return '';
-            if (cell.f) return String(cell.f).trim();
-            let val = String(cell.v).trim();
-            if (val.startsWith('Date(')) {
-                const matches = val.match(/\d+/g);
-                if (matches && matches.length >= 3) {
-                    const year = matches[0];
-                    const month = String(parseInt(matches[1]) + 1).padStart(2, '0');
-                    const day = String(matches[2]).padStart(2, '0');
-                    return `${day}/${month}/${year}`;
-                }
-            }
-            return val;
-        }
-
-        function formatImageUrl(url) {
-            if (!url) return '';
-            url = url.trim();
-            if (url.includes('drive.google.com')) {
-                const match = url.match(/\/d\/([a-zA-Z0-9_-]+)/) || url.match(/id=([a-zA-Z0-9_-]+)/);
-                if (match && match[1]) {
-                    return `https://lh3.googleusercontent.com/d/${match[1]}`;
-                }
-            }
-            return url;
-        }
-
-        function getUrlParams() {
-            const params = new URLSearchParams(window.location.search);
-            return {
-                id: params.get('id'),
-                type: params.get('type'),
-                row: params.get('row')
-            };
-        }
-
-        /* 1. XỬ LÝ BÀI VIẾT PHONG TRÀO (TYPE = GOCXANH) - SỬ DỤNG GVIZ API THAY VÌ FETCH TSV CHẶN */
-        function loadGocXanhDetail(json) {
-            const container = document.getElementById('article-container');
-            const { id } = getUrlParams();
-            
-            const backLink = document.getElementById('back-link');
-            backLink.href = 'gocxanh.html';
-            backLink.innerHTML = '&larr; Quay lại Góc Xanh';
-
-            try {
-                if (!json || !json.table || !json.table.rows) {
-                     container.innerHTML = '<div class="empty-state">Bài viết phong trào không tồn tại hoặc đã bị xóa.</div>';
-                     return;
-                }
-
-                const rows = json.table.rows;
-                let targetRow = null;
-
-                for (let i = 0; i < rows.length; i++) {
-                    const r = rows[i].c;
-                    if (!r) continue;
-                    // uid ở cột 0
-                    const rowUid = r[0] ? (r[0].v !== null ? String(r[0].v).trim() : '') : '';
-                    if (rowUid === String(id)) {
-                        targetRow = r;
-                        break;
-                    }
-                }
-
-                if (!targetRow) {
-                    container.innerHTML = '<div class="empty-state">Bài viết phong trào không tồn tại hoặc đã bị xóa.</div>';
-                    return;
-                }
-                
-                // Ánh xạ cột của Sheet Phong Trào[cite: 7]
-                // A(0):uid, B(1):Ngày, C(2):Tác Giả, D(3):Tiêu Đề, E(4):Chi Tiết, F(5):Ảnh, G(6):video
-                const ngay = parseCellValue(targetRow[1]);
-                const tacGia = targetRow[2] && targetRow[2].v ? targetRow[2].v : 'Ban Phong Trào';
-                const tieuDe = targetRow[3] && targetRow[3].v ? targetRow[3].v : 'Không có tiêu đề';
-                const chiTiet = targetRow[4] && targetRow[4].v ? targetRow[4].v : '';
-                const rawHinhAnh = targetRow[5] ? parseCellValue(targetRow[5]) : '';
-
-                document.title = `${tieuDe} - Cổng Thông Tin Lớp 12A7`;
-
-                let imagesHtml = '';
-                if (rawHinhAnh) {
-                    const imgList = rawHinhAnh.split(/[\n,]+/).map(u => u.trim()).filter(u => u.length > 0);
-                    if (imgList.length > 0) {
-                        imagesHtml = '<div class="article-media-grid">';
-                        imgList.forEach(url => {
-                            const formattedUrl = formatImageUrl(url);
-                            imagesHtml += `<img src="${escapeHtml(formattedUrl)}" alt="Hình ảnh bài viết" onclick="openModal(this)" onerror="this.style.display='none'">`;
-                        });
-                        imagesHtml += '</div>';
-                    }
-                }
-
-                container.innerHTML = `
-                    <h1 class="article-title">${escapeHtml(tieuDe)}</h1>
-                    <div class="article-meta">
-                        🕒 Ngày đăng: <b>${escapeHtml(ngay)}</b> | 
-                        ✍️ Đăng bởi: <b>${escapeHtml(tacGia)}</b>
-                    </div>
-                    <div class="article-body">${linkify(chiTiet || 'Không có nội dung chi tiết.')}</div>
-                    ${imagesHtml}
-                `;
-                initFirebaseEngagement();
-
-            } catch (err) {
-                console.error("Lỗi tải bài viết phong trào:", err);
-                container.innerHTML = '<div class="empty-state">Đã xảy ra lỗi khi tải chi tiết bài viết.</div>';
-            }
-        }
-
-
-        /* 2. XỬ LÝ BÀI VIẾT THƯỜNG / TIN TỨC */
-        function handleNewsDetail(json) {
-            const container = document.getElementById('article-container');
-            
-            const backLink = document.getElementById('back-link');
-            backLink.href = 'index.html';
-            backLink.innerHTML = '&larr; Quay lại Trang Chủ';
-
-            const { id } = getUrlParams();
-
-            try {
-                if (!json || !json.table || !json.table.rows) {
-                    container.innerHTML = '<div class="empty-state">Không thể kết nối dữ liệu bài viết.</div>';
-                    return;
-                }
-
-                const rows = json.table.rows;
-                let targetRow = null;
-
-                for (let i = 0; i < rows.length; i++) {
-                    const r = rows[i].c;
-                    if (!r) continue;
-                    const rowId = r[0] ? (r[0].v !== null ? String(r[0].v) : String(i + 1)) : String(i + 1);
-                    if (rowId === String(id)) {
-                        targetRow = r;
-                        break;
-                    }
-                }
-
-                if (!targetRow) {
-                    container.innerHTML = '<div class="empty-state">Bài viết không tồn tại hoặc đã bị xóa.</div>';
-                    return;
-                }
-
-                const ngay = parseCellValue(targetRow[1]);
-                const tacGia = targetRow[2] && targetRow[2].v ? targetRow[2].v : 'Ban Cán Sự Lớp';
-                const tieuDe = targetRow[3] && targetRow[3].v ? targetRow[3].v : 'Không có tiêu đề';
-                const tomTat = targetRow[4] && targetRow[4].v ? targetRow[4].v : '';
-                const noiDung = (targetRow[5] && targetRow[5].v) ? targetRow[5].v : tomTat;
-                const rawHinhAnh = targetRow[6] ? parseCellValue(targetRow[6]) : '';
-
-                document.title = `${tieuDe} - Cổng Thông Tin Lớp 12A7`;
-
-                let imagesHtml = '';
-                if (rawHinhAnh.trim()) {
-                    const imgList = rawHinhAnh.split(/[\n,]+/).map(url => url.trim()).filter(url => url.length > 0);
-                    if (imgList.length > 0) {
-                        imagesHtml = '<div class="article-media-grid">';
-                        imgList.forEach(url => {
-                            const formattedUrl = formatImageUrl(url);
-                            imagesHtml += `<img src="${escapeHtml(formattedUrl)}" alt="Hình ảnh bài viết" onclick="openModal(this)" onerror="this.style.display='none'">`;
-                        });
-                        imagesHtml += '</div>';
-                    }
-                }
-
-                container.innerHTML = `
-                    <h1 class="article-title">${escapeHtml(tieuDe)}</h1>
-                    <div class="article-meta">
-                        🕒 Ngày đăng: <b>${escapeHtml(ngay)}</b> | 
-                        ✍️ Đăng bởi: <b>${escapeHtml(tacGia)}</b>
-                    </div>
-                    ${tomTat ? `<div class="article-summary">${linkify(tomTat)}</div>` : ''}
-                    <div class="article-body">${linkify(noiDung)}</div>
-                    ${imagesHtml}
-                `;
-                initFirebaseEngagement();
-
-            } catch (err) {
-                console.error("Lỗi đọc bài viết:", err);
-                container.innerHTML = '<div class="empty-state">Đã xảy ra lỗi khi hiển thị bài viết.</div>';
-            }
-        }
-
-        /* 3. XỬ LÝ NỘI DUNG BÁO BÀI */
-        function handleBaoBaiDetail(json) {
-            const container = document.getElementById('article-container');
-            const { row } = getUrlParams();
-            const rowIndex = parseInt(row, 10);
-            
-            const backLink = document.getElementById('back-link');
-            backLink.href = 'baobai.html';
-            backLink.innerHTML = '&larr; Quay lại Danh Sách Báo Bài';
-
-            try {
-                if (!json || !json.table || !json.table.rows || isNaN(rowIndex) || !json.table.rows[rowIndex]) {
-                    container.innerHTML = '<div class="empty-state">Không tìm thấy thông tin báo bài.</div>';
-                    return;
-                }
-
-                const r = json.table.rows[rowIndex].c;
-                const ngayThang = parseCellValue(r[0]);
-                const monHoc = parseCellValue(r[1]);
-                const noiDung = parseCellValue(r[2]);
-
-                const titleText = monHoc ? `[${monHoc}] Báo bài ${ngayThang ? '(' + ngayThang + ')' : ''}` : `Báo bài ngày ${ngayThang}`;
-
-                document.title = `${titleText} - Cổng Thông Tin Lớp 12A7`;
-
-                container.innerHTML = `
-                    <h1 class="article-title">📌 ${escapeHtml(titleText)}</h1>
-                    <div class="article-meta">
-                        🕒 Ngày giao: <b>${escapeHtml(ngayThang || 'Chưa cập nhật')}</b> | 
-                        📖 Môn học: <b>${escapeHtml(monHoc || 'Chung')}</b>
-                    </div>
-                    <div class="article-body">${linkify(noiDung || 'Không có nội dung chi tiết.')}</div>
-                `;
-                initFirebaseEngagement();
-            } catch (err) {
-                console.error("Lỗi đọc báo bài:", err);
-                container.innerHTML = '<div class="empty-state">Đã xảy ra lỗi khi hiển thị chi tiết báo bài.</div>';
-            }
-        }
-
-        /* LIGHTBOX FUNCTIONS */
-        function openModal(imgElement) {
-            const modal = document.getElementById("imageModal");
-            const modalImg = document.getElementById("imgFull");
-            modal.style.display = "block";
-            modalImg.src = imgElement.src;
-        }
-
-        function closeModal() {
-            document.getElementById("imageModal").style.display = "none";
-        }
-
-        document.addEventListener("keydown", function(e) {
-            if (e.key === "Escape") closeModal();
-        });
-
-        /* KHỞI TẠO */
-        function init() {
-            const { id, type } = getUrlParams();
-            const script = document.createElement('script');
-
-            if (type === 'gocxanh') {
-                // Gọi API GVIZ cho Phong trào thay vì fetch
-                script.src = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?gid=${GID_PHONGTRAO}&tqx=responseHandler:loadGocXanhDetail`;
-                document.body.appendChild(script);
-            } else if (type === 'baobai') {
-                script.src = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?gid=${GID_BAO_BAI}&tqx=responseHandler:handleBaoBaiDetail`;
-                document.body.appendChild(script);
-            } else if (id) {
-                script.src = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=responseHandler:handleNewsDetail`;
-                document.body.appendChild(script);
-            } else {
-                document.getElementById('article-container').innerHTML = '<div class="empty-state">Liên kết bài viết không hợp lệ.</div>';
-            }
-        }
-
-        window.onload = init;
-    </script>
-</body>
-</html>
+    <p class="comment-status" id="fb-admin-status">Chỉ tài khoản được cấp quyền quản trị mới có thể xóa bình luận.</p>
+    <button class="btn btn-outline" type="button" id="fb-admin-logout" hidden>Đăng xuất quản trị</button>
+  </details>
+</section>
+
+</main>
+<footer class="site-footer"><div class="footer-inner"><div><div class="footer-brand">12A7 · CLASS OF 2027</div><p>Giữ lại thanh xuân, viết tiếp hành trình.</p></div><div><p>© 2026 Cổng thông tin lớp 12A7</p><p>Liên hệ: <a href="mailto:12a7.phanhieuttgdnngdtxtanbinh@gmail.com">12a7.phanhieuttgdnngdtanbinh@gmail.com</a></p></div></div></footer>
+<div class="lightbox" id="a7-lightbox" aria-hidden="true" onclick="window.a7CloseLightbox()">
+  <button class="lightbox-close" type="button" aria-label="Đóng ảnh" onclick="event.stopPropagation();window.a7CloseLightbox()">×</button>
+  <button class="lightbox-nav lightbox-prev" type="button" aria-label="Ảnh trước" onclick="event.stopPropagation();window.a7MoveLightbox(-1)">‹</button>
+  <img alt="Ảnh phóng to" id="a7-lightbox-img" onclick="event.stopPropagation()">
+  <button class="lightbox-nav lightbox-next" type="button" aria-label="Ảnh tiếp theo" onclick="event.stopPropagation();window.a7MoveLightbox(1)">›</button>
+  <div class="lightbox-counter" id="a7-lightbox-counter" onclick="event.stopPropagation()">1 / 1</div>
+</div><script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
+<script src="assets/app.js"></script>
+
+<script>
+(function(){
+ const A7=window.A7,params=new URLSearchParams(location.search);
+ const id=params.get('id'),type=params.get('type'),rowIndex=params.get('row');
+
+ let a7GalleryImages=[];
+ let a7GalleryIndex=0;
+ function a7UpdateLightbox(){
+  const overlay=document.getElementById('a7-lightbox');
+  const image=document.getElementById('a7-lightbox-img');
+  const counter=document.getElementById('a7-lightbox-counter');
+  if(!overlay||!image||!a7GalleryImages.length)return;
+  image.src=a7GalleryImages[a7GalleryIndex];
+  counter.textContent=(a7GalleryIndex+1)+' / '+a7GalleryImages.length;
+  const showNav=a7GalleryImages.length>1;
+  overlay.querySelectorAll('.lightbox-nav').forEach(button=>button.style.display=showNav?'grid':'none');
+ }
+ window.a7OpenLightbox=function(index){
+  if(!a7GalleryImages.length)return;
+  a7GalleryIndex=Math.max(0,Math.min(Number(index)||0,a7GalleryImages.length-1));
+  a7UpdateLightbox();
+  const overlay=document.getElementById('a7-lightbox');
+  overlay.classList.add('open');
+  overlay.setAttribute('aria-hidden','false');
+  document.body.style.overflow='hidden';
+ };
+ window.a7MoveLightbox=function(step){
+  if(!a7GalleryImages.length)return;
+  a7GalleryIndex=(a7GalleryIndex+step+a7GalleryImages.length)%a7GalleryImages.length;
+  a7UpdateLightbox();
+ };
+ window.a7CloseLightbox=function(){
+  const overlay=document.getElementById('a7-lightbox');
+  if(!overlay)return;
+  overlay.classList.remove('open');
+  overlay.setAttribute('aria-hidden','true');
+  document.body.style.overflow='';
+ };
+ document.addEventListener('keydown',function(event){
+  const overlay=document.getElementById('a7-lightbox');
+  if(!overlay||!overlay.classList.contains('open'))return;
+  if(event.key==='ArrowRight'){event.preventDefault();window.a7MoveLightbox(1);}
+  else if(event.key==='ArrowLeft'){event.preventDefault();window.a7MoveLightbox(-1);}
+  else if(event.key==='Escape'){event.preventDefault();window.a7CloseLightbox();}
+ });
+
+ const DB='https://a7-website-3bd33-default-rtdb.asia-southeast1.firebasedatabase.app';
+ const FIREBASE_CONFIG={
+  apiKey:"AIzaSyD_bg0nSmeOma70PVZSKlW9OxWDqXuzrA0",
+  authDomain:"a7-website-3bd33.firebaseapp.com",
+  databaseURL:DB,
+  projectId:"a7-website-3bd33",
+  storageBucket:"a7-website-3bd33.firebasestorage.app",
+  messagingSenderId:"1022960527978",
+  appId:"1:1022960527978:web:c5f8286381710491053813",
+  measurementId:"G-QR9J1DNYV6"
+ };
+ const REACTIONS={
+  like:{label:'Thích',emoji:'👍'},
+  love:{label:'Yêu thích',emoji:'❤️'},
+  haha:{label:'Haha',emoji:'😂'},
+  wow:{label:'Wow',emoji:'😮'},
+  support:{label:'Ủng hộ',emoji:'👏'}
+ };
+ let fbAuth=null,fbDb=null,fbCurrentUser=null,fbIsAdmin=false;
+ let fbPostKey='',fbPostRef=null,fbCommentsRef=null,fbListener=null;
+
+ function postKey(){
+  // QUAN TRỌNG: giữ nguyên postKey trong Firebase cũ để không làm mất số liệu hiện có.
+  if(type==='gocxanh')return 'gocxanh_'+String(id||'unknown');
+  if(type==='baobai')return 'baobai_'+String(rowIndex||'unknown');
+  if(id)return 'news_'+String(id);
+  return '';
+ }
+ function esc(v){return A7.esc(v==null?'':String(v));}
+ function showMessage(message,kind='error'){
+  const el=document.getElementById('fb-alert');
+  if(!el)return;el.textContent=message;el.className='fb-alert show '+kind;
+ }
+ function fmtTime(timestamp){
+  const date=new Date(Number(timestamp||0));
+  if(!Number.isFinite(date.getTime())||!timestamp)return 'Vừa xong';
+  return date.toLocaleString('vi-VN',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'});
+ }
+ function renderState(snapshot){
+  // Read exactly the old articleInteractions/{postKey} shape.
+  const data=snapshot.val()||{};
+  const views=data.views||{},reactions=data.reactions||{},comments=data.comments||{};
+  const viewTotal=Object.values(views).reduce((sum,item)=>sum+Number((item&&item.count)||0),0);
+  const reactionCounts={like:0,love:0,haha:0,wow:0,support:0};
+  let myReaction=null;
+  Object.entries(reactions).forEach(([uid,item])=>{
+   if(!item||!Object.prototype.hasOwnProperty.call(reactionCounts,item.type))return;
+   reactionCounts[item.type]++;
+   if(fbCurrentUser&&uid===fbCurrentUser.uid)myReaction=item.type;
+  });
+  const entries=Object.entries(comments)
+   .filter(([,item])=>item&&item.deleted!==true)
+   .sort((a,b)=>Number(b[1].createdAt||0)-Number(a[1].createdAt||0));
+  const totalReactions=Object.values(reactionCounts).reduce((a,b)=>a+b,0);
+  document.getElementById('fb-view-count').textContent=viewTotal.toLocaleString('vi-VN');
+  document.getElementById('fb-comment-count').textContent=entries.length.toLocaleString('vi-VN');
+  document.getElementById('fb-reaction-count').textContent=totalReactions.toLocaleString('vi-VN');
+  document.querySelectorAll('#fb-reactions [data-reaction]').forEach(button=>{
+   const kind=button.dataset.reaction,count=Number(reactionCounts[kind]||0);
+   const countEl=button.querySelector('[data-count]');
+   if(countEl)countEl.textContent=count.toLocaleString('vi-VN');
+   button.classList.toggle('active',myReaction===kind);
+   button.setAttribute('aria-pressed',myReaction===kind?'true':'false');
+  });
+  const list=document.getElementById('fb-comments');
+  if(!entries.length){
+   list.innerHTML='<div class="empty-state">Chưa có bình luận nào. Hãy là người đầu tiên chia sẻ nhé!</div>';
+  }else{
+   list.innerHTML=entries.map(([commentId,item])=>`
+    <article class="comment-item">
+     <div class="comment-item-head">
+      <strong>${esc(item.name||'Ẩn danh')}</strong>
+      <time>${esc(fmtTime(item.createdAt))}</time>
+      ${fbIsAdmin?`<button class="comment-delete" type="button" data-delete-comment="${esc(commentId)}">Xóa</button>`:''}
+     </div>
+     <p>${esc(item.content||'')}</p>
+    </article>`).join('');
+  }
+ }
+ async function checkAdmin(user){
+  fbIsAdmin=false;
+  if(user&&!user.isAnonymous){
+   try{const snap=await fbDb.ref('admins/'+user.uid).once('value');fbIsAdmin=snap.val()===true;}
+   catch(error){console.warn('Không kiểm tra được quyền Admin:',error);}
+  }
+  const login=document.getElementById('fb-admin-login');
+  const status=document.getElementById('fb-admin-status');
+  const logout=document.getElementById('fb-admin-logout');
+  if(login)login.hidden=fbIsAdmin;
+  if(logout)logout.hidden=!fbIsAdmin;
+  if(status)status.textContent=fbIsAdmin
+   ?'Đã đăng nhập quyền quản trị. Bạn có thể xóa bình luận không phù hợp.'
+   :(user&&!user.isAnonymous?'Tài khoản chưa được cấp quyền quản trị.':'Chỉ Admin/GVCN được cấp quyền mới có thể xóa bình luận.');
+  if(fbPostRef){
+   const snap=await fbPostRef.once('value');
+   renderState(snap);
+  }
+ }
+ function waitForInitialAuth(){
+  return new Promise((resolve,reject)=>{
+   const unsubscribe=fbAuth.onAuthStateChanged(user=>{unsubscribe();resolve(user||null);},error=>{unsubscribe();reject(error);});
+  });
+ }
+ async function ensureUser(){
+  await fbAuth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+  let user=await waitForInitialAuth();
+  // Chỉ tạo anonymous khi trình duyệt chưa có phiên nào; không ghi đè phiên Admin đã lưu.
+  if(!user){const credential=await fbAuth.signInAnonymously();user=credential.user;}
+  return user;
+ }
+ async function recordView(){
+  if(!fbCurrentUser||!fbPostRef)return;
+  const ref=fbPostRef.child('views/'+fbCurrentUser.uid);
+  const now=Date.now();
+  await ref.transaction(current=>{
+   const previous=current||{count:0,lastAt:0};
+   if(now-Number(previous.lastAt||0)<30*60*1000)return previous;
+   return {count:Number(previous.count||0)+1,lastAt:now};
+  });
+ }
+ async function toggleReaction(kind){
+  if(!REACTIONS[kind]||!fbCurrentUser||!fbPostRef)return;
+  const ref=fbPostRef.child('reactions/'+fbCurrentUser.uid);
+  try{
+   await ref.transaction(current=>{
+    if(current&&current.type===kind)return null;
+    return {type:kind,updatedAt:firebase.database.ServerValue.TIMESTAMP};
+   });
+   showMessage('Đã cập nhật cảm xúc của bạn.','ok');
+  }catch(error){console.error(error);showMessage('Không thể lưu cảm xúc. Hãy kiểm tra Firebase Rules.');}
+ }
+ async function submitComment(event){
+  event.preventDefault();
+  const form=event.currentTarget;
+  const name=form.elements.name.value.trim();
+  const content=form.elements.content.value.trim();
+  if(!name||!content){showMessage('Vui lòng nhập tên và nội dung bình luận.');return;}
+  if(name.length>60||content.length>1000){showMessage('Tên tối đa 60 ký tự và bình luận tối đa 1.000 ký tự.');return;}
+  const button=form.querySelector('button[type=submit]');
+  button.disabled=true;button.textContent='Đang gửi…';
+  try{
+   // Giữ nguyên schema bình luận cũ: {uid,name,content,createdAt}.
+   await fbCommentsRef.push().set({
+    uid:fbCurrentUser.uid,
+    name:name,
+    content:content,
+    createdAt:firebase.database.ServerValue.TIMESTAMP
+   });
+   form.elements.content.value='';
+   showMessage('Bình luận đã được gửi thành công!','ok');
+  }catch(error){console.error(error);showMessage('Không thể gửi bình luận. Kiểm tra quyền ghi Firebase.');}
+  finally{button.disabled=false;button.textContent='Gửi bình luận';}
+ }
+ async function deleteComment(commentId){
+  if(!fbIsAdmin||!commentId||!fbCommentsRef)return;
+  if(!confirm('Bạn có chắc muốn xóa bình luận này?'))return;
+  try{await fbCommentsRef.child(commentId).remove();showMessage('Đã xóa bình luận.','ok');}
+  catch(error){console.error(error);showMessage('Không thể xóa bình luận. Tài khoản chưa có quyền Admin trong Rules.');}
+ }
+ async function adminLogin(){
+  const email=document.getElementById('fb-admin-email').value.trim();
+  const password=document.getElementById('fb-admin-password').value;
+  if(!email||!password){showMessage('Vui lòng nhập email và mật khẩu quản trị.');return;}
+  try{
+   await fbAuth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+   await fbAuth.signInWithEmailAndPassword(email,password);
+   await checkAdmin(fbAuth.currentUser);
+   if(!fbIsAdmin)showMessage('Tài khoản chưa được cấp quyền Admin trong Firebase Database.');
+   else showMessage('Đăng nhập quản trị thành công.','ok');
+  }catch(error){console.error(error);showMessage('Đăng nhập thất bại. Kiểm tra email, mật khẩu và phương thức Email/Password.');}
+ }
+ async function adminLogout(){
+  try{await fbAuth.signOut();await fbAuth.signInAnonymously();showMessage('Đã đăng xuất quản trị.','ok');}
+  catch(error){showMessage('Không thể đăng xuất: '+error.message);}
+ }
+ async function initEngagement(){
+  fbPostKey=postKey();
+  if(!fbPostKey)return;
+  const section=document.getElementById('fb-engagement');
+  section.hidden=false;
+  if(!window.firebase){showMessage('Không tải được Firebase SDK.');return;}
+  try{
+   if(!firebase.apps.length)firebase.initializeApp(FIREBASE_CONFIG);
+   fbAuth=firebase.auth();fbDb=firebase.database();
+   fbPostRef=fbDb.ref('articleInteractions/'+fbPostKey);
+   fbCommentsRef=fbPostRef.child('comments');
+
+   fbCurrentUser=await ensureUser();
+   await checkAdmin(fbCurrentUser);
+
+   if(!fbListener){
+    fbListener=fbPostRef.on('value',renderState,error=>{
+     console.error('Firebase read error:',error);
+     showMessage('Không đọc được dữ liệu Firebase. Kiểm tra Database Rules.');
+    });
+    document.getElementById('fb-reactions').addEventListener('click',event=>{
+     const btn=event.target.closest('[data-reaction]');
+     if(btn)toggleReaction(btn.dataset.reaction);
+    });
+    document.getElementById('fb-comment-form').addEventListener('submit',submitComment);
+    document.getElementById('fb-comments').addEventListener('click',event=>{
+     const btn=event.target.closest('[data-delete-comment]');
+     if(btn)deleteComment(btn.dataset.deleteComment);
+    });
+    document.getElementById('fb-admin-login-btn').addEventListener('click',adminLogin);
+    document.getElementById('fb-admin-logout').addEventListener('click',adminLogout);
+    fbAuth.onAuthStateChanged(async user=>{
+     fbCurrentUser=user;
+     if(user)await checkAdmin(user);
+    });
+   }
+   await recordView();
+  }catch(error){
+   console.error('Firebase engagement init error:',error);
+   showMessage('Không thể kết nối Firebase: '+(error.message||error));
+  }
+ }
+ function imageUrl(url){
+  url=String(url||'').trim();
+  if(url.includes('drive.google.com')){const m=url.match(/\/d\/([^/]+)/)||url.match(/id=([^&]+)/);if(m)return `https://drive.google.com/uc?export=view&id=${m[1]}`;}
+  return url;
+ }
+ function parseImageLinks(value){
+  return String(value == null ? '' : value)
+   .split(/[,\n\r;]+/)
+   .map(item => item.trim().replace(/^["']|["']$/g,''))
+   .filter(item => /^https?:\/\/\S+$/i.test(item));
+ }
+ function linkify(text){
+  const safe=esc(text);
+  return safe.replace(/(https?:\/\/[^\s<]+)/g,url=>`<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`);
+ }
+ function renderArticle(title,date,author,summary,content,images=[],videos=[]){
+  document.title=(title||'Bài viết')+' | 12A7';
+  A7.$('#article-page-title').textContent=title||'Chi tiết nội dung';
+  let media='';
+  a7GalleryImages=images.map(imageUrl).filter(Boolean);
+  a7GalleryIndex=0;
+  a7GalleryImages.forEach((url,index)=>{
+   media+=`<img src="${esc(url)}" alt="${esc(title)}" loading="lazy" onclick="window.a7OpenLightbox(${index})">`;
+  });
+  const videoHtml=videos.length?`<div class="media-chips">${videos.map((u,i)=>`<a href="${esc(u)}" target="_blank" rel="noopener">▶ Mở video ${i+1}</a>`).join('')}</div>`:'';
+  A7.$('#article-detail').innerHTML=`<div class="meta"><span>◷ ${esc(date)}</span><span>✦ ${esc(author)}</span></div><h2 style="font-size:clamp(24px,3.5vw,34px);line-height:1.28;color:var(--navy);margin:12px 0 18px">${esc(title)}</h2>${summary?`<div class="news-card" style="background:#f7fafb"><b>Tóm tắt</b><p>${linkify(summary)}</p></div>`:''}<div class="article-body">${linkify(content||'Chưa có nội dung chi tiết.')}</div>${media?`<div class="article-media">${media}</div>`:''}${videoHtml}`;
+  initEngagement();
+ }
+ function noArticle(message){A7.$('#article-detail').innerHTML=`<div class="empty-state">${esc(message)}</div>`;}
+ async function loadMovement(){
+  A7.$('#article-back').href='gocxanh.html';
+  try{
+   const rows=await A7.fetchTSV(A7.TSV_PHONGTRAO);
+   const found=rows.slice(1).find(row=>String(row[0]||'').trim()===String(id));
+   if(!found){noArticle('Không tìm thấy bài viết phong trào.');return;}
+   const images=String(found[5]||'').split(/[\n,]+/).map(v=>v.trim()).filter(v=>/^https?:\/\//i.test(v));
+   const videos=String(found[6]||'').split(/[\n,]+/).map(v=>v.trim()).filter(v=>/^https?:\/\//i.test(v));
+   renderArticle(found[3],found[1],found[2],'',found[4],images,videos);
+  }catch(error){console.error(error);noArticle('Không thể đọc bài viết phong trào từ Google Sheets.');}
+ }
+ async function loadBaoBai(){
+  A7.$('#article-back').href='baobai.html';
+  try{
+   const rows=await A7.fetchTSV(A7.TSV_BAOBAI),row=rows[Number(rowIndex)]||[];
+   if(!row.length){noArticle('Không tìm thấy thông tin báo bài.');return;}
+   renderArticle(`Báo bài · ${row[1]||'Chung'}`,row[0],'Ban cán sự lớp','',row[2]||'');
+  }catch(error){noArticle('Không thể tải nội dung báo bài.');}
+ }
+ function loadNewsDetail(){
+  A7.$('#article-back').href='index.html#tin-tuc';
+  A7.loadGViz('',(json,error)=>{
+   if(error||!json||!json.table){noArticle('Không thể kết nối dữ liệu bài viết.');return;}
+   const row=(json.table.rows||[]).find((item,index)=>{
+    const c=item.c||[];
+    return String(A7.parseCell(c[0])||index+1)===String(id);
+   });
+   if(!row){noArticle('Không tìm thấy bài viết.');return;}
+   const c=row.c||[];
+   const images=parseImageLinks(A7.parseCell(c[6]));
+   renderArticle(A7.parseCell(c[3]),A7.parseCell(c[1]),A7.parseCell(c[2]),A7.parseCell(c[4]),A7.parseCell(c[5])||A7.parseCell(c[4]),images,[]);
+  });
+ }
+ if(type==='gocxanh')loadMovement();
+ else if(type==='baobai')loadBaoBai();
+ else if(id)loadNewsDetail();
+ else noArticle('Liên kết bài viết không hợp lệ.');
+})();
+</script>
+
+</body></html>

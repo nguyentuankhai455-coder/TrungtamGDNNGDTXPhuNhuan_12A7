@@ -1,188 +1,75 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thành Viên - Lớp 12A7 (2026 - 2027)</title>
-    
-    <link rel="icon" type="image/png" href="logo.png">
-    <link rel="shortcut icon" type="image/png" href="logo.png">
-
-    <style>
-        :root {
-            --primary-color: #003366;
-            --secondary-color: #0055a5;
-            --green-color: #28a745;
-            --bg-light: #f4f6f9;
-            --text-color: #333;
-            --gold-color: #ffcc00;
-        }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
-        html { scroll-behavior: smooth; }
-        body { background-color: var(--bg-light); color: var(--text-color); line-height: 1.8; display: flex; flex-direction: column; min-height: 100vh; }
-
-        header { background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color: white; padding: 20px 0; border-bottom: 4px solid var(--gold-color); }
-        .header-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; align-items: center; gap: 20px; }
-        .logo-box { width: 70px; height: 70px; border-radius: 50%; background-color: #fff; color: var(--primary-color); display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 18px; overflow: hidden; border: 2px solid #fff; flex-shrink: 0; }
-        .logo-box img { width: 100%; height: 100%; object-fit: cover; }
-        .header-text h1 { font-size: 24px; text-transform: uppercase; letter-spacing: 1px; }
-        .header-text p { font-size: 14px; opacity: 0.9; }
-
-        nav { background-color: #002244; position: sticky; top: 0; z-index: 100; border-bottom: 3px solid var(--gold-color); }
-        .nav-container { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; }
-        .nav-container a { color: white; padding: 12px 18px; text-decoration: none; font-size: 14px; font-weight: 600; text-transform: uppercase; transition: background 0.3s, color 0.3s; }
-        .nav-container a:hover, .nav-container a.active { background-color: var(--secondary-color); color: var(--gold-color); }
-        .nav-container a.green-tab { color: #28a745; font-weight: bold; }
-        .nav-container a.green-tab:hover { background-color: #28a745 !important; color: #fff !important; }
-
-        .main-wrapper { max-width: 1200px; width: 100%; margin: 30px auto; padding: 0 15px; display: grid; grid-template-columns: 3fr 1fr; gap: 20px; flex: 1; }
-        .card { background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.06); border: 1px solid #eaeaea; margin-bottom: 20px; }
-
-        .section-title { color: var(--primary-color); font-size: 18px; border-bottom: 2px solid var(--primary-color); padding-bottom: 8px; margin-bottom: 20px; text-transform: uppercase; }
-
-        .bcs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 30px; }
-        .bcs-card { border: 1px solid #e0e0e0; border-radius: 6px; padding: 15px; text-align: center; background: #fafafa; border-top: 3px solid var(--secondary-color); }
-        .bcs-card.gvcn { border-top-color: var(--gold-color); background-color: #fffdf0; }
-        .bcs-card h4 { color: var(--primary-color); font-size: 16px; margin-bottom: 5px; }
-        .bcs-card p { font-size: 14px; color: #555; }
-
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-        th, td { border: 1px solid #ddd; padding: 10px 12px; text-align: left; font-size: 14px; }
-        th { background-color: var(--primary-color); color: white; }
-        tr:nth-child(even) { background-color: #f9f9f9; }
-        tr:hover { background-color: #f1f5f9; }
-        tr.highlight-role { background-color: #eef6ff; font-weight: 600; }
-
-        .notice-list { list-style: none; }
-        .notice-list li { padding: 8px 0; border-bottom: 1px solid #f0f0f0; font-size: 14px; }
-
-        footer { background-color: #001529; color: white; text-align: center; padding: 20px; font-size: 13px; margin-top: auto; border-top: 3px solid var(--gold-color); }
-        footer p { margin: 4px 0; color: #aaa; }
-        footer a { color: #66b3ff; text-decoration: none; }
-        footer a:hover { text-decoration: underline; }
-
-        @media (max-width: 768px) {
-            .header-container { flex-direction: column; text-align: center; }
-            .main-wrapper { grid-template-columns: 1fr; }
-            .card { padding: 20px; }
-            .bcs-grid { grid-template-columns: 1fr; }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#10283f">
+<title>Thành viên | 12A7</title>
+<link rel="icon" href="logo.png">
+<link rel="stylesheet" href="assets/site.css?v=logo-fix-2">
 </head>
 <body>
 
-    <header>
-        <div class="header-container">
-            <div class="logo-box" id="logo-container">
-                <img src="logo.png" alt="Logo Lớp 12A7" onerror="document.getElementById('logo-container').innerText='12A7'">
-            </div>
-            <div class="header-text">
-                <h1>CỔNG THÔNG TIN LỚP 12A7</h1>
-                <p>Trung tâm Giáo dục nghề nghiệp - Giáo dục thường xuyên Tân Bình (Phân hiệu Phú Nhuận) | Năm học 2026 - 2027</p>
-            </div>
-        </div>
-    </header>
-
-    <nav>
-        <div class="nav-container">
-            <a href="index.html">Trang chủ</a>
-            <a href="baobai.html">Báo Bài</a>
-            <a href="index.html#tin-tuc">Tin tức & Sự kiện</a>
-            <a href="gochoc-tap.html">Góc học tập</a>
-            <a href="giaovien.html">Giáo viên</a>
-            <a href="gocxanh.html" class="green-tab">Góc Xanh</a>
-            <a href="thanhvien.html" class="active">Thành viên</a>
-            <a href="thuvien.html">Thư viện ảnh</a>
-            <a href="credits.html">Credits</a>
-        </div>
-    </nav>
-
-    <div class="main-wrapper">
-        <main>
-            <div class="card">
-                <h3 class="section-title">Ban Cán Sự Lớp & Giáo Viên Chủ Nhiệm</h3>
-                <div class="bcs-grid">
-                    <div class="bcs-card gvcn">
-                        <h4>Cô Nguyễn Thị Khánh Ly</h4>
-                        <p><b>Giáo viên chủ nhiệm</b></p>
-                    </div>
-                    <div class="bcs-card">
-                        <h4>VÕ NGỌC KHANG</h4>
-                        <p><b>Lớp trưởng</b></p>
-                    </div>
-                    <div class="bcs-card">
-                        <h4>Cao Cẩm Doanh</h4>
-                        <p><b>Lớp phó Học tập</b></p>
-                    </div>
-                    <div class="bcs-card">
-                        <h4>Lê Thị Kim Hương</h4>
-                        <p><b>Lớp phó Phong trào</b></p>
-                    </div>
-                </div>
-
-                <h3 class="section-title">Danh Sách Học Sinh Lớp 12A7 (29 Thành Viên)</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th style="width: 60px; text-align: center;">STT</th>
-                            <th>Họ và Tên</th>
-                            <th>Chức vụ / Vai trò</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr><td style="text-align: center;">1</td><td>ĐỖ HÙNG VƯƠNG ANH</td><td>Học sinh</td></tr>
-                        <tr><td style="text-align: center;">2</td><td>TRƯƠNG TÚ ANH</td><td>Học sinh</td></tr>
-                        <tr><td style="text-align: center;">3</td><td>PHẠM THẢO CHI</td><td>Học sinh</td></tr>
-                        <tr class="highlight-role"><td style="text-align: center;">4</td><td>CAO CẨM DOANH</td><td>Lớp phó Học tập</td></tr>
-                        <tr><td style="text-align: center;">5</td><td>NGUYỄN NGỌC DUY</td><td>Học sinh</td></tr>
-                        <tr><td style="text-align: center;">6</td><td>NGUYỄN TẤN ĐẠT</td><td>Học sinh</td></tr>
-                        <tr><td style="text-align: center;">7</td><td>VŨ MINH ĐỨC</td><td>Học sinh</td></tr>
-                        <tr><td style="text-align: center;">8</td><td>MAI THANH HẰNG</td><td>Học sinh</td></tr>
-                        <tr><td style="text-align: center;">9</td><td>TRỊNH THANH QUỐC HUY</td><td>Học sinh</td></tr>
-                        <tr class="highlight-role"><td style="text-align: center;">10</td><td>LÊ THỊ KIM HƯƠNG</td><td>Lớp phó Phong trào</td></tr>
-                        <tr><td style="text-align: center;">11</td><td>NGUYỄN TUẤN KHẢI</td><td>Học sinh</td></tr>
-                        <tr class="highlight-role"><td style="text-align: center;">12</td><td>VÕ NGỌC KHANG</td><td>Lớp trưởng</td></tr>
-                        <tr><td style="text-align: center;">13</td><td>HUỲNH ĐĂNG KHÔI</td><td>Học sinh</td></tr>
-                        <tr><td style="text-align: center;">14</td><td>VÕ HOÀNG LONG</td><td>Học sinh</td></tr>
-                        <tr class="highlight-role"><td style="text-align: center;">15</td><td>NGUYỄN TRẦN THẢO LY</td><td>Tổ trưởng Tổ 4</td></tr>                        
-                        <tr><td style="text-align: center;">16</td><td>TRẦN GIA MINH</td><td>Học sinh</td></tr>
-                        <tr><td style="text-align: center;">17</td><td>LÊ VÕ HOÀNG NGHĨA</td><td>Học sinh</td></tr>
-                        <tr><td style="text-align: center;">18</td><td>TRƯƠNG MINH NGỌC</td><td>Học sinh</td></tr>
-                        <tr class="highlight-role"><td style="text-align: center;">19</td><td>BÙI THỊ KIM NGUYÊN</td><td>Tổ trưởng Tổ 3</td></tr>    
-                        <tr class="highlight-role"><td style="text-align: center;">20</td><td>NGUYỄN LÊ THẢO NGUYÊN</td><td>Tổ trưởng Tổ 1</td></tr>                   
-                        <tr><td style="text-align: center;">21</td><td>LƯU THỊ NGUYỆT</td><td>Học sinh</td></tr>
-                        <tr><td style="text-align: center;">22</td><td>NGUYỄN NGỌC TUYẾT</td><td>Học sinh</td></tr>
-                        <tr class="highlight-role"><td style="text-align: center;">23</td><td>KHÂU NGỌC MAI PHƯƠNG</td><td>Tổ trưởng Tổ 2</td></tr>
-                        <tr><td style="text-align: center;">24</td><td>TRẦN TRÍ THÀNH</td><td>Học sinh</td></tr>
-                        <tr><td style="text-align: center;">25</td><td>LÊ HỒNG HIẾU THẢO</td><td>Học sinh</td></tr>
-                        <tr><td style="text-align: center;">26</td><td>TRẦN THỊ MỸ TRINH</td><td>Học sinh</td></tr>
-                        <tr><td style="text-align: center;">27</td><td>LÊ MINH TRUNG</td><td>Học sinh</td></tr>
-                        <tr><td style="text-align: center;">28</td><td>NGUYỄN NGHIÊM LÂM</td><td>Học sinh</td></tr>
-                        <tr><td style="text-align: center;">29</td><td>LÊ VĂN HOÀNG VŨ</td><td>Học sinh</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </main>
-
-        <aside>
-            <div class="card">
-                <h3 class="section-title">Ban cán sự Lớp 12A7</h3>
-                <ul class="notice-list">
-                    <li><b>GVCN:</b> Cô Nguyễn Thị Khánh Ly</li>
-                    <li><b>Lớp trưởng:</b> VÕ NGỌC KHANG</li>
-                    <li><b>Lớp phó HT:</b> Cao Cẩm Doanh</li>
-                    <li><b>Lớp phó Phong trào:</b> Lê Thị Kim Hương</li>
-                </ul>
-            </div>
-        </aside>
+<div class="site-topline"></div>
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="index.html" aria-label="Cổng thông tin lớp 12A7">
+      <div class="brand-mark" style="width:64px;height:64px;min-width:64px;max-width:64px;flex:0 0 64px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#fff;line-height:0"><img src="logo.png?v=2" alt="Logo lớp 12A7" style="display:block;width:100%;height:100%;max-width:100%;object-fit:contain;position:static" onerror="this.parentElement.textContent='A7'"></div>
+      <div class="brand-copy">
+        <div class="brand-eyebrow">CLASS OF 2027 · THE LAST CHAPTER</div>
+        <h1 class="brand-title">CỔNG THÔNG TIN LỚP 12A7</h1>
+        <p class="brand-subtitle">Trung tâm GDNN – GDTX Tân Bình · Phân hiệu Phú Nhuận</p>
+      </div>
+    </a>
+    <div class="header-actions">
+      <button class="auth-btn" type="button" data-auth-open="login">Đăng nhập</button>
+      <button class="auth-btn primary" type="button" data-auth-open="register">Đăng ký <span aria-hidden="true">↗</span></button>
     </div>
+  </div>
+</header>
+<nav class="main-nav">
+  <div class="nav-inner">
+    <a class="nav-link" href="index.html">Trang chủ</a>
+    <a class="nav-link" href="baobai.html">Báo bài</a>
+    <a class="nav-link" href="index.html#tin-tuc">Tin tức & sự kiện</a>
+    <a class="nav-link" href="hoctap.html">Góc học tập</a>
+    <a class="nav-link" href="giaovien.html">Giáo viên</a>
+    <a class="nav-link" href="gocxanh.html">Góc xanh</a>
+    <a class="nav-link" href="thanhvien.html">Thành viên</a>
+    <a class="nav-link" href="thuvien.html">Thư viện ảnh</a>
+    <a class="nav-link" href="credits.html">Credits</a>
+  </div>
+</nav>
 
-    <footer>
-        <p>&copy; 2026 Cổng thông tin Lớp 12A7 - Trung tâm Giáo dục nghề nghiệp - Giáo dục thường xuyên Tân Bình (Phân hiệu Phú Nhuận)</p>
-        <p>📧 Email liên hệ: <a href="mailto:12a7.phanhieuttgdnngdtxtanbinh@gmail.com">12a7.phanhieuttgdnngdtxtanbinh@gmail.com</a></p>
-        <p>Phát triển và vận hành bởi Tập thể Lớp 12A7</p>
-    </footer>
+<main class="page-wrap">
+
+<section class="page-heading"><div class="section-kicker">Our people · 12A7</div><h1>Thành viên lớp 12A7</h1><p>29 gương mặt, một tập thể, cùng nhau hoàn thành chương cuối của tuổi học trò.</p></section>
+<div class="grid grid-2" style="margin-bottom:20px">
+ <article class="panel"><div class="eyebrow">Homeroom teacher</div><h2 style="margin:7px 0;color:var(--navy)">Cô Nguyễn Thị Khánh Ly</h2><p style="margin:0;color:var(--muted);font-size:13px">Giáo viên chủ nhiệm</p></article>
+ <article class="panel"><div class="eyebrow">Class committee</div><p style="margin:7px 0;color:var(--navy);font-size:13px"><b>Võ Ngọc Khang</b> · Lớp trưởng<br><b>Cao Cẩm Doanh</b> · Lớp phó Học tập<br><b>Lê Thị Kim Hương</b> · Lớp phó Phong trào</p></article>
+</div>
+<div class="section-head"><div><div class="eyebrow">The class list</div><h2>Danh sách thành viên · 29 người</h2></div></div>
+<div class="grid grid-4"><article class="member-card"><div class="member-no">A7 · 01</div><h3>ĐỖ HÙNG VƯƠNG ANH</h3><p>Học sinh</p></article><article class="member-card"><div class="member-no">A7 · 02</div><h3>TRƯƠNG TÚ ANH</h3><p>Học sinh</p></article><article class="member-card"><div class="member-no">A7 · 03</div><h3>PHẠM THẢO CHI</h3><p>Học sinh</p></article><article class="member-card"><div class="member-no">A7 · 04</div><h3>CAO CẨM DOANH</h3><p>Lớp phó Học tập</p></article><article class="member-card"><div class="member-no">A7 · 05</div><h3>NGUYỄN NGỌC DUY</h3><p>Học sinh</p></article><article class="member-card"><div class="member-no">A7 · 06</div><h3>NGUYỄN TẤN ĐẠT</h3><p>Học sinh</p></article><article class="member-card"><div class="member-no">A7 · 07</div><h3>VŨ MINH ĐỨC</h3><p>Học sinh</p></article><article class="member-card"><div class="member-no">A7 · 08</div><h3>MAI THANH HẰNG</h3><p>Học sinh</p></article><article class="member-card"><div class="member-no">A7 · 09</div><h3>TRỊNH THANH QUỐC</h3><p>Học sinh</p></article><article class="member-card"><div class="member-no">A7 · 10</div><h3>LÊ THỊ KIM HƯƠNG</h3><p>Lớp phó Phong trào</p></article><article class="member-card"><div class="member-no">A7 · 11</div><h3>NGUYỄN TUẤN KHẢI</h3><p>Học sinh</p></article><article class="member-card"><div class="member-no">A7 · 12</div><h3>VÕ NGỌC KHANG</h3><p>Lớp trưởng</p></article><article class="member-card"><div class="member-no">A7 · 13</div><h3>HUỲNH ĐĂNG KHÔI</h3><p>Học sinh</p></article><article class="member-card"><div class="member-no">A7 · 14</div><h3>VÕ HOÀNG LONG</h3><p>Học sinh</p></article><article class="member-card"><div class="member-no">A7 · 15</div><h3>NGUYỄN TRẦN THẢO LY</h3><p>Tổ trưởng Tổ 4</p></article><article class="member-card"><div class="member-no">A7 · 16</div><h3>TRẦN GIA MINH</h3><p>Học sinh</p></article><article class="member-card"><div class="member-no">A7 · 17</div><h3>LÊ VÕ HOÀNG NGHĨA</h3><p>Học sinh</p></article><article class="member-card"><div class="member-no">A7 · 18</div><h3>TRƯƠNG MINH NGỌC</h3><p>Học sinh</p></article><article class="member-card"><div class="member-no">A7 · 19</div><h3>BÙI THỊ KIM NGUYÊN</h3><p>Tổ trưởng Tổ 3</p></article><article class="member-card"><div class="member-no">A7 · 20</div><h3>NGUYỄN LÊ THẢO NGUYÊN</h3><p>Tổ trưởng Tổ 1</p></article><article class="member-card"><div class="member-no">A7 · 21</div><h3>LƯU THỊ NGUYỆT</h3><p>Học sinh</p></article><article class="member-card"><div class="member-no">A7 · 22</div><h3>NGUYỄN NGỌC TUYẾT</h3><p>Học sinh</p></article><article class="member-card"><div class="member-no">A7 · 23</div><h3>KHÂU NGỌC MAI PHƯƠNG</h3><p>Tổ trưởng Tổ 2</p></article><article class="member-card"><div class="member-no">A7 · 24</div><h3>TRẦN TRÍ THÀNH</h3><p>Học sinh</p></article><article class="member-card"><div class="member-no">A7 · 25</div><h3>LÊ HỒNG HIẾU THẢO</h3><p>Học sinh</p></article><article class="member-card"><div class="member-no">A7 · 26</div><h3>TRẦN THỊ MỸ TRINH</h3><p>Học sinh</p></article><article class="member-card"><div class="member-no">A7 · 27</div><h3>LÊ MINH TRUNG</h3><p>Học sinh</p></article><article class="member-card"><div class="member-no">A7 · 28</div><h3>NGUYỄN NGHIÊM LÂM</h3><p>Học sinh</p></article><article class="member-card"><div class="member-no">A7 · 29</div><h3>LÊ VĂN HOÀNG VŨ</h3><p>Học sinh</p></article></div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">12A7 · CLASS OF 2027</div>
+      <p>Giữ lại thanh xuân, viết tiếp hành trình.</p>
+    </div>
+    <div>
+      <p>© 2026 Cổng thông tin lớp 12A7</p>
+      <p>Liên hệ: <a href="mailto:12a7.phanhieuttgdnngdtxtanbinh@gmail.com">12a7.phanhieuttgdnngdtxtanbinh@gmail.com</a></p>
+    </div>
+  </div>
+</footer>
+<div class="lightbox" id="a7-lightbox" onclick="this.classList.remove('open')"><img alt="Ảnh phóng to" id="a7-lightbox-img"></div>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="assets/app.js"></script>
+
 
 </body>
 </html>

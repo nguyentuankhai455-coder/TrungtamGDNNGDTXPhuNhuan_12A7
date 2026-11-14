@@ -1,0 +1,22 @@
+{
+  "notifications": {
+    "$uid": {
+      ".read": "auth != null && auth.uid === $uid",
+      "$notificationId": {
+        "readAt": {
+          ".write": "auth != null && auth.uid === $uid",
+          ".validate": "newData.isNumber()"
+        }
+      }
+    }
+  },
+  "announcements": {
+    ".read": "auth != null"
+  },
+  "activityLogs": {
+    ".indexOn": ["createdAt", "uid", "event"]
+  },
+  "privacyConsents": {
+    ".indexOn": ["updatedAt"]
+  }
+}

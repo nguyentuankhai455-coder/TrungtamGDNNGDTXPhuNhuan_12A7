@@ -1,0 +1,20 @@
+{
+  "name": "12a7-member-system",
+  "version": "1.0.0",
+  "private": true,
+  "description": "12A7 portal with Firebase notifications and auditable member activity API",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "check": "node --check server.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "express-rate-limit": "^7.5.0",
+    "firebase-admin": "^13.0.2",
+    "helmet": "^8.0.0"
+  }
+}

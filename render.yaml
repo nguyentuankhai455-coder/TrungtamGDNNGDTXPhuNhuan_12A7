@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: 12a7-member-system
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: FIREBASE_DATABASE_URL
+        value: https://a7-website-3bd33-default-rtdb.asia-southeast1.firebasedatabase.app
+      - key: FIREBASE_SERVICE_ACCOUNT_JSON
+        sync: false
+      - key: IP_RETENTION_DAYS
+        value: "90"

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="vi"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#10283f"><title>Thông báo & hoạt động tài khoản | 12A7</title>
+<link rel="icon" type="image/png" href="logo.png"><link rel="stylesheet" href="assets/site.css?v=member-system-1"></head>
+<body>
+<div class="site-topline"></div>
+<header class="site-header">
+ <div class="header-inner">
+  <a class="brand" href="index.html" aria-label="Cổng thông tin lớp 12A7">
+   <div class="brand-mark"><img src="logo.png" alt="Logo lớp 12A7"></div>
+   <div class="brand-copy"><div class="brand-eyebrow">CLASS OF 2027 · THE LAST CHAPTER</div>
+    <h1 class="brand-title">CỔNG THÔNG TIN LỚP 12A7</h1>
+    <p class="brand-subtitle">Trung tâm GDNN – GDTX Tân Bình · Phân hiệu Phú Nhuận</p></div>
+  </a><div class="header-actions"></div>
+ </div>
+</header>
+<nav class="main-nav"><div class="nav-inner">
+<a class="nav-link" href="index.html">Trang chủ</a><a class="nav-link" href="baobai.html">Báo bài</a>
+<a class="nav-link" href="index.html#tin-tuc">Tin tức & sự kiện</a><a class="nav-link" href="hoctap.html">Góc học tập</a>
+<a class="nav-link" href="giaovien.html">Giáo viên</a><a class="nav-link" href="gocxanh.html">Góc xanh</a>
+<a class="nav-link" href="thanhvien.html">Thành viên</a><a class="nav-link" href="thuvien.html">Thư viện ảnh</a><a class="nav-link" href="credits.html">Credits</a>
+</div></nav>
+<main class="page-wrap">
+<section class="page-heading"><div class="section-kicker">Member center · 12A7</div><h1>Thông báo & hoạt động tài khoản</h1>
+<p>Nơi nhận thông báo từ GVCN/Admin và xem lại hoạt động tài khoản của bạn.</p></section>
+
+<div id="member-login-required" class="panel empty-state">Vui lòng đăng nhập tài khoản 12A7 để xem thông báo và lịch sử hoạt động.</div>
+<div id="member-content" hidden>
+ <section class="panel">
+  <div class="section-head"><div><div class="eyebrow">Notifications</div><h2>Thông báo của bạn</h2><p>Thông báo được đồng bộ theo thời gian thực từ Firebase.</p></div>
+  <button class="btn btn-outline" type="button" id="mark-all-read">Đánh dấu tất cả đã đọc</button></div>
+  <div id="notification-list" class="notification-list"><div class="loading-state">Đang tải thông báo…</div></div>
+ </section>
+
+ <section class="section member-page-grid">
+  <div class="panel">
+   <div class="section-head"><div><div class="eyebrow">Account activity</div><h2>Hoạt động gần đây</h2><p>Nhật ký gắn với UID tài khoản đang đăng nhập.</p></div></div>
+   <div id="my-activity-list" class="activity-list"><div class="loading-state">Đang tải hoạt động…</div></div>
+  </div>
+  <div class="panel">
+   <div class="eyebrow">Privacy & transparency</div><h2 style="margin:5px 0 13px;color:var(--navy);font-size:18px">Thông tin ghi nhận hoạt động</h2>
+   <div class="privacy-notice">
+    <h3>Minh bạch về nhật ký và địa chỉ IP</h3>
+    <p>Website ghi nhận UID, email/tên hiển thị từ Firebase, loại hoạt động, thời điểm, bài viết liên quan và thông tin trình duyệt để hỗ trợ an toàn tài khoản, kiểm duyệt tương tác và lập báo cáo cho GVCN/Admin.</p>
+    <ul>
+      <li>Địa chỉ IP chỉ được lưu khi bạn chủ động đồng ý.</li>
+      <li>Nếu không đồng ý, nhật ký vẫn ghi nhận hoạt động và thời gian nhưng không lưu IP.</li>
+      <li>IP đầy đủ chỉ được hiển thị cho GVCN/Admin được hệ thống cấp quyền.</li>
+      <li>Nhật ký dự kiến lưu tối đa 90 ngày rồi tự động xóa.</li>
+      <li>Nội dung mật khẩu và nội dung bình luận không được sao chép vào nhật ký.</li>
+    </ul>
+    <div id="privacy-consent-controls" class="privacy-actions">
+      <button class="btn btn-gold" id="privacy-accept" type="button">Đồng ý ghi nhận IP</button>
+      <button class="btn btn-outline" id="privacy-decline" type="button">Không đồng ý ghi IP</button>
+    </div>
+    <p class="privacy-status" id="privacy-status">Đang kiểm tra lựa chọn bảo mật…</p>
+   </div>
+  </div>
+ </section>
+ <div class="panel" id="staff-shortcut" hidden>
+  <div class="section-head"><div><div class="eyebrow">Staff tools</div><h2>Quản trị hoạt động</h2><p>Tra cứu nhật ký và gửi thông báo cho thành viên.</p></div>
+  <a href="quanly-hoatdong.html" class="btn btn-blue">Mở trang quản trị →</a></div>
+ </div>
+</div>
+<div id="member-page-alert" class="comment-status" role="status"></div>
+</main>
+<footer class="site-footer"><div class="footer-inner"><div><div class="footer-brand">12A7 · CLASS OF 2027</div><p>Giữ lại thanh xuân, viết tiếp hành trình.</p></div>
+<div><p>© 2026 Cổng thông tin lớp 12A7</p><p>Liên hệ: <a href="mailto:12a7.phanhieuttgdnngdtxtanbinh@gmail.com">12a7.phanhieuttgdnngdtxtanbinh@gmail.com</a></p></div></div></footer>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
+<script src="assets/app.js"></script>
+
+<script>
+(function(){
+ const A7=window.A7;
+ const $=A7.$;
+ const API=window.A7_API_BASE||location.origin;
+ const eventLabels={
+  login:'Đăng nhập',logout:'Đăng xuất',register:'Tạo tài khoản',
+  comment_create:'Đăng bình luận',comment_delete:'Xóa bình luận',
+  reaction_set:'Thả cảm xúc',reaction_remove:'Gỡ cảm xúc'
+ };
+ let db=null,notifRef=null,notifHandler=null,user=null;
+
+ async function api(path,options={}){
+  if(!user)throw new Error('Bạn chưa đăng nhập.');
+  const token=await user.getIdToken();
+  const response=await fetch(API+path,{...options,headers:{
+   'Content-Type':'application/json','Authorization':'Bearer '+token,...(options.headers||{})
+  }});
+  const data=await response.json().catch(()=>({}));
+  if(!response.ok)throw new Error(data.error||'API '+response.status);
+  return data;
+ }
+ function time(value){return new Date(Number(value)||Date.now()).toLocaleString('vi-VN');}
+ function renderNotifications(snapshot){
+  const box=$('#notification-list'),items=[];
+  snapshot.forEach(child=>items.push({id:child.key,...(child.val()||{})}));
+  items.sort((a,b)=>Number(b.createdAt||0)-Number(a.createdAt||0));
+  if(!items.length){box.innerHTML='<div class="empty-state">Bạn chưa có thông báo nào.</div>';return;}
+  box.innerHTML=items.map(item=>`
+   <article class="notification-item ${item.readAt?'':'unread'}">
+    <div class="notification-symbol">${item.type==='announcement'?'📢':'🔔'}</div>
+    <div class="notification-copy">
+     <h3>${A7.esc(item.title||'Thông báo 12A7')}</h3>
+     <p>${A7.esc(item.message||'')}</p><time>${A7.esc(time(item.createdAt))}</time>
+     <div class="notification-actions">
+      ${item.href?`<a class="text-link" href="${A7.esc(item.href)}">Mở nội dung →</a>`:''}
+      ${!item.readAt?`<button class="btn btn-outline" type="button" data-read="${A7.esc(item.id)}">Đánh dấu đã đọc</button>`:''}
+     </div>
+    </div>
+   </article>`).join('');
+ }
+ async function loadMyActivities(){
+  const box=$('#my-activity-list');
+  try{
+   const data=await api('/api/activity/me?limit=100');
+   const records=data.records||[];
+   if(!records.length){box.innerHTML='<div class="empty-state">Chưa có hoạt động nào được ghi nhận.</div>';return;}
+   box.innerHTML=records.map(item=>`
+    <article class="member-activity-item"><span class="activity-dot"></span><div class="activity-copy">
+     <strong>${A7.esc(eventLabels[item.event]||item.event||'Hoạt động')}</strong>
+     <span>${A7.esc(item.postKey||'')} · ${A7.esc(time(item.createdAt))}</span>
+    </div></article>`).join('');
+  }catch(error){
+   box.innerHTML=`<div class="empty-state">Chưa kết nối được nhật ký hoạt động của máy chủ. ${A7.esc(error.message)}</div>`;
+  }
+ }
+ async function loadPrivacy(){
+  try{
+   const data=await api('/api/privacy/status');
+   const status=$('#privacy-status'),controls=$('#privacy-consent-controls');
+   status.textContent=data.ipAudit
+    ?'Bạn đã đồng ý ghi nhận IP. Có thể thu hồi lựa chọn bất cứ lúc nào.'
+    :'Bạn chưa đồng ý ghi nhận IP. Hệ thống vẫn lưu loại hoạt động và thời gian, không lưu IP.';
+   $('#privacy-accept').textContent=data.ipAudit?'Đã đồng ý ghi IP':'Đồng ý ghi nhận IP';
+   $('#privacy-decline').textContent=data.ipAudit?'Thu hồi đồng ý':'Không đồng ý ghi IP';
+  }catch(error){$('#privacy-status').textContent='Chưa kiểm tra được trạng thái đồng ý: '+error.message;}
+ }
+ async function setPrivacy(value){
+  try{
+   const data=await api('/api/privacy/consent',{method:'POST',body:JSON.stringify({ipAudit:value})});
+   $('#privacy-status').textContent=data.ipAudit
+    ?'Đã ghi nhận lựa chọn đồng ý. Những hoạt động tiếp theo sẽ có IP.'
+    :'Đã ghi nhận lựa chọn không lưu IP. IP trước đây (nếu có) cũng được xóa khỏi nhật ký.';
+  }catch(error){$('#privacy-status').textContent='Không lưu được lựa chọn: '+error.message;}
+ }
+ function attach(userValue){
+  if(notifRef&&notifHandler)notifRef.off('value',notifHandler);
+  notifRef=null;notifHandler=null;user=userValue;
+  const isMember=!!(user&&!user.isAnonymous);
+  $('#member-login-required').hidden=isMember;
+  $('#member-content').hidden=!isMember;
+  if(!isMember)return;
+  db=firebase.database();
+  notifRef=db.ref('notifications/'+user.uid);
+  notifHandler=renderNotifications;
+  notifRef.on('value',notifHandler,error=>{$('#notification-list').innerHTML='<div class="empty-state">Không tải được thông báo: '+A7.esc(error.message)+'</div>';});
+  $('#member-page-alert').textContent='';
+  loadMyActivities();loadPrivacy();
+ }
+ document.addEventListener('click',async e=>{
+  const read=e.target.closest('[data-read]');
+  if(read&&user){
+   try{await db.ref(`notifications/${user.uid}/${read.dataset.read}/readAt`).set(firebase.database.ServerValue.TIMESTAMP);}
+   catch(error){$('#member-page-alert').textContent='Không đánh dấu đã đọc được: '+error.message;}
+  }
+ });
+ $('#mark-all-read').addEventListener('click',async()=>{
+  if(!user||!notifRef)return;
+  const snap=await notifRef.once('value'),updates={};
+  snap.forEach(child=>{if(!child.child('readAt').exists())updates[child.key+'/readAt']=firebase.database.ServerValue.TIMESTAMP;});
+  if(Object.keys(updates).length)await notifRef.update(updates);
+ });
+ $('#privacy-accept').addEventListener('click',()=>setPrivacy(true));
+ $('#privacy-decline').addEventListener('click',()=>setPrivacy(false));
+ if(!window.firebase||!firebase.auth){$('#member-login-required').textContent='Không tải được Firebase Authentication.';return;}
+ firebase.auth().onAuthStateChanged(attach);
+})();
+</script>
+</body></html>

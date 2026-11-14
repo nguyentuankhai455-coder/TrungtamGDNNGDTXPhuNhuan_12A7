@@ -1,504 +1,305 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cổng Thông Tin Lớp 12A7 (2026 - 2027)</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#10283f">
+<title>Trang chủ | 12A7</title>
+<link rel="icon" href="logo.png">
+<link rel="stylesheet" href="assets/site.css?v=logo-fix-2">
 
-    <link rel="icon" type="image/png" href="logo.png">
-    <link rel="shortcut icon" type="image/png" href="logo.png">
+<style id="a7-news-list-controls">
+  #posts-list .news-card-pinned{
+    border:1px solid #e4c16c;
+    background:linear-gradient(135deg,#fffdf6 0%,#ffffff 78%);
+    box-shadow:0 8px 22px rgba(169,128,45,.08);
+  }
+  #posts-list .news-pin-label{
+    display:inline-flex;
+    align-items:center;
+    gap:5px;
+    margin:0 0 8px;
+    padding:5px 9px;
+    border-radius:999px;
+    background:#fff2d6;
+    color:#94651b;
+    font-size:10px;
+    font-weight:800;
+    letter-spacing:.5px;
+  }
+  #posts-list .news-list-controls{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    justify-content:center;
+    gap:12px;
+    padding:12px 0 4px;
+  }
+  #posts-list .news-list-count{
+    color:#788796;
+    font-size:11px;
+    font-weight:600;
+  }
+</style>
 
-    <style>
-        :root {
-            --primary-color: #003366;
-            --secondary-color: #0055a5;
-            --green-color: #28a745;
-            --bg-light: #f4f6f9;
-            --text-color: #333;
-            --gold-color: #ffcc00;
-        }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
-        html { scroll-behavior: smooth; }
-        body { background-color: var(--bg-light); color: var(--text-color); line-height: 1.6; display: flex; flex-direction: column; min-height: 100vh; overflow-x: hidden; }
-
-        header {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            padding: 20px 0;
-            border-bottom: 4px solid var(--gold-color);
-            position: relative;
-        }
-        .header-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-        .logo-box {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            background-color: #fff;
-            color: var(--primary-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 18px;
-            overflow: hidden;
-            border: 2px solid #fff;
-            flex-shrink: 0;
-        }
-        .logo-box img { width: 100%; height: 100%; object-fit: cover; }
-        .header-text h1 { font-size: 24px; text-transform: uppercase; letter-spacing: 1px; }
-        .header-text p { font-size: 14px; opacity: 0.9; }
-
-        nav { background-color: #002244; position: sticky; top: 0; z-index: 100; border-bottom: 3px solid var(--gold-color); }
-        .nav-container { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; }
-        .nav-container a {
-            color: white;
-            padding: 12px 18px;
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 600;
-            text-transform: uppercase;
-            transition: background 0.3s, color 0.3s;
-        }
-        .nav-container a:hover, .nav-container a.active { background-color: var(--secondary-color); color: var(--gold-color); }
-        
-        .nav-container a.green-tab { color: #28a745; font-weight: bold; }
-        .nav-container a.green-tab:hover { background-color: #28a745 !important; color: #fff !important; }
-
-        .main-wrapper {
-            max-width: 1200px;
-            width: 100%;
-            margin: 20px auto;
-            padding: 0 15px;
-            display: grid;
-            grid-template-columns: 3fr 1fr;
-            gap: 20px;
-            flex: 1;
-        }
-
-        .card {
-            background: white;
-            border-radius: 12px;
-            padding: 24px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-            scroll-margin-top: 60px;
-            border: 1px solid #eaeaea;
-        }
-        .section-title {
-            color: var(--primary-color);
-            font-size: 18px;
-            border-bottom: 2px solid var(--primary-color);
-            padding-bottom: 8px;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-        }
-
-        .banner-box {
-            position: relative;
-            width: 100%;
-            height: 280px;
-            border-radius: 10px;
-            overflow: hidden;
-            background: linear-gradient(135deg, #003366, #0055a5);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .banner-box img { width: 100%; height: 100%; object-fit: cover; }
-        .banner-overlay-text {
-            position: absolute;
-            background: rgba(0, 51, 102, 0.7);
-            color: #ffffff;
-            padding: 14px 28px;
-            border-radius: 10px;
-            text-align: center;
-            font-size: 20px;
-            font-weight: bold;
-            line-height: 1.4;
-            backdrop-filter: blur(4px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 15px 0;
-            color: #777;
-            font-style: italic;
-            font-size: 14px;
-        }
-
-        .post-item { border-bottom: 1px dashed #eee; padding: 15px 0; }
-        .post-item:last-child { border-bottom: none; }
-        
-        /* CSS CHO BÀI VIẾT ĐÃ GHIM */
-        .post-item.pinned-post { 
-            background-color: #fffcf0; 
-            padding: 15px; 
-            border: 1px solid #ffeeba; 
-            border-left: 4px solid var(--gold-color); 
-            border-radius: 8px; 
-            margin-bottom: 15px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
-        }
-        
-        .post-date { font-size: 12px; color: #888; display: block; margin-bottom: 4px; }
-        .post-title a { font-size: 17px; color: var(--primary-color); text-decoration: none; font-weight: bold; }
-        .post-title a:hover { color: var(--secondary-color); text-decoration: underline; }
-        .post-content { font-size: 14px; color: #444; margin: 6px 0; }
-        .read-more-btn {
-            display: inline-block;
-            margin-top: 8px;
-            padding: 6px 14px;
-            background-color: var(--primary-color);
-            color: #fff;
-            text-decoration: none;
-            border-radius: 6px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-        .read-more-btn:hover { background-color: var(--secondary-color); }
-
-        /* NÚT XEM THÊM TIN TỨC */
-        .load-more-container { text-align: center; margin-top: 20px; }
-        .load-more-action-btn {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: white; border: none; padding: 10px 24px; font-size: 13px; font-weight: bold;
-            border-radius: 20px; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            transition: transform 0.2s, background 0.2s; text-transform: uppercase;
-        }
-        .load-more-action-btn:hover { transform: scale(1.05); background: linear-gradient(135deg, #002244, #003366); }
-
-        .notice-list { list-style: none; }
-        .notice-list li { padding: 8px 0; border-bottom: 1px solid #f0f0f0; font-size: 14px; }
-
-        /* POPUP CHÀO MỪNG CHỐNG TRÀN VIỀN */
-        .welcome-modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.75); z-index: 10000;
-            display: flex; align-items: center; justify-content: center;
-            opacity: 0; pointer-events: none; transition: opacity 0.4s ease; backdrop-filter: blur(4px);
-        }
-        .welcome-modal-overlay.show { opacity: 1; pointer-events: auto; }
-        .welcome-modal-content {
-            background: #fff; width: 92%; max-width: 650px; max-height: 90vh; display: flex; flex-direction: column;
-            border-radius: 14px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.3); border: 2px solid var(--gold-color);
-            transform: translateY(30px); transition: transform 0.4s ease;
-        }
-        .welcome-modal-overlay.show .welcome-modal-content { transform: translateY(0); }
-        .welcome-modal-header {
-            background: linear-gradient(135deg, #003366, #0055a5); color: var(--gold-color);
-            padding: 15px 20px; font-weight: bold; font-size: 15px; flex-shrink: 0;
-            display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--gold-color); text-transform: uppercase;
-        }
-        .welcome-close-btn { color: #fff; font-size: 26px; cursor: pointer; transition: color 0.2s; }
-        .welcome-close-btn:hover { color: var(--gold-color); }
-        .welcome-modal-body { padding: 20px; text-align: center; overflow-y: auto; }
-        .welcome-icon { font-size: 40px; margin-bottom: 5px; animation: bounce 2s infinite; }
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
-            40% {transform: translateY(-8px);}
-            60% {transform: translateY(-4px);}
-        }
-        .welcome-modal-body h3 { color: #003366; font-size: 18px; margin-bottom: 5px; text-transform: uppercase; }
-        .welcome-message {
-            font-size: 14px; color: #333; line-height: 1.6; background: #f8f9fa;
-            padding: 15px; border-radius: 8px; border-left: 4px solid var(--gold-color); margin: 12px 0 18px 0; text-align: left;
-        }
-        .welcome-message ul { padding-left: 20px; margin-top: 10px; font-size: 13.5px; }
-        
-        .popup-btn-group { display: flex; flex-direction: column; gap: 10px; align-items: center; margin-top: 10px; }
-        .welcome-action-btn {
-            background: linear-gradient(135deg, #003366, #0055a5); color: white;
-            border: none; padding: 11px 28px; font-size: 14px; font-weight: bold;
-            border-radius: 25px; cursor: pointer; box-shadow: 0 4px 12px rgba(0,51,102,0.3);
-            transition: transform 0.2s, background 0.2s; text-transform: uppercase; width: 100%; max-width: 280px;
-        }
-        .welcome-action-btn:hover { transform: scale(1.02); background: linear-gradient(135deg, #002244, #003366); }
-        
-        .dont-show-btn { background: transparent; color: #666; border: none; font-size: 13px; cursor: pointer; text-decoration: underline; transition: color 0.2s; padding: 5px; }
-        .dont-show-btn:hover { color: #003366; }
-
-        footer {
-            background-color: #001529;
-            color: white;
-            text-align: center;
-            padding: 20px;
-            margin-top: 40px;
-            font-size: 13px;
-            border-top: 3px solid var(--gold-color);
-        }
-        footer p { margin: 4px 0; color: #aaa; }
-        footer a { color: #66b3ff; text-decoration: none; }
-        footer a:hover { text-decoration: underline; }
-
-        @media (max-width: 768px) {
-            .header-container { flex-direction: column; text-align: center; }
-            .main-wrapper { grid-template-columns: 1fr; }
-        }
-    </style>
 </head>
 <body>
 
-    <header>
-        <div class="header-container">
-            <div class="logo-box" id="logo-container">
-                <img src="logo.png" alt="Logo Lớp 12A7" onerror="document.getElementById('logo-container').innerText='12A7'">
-            </div>
-            <div class="header-text">
-                <h1>CỔNG THÔNG TIN LỚP 12A7</h1>
-                <p>Trung tâm Giáo dục nghề nghiệp - Giáo dục thường xuyên Tân Bình (Phân hiệu Phú Nhuận)<br>Năm học 2026 - 2027</p>
-            </div>
-        </div>
-    </header>
-
-    <nav>
-        <div class="nav-container">
-            <a href="index.html" class="active">Trang chủ</a>
-            <a href="baobai.html">Báo Bài</a>
-            <a href="index.html#tin-tuc">Tin tức & Sự kiện</a>
-            <a href="gochoc-tap.html">Góc học tập</a>
-            <a href="giaovien.html">Giáo viên</a>
-            <a href="gocxanh.html" class="green-tab">Góc Xanh</a>
-            <a href="thanhvien.html">Thành viên</a>
-            <a href="thuvien.html">Thư viện ảnh</a>
-            <a href="credits.html">Credits</a>
-        </div>
-    </nav>
-
-    <div class="main-wrapper">
-        <main>
-            <div class="card">
-                <div class="banner-box">
-                    <img id="main-banner" src="banner.jpg" alt="Banner Lớp 12A7" onerror="this.style.display='none'">
-                    <div class="banner-overlay-text">
-                        Chào mừng bạn đến với Cổng thông tin Lớp 12A7<br>Năm học 2026 - 2027
-                    </div>
-                </div>
-            </div>
-
-            <div class="card" id="tin-tuc">
-                <h3 class="section-title">Tin tức & Hoạt động mới</h3>
-                <div id="posts-list">
-                    <div class="empty-state">⏳ Đang tải tin tức...</div>
-                </div>
-            </div>
-        </main>
-
-        <aside>
-            <div class="card">
-                <h3 class="section-title">Ban cán sự Lớp 12A7</h3>
-                <ul class="notice-list" style="font-size: 13px;">
-                    <li><b>GVCN:</b> Cô Nguyễn Thị Khánh Ly</li>
-                    <li><b>Lớp trưởng:</b> VÕ NGỌC KHANG</li>
-                    <li><b>Lớp phó HT:</b> Cao Cẩm Doanh</li>
-                    <li><b>Lớp phó Phong trào:</b> Lê Thị Kim Hương</li>
-                </ul>
-            </div>
-        </aside>
+<div class="site-topline"></div>
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="index.html" aria-label="Cổng thông tin lớp 12A7">
+      <div class="brand-mark" style="width:64px;height:64px;min-width:64px;max-width:64px;flex:0 0 64px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#fff;line-height:0"><img src="logo.png?v=2" alt="Logo lớp 12A7" style="display:block;width:100%;height:100%;max-width:100%;object-fit:contain;position:static" onerror="this.parentElement.textContent='A7'"></div>
+      <div class="brand-copy">
+        <div class="brand-eyebrow">CLASS OF 2027 · THE LAST CHAPTER</div>
+        <h1 class="brand-title">CỔNG THÔNG TIN LỚP 12A7</h1>
+        <p class="brand-subtitle">Trung tâm GDNN – GDTX Tân Bình · Phân hiệu Phú Nhuận</p>
+      </div>
+    </a>
+    <div class="header-actions">
+      <button class="auth-btn" type="button" data-auth-open="login">Đăng nhập</button>
+      <button class="auth-btn primary" type="button" data-auth-open="register">Đăng ký <span aria-hidden="true">↗</span></button>
     </div>
+  </div>
+</header>
+<nav class="main-nav">
+  <div class="nav-inner">
+    <a class="nav-link" href="index.html">Trang chủ</a>
+    <a class="nav-link" href="baobai.html">Báo bài</a>
+    <a class="nav-link" href="index.html#tin-tuc">Tin tức & sự kiện</a>
+    <a class="nav-link" href="hoctap.html">Góc học tập</a>
+    <a class="nav-link" href="giaovien.html">Giáo viên</a>
+    <a class="nav-link" href="gocxanh.html">Góc xanh</a>
+    <a class="nav-link" href="thanhvien.html">Thành viên</a>
+    <a class="nav-link" href="thuvien.html">Thư viện ảnh</a>
+    <a class="nav-link" href="credits.html">Credits</a>
+  </div>
+</nav>
 
-    <!-- POPUP CHÀO MỪNG -->
-    <div id="welcomePopup" class="welcome-modal-overlay">
-        <div class="welcome-modal-content">
-            <div class="welcome-modal-header">
-                <span>🌻 Chào mừng đến với Lớp 12A7 🌻</span>
-                <span class="welcome-close-btn" onclick="closeWelcomePopup()">&times;</span>
-            </div>
-            <div class="welcome-modal-body">
-                <div class="welcome-icon">🏫</div>
-                <h3>CỔNG THÔNG TIN LỚP 12A7</h3>
-                <p style="color: #666; font-size: 13px; margin-bottom: 10px;">Trung tâm GDNN - GDTX Tân Bình (Phân hiệu Phú Nhuận) | Năm học 2026 - 2027</p>
-                <div class="welcome-message">
-                    <b>Trân trọng kính chào quý thầy cô cùng toàn thể các bạn học viên!</b><br>
-                    Cổng thông tin điện tử lớp 12A7 là ngôi nhà chung trực tuyến được xây dựng nhằm kết nối việc học tập, sinh hoạt và cập nhật các thông tin chính thống của tập thể lớp.
-                    <br>
-                    <b>Giới thiệu sơ lược về website:</b>
-                    <ul>
-                        <li>📌 <b>Tin tức & Sự kiện:</b> Nơi cung cấp các bài viết tuyên truyền, phổ biến kiến thức và thông báo quan trọng liên quan đến học sinh.</li>
-                        <li>📚 <b>Góc Học Tập:</b> Cập nhật nhanh chóng bài tập, lịch học và tài liệu ôn thi chính thống.</li>
-                        <li>🌿 <b>Góc Xanh & Phong trào:</b> Lưu giữ các hoạt động bảo vệ môi trường và thi đua sôi nổi của tập thể lớp.</li>
-                        <li>📸 <b>Thư viện ảnh:</b> Nơi lưu giữ những khoảnh khắc kỷ niệm đẹp nhất của thầy và trò 12A7.</li>
-                    </ul>
-                </div>
-                <div class="popup-btn-group">
-                    <button class="welcome-action-btn" onclick="closeWelcomePopup()">Khám phá ngay 🚀</button>
-                    <button class="dont-show-btn" onclick="dontShowFor24Hours()">Không hiện lại trong vòng 24h</button>
-                </div>
-            </div>
-        </div>
+<main class="page-wrap">
+  <section class="home-banner" aria-label="Chào mừng đến với Cổng thông tin lớp 12A7">
+    <img src="banner.jpg" alt="Tập thể lớp 12A7 trong lễ khai giảng năm học 2026–2027"
+         fetchpriority="high" decoding="async">
+  </section>
+
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-kicker">ONE CLASS · ONE JOURNEY · ONE MEMORY</div>
+    <h1>Một chặng đường.<br><span>Một dấu ấn 12A7.</span></h1>
+    <p>Nơi lưu giữ thông tin, nhịp sống học đường và những khoảnh khắc cuối cấp của tập thể 12A7 trong năm học 2026–2027.</p>
+    <div class="hero-actions">
+      <a class="btn btn-gold" href="#tin-tuc">Khám phá tin mới <span>↗</span></a>
+      <a class="btn btn-glass" href="thanhvien.html">Gặp gỡ tập thể 12A7</a>
     </div>
+  </div>
+  <div class="hero-side">
+    <div class="hero-stat"><strong>12A7</strong><span>Tập thể · Phân hiệu Phú Nhuận</span></div>
+    <div class="hero-stat"><strong>2026—27</strong><span>Năm học cuối cấp</span></div>
+    <div class="hero-stat"><strong>29</strong><span>Thành viên cùng viết nên thanh xuân</span></div>
+  </div>
+</section>
 
-    <footer>
-        <p>&copy; 2026 Cổng thông tin Lớp 12A7 - Trung tâm Giáo dục nghề nghiệp - Giáo dục thường xuyên Tân Bình (Phân hiệu Phú Nhuận)</p>
-        <p>📧 Email liên hệ: <a href="mailto:12a7.phanhieuttgdnngdtxtanbinh@gmail.com">12a7.phanhieuttgdnngdtxtanbinh@gmail.com</a></p>
-        <p>Phát triển và vận hành bởi Tập thể Lớp 12A7</p>
-    </footer>
+<section class="section" id="tin-tuc">
+  <div class="section-head"><div><div class="eyebrow">Cập nhật từ lớp</div><h2>Tin tức & hoạt động mới</h2><p>Thông tin được đồng bộ trực tiếp từ Google Sheets.</p></div><a class="text-link" href="gocxanh.html">Xem hoạt động lớp ↗</a></div>
+  <div id="posts-list" class="news-list"><div class="loading-state">Đang tải tin tức từ Google Sheets…</div></div>
+</section>
 
-    <!-- HIỆU ỨNG TUNG HOA 20/11 -->
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<section class="section">
+  <div class="section-head"><div><div class="eyebrow">Hỗ trợ học tập</div><h2>Góc học tập & tài liệu</h2><p>Thời khóa biểu và kho tài liệu ôn tập của lớp 12A7.</p></div><a class="text-link" href="hoctap.html">Mở Góc học tập ↗</a></div>
+  <a class="panel" href="hoctap.html" style="display:flex;align-items:center;justify-content:space-between;gap:18px">
+    <div><div class="eyebrow">Study space · 12A7</div><h2 style="margin:5px 0;color:var(--navy)">Tất cả tài liệu học tập tại một nơi</h2><p style="margin:0;color:var(--muted);font-size:13px">Xem thời khóa biểu, truy cập tài liệu và đề cương ôn thi.</p></div>
+    <span class="btn btn-blue">Khám phá →</span>
+  </a>
+</section>
 
-    <script>
-        const SPREADSHEET_ID = '10WZAkfTsUhEsTRADxZ3JX869kLV_Sen45r4BeSrxDZY';
-        
-        let allPostsData = [];
-        let currentDisplayCount = 5; // Mặc định hiển thị 5 bài đầu tiên
+<section class="section">
+  <div class="grid grid-3">
+    <a class="panel" href="baobai.html"><div class="eyebrow">01 · Learning</div><h2>Báo bài</h2><p style="color:var(--muted);font-size:13px">Theo dõi nhiệm vụ học tập hằng ngày.</p><span class="text-link">Mở bảng báo bài →</span></a>
+    <a class="panel" href="giaovien.html"><div class="eyebrow">02 · Teachers</div><h2>Đội ngũ giáo viên</h2><p style="color:var(--muted);font-size:13px">Thông tin giáo viên giảng dạy lớp 12A7.</p><span class="text-link">Gặp gỡ thầy cô →</span></a>
+    <a class="panel" href="thuvien.html"><div class="eyebrow">03 · Memories</div><h2>Thư viện ảnh</h2><p style="color:var(--muted);font-size:13px">Những khoảnh khắc đáng nhớ của tập thể.</p><span class="text-link">Xem bộ sưu tập →</span></a>
+  </div>
+</section>
 
-        function parseCellValue(cell) {
-            if (!cell || cell.v === null || cell.v === undefined) return '';
-            if (cell.f) return String(cell.f).trim();
-            let val = String(cell.v).trim();
-            if (val.startsWith('Date(')) {
-                const matches = val.match(/\d+/g);
-                if (matches && matches.length >= 3) {
-                    const year = matches[0];
-                    const month = String(parseInt(matches[1]) + 1).padStart(2, '0');
-                    const day = String(matches[2]).padStart(2, '0');
-                    return `${day}/${month}/${year}`;
-                }
-            }
-            return val;
-        }
+</main>
 
-        function renderPosts() {
-            const container = document.getElementById('posts-list');
-            if (allPostsData.length === 0) {
-                container.innerHTML = '<div class="empty-state">Hiện chưa có bài viết mới nào.</div>';
-                return;
-            }
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">12A7 · CLASS OF 2027</div>
+      <p>Giữ lại thanh xuân, viết tiếp hành trình.</p>
+    </div>
+    <div>
+      <p>© 2026 Cổng thông tin lớp 12A7</p>
+      <p>Liên hệ: <a href="mailto:12a7.phanhieuttgdnngdtxtanbinh@gmail.com">12a7.phanhieuttgdnngdtxtanbinh@gmail.com</a></p>
+    </div>
+  </div>
+</footer>
+<div class="lightbox" id="a7-lightbox" onclick="this.classList.remove('open')"><img alt="Ảnh phóng to" id="a7-lightbox-img"></div>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="assets/app.js"></script>
 
-            // Lấy ra đúng số lượng bài viết đang muốn hiển thị
-            const visiblePosts = allPostsData.slice(0, currentDisplayCount);
-            let html = visiblePosts.join('');
 
-            // Nếu vẫn còn bài viết chưa hiển thị, hiện nút Xem thêm
-            if (currentDisplayCount < allPostsData.length) {
-                html += `
-                    <div class="load-more-container">
-                        <button class="load-more-action-btn" onclick="loadMorePosts()">Xem thêm tin tức ⬇️</button>
-                    </div>
-                `;
-            }
-            container.innerHTML = html;
-        }
+<script>
+(function(){
+  const A7 = window.A7;
+  const NEWS_SHEET_URL = 'https://docs.google.com/spreadsheets/d/10WZAkfTsUhEsTRADxZ3JX869kLV_Sen45r4BeSrxDZY/gviz/tq?tqx=responseHandler:handle12A7News';
 
-        function loadMorePosts() {
-            currentDisplayCount += 5; // Load thêm 5 bài mỗi lần bấm
-            renderPosts();
-        }
+  const PAGE_SIZE = 5;
+  let allNewsPosts = [];
+  let visibleNewsCount = PAGE_SIZE;
 
-        function handleNewsData(json) {
-            const container = document.getElementById('posts-list');
-            try {
-                if (!json || !json.table || !json.table.rows || json.table.rows.length === 0) {
-                    container.innerHTML = '<div class="empty-state">Hiện chưa có bài viết mới nào.</div>';
-                    return;
-                }
+  function readCell(cell){
+    return cell ? A7.parseCell(cell) : '';
+  }
 
-                const rows = json.table.rows;
-                let pinnedPosts = [];
-                let normalPosts = [];
+  function isPinnedRow(cells){
+    // Theo cấu trúc Sheet đang dùng: cột H (ô H) ghi chính xác "GHIM".
+    const marker = readCell(cells[7]).trim().toUpperCase();
+    return marker === 'GHIM';
+  }
 
-                // Lặp ngược từ dưới lên (bài mới nhất ở dưới sheet sẽ lên đầu)
-                for (let i = rows.length - 1; i >= 0; i--) {
-                    const row = rows[i].c;
-                    if (!row) continue;
+  function renderNews(){
+    const box = A7.$('#posts-list');
 
-                    const id = row[0] ? (row[0].v !== null ? row[0].v : (i + 1)) : (i + 1);
-                    const ngay = parseCellValue(row[1]);
-                    const tacGia = row[2] ? (row[2].v || 'admin') : 'admin';
-                    const tieude = row[3] ? (row[3].v || '') : '';
-                    const tomTat = row[4] ? (row[4].v || '') : '';
-                    
-                    let isPinned = false;
-                    if (row[7] && row[7].v) {
-                        const valH = String(row[7].v).trim().toUpperCase();
-                        if (valH === 'GHIM') {
-                            isPinned = true;
-                        }
-                    }
+    if(!allNewsPosts.length){
+      box.innerHTML = '<div class="empty-state">Hiện chưa có tin tức mới.</div>';
+      return;
+    }
 
-                    if (tieude && tieude.trim() !== '') {
-                        const postHtml = `
-                            <div class="post-item ${isPinned ? 'pinned-post' : ''}">
-                                <span class="post-date">
-                                    ${isPinned ? '<span style="color:#d32f2f; font-weight:bold; margin-right:5px;">📌 ĐÃ GHIM</span> | ' : ''}
-                                    🕒 ${ngay} | ✍️ ${tacGia}
-                                </span>
-                                <div class="post-title">
-                                    <a href="baiviet.html?id=${id}">${tieude}</a>
-                                </div>
-                                <div class="post-content">${tomTat}</div>
-                                <a href="baiviet.html?id=${id}" class="read-more-btn">Xem chi tiết &rarr;</a>
-                            </div>
-                        `;
-                        
-                        if (isPinned) {
-                            pinnedPosts.push(postHtml);
-                        } else {
-                            normalPosts.push(postHtml);
-                        }
-                    }
-                }
-                
-                // Gộp bài ghim và bài bình thường lại thành một mảng duy nhất
-                allPostsData = [...pinnedPosts, ...normalPosts];
-                
-                // Gọi hàm hiển thị bài viết
-                renderPosts();
-            } catch (err) {
-                console.error("Lỗi đọc tin tức:", err);
-                container.innerHTML = '<div class="empty-state">Không thể hiển thị bài viết lúc này.</div>';
-            }
-        }
+    const visiblePosts = allNewsPosts.slice(0, visibleNewsCount);
+    let out = visiblePosts.map(post => `
+      <article class="news-card${post.isPinned ? ' news-card-pinned' : ''}">
+        ${post.isPinned ? '<div class="news-pin-label">📌 ĐÃ GHIM</div>' : ''}
+        <div class="meta">
+          <span>◷ ${A7.esc(post.date || '12A7')}</span>
+          <span>✦ ${A7.esc(post.author)}</span>
+        </div>
+        <h3>${A7.esc(post.title)}</h3>
+        <p>${A7.esc(post.summary)}</p>
+        <a class="text-link" href="baiviet.html?id=${encodeURIComponent(post.id)}">Đọc bài viết →</a>
+      </article>
+    `).join('');
 
-        function loadNews() {
-            const script = document.createElement('script');
-            script.src = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=responseHandler:handleNewsData`;
-            document.body.appendChild(script);
-        }
+    if(visibleNewsCount < allNewsPosts.length){
+      const remaining = allNewsPosts.length - visibleNewsCount;
+      out += `
+        <div class="news-list-controls">
+          <button class="btn btn-outline" type="button" id="news-load-more">
+            Xem thêm ${Math.min(PAGE_SIZE, remaining)} tin ↓
+          </button>
+          <span class="news-list-count">Đang hiển thị ${visiblePosts.length}/${allNewsPosts.length} bài viết</span>
+        </div>`;
+    }else if(allNewsPosts.length > PAGE_SIZE){
+      out += `
+        <div class="news-list-controls">
+          <button class="btn btn-outline" type="button" id="news-collapse">
+            Thu gọn ↑
+          </button>
+          <span class="news-list-count">Đã hiển thị tất cả ${allNewsPosts.length} bài viết</span>
+        </div>`;
+    }
 
-        // Xử lý Popup Chào Mừng & 24h
-        function closeWelcomePopup() {
-            document.getElementById('welcomePopup').classList.remove('show');
-        }
+    box.innerHTML = out;
 
-        function dontShowFor24Hours() {
-            const expireTime = new Date().getTime() + (24 * 60 * 60 * 1000);
-            localStorage.setItem('popup_expire_12a7', expireTime);
-            closeWelcomePopup();
-        }
+    const moreButton = box.querySelector('#news-load-more');
+    if(moreButton){
+      moreButton.addEventListener('click', () => {
+        visibleNewsCount = Math.min(visibleNewsCount + PAGE_SIZE, allNewsPosts.length);
+        renderNews();
+      });
+    }
 
-        window.onload = function() {
-            loadNews();
-            
-            // Kiểm tra xem URL có chứa hash #tin-tuc không
-            const hasHashTinTuc = window.location.hash === '#tin-tuc';
+    const collapseButton = box.querySelector('#news-collapse');
+    if(collapseButton){
+      collapseButton.addEventListener('click', () => {
+        visibleNewsCount = PAGE_SIZE;
+        renderNews();
+        box.scrollIntoView({behavior:'smooth', block:'start'});
+      });
+    }
+  }
 
-            const expireTime = localStorage.getItem('popup_expire_12a7');
-            const now = new Date().getTime();
-            
-            // Chỉ hiện popup nếu KHÔNG phải đang nhảy tới #tin-tuc VÀ chưa hết hạn 24h
-            if (!hasHashTinTuc && (!expireTime || now > expireTime)) {
-                setTimeout(() => {
-                    document.getElementById('welcomePopup').classList.add('show');
-                    // Bắn pháo hoa ngay khi popup hiện lên
-                    confetti({
-                        particleCount: 150,
-                        spread: 100,
-                        origin: { y: 0.6 },
-                        colors: ['#d31027', '#ea384d', '#ffcc00', '#ffffff']
-                    });
-                }, 500);
-            }
-        };
-    </script>
+  function handleNewsData(json){
+    const box = A7.$('#posts-list');
+
+    if(!json || json.status === 'error' || !json.table || !Array.isArray(json.table.rows)){
+      box.innerHTML = '<div class="empty-state">Google Sheets đã phản hồi nhưng dữ liệu Tin tức không hợp lệ.</div>';
+      return;
+    }
+
+    const rows = json.table.rows;
+    const pinnedPosts = [];
+    const normalPosts = [];
+
+    // Sheet xếp bài mới ở cuối; đảo ngược để bài mới hơn đứng trước.
+    rows.slice().reverse().forEach((row, reverseIndex) => {
+      const cells = row && row.c ? row.c : [];
+      const id = readCell(cells[0]) || String(rows.length - reverseIndex);
+      const date = readCell(cells[1]);
+      const author = readCell(cells[2]) || 'Ban biên tập 12A7';
+      const title = readCell(cells[3]);
+      const summary = readCell(cells[4]);
+
+      if(!title || /^(tiêu đề|tieu de|title)$/i.test(title.trim())) return;
+
+      const post = {
+        id: id,
+        date: date,
+        author: author,
+        title: title,
+        summary: summary,
+        isPinned: isPinnedRow(cells)
+      };
+
+      if(post.isPinned) pinnedPosts.push(post);
+      else normalPosts.push(post);
+    });
+
+    // Bài ghim luôn đứng trước; trong mỗi nhóm vẫn giữ thứ tự mới nhất trước.
+    allNewsPosts = pinnedPosts.concat(normalPosts);
+    visibleNewsCount = PAGE_SIZE;
+    renderNews();
+  }
+
+  function loadNews(){
+    const box = A7.$('#posts-list');
+    box.innerHTML = '<div class="loading-state">Đang kết nối Google Sheets…</div>';
+
+    let finished = false;
+    const script = document.createElement('script');
+    const timeout = setTimeout(() => {
+      if(finished) return;
+      finished = true;
+      script.remove();
+      delete window.handle12A7News;
+      box.innerHTML = '<div class="empty-state">Google Sheets không phản hồi. Vui lòng tải lại trang sau ít phút.</div>';
+    }, 15000);
+
+    window.handle12A7News = function(json){
+      if(finished) return;
+      finished = true;
+      clearTimeout(timeout);
+      script.remove();
+      delete window.handle12A7News;
+      handleNewsData(json);
+    };
+
+    script.onerror = function(){
+      if(finished) return;
+      finished = true;
+      clearTimeout(timeout);
+      delete window.handle12A7News;
+      box.innerHTML = '<div class="empty-state">Không tải được dữ liệu Tin tức từ Google Sheets. Kiểm tra quyền xem của bảng tính.</div>';
+    };
+
+    script.src = NEWS_SHEET_URL;
+    document.body.appendChild(script);
+  }
+
+  loadNews();
+})();
+</script>
+
 </body>
 </html>

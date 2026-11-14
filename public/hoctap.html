@@ -1,0 +1,53 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#10283f"><title>Góc học tập | 12A7</title><link rel="stylesheet" href="assets/site.css?v=logo-fix-2"><link rel="icon" type="image/png" href="logo.png">
+</head><body>
+<div class="site-topline"></div>
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="index.html" aria-label="Cổng thông tin lớp 12A7">
+      <div class="brand-mark" style="width:64px;height:64px;min-width:64px;max-width:64px;flex:0 0 64px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#fff;line-height:0"><img src="logo.png?v=2" alt="Logo lớp 12A7" style="display:block;width:100%;height:100%;max-width:100%;object-fit:contain;position:static" onerror="this.parentElement.textContent='A7'"></div>
+      <div class="brand-copy"><div class="brand-eyebrow">CLASS OF 2027 · THE LAST CHAPTER</div>
+        <h1 class="brand-title">CỔNG THÔNG TIN LỚP 12A7</h1>
+        <p class="brand-subtitle">Trung tâm GDNN – GDTX Tân Bình · Phân hiệu Phú Nhuận</p></div>
+    </a>
+    <div class="header-actions"><button class="auth-btn" type="button" data-auth-open="login">Đăng nhập</button><button class="auth-btn primary" type="button" data-auth-open="register">Đăng ký ↗</button></div>
+  </div>
+</header>
+<nav class="main-nav"><div class="nav-inner">
+<a class="nav-link" href="index.html">Trang chủ</a><a class="nav-link" href="baobai.html">Báo bài</a><a class="nav-link" href="index.html#tin-tuc">Tin tức & sự kiện</a><a class="nav-link" href="hoctap.html">Góc học tập</a><a class="nav-link" href="giaovien.html">Giáo viên</a><a class="nav-link" href="gocxanh.html">Góc xanh</a><a class="nav-link" href="thanhvien.html">Thành viên</a><a class="nav-link" href="thuvien.html">Thư viện ảnh</a><a class="nav-link" href="credits.html">Credits</a>
+</div></nav><main class="page-wrap">
+<section class="page-heading"><div class="section-kicker">Study space · 12A7</div><h1>Góc học tập</h1><p>Thời khóa biểu, tài liệu ôn tập và các nguồn học liệu dành cho tập thể 12A7.</p></section>
+<section class="panel">
+  <div class="section-head"><div><div class="eyebrow">Weekly schedule</div><h2>Thời khóa biểu lớp 12A7</h2><p>Cập nhật theo ảnh thời khóa biểu mới nhất.</p></div><span class="badge" style="color:#a27c3f">2026—2027</span></div>
+  <div class="tkb-frame"><img src="tkb.png" alt="Thời khóa biểu lớp 12A7" onerror="this.parentElement.innerHTML='<div class=empty-state>Chưa tìm thấy ảnh tkb.png. Hãy đặt ảnh thời khóa biểu trong thư mục gốc website.</div>'"></div>
+</section>
+<section class="section">
+  <div class="section-head"><div><div class="eyebrow">Learning resources</div><h2>Tài liệu ôn tập</h2><p>Dữ liệu lấy từ Google Sheets, có thể mở tài liệu gốc.</p></div></div>
+  <div class="panel"><div id="study-docs"><div class="loading-state">Đang tải danh sách tài liệu…</div></div></div>
+</section>
+<section class="section grid grid-2">
+  <article class="study-link-card"><div class="eyebrow">Daily tasks</div><h3>Bảng báo bài</h3><p>Theo dõi bài tập và nội dung học tập được giao theo ngày.</p><a class="text-link" href="baobai.html">Mở bảng báo bài →</a></article>
+  <article class="study-link-card"><div class="eyebrow">Class updates</div><h3>Tin tức lớp học</h3><p>Cập nhật thông báo và những nội dung mới từ tập thể 12A7.</p><a class="text-link" href="index.html#tin-tuc">Xem tin tức →</a></article>
+</section>
+</main>
+<footer class="site-footer"><div class="footer-inner"><div><div class="footer-brand">12A7 · CLASS OF 2027</div><p>Giữ lại thanh xuân, viết tiếp hành trình.</p></div><div><p>© 2026 Cổng thông tin lớp 12A7</p><p>Liên hệ: <a href="mailto:12a7.phanhieuttgdnngdtxtanbinh@gmail.com">12a7.phanhieuttgdnngdtanbinh@gmail.com</a></p></div></div></footer>
+<div class="lightbox" id="a7-lightbox" onclick="this.classList.remove('open')"><img alt="Ảnh phóng to" id="a7-lightbox-img"></div><script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
+<script src="assets/app.js"></script>
+<script>
+(function(){
+ const A7=window.A7,box=A7.$('#study-docs');
+ A7.loadGViz(A7.GIDS.docs,(json,err)=>{
+  if(err||!json||!json.table){box.innerHTML='<div class="empty-state">Không thể kết nối Google Sheets tài liệu. Vui lòng kiểm tra quyền xuất bản.</div>';return;}
+  let items='';
+  (json.table.rows||[]).forEach(row=>{
+   const c=row.c||[],desc=A7.parseCell(c[0]),url=A7.parseCell(c[1]);
+   if(!desc||!url||desc.toLowerCase()==='mô tả')return;
+   const href=/^https?:\/\//i.test(url)?url:'https://'+url;
+   items+=`<li class="doc-item"><b>▤ ${A7.esc(desc)}</b><a class="doc-link" href="${A7.esc(href)}" target="_blank" rel="noopener noreferrer">Mở tài liệu ↗</a></li>`;
+  });
+  box.innerHTML=items?`<ul class="doc-list">${items}</ul>`:'<div class="empty-state">Chưa có tài liệu ôn tập được đăng.</div>';
+ });
+})();
+</script>
+</body></html>

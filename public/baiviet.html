@@ -1,0 +1,467 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#10283f"><title>Chi tiết bài viết | 12A7</title><link rel="stylesheet" href="assets/site.css?v=logo-fix-2"><link rel="icon" type="image/png" href="logo.png">
+
+<style id="a7-article-lightbox-navigation">
+#a7-lightbox{
+  position:fixed;inset:0;z-index:9999;display:none;align-items:center;justify-content:center;
+  padding:70px 88px 64px;background:rgba(0,0,0,.88);backdrop-filter:blur(4px);
+}
+#a7-lightbox.open{display:flex}
+#a7-lightbox img{
+  display:block;max-width:min(100%,1200px);max-height:calc(100vh - 130px);
+  width:auto;height:auto;object-fit:contain;border-radius:12px;
+  box-shadow:0 18px 55px rgba(0,0,0,.35);user-select:none
+}
+#a7-lightbox .lightbox-nav{
+  position:absolute;top:50%;transform:translateY(-50%);z-index:2;
+  width:54px;height:68px;border:1px solid rgba(255,255,255,.35);border-radius:16px;
+  display:grid;place-items:center;background:rgba(18,40,61,.78);color:#fff;
+  font-size:45px;line-height:1;cursor:pointer;box-shadow:0 6px 22px rgba(0,0,0,.25);
+  transition:background .18s ease,transform .18s ease
+}
+#a7-lightbox .lightbox-nav:hover{background:rgba(33,83,119,.96);transform:translateY(-50%) scale(1.06)}
+#a7-lightbox .lightbox-prev{left:22px}
+#a7-lightbox .lightbox-next{right:22px}
+#a7-lightbox .lightbox-close{
+  position:absolute;right:23px;top:18px;z-index:3;width:42px;height:42px;
+  border:1px solid rgba(255,255,255,.35);border-radius:50%;background:rgba(18,40,61,.8);
+  color:#fff;font-size:27px;line-height:1;cursor:pointer
+}
+#a7-lightbox .lightbox-counter{
+  position:absolute;bottom:18px;left:50%;transform:translateX(-50%);
+  padding:7px 13px;border:1px solid rgba(255,255,255,.22);border-radius:999px;
+  background:rgba(18,40,61,.78);color:#fff;font-size:12px;font-weight:800;
+  letter-spacing:.4px
+}
+@media(max-width:650px){
+  #a7-lightbox{padding:65px 52px 58px}
+  #a7-lightbox img{max-width:100%;max-height:calc(100vh - 130px)}
+  #a7-lightbox .lightbox-nav{width:38px;height:52px;font-size:34px;border-radius:12px}
+  #a7-lightbox .lightbox-prev{left:7px}
+  #a7-lightbox .lightbox-next{right:7px}
+  #a7-lightbox .lightbox-close{right:10px;top:10px;width:36px;height:36px}
+  #a7-lightbox .lightbox-counter{bottom:10px}
+}
+</style>
+
+</head><body>
+<div class="site-topline"></div>
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="index.html" aria-label="Cổng thông tin lớp 12A7">
+      <div class="brand-mark" style="width:64px;height:64px;min-width:64px;max-width:64px;flex:0 0 64px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#fff;line-height:0"><img src="logo.png?v=2" alt="Logo lớp 12A7" style="display:block;width:100%;height:100%;max-width:100%;object-fit:contain;position:static" onerror="this.parentElement.textContent='A7'"></div>
+      <div class="brand-copy"><div class="brand-eyebrow">CLASS OF 2027 · THE LAST CHAPTER</div>
+        <h1 class="brand-title">CỔNG THÔNG TIN LỚP 12A7</h1>
+        <p class="brand-subtitle">Trung tâm GDNN – GDTX Tân Bình · Phân hiệu Phú Nhuận</p></div>
+    </a>
+    <div class="header-actions"><button class="auth-btn" type="button" data-auth-open="login">Đăng nhập</button><button class="auth-btn primary" type="button" data-auth-open="register">Đăng ký ↗</button></div>
+  </div>
+</header>
+<nav class="main-nav"><div class="nav-inner">
+<a class="nav-link" href="index.html">Trang chủ</a><a class="nav-link" href="baobai.html">Báo bài</a><a class="nav-link" href="index.html#tin-tuc">Tin tức & sự kiện</a><a class="nav-link" href="hoctap.html">Góc học tập</a><a class="nav-link" href="giaovien.html">Giáo viên</a><a class="nav-link" href="gocxanh.html">Góc xanh</a><a class="nav-link" href="thanhvien.html">Thành viên</a><a class="nav-link" href="thuvien.html">Thư viện ảnh</a><a class="nav-link" href="credits.html">Credits</a>
+</div></nav><main class="page-wrap">
+<section class="page-heading"><div class="section-kicker">12A7 journal</div><h1 id="article-page-title">Chi tiết nội dung</h1><p>Những câu chuyện và dấu ấn của tập thể 12A7.</p></section>
+<a class="btn btn-outline" id="article-back" href="index.html" style="margin-bottom:18px">← Quay lại</a>
+<article class="panel" id="article-detail"><div class="loading-state">Đang tải nội dung…</div></article>
+
+<section class="panel" id="fb-engagement" hidden>
+  <div class="section-head">
+    <div><div class="eyebrow">Community response</div><h2 class="engagement-title">Cùng tương tác với bài viết</h2><p class="engagement-subtitle">Cảm xúc, lượt xem và bình luận của thành viên 12A7.</p></div>
+  </div>
+  <div class="fb-stats">
+    <div class="fb-stat">👁️ <b id="fb-view-count">0</b> lượt xem</div>
+    <div class="fb-stat">💬 <b id="fb-comment-count">0</b> bình luận</div>
+    <div class="fb-stat">❤️ <b id="fb-reaction-count">0</b> cảm xúc</div>
+  </div>
+  <h3 class="engagement-subtitle" style="margin-top:18px;color:var(--navy)">Bạn cảm thấy bài viết này thế nào?</h3>
+  <div class="reaction-row" id="fb-reactions">
+    <button type="button" class="reaction-btn" data-reaction="like"><span>👍</span> Thích <b data-count>0</b></button>
+    <button type="button" class="reaction-btn" data-reaction="love"><span>❤️</span> Yêu thích <b data-count>0</b></button>
+    <button type="button" class="reaction-btn" data-reaction="haha"><span>😂</span> Haha <b data-count>0</b></button>
+    <button type="button" class="reaction-btn" data-reaction="wow"><span>😮</span> Wow <b data-count>0</b></button>
+    <button type="button" class="reaction-btn" data-reaction="support"><span>👏</span> Ủng hộ <b data-count>0</b></button>
+  </div>
+  <div class="engagement-panel">
+    <h3 class="engagement-title" style="font-size:16px">💬 Để lại bình luận</h3>
+    <form class="comment-form" id="fb-comment-form">
+      <input name="name" id="fb-comment-name" maxlength="60" required placeholder="Tên của bạn">
+      <textarea name="content" id="fb-comment-content" maxlength="1000" required placeholder="Viết bình luận của bạn..."></textarea>
+      <button class="btn btn-blue" id="fb-comment-submit" type="submit">Gửi bình luận ↗</button>
+    </form>
+    <div class="fb-alert" id="fb-alert" role="status"></div>
+    <h3 style="font-size:15px;color:var(--navy);margin:22px 0 10px">Ý kiến từ thành viên</h3>
+    <div class="comment-list" id="fb-comments"><div class="empty-state">Đang kết nối dữ liệu tương tác…</div></div>
+    <p class="auth-note" style="text-align:left">Vui lòng bình luận văn minh, lịch sự và phù hợp với môi trường học đường.</p>
+  </div>
+  <details class="admin-panel">
+    <summary>🔐 Quản trị bình luận (GVCN / Admin)</summary>
+    <div id="fb-admin-login" class="comment-form" style="margin-top:12px">
+      <input id="fb-admin-email" type="email" autocomplete="username" placeholder="Email quản trị">
+      <input id="fb-admin-password" type="password" autocomplete="current-password" placeholder="Mật khẩu">
+      <button class="btn btn-blue" type="button" id="fb-admin-login-btn">Đăng nhập quản trị</button>
+    </div>
+    <p class="comment-status" id="fb-admin-status">Chỉ tài khoản được cấp quyền quản trị mới có thể xóa bình luận.</p>
+    <button class="btn btn-outline" type="button" id="fb-admin-logout" hidden>Đăng xuất quản trị</button>
+  </details>
+</section>
+
+</main>
+<footer class="site-footer"><div class="footer-inner"><div><div class="footer-brand">12A7 · CLASS OF 2027</div><p>Giữ lại thanh xuân, viết tiếp hành trình.</p></div><div><p>© 2026 Cổng thông tin lớp 12A7</p><p>Liên hệ: <a href="mailto:12a7.phanhieuttgdnngdtxtanbinh@gmail.com">12a7.phanhieuttgdnngdtanbinh@gmail.com</a></p></div></div></footer>
+<div class="lightbox" id="a7-lightbox" aria-hidden="true" onclick="window.a7CloseLightbox()">
+  <button class="lightbox-close" type="button" aria-label="Đóng ảnh" onclick="event.stopPropagation();window.a7CloseLightbox()">×</button>
+  <button class="lightbox-nav lightbox-prev" type="button" aria-label="Ảnh trước" onclick="event.stopPropagation();window.a7MoveLightbox(-1)">‹</button>
+  <img alt="Ảnh phóng to" id="a7-lightbox-img" onclick="event.stopPropagation()">
+  <button class="lightbox-nav lightbox-next" type="button" aria-label="Ảnh tiếp theo" onclick="event.stopPropagation();window.a7MoveLightbox(1)">›</button>
+  <div class="lightbox-counter" id="a7-lightbox-counter" onclick="event.stopPropagation()">1 / 1</div>
+</div><script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
+<script src="assets/app.js"></script>
+
+<script>
+(function(){
+ const A7=window.A7,params=new URLSearchParams(location.search);
+ const id=params.get('id'),type=params.get('type'),rowIndex=params.get('row');
+
+ let a7GalleryImages=[];
+ let a7GalleryIndex=0;
+ function a7UpdateLightbox(){
+  const overlay=document.getElementById('a7-lightbox');
+  const image=document.getElementById('a7-lightbox-img');
+  const counter=document.getElementById('a7-lightbox-counter');
+  if(!overlay||!image||!a7GalleryImages.length)return;
+  image.src=a7GalleryImages[a7GalleryIndex];
+  counter.textContent=(a7GalleryIndex+1)+' / '+a7GalleryImages.length;
+  const showNav=a7GalleryImages.length>1;
+  overlay.querySelectorAll('.lightbox-nav').forEach(button=>button.style.display=showNav?'grid':'none');
+ }
+ window.a7OpenLightbox=function(index){
+  if(!a7GalleryImages.length)return;
+  a7GalleryIndex=Math.max(0,Math.min(Number(index)||0,a7GalleryImages.length-1));
+  a7UpdateLightbox();
+  const overlay=document.getElementById('a7-lightbox');
+  overlay.classList.add('open');
+  overlay.setAttribute('aria-hidden','false');
+  document.body.style.overflow='hidden';
+ };
+ window.a7MoveLightbox=function(step){
+  if(!a7GalleryImages.length)return;
+  a7GalleryIndex=(a7GalleryIndex+step+a7GalleryImages.length)%a7GalleryImages.length;
+  a7UpdateLightbox();
+ };
+ window.a7CloseLightbox=function(){
+  const overlay=document.getElementById('a7-lightbox');
+  if(!overlay)return;
+  overlay.classList.remove('open');
+  overlay.setAttribute('aria-hidden','true');
+  document.body.style.overflow='';
+ };
+ document.addEventListener('keydown',function(event){
+  const overlay=document.getElementById('a7-lightbox');
+  if(!overlay||!overlay.classList.contains('open'))return;
+  if(event.key==='ArrowRight'){event.preventDefault();window.a7MoveLightbox(1);}
+  else if(event.key==='ArrowLeft'){event.preventDefault();window.a7MoveLightbox(-1);}
+  else if(event.key==='Escape'){event.preventDefault();window.a7CloseLightbox();}
+ });
+
+ const DB='https://a7-website-3bd33-default-rtdb.asia-southeast1.firebasedatabase.app';
+ const FIREBASE_CONFIG={
+  apiKey:"AIzaSyD_bg0nSmeOma70PVZSKlW9OxWDqXuzrA0",
+  authDomain:"a7-website-3bd33.firebaseapp.com",
+  databaseURL:DB,
+  projectId:"a7-website-3bd33",
+  storageBucket:"a7-website-3bd33.firebasestorage.app",
+  messagingSenderId:"1022960527978",
+  appId:"1:1022960527978:web:c5f8286381710491053813",
+  measurementId:"G-QR9J1DNYV6"
+ };
+ const REACTIONS={
+  like:{label:'Thích',emoji:'👍'},
+  love:{label:'Yêu thích',emoji:'❤️'},
+  haha:{label:'Haha',emoji:'😂'},
+  wow:{label:'Wow',emoji:'😮'},
+  support:{label:'Ủng hộ',emoji:'👏'}
+ };
+ let fbAuth=null,fbDb=null,fbCurrentUser=null,fbIsAdmin=false;
+ let fbPostKey='',fbPostRef=null,fbCommentsRef=null,fbListener=null;
+
+ function postKey(){
+  // QUAN TRỌNG: giữ nguyên postKey trong Firebase cũ để không làm mất số liệu hiện có.
+  if(type==='gocxanh')return 'gocxanh_'+String(id||'unknown');
+  if(type==='baobai')return 'baobai_'+String(rowIndex||'unknown');
+  if(id)return 'news_'+String(id);
+  return '';
+ }
+ function esc(v){return A7.esc(v==null?'':String(v));}
+ function showMessage(message,kind='error'){
+  const el=document.getElementById('fb-alert');
+  if(!el)return;el.textContent=message;el.className='fb-alert show '+kind;
+ }
+ function fmtTime(timestamp){
+  const date=new Date(Number(timestamp||0));
+  if(!Number.isFinite(date.getTime())||!timestamp)return 'Vừa xong';
+  return date.toLocaleString('vi-VN',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'});
+ }
+ function renderState(snapshot){
+  // Read exactly the old articleInteractions/{postKey} shape.
+  const data=snapshot.val()||{};
+  const views=data.views||{},reactions=data.reactions||{},comments=data.comments||{};
+  const viewTotal=Object.values(views).reduce((sum,item)=>sum+Number((item&&item.count)||0),0);
+  const reactionCounts={like:0,love:0,haha:0,wow:0,support:0};
+  let myReaction=null;
+  Object.entries(reactions).forEach(([uid,item])=>{
+   if(!item||!Object.prototype.hasOwnProperty.call(reactionCounts,item.type))return;
+   reactionCounts[item.type]++;
+   if(fbCurrentUser&&uid===fbCurrentUser.uid)myReaction=item.type;
+  });
+  const entries=Object.entries(comments)
+   .filter(([,item])=>item&&item.deleted!==true)
+   .sort((a,b)=>Number(b[1].createdAt||0)-Number(a[1].createdAt||0));
+  const totalReactions=Object.values(reactionCounts).reduce((a,b)=>a+b,0);
+  document.getElementById('fb-view-count').textContent=viewTotal.toLocaleString('vi-VN');
+  document.getElementById('fb-comment-count').textContent=entries.length.toLocaleString('vi-VN');
+  document.getElementById('fb-reaction-count').textContent=totalReactions.toLocaleString('vi-VN');
+  document.querySelectorAll('#fb-reactions [data-reaction]').forEach(button=>{
+   const kind=button.dataset.reaction,count=Number(reactionCounts[kind]||0);
+   const countEl=button.querySelector('[data-count]');
+   if(countEl)countEl.textContent=count.toLocaleString('vi-VN');
+   button.classList.toggle('active',myReaction===kind);
+   button.setAttribute('aria-pressed',myReaction===kind?'true':'false');
+  });
+  const list=document.getElementById('fb-comments');
+  if(!entries.length){
+   list.innerHTML='<div class="empty-state">Chưa có bình luận nào. Hãy là người đầu tiên chia sẻ nhé!</div>';
+  }else{
+   list.innerHTML=entries.map(([commentId,item])=>`
+    <article class="comment-item">
+     <div class="comment-item-head">
+      <strong>${esc(item.name||'Ẩn danh')}</strong>
+      <time>${esc(fmtTime(item.createdAt))}</time>
+      ${fbIsAdmin?`<button class="comment-delete" type="button" data-delete-comment="${esc(commentId)}">Xóa</button>`:''}
+     </div>
+     <p>${esc(item.content||'')}</p>
+    </article>`).join('');
+  }
+ }
+ async function checkAdmin(user){
+  fbIsAdmin=false;
+  if(user&&!user.isAnonymous){
+   try{const snap=await fbDb.ref('admins/'+user.uid).once('value');fbIsAdmin=snap.val()===true;}
+   catch(error){console.warn('Không kiểm tra được quyền Admin:',error);}
+  }
+  const login=document.getElementById('fb-admin-login');
+  const status=document.getElementById('fb-admin-status');
+  const logout=document.getElementById('fb-admin-logout');
+  if(login)login.hidden=fbIsAdmin;
+  if(logout)logout.hidden=!fbIsAdmin;
+  if(status)status.textContent=fbIsAdmin
+   ?'Đã đăng nhập quyền quản trị. Bạn có thể xóa bình luận không phù hợp.'
+   :(user&&!user.isAnonymous?'Tài khoản chưa được cấp quyền quản trị.':'Chỉ Admin/GVCN được cấp quyền mới có thể xóa bình luận.');
+  if(fbPostRef){
+   const snap=await fbPostRef.once('value');
+   renderState(snap);
+  }
+ }
+ function waitForInitialAuth(){
+  return new Promise((resolve,reject)=>{
+   const unsubscribe=fbAuth.onAuthStateChanged(user=>{unsubscribe();resolve(user||null);},error=>{unsubscribe();reject(error);});
+  });
+ }
+ async function ensureUser(){
+  await fbAuth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+  let user=await waitForInitialAuth();
+  // Chỉ tạo anonymous khi trình duyệt chưa có phiên nào; không ghi đè phiên Admin đã lưu.
+  if(!user){const credential=await fbAuth.signInAnonymously();user=credential.user;}
+  return user;
+ }
+ async function recordView(){
+  if(!fbCurrentUser||!fbPostRef)return;
+  const ref=fbPostRef.child('views/'+fbCurrentUser.uid);
+  const now=Date.now();
+  await ref.transaction(current=>{
+   const previous=current||{count:0,lastAt:0};
+   if(now-Number(previous.lastAt||0)<30*60*1000)return previous;
+   return {count:Number(previous.count||0)+1,lastAt:now};
+  });
+ }
+ async function toggleReaction(kind){
+  if(!REACTIONS[kind]||!fbCurrentUser||!fbPostRef)return;
+  const ref=fbPostRef.child('reactions/'+fbCurrentUser.uid);
+  try{
+   const before=await ref.once('value');
+   const wasSame=!!(before.val()&&before.val().type===kind);
+   await ref.transaction(current=>{
+    if(current&&current.type===kind)return null;
+    return {type:kind,updatedAt:firebase.database.ServerValue.TIMESTAMP};
+   });
+   if(window.A7Activity) window.A7Activity.log(wasSame?'reaction_remove':'reaction_set',{
+    postKey:fbPostKey,reaction:kind
+   }).catch(error=>console.warn('Không ghi được nhật ký cảm xúc:',error));
+   showMessage('Đã cập nhật cảm xúc của bạn.','ok');
+  }catch(error){console.error(error);showMessage('Không thể lưu cảm xúc. Hãy kiểm tra Firebase Rules.');}
+ }
+ async function submitComment(event){
+  event.preventDefault();
+  const form=event.currentTarget;
+  const name=form.elements.name.value.trim();
+  const content=form.elements.content.value.trim();
+  if(!name||!content){showMessage('Vui lòng nhập tên và nội dung bình luận.');return;}
+  if(name.length>60||content.length>1000){showMessage('Tên tối đa 60 ký tự và bình luận tối đa 1.000 ký tự.');return;}
+  const button=form.querySelector('button[type=submit]');
+  button.disabled=true;button.textContent='Đang gửi…';
+  try{
+   // Giữ nguyên schema bình luận cũ: {uid,name,content,createdAt}.
+   const newCommentRef=fbCommentsRef.push();
+   await newCommentRef.set({
+    uid:fbCurrentUser.uid,
+    name:name,
+    content:content,
+    createdAt:firebase.database.ServerValue.TIMESTAMP
+   });
+   if(window.A7Activity) window.A7Activity.log('comment_create',{
+    postKey:fbPostKey,commentId:newCommentRef.key
+   }).catch(error=>console.warn('Không ghi được nhật ký bình luận:',error));
+   form.elements.content.value='';
+   showMessage('Bình luận đã được gửi thành công!','ok');
+  }catch(error){console.error(error);showMessage('Không thể gửi bình luận. Kiểm tra quyền ghi Firebase.');}
+  finally{button.disabled=false;button.textContent='Gửi bình luận';}
+ }
+ async function deleteComment(commentId){
+  if(!fbIsAdmin||!commentId||!fbCommentsRef)return;
+  if(!confirm('Bạn có chắc muốn xóa bình luận này?'))return;
+  try{
+   await fbCommentsRef.child(commentId).remove();
+   if(window.A7Activity) window.A7Activity.log('comment_delete',{
+    postKey:fbPostKey,commentId:commentId
+   }).catch(error=>console.warn('Không ghi được nhật ký xóa bình luận:',error));
+   showMessage('Đã xóa bình luận.','ok');
+  }
+  catch(error){console.error(error);showMessage('Không thể xóa bình luận. Tài khoản chưa có quyền Admin trong Rules.');}
+ }
+ async function adminLogin(){
+  const email=document.getElementById('fb-admin-email').value.trim();
+  const password=document.getElementById('fb-admin-password').value;
+  if(!email||!password){showMessage('Vui lòng nhập email và mật khẩu quản trị.');return;}
+  try{
+   await fbAuth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+   await fbAuth.signInWithEmailAndPassword(email,password);
+   await checkAdmin(fbAuth.currentUser);
+   if(!fbIsAdmin)showMessage('Tài khoản chưa được cấp quyền Admin trong Firebase Database.');
+   else showMessage('Đăng nhập quản trị thành công.','ok');
+  }catch(error){console.error(error);showMessage('Đăng nhập thất bại. Kiểm tra email, mật khẩu và phương thức Email/Password.');}
+ }
+ async function adminLogout(){
+  try{await fbAuth.signOut();await fbAuth.signInAnonymously();showMessage('Đã đăng xuất quản trị.','ok');}
+  catch(error){showMessage('Không thể đăng xuất: '+error.message);}
+ }
+ async function initEngagement(){
+  fbPostKey=postKey();
+  if(!fbPostKey)return;
+  const section=document.getElementById('fb-engagement');
+  section.hidden=false;
+  if(!window.firebase){showMessage('Không tải được Firebase SDK.');return;}
+  try{
+   if(!firebase.apps.length)firebase.initializeApp(FIREBASE_CONFIG);
+   fbAuth=firebase.auth();fbDb=firebase.database();
+   fbPostRef=fbDb.ref('articleInteractions/'+fbPostKey);
+   fbCommentsRef=fbPostRef.child('comments');
+
+   fbCurrentUser=await ensureUser();
+   await checkAdmin(fbCurrentUser);
+
+   if(!fbListener){
+    fbListener=fbPostRef.on('value',renderState,error=>{
+     console.error('Firebase read error:',error);
+     showMessage('Không đọc được dữ liệu Firebase. Kiểm tra Database Rules.');
+    });
+    document.getElementById('fb-reactions').addEventListener('click',event=>{
+     const btn=event.target.closest('[data-reaction]');
+     if(btn)toggleReaction(btn.dataset.reaction);
+    });
+    document.getElementById('fb-comment-form').addEventListener('submit',submitComment);
+    document.getElementById('fb-comments').addEventListener('click',event=>{
+     const btn=event.target.closest('[data-delete-comment]');
+     if(btn)deleteComment(btn.dataset.deleteComment);
+    });
+    document.getElementById('fb-admin-login-btn').addEventListener('click',adminLogin);
+    document.getElementById('fb-admin-logout').addEventListener('click',adminLogout);
+    fbAuth.onAuthStateChanged(async user=>{
+     fbCurrentUser=user;
+     if(user)await checkAdmin(user);
+    });
+   }
+   await recordView();
+  }catch(error){
+   console.error('Firebase engagement init error:',error);
+   showMessage('Không thể kết nối Firebase: '+(error.message||error));
+  }
+ }
+ function imageUrl(url){
+  url=String(url||'').trim();
+  if(url.includes('drive.google.com')){const m=url.match(/\/d\/([^/]+)/)||url.match(/id=([^&]+)/);if(m)return `https://drive.google.com/uc?export=view&id=${m[1]}`;}
+  return url;
+ }
+ function parseImageLinks(value){
+  return String(value == null ? '' : value)
+   .split(/[,\n\r;]+/)
+   .map(item => item.trim().replace(/^["']|["']$/g,''))
+   .filter(item => /^https?:\/\/\S+$/i.test(item));
+ }
+ function linkify(text){
+  const safe=esc(text);
+  return safe.replace(/(https?:\/\/[^\s<]+)/g,url=>`<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`);
+ }
+ function renderArticle(title,date,author,summary,content,images=[],videos=[]){
+  document.title=(title||'Bài viết')+' | 12A7';
+  A7.$('#article-page-title').textContent=title||'Chi tiết nội dung';
+  let media='';
+  a7GalleryImages=images.map(imageUrl).filter(Boolean);
+  a7GalleryIndex=0;
+  a7GalleryImages.forEach((url,index)=>{
+   media+=`<img src="${esc(url)}" alt="${esc(title)}" loading="lazy" onclick="window.a7OpenLightbox(${index})">`;
+  });
+  const videoHtml=videos.length?`<div class="media-chips">${videos.map((u,i)=>`<a href="${esc(u)}" target="_blank" rel="noopener">▶ Mở video ${i+1}</a>`).join('')}</div>`:'';
+  A7.$('#article-detail').innerHTML=`<div class="meta"><span>◷ ${esc(date)}</span><span>✦ ${esc(author)}</span></div><h2 style="font-size:clamp(24px,3.5vw,34px);line-height:1.28;color:var(--navy);margin:12px 0 18px">${esc(title)}</h2>${summary?`<div class="news-card" style="background:#f7fafb"><b>Tóm tắt</b><p>${linkify(summary)}</p></div>`:''}<div class="article-body">${linkify(content||'Chưa có nội dung chi tiết.')}</div>${media?`<div class="article-media">${media}</div>`:''}${videoHtml}`;
+  initEngagement();
+ }
+ function noArticle(message){A7.$('#article-detail').innerHTML=`<div class="empty-state">${esc(message)}</div>`;}
+ async function loadMovement(){
+  A7.$('#article-back').href='gocxanh.html';
+  try{
+   const rows=await A7.fetchTSV(A7.TSV_PHONGTRAO);
+   const found=rows.slice(1).find(row=>String(row[0]||'').trim()===String(id));
+   if(!found){noArticle('Không tìm thấy bài viết phong trào.');return;}
+   const images=String(found[5]||'').split(/[\n,]+/).map(v=>v.trim()).filter(v=>/^https?:\/\//i.test(v));
+   const videos=String(found[6]||'').split(/[\n,]+/).map(v=>v.trim()).filter(v=>/^https?:\/\//i.test(v));
+   renderArticle(found[3],found[1],found[2],'',found[4],images,videos);
+  }catch(error){console.error(error);noArticle('Không thể đọc bài viết phong trào từ Google Sheets.');}
+ }
+ async function loadBaoBai(){
+  A7.$('#article-back').href='baobai.html';
+  try{
+   const rows=await A7.fetchTSV(A7.TSV_BAOBAI),row=rows[Number(rowIndex)]||[];
+   if(!row.length){noArticle('Không tìm thấy thông tin báo bài.');return;}
+   renderArticle(`Báo bài · ${row[1]||'Chung'}`,row[0],'Ban cán sự lớp','',row[2]||'');
+  }catch(error){noArticle('Không thể tải nội dung báo bài.');}
+ }
+ function loadNewsDetail(){
+  A7.$('#article-back').href='index.html#tin-tuc';
+  A7.loadGViz('',(json,error)=>{
+   if(error||!json||!json.table){noArticle('Không thể kết nối dữ liệu bài viết.');return;}
+   const row=(json.table.rows||[]).find((item,index)=>{
+    const c=item.c||[];
+    return String(A7.parseCell(c[0])||index+1)===String(id);
+   });
+   if(!row){noArticle('Không tìm thấy bài viết.');return;}
+   const c=row.c||[];
+   const images=parseImageLinks(A7.parseCell(c[6]));
+   renderArticle(A7.parseCell(c[3]),A7.parseCell(c[1]),A7.parseCell(c[2]),A7.parseCell(c[4]),A7.parseCell(c[5])||A7.parseCell(c[4]),images,[]);
+  });
+ }
+ if(type==='gocxanh')loadMovement();
+ else if(type==='baobai')loadBaoBai();
+ else if(id)loadNewsDetail();
+ else noArticle('Liên kết bài viết không hợp lệ.');
+})();
+</script>
+
+</body></html>

@@ -1,229 +1,90 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thư Viện Ảnh - Lớp 12A7</title>
-    
-    <link rel="icon" type="image/png" href="logo.png">
-    <link rel="shortcut icon" type="image/png" href="logo.png">
-
-    <style>
-        :root {
-            --primary-color: #003366;
-            --secondary-color: #0055a5;
-            --green-color: #28a745;
-            --bg-light: #f4f6f9;
-            --text-color: #333;
-            --gold-color: #ffcc00;
-        }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
-        body { background-color: var(--bg-light); color: var(--text-color); line-height: 1.6; }
-
-        header {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            padding: 20px 0;
-            border-bottom: 4px solid var(--gold-color);
-        }
-        .header-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; align-items: center; gap: 20px; }
-        .logo-box { width: 70px; height: 70px; border-radius: 50%; background-color: #fff; color: var(--primary-color); display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 18px; overflow: hidden; border: 2px solid #fff; flex-shrink: 0; }
-        .logo-box img { width: 100%; height: 100%; object-fit: cover; }
-        .header-text h1 { font-size: 24px; text-transform: uppercase; letter-spacing: 1px; }
-        .header-text p { font-size: 14px; opacity: 0.9; }
-
-        nav { background-color: #002244; position: sticky; top: 0; z-index: 100; border-bottom: 3px solid var(--gold-color); }
-        .nav-container { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; }
-        .nav-container a { color: white; padding: 12px 18px; text-decoration: none; font-size: 14px; font-weight: 600; text-transform: uppercase; transition: background 0.3s, color 0.3s; }
-        .nav-container a:hover, .nav-container a.active { background-color: var(--secondary-color); color: var(--gold-color); }
-        .nav-container a.green-tab { color: #28a745; font-weight: bold; }
-        .nav-container a.green-tab:hover { background-color: #28a745 !important; color: #fff !important; }
-
-        .main-wrapper { max-width: 1200px; margin: 20px auto; padding: 0 15px; }
-        .card { background: white; border-radius: 6px; padding: 25px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .section-title { color: var(--primary-color); font-size: 20px; border-bottom: 2px solid var(--primary-color); padding-bottom: 10px; margin-bottom: 20px; text-transform: uppercase; }
-
-        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
-        .gallery-card { border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden; background: #fff; transition: transform 0.2s, box-shadow 0.2s; cursor: pointer; display: flex; flex-direction: column; }
-        .gallery-card:hover { transform: translateY(-4px); box-shadow: 0 6px 12px rgba(0,0,0,0.1); }
-        .img-container { width: 100%; height: 200px; background-color: #eee; overflow: hidden; }
-        .img-container img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; display: block; }
-        .gallery-card:hover .img-container img { transform: scale(1.05); }
-
-        .gallery-info { padding: 12px 15px; text-align: center; flex-grow: 1; }
-        .gallery-title { font-size: 15px; font-weight: bold; color: var(--primary-color); margin-bottom: 4px; }
-        .gallery-desc { font-size: 13px; color: #666; white-space: pre-line; }
-
-        .empty-state { text-align: center; padding: 40px 0; color: #777; font-style: italic; }
-
-        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.85); align-items: center; justify-content: center; padding: 20px; }
-        .modal-content { background-color: #fff; max-width: 800px; width: 100%; border-radius: 8px; overflow: hidden; position: relative; animation: fadeIn 0.3s ease-in-out; }
-        .modal-body { max-height: 85vh; overflow-y: auto; }
-        .modal-img { width: 100%; max-height: 500px; object-fit: contain; background: #000; display: block; }
-        .modal-caption { padding: 20px; text-align: center; }
-        .modal-title { font-size: 18px; font-weight: bold; color: var(--primary-color); margin-bottom: 8px; }
-        .modal-desc { font-size: 14px; color: #444; line-height: 1.6; white-space: pre-line; }
-        .close-btn { position: absolute; top: 10px; right: 15px; color: white; font-size: 28px; font-weight: bold; cursor: pointer; text-shadow: 0 0 5px rgba(0,0,0,0.8); z-index: 10; }
-
-        @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
-
-        footer { background-color: #001529; color: white; text-align: center; padding: 20px; margin-top: 40px; font-size: 13px; border-top: 3px solid var(--gold-color); }
-        footer p { margin: 4px 0; color: #aaa; }
-        footer a { color: #66b3ff; text-decoration: none; }
-        footer a:hover { text-decoration: underline; }
-
-        @media (max-width: 768px) {
-            .header-container { flex-direction: column; text-align: center; }
-            .gallery-grid { grid-template-columns: 1fr; }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#10283f">
+<title>Thư viện ảnh | 12A7</title>
+<link rel="icon" href="logo.png">
+<link rel="stylesheet" href="assets/site.css?v=logo-fix-2">
 </head>
 <body>
 
-    <header>
-        <div class="header-container">
-            <div class="logo-box" id="logo-container">
-                <img src="logo.png" alt="Logo Lớp 12A7" onerror="document.getElementById('logo-container').innerHTML='12A7'">
-            </div>
-            <div class="header-text">
-                <h1>CỔNG THÔNG TIN LỚP 12A7</h1>
-                <p>Trung tâm Giáo dục nghề nghiệp - Giáo dục thường xuyên Tân Bình (Phân hiệu Phú Nhuận) | Năm học 2026 - 2027</p>
-            </div>
-        </div>
-    </header>
-
-    <nav>
-        <div class="nav-container">
-            <a href="index.html">Trang chủ</a>
-            <a href="baobai.html">Báo Bài</a>
-            <a href="index.html#tin-tuc">Tin tức & Sự kiện</a>
-            <a href="gochoc-tap.html">Góc học tập</a>
-            <a href="giaovien.html">Giáo viên</a>
-            <a href="gocxanh.html" class="green-tab">Góc Xanh</a>
-            <a href="thanhvien.html">Thành viên</a>
-            <a href="thuvien.html" class="active">Thư viện ảnh</a>
-            <a href="credits.html">Credits</a>
-        </div>
-    </nav>
-
-    <div class="main-wrapper">
-        <div class="card">
-            <h2 class="section-title">Thư viện ảnh kỷ niệm Lớp 12A7</h2>
-            
-            <div id="gallery-container" class="gallery-grid">
-                <div class="empty-state" style="grid-column: 1/-1;">Đang tải hình ảnh từ thư viện...</div>
-            </div>
-
-            <p style="text-align: center; margin-top: 30px; font-style: italic; color: #777; font-size: 13px;">
-                Hình ảnh mới về các hoạt động phong trào và học tập sẽ tiếp tục được cập nhật.
-            </p>
-        </div>
+<div class="site-topline"></div>
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="index.html" aria-label="Cổng thông tin lớp 12A7">
+      <div class="brand-mark" style="width:64px;height:64px;min-width:64px;max-width:64px;flex:0 0 64px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#fff;line-height:0"><img src="logo.png?v=2" alt="Logo lớp 12A7" style="display:block;width:100%;height:100%;max-width:100%;object-fit:contain;position:static" onerror="this.parentElement.textContent='A7'"></div>
+      <div class="brand-copy">
+        <div class="brand-eyebrow">CLASS OF 2027 · THE LAST CHAPTER</div>
+        <h1 class="brand-title">CỔNG THÔNG TIN LỚP 12A7</h1>
+        <p class="brand-subtitle">Trung tâm GDNN – GDTX Tân Bình · Phân hiệu Phú Nhuận</p>
+      </div>
+    </a>
+    <div class="header-actions">
+      <button class="auth-btn" type="button" data-auth-open="login">Đăng nhập</button>
+      <button class="auth-btn primary" type="button" data-auth-open="register">Đăng ký <span aria-hidden="true">↗</span></button>
     </div>
+  </div>
+</header>
+<nav class="main-nav">
+  <div class="nav-inner">
+    <a class="nav-link" href="index.html">Trang chủ</a>
+    <a class="nav-link" href="baobai.html">Báo bài</a>
+    <a class="nav-link" href="index.html#tin-tuc">Tin tức & sự kiện</a>
+    <a class="nav-link" href="hoctap.html">Góc học tập</a>
+    <a class="nav-link" href="giaovien.html">Giáo viên</a>
+    <a class="nav-link" href="gocxanh.html">Góc xanh</a>
+    <a class="nav-link" href="thanhvien.html">Thành viên</a>
+    <a class="nav-link" href="thuvien.html">Thư viện ảnh</a>
+    <a class="nav-link" href="credits.html">Credits</a>
+  </div>
+</nav>
 
-    <div id="imageModal" class="modal" onclick="closeModal(event)">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <span class="close-btn" onclick="closeModal()">×</span>
-            <div class="modal-body">
-                <img id="modalImg" class="modal-img" src="" alt="">
-                <div class="modal-caption">
-                    <div id="modalTitle" class="modal-title"></div>
-                    <div id="modalDesc" class="modal-desc"></div>
-                </div>
-            </div>
-        </div>
+<main class="page-wrap">
+
+<section class="page-heading"><div class="section-kicker">Moments archive</div><h1>Thư viện ảnh</h1><p>Những khung hình lưu lại hành trình và kỷ niệm của 12A7.</p></section>
+<div class="section-head"><div><div class="eyebrow">Photo collection</div><h2>Khoảnh khắc của chúng mình</h2><p>Ảnh được đồng bộ trực tiếp từ Google Sheets.</p></div></div>
+<div id="gallery-grid" class="gallery-grid"><div class="loading-state">Đang tải thư viện ảnh…</div></div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">12A7 · CLASS OF 2027</div>
+      <p>Giữ lại thanh xuân, viết tiếp hành trình.</p>
     </div>
+    <div>
+      <p>© 2026 Cổng thông tin lớp 12A7</p>
+      <p>Liên hệ: <a href="mailto:12a7.phanhieuttgdnngdtxtanbinh@gmail.com">12a7.phanhieuttgdnngdtxtanbinh@gmail.com</a></p>
+    </div>
+  </div>
+</footer>
+<div class="lightbox" id="a7-lightbox" onclick="this.classList.remove('open')"><img alt="Ảnh phóng to" id="a7-lightbox-img"></div>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="assets/app.js"></script>
 
-    <footer>
-        <p>&copy; 2026 Cổng thông tin Lớp 12A7 - Trung tâm Giáo dục nghề nghiệp - Giáo dục thường xuyên Tân Bình (Phân hiệu Phú Nhuận)</p>
-        <p>📧 Email liên hệ: <a href="mailto:12a7.phanhieuttgdnngdtxtanbinh@gmail.com">12a7.phanhieuttgdnngdtxtanbinh@gmail.com</a></p>
-        <p>Phát triển và vận hành bởi Tập thể Lớp 12A7</p>
-    </footer>
 
-    <script>
-        const SHEET_ID = '10WZAkfTsUhEsTRADxZ3JX869kLV_Sen45r4BeSrxDZY';
-        const GID = '208030591';
+<script>
+(function(){
+ const A7=window.A7;
+ function drive(url){url=String(url||'').trim();if(url.includes('drive.google.com')){const m=url.match(/\/d\/([^/]+)/)||url.match(/id=([^&]+)/);if(m)return `https://drive.google.com/uc?export=view&id=${m[1]}`;}return url;}
+ A7.loadGViz(A7.GIDS.gallery,(json,err)=>{
+  const box=A7.$('#gallery-grid');
+  if(err||!json||!json.table){box.innerHTML='<div class="empty-state">Không thể kết nối thư viện ảnh.</div>';return;}
+  const rows=json.table.rows||[];let html='';
+  for(let i=1;i<rows.length;i++){
+   const c=rows[i].c||[],title=A7.parseCell(c[0])||'Ảnh kỷ niệm',url=drive(A7.parseCell(c[1])),desc=A7.parseCell(c[2]);
+   if(!url)continue;
+   html+=`<article class="gallery-card"><img src="${A7.esc(url)}" alt="${A7.esc(title)}" loading="lazy" data-full="${A7.esc(url)}"><div class="gallery-info"><h3>${A7.esc(title)}</h3><p style="font-size:11px;color:var(--muted);margin:4px 0">${A7.esc(desc)}</p></div></article>`;
+  }
+  box.innerHTML=html||'<div class="empty-state">Chưa có ảnh trong thư viện.</div>';
+  box.querySelectorAll('img[data-full]').forEach(img=>img.addEventListener('click',()=>{A7.$('#a7-lightbox-img').src=img.dataset.full;A7.$('#a7-lightbox').classList.add('open');}));
+ });
+})();
+</script>
 
-        function formatDriveUrl(url) {
-            if (!url) return '';
-            url = url.trim();
-            if (url.includes('drive.google.com')) {
-                const match = url.match(/\/d\/([^\/]+)/) || url.match(/id=([^&]+)/);
-                if (match && match[1]) {
-                    return `https://drive.google.com/uc?export=view&id=${match[1]}`;
-                }
-            }
-            return url;
-        }
-
-        function handleGalleryData(json) {
-            const container = document.getElementById('gallery-container');
-            
-            try {
-                const rows = json.table.rows;
-                if (!rows || rows.length <= 1) {
-                    container.innerHTML = '<div class="empty-state" style="grid-column: 1/-1;">Chưa có hình ảnh nào trong thư viện.</div>';
-                    return;
-                }
-
-                let html = '';
-                let count = 0;
-
-                for (let i = 1; i < rows.length; i++) {
-                    const row = rows[i].c;
-                    if (!row) continue;
-
-                    const title = row[0] ? (row[0].v || 'Ảnh kỷ niệm') : 'Ảnh kỷ niệm';
-                    const rawImgUrl = row[1] ? (row[1].v || '') : '';
-                    const desc = row[2] ? (row[2].v || '') : '';
-
-                    const imgUrl = formatDriveUrl(rawImgUrl);
-
-                    if (imgUrl) {
-                        count++;
-                        const safeImg = encodeURIComponent(imgUrl);
-                        const safeTitle = encodeURIComponent(title);
-                        const safeDesc = encodeURIComponent(desc);
-
-                        html += `
-                            <div class="gallery-card" onclick="openModal('${safeImg}', '${safeTitle}', '${safeDesc}')">
-                                <div class="img-container">
-                                    <img src="${imgUrl}" alt="${title}" onerror="this.src='banner.jpg'">
-                                </div>
-                                <div class="gallery-info">
-                                    <div class="gallery-title">${title}</div>
-                                    ${desc ? `<div class="gallery-desc">${desc}</div>` : ''}
-                                </div>
-                            </div>
-                        `;
-                    }
-                }
-
-                container.innerHTML = (count > 0) ? html : '<div class="empty-state" style="grid-column: 1/-1;">Chưa có hình ảnh nào trong thư viện.</div>';
-            } catch (err) {
-                console.error("Lỗi xử lý dữ liệu:", err);
-                container.innerHTML = '<div class="empty-state" style="grid-column: 1/-1;">Không thể hiển thị thư viện ảnh lúc này.</div>';
-            }
-        }
-
-        function openModal(imgUrl, title, desc) {
-            document.getElementById('modalImg').src = decodeURIComponent(imgUrl);
-            document.getElementById('modalTitle').innerText = decodeURIComponent(title);
-            document.getElementById('modalDesc').innerText = decodeURIComponent(desc);
-            document.getElementById('imageModal').style.display = 'flex';
-        }
-
-        function closeModal() {
-            document.getElementById('imageModal').style.display = 'none';
-        }
-
-        function loadGallery() {
-            const script = document.createElement('script');
-            script.src = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?gid=${GID}&tqx=responseHandler:handleGalleryData`;
-            document.body.appendChild(script);
-        }
-
-        window.onload = loadGallery;
-    </script>
 </body>
 </html>

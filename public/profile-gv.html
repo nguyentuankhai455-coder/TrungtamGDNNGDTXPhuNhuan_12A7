@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#10283f">
+<title>Hồ sơ giáo viên | 12A7</title>
+<link rel="icon" href="logo.png">
+<link rel="stylesheet" href="assets/site.css?v=logo-fix-2">
+</head>
+<body>
+
+<div class="site-topline"></div>
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="index.html" aria-label="Cổng thông tin lớp 12A7">
+      <div class="brand-mark" style="width:64px;height:64px;min-width:64px;max-width:64px;flex:0 0 64px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#fff;line-height:0"><img src="logo.png?v=2" alt="Logo lớp 12A7" style="display:block;width:100%;height:100%;max-width:100%;object-fit:contain;position:static" onerror="this.parentElement.textContent='A7'"></div>
+      <div class="brand-copy">
+        <div class="brand-eyebrow">CLASS OF 2027 · THE LAST CHAPTER</div>
+        <h1 class="brand-title">CỔNG THÔNG TIN LỚP 12A7</h1>
+        <p class="brand-subtitle">Trung tâm GDNN – GDTX Tân Bình · Phân hiệu Phú Nhuận</p>
+      </div>
+    </a>
+    <div class="header-actions">
+      <button class="auth-btn" type="button" data-auth-open="login">Đăng nhập</button>
+      <button class="auth-btn primary" type="button" data-auth-open="register">Đăng ký <span aria-hidden="true">↗</span></button>
+    </div>
+  </div>
+</header>
+<nav class="main-nav">
+  <div class="nav-inner">
+    <a class="nav-link" href="index.html">Trang chủ</a>
+    <a class="nav-link" href="baobai.html">Báo bài</a>
+    <a class="nav-link" href="index.html#tin-tuc">Tin tức & sự kiện</a>
+    <a class="nav-link" href="hoctap.html">Góc học tập</a>
+    <a class="nav-link" href="giaovien.html">Giáo viên</a>
+    <a class="nav-link" href="gocxanh.html">Góc xanh</a>
+    <a class="nav-link" href="thanhvien.html">Thành viên</a>
+    <a class="nav-link" href="thuvien.html">Thư viện ảnh</a>
+    <a class="nav-link" href="credits.html">Credits</a>
+  </div>
+</nav>
+
+<main class="page-wrap">
+
+<section class="page-heading"><div class="section-kicker">Teacher profile</div><h1>Hồ sơ giáo viên</h1><p>Thông tin được lấy theo mã hồ sơ từ Google Sheets.</p></section>
+<a class="btn btn-outline" href="giaovien.html" style="margin-bottom:18px">← Quay lại danh sách giáo viên</a>
+<section class="panel" id="profile-container"><div class="loading-state">Đang tải hồ sơ…</div></section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">12A7 · CLASS OF 2027</div>
+      <p>Giữ lại thanh xuân, viết tiếp hành trình.</p>
+    </div>
+    <div>
+      <p>© 2026 Cổng thông tin lớp 12A7</p>
+      <p>Liên hệ: <a href="mailto:12a7.phanhieuttgdnngdtxtanbinh@gmail.com">12a7.phanhieuttgdnngdtxtanbinh@gmail.com</a></p>
+    </div>
+  </div>
+</footer>
+<div class="lightbox" id="a7-lightbox" onclick="this.classList.remove('open')"><img alt="Ảnh phóng to" id="a7-lightbox-img"></div>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
+<script src="assets/app.js"></script>
+
+
+<script>
+(function(){
+ const A7=window.A7,id=new URLSearchParams(location.search).get('id');
+ A7.loadGViz(A7.GIDS.teachers,(json,err)=>{
+  const box=A7.$('#profile-container');
+  if(err||!json||!json.table){box.innerHTML='<div class="empty-state">Không thể kết nối hồ sơ giáo viên.</div>';return;}
+  let found=null;
+  (json.table.rows||[]).forEach(row=>{const c=row.c||[];if(A7.parseCell(c[6])===id)found=c;});
+  if(!found){box.innerHTML='<div class="empty-state">Không tìm thấy hồ sơ giáo viên.</div>';return;}
+  const [avatar,name,subject,role,unit,quote]=found.map(A7.parseCell);
+  box.innerHTML=`<div class="profile-layout"><div class="profile-photo">${avatar?`<img src="${A7.esc(avatar)}" alt="${A7.esc(name)}">`:'✦'}</div><div class="profile-info"><div class="eyebrow">12A7 · Teacher</div><h2>${A7.esc(name||'Chưa cập nhật')}</h2><p>${A7.esc(subject||'Bộ môn')}</p><div class="news-card"><b>Nhiệm vụ</b><p>${A7.esc(role||'Giáo viên')}</p><b>Đơn vị công tác</b><p>${A7.esc(unit||'TT GDNN – GDTX Tân Bình')}</p><b>Lời nhắn</b><p>${A7.esc(quote||'Chúc các em học tốt!')}</p></div></div></div>`;
+ });
+})();
+</script>
+
+</body>
+</html>

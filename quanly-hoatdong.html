@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="vi"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#10283f"><title>Quản lý hoạt động thành viên | 12A7</title>
+<link rel="icon" type="image/png" href="logo.png"><link rel="stylesheet" href="assets/site.css?v=member-header-fix-2">
+<style id="a7-member-pages-header-fix">
+.site-header,.site-header *{box-sizing:border-box}
+.site-header{width:100%;min-height:105px}
+.site-header .header-inner{width:min(1200px,calc(100% - 32px));min-height:105px;margin:0 auto}
+.site-header .brand{background:transparent!important;box-shadow:none!important;overflow:visible!important}
+.site-header .brand-mark{width:64px!important;height:64px!important;min-width:64px!important;max-width:64px!important;flex:0 0 64px!important;background:#fff!important;overflow:hidden!important}
+.site-header .brand-mark img{position:static!important;display:block!important;width:100%!important;height:100%!important;max-width:100%!important;max-height:100%!important;object-fit:contain!important}
+.site-header .brand-copy{background:transparent!important;min-width:0!important}
+.site-header .brand-eyebrow,.site-header .brand-title,.site-header .brand-subtitle{background:transparent!important}
+.site-header .header-actions{width:auto!important;max-width:none!important;background:transparent!important}
+@media(max-width:600px){
+ .site-header .header-inner{width:calc(100% - 24px);padding:16px 0;align-items:flex-start;flex-direction:column}
+ .site-header .brand{max-width:100%!important;width:100%!important}
+ .site-header .brand-mark{width:54px!important;height:54px!important;min-width:54px!important;max-width:54px!important;flex-basis:54px!important}
+ .site-header .header-actions{width:100%!important;justify-content:flex-end}
+}
+</style>
+
+</head>
+<body>
+
+<div class="site-topline"></div>
+<header class="site-header" style="background:linear-gradient(125deg,#0b2035 0%,#123653 62%,#1a4d6c 100%);color:#fff;position:relative;overflow:hidden">
+ <div class="header-inner" style="max-width:1200px;margin:auto;padding:24px 24px 22px;display:flex;align-items:center;justify-content:space-between;gap:22px;position:relative;z-index:1">
+  <a class="brand" href="index.html" aria-label="Cổng thông tin lớp 12A7" style="display:flex;align-items:center;gap:16px;flex:0 1 auto;width:auto;min-width:0;max-width:calc(100% - 260px);background:transparent;color:#fff;text-decoration:none">
+   <div class="brand-mark" style="width:64px;height:64px;min-width:64px;max-width:64px;flex:0 0 64px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#fff;line-height:0;border-radius:19px;position:relative">
+    <img src="logo.png?v=3" alt="Logo lớp 12A7" style="display:block;width:100%;height:100%;max-width:100%;object-fit:contain;position:static;margin:0;padding:0;border:0;background:#fff" onerror="this.parentElement.textContent='A7'">
+   </div>
+   <div class="brand-copy" style="min-width:0;background:transparent;color:#fff">
+    <div class="brand-eyebrow" style="font-size:10px;font-weight:800;letter-spacing:2.7px;color:#e7c98b;text-transform:uppercase;margin-bottom:3px">CLASS OF 2027 · THE LAST CHAPTER</div>
+    <h1 class="brand-title" style="margin:0;color:#fff;font-size:clamp(19px,2.3vw,26px);line-height:1.18;letter-spacing:.2px;font-weight:800">CỔNG THÔNG TIN LỚP 12A7</h1>
+    <p class="brand-subtitle" style="margin:6px 0 0;color:rgba(255,255,255,.78);font-size:12px;line-height:1.4">Trung tâm GDNN – GDTX Tân Bình · Phân hiệu Phú Nhuận</p>
+   </div>
+  </a>
+  <div class="header-actions" style="display:flex;align-items:center;gap:9px;flex-shrink:0">
+   <button class="auth-btn" type="button" data-auth-open="login">Đăng nhập</button>
+   <button class="auth-btn primary" type="button" data-auth-open="register">Đăng ký ↗</button>
+  </div>
+ </div>
+</header>
+<nav class="main-nav"><div class="nav-inner">
+<a class="nav-link" href="index.html">Trang chủ</a><a class="nav-link" href="baobai.html">Báo bài</a>
+<a class="nav-link" href="index.html#tin-tuc">Tin tức & sự kiện</a><a class="nav-link" href="hoctap.html">Góc học tập</a>
+<a class="nav-link" href="giaovien.html">Giáo viên</a><a class="nav-link" href="gocxanh.html">Góc xanh</a>
+<a class="nav-link" href="thanhvien.html">Thành viên</a><a class="nav-link" href="thuvien.html">Thư viện ảnh</a><a class="nav-link" href="credits.html">Credits</a>
+</div></nav>
+<main class="page-wrap">
+<section class="page-heading"><div class="section-kicker">Staff dashboard · 12A7</div><h1>Quản lý hoạt động thành viên</h1>
+<p>Tra cứu nhật ký, kiểm tra tương tác và gửi thông báo chung cho thành viên.</p></section>
+<div class="panel" id="staff-denied"><div class="empty-state">Đang kiểm tra quyền quản trị…</div></div>
+<div id="staff-console" hidden>
+ <section class="panel">
+  <div class="section-head"><div><div class="eyebrow">Broadcast</div><h2>Gửi thông báo toàn lớp</h2><p>Thông báo sẽ được gửi đến các tài khoản email đã đăng ký trong Firebase Authentication.</p></div></div>
+  <form id="broadcast-form" class="admin-broadcast">
+   <label>Tiêu đề<input name="title" maxlength="100" required placeholder="VD: Thông báo lịch sinh hoạt lớp"></label>
+   <label>Nội dung<textarea name="message" maxlength="800" required placeholder="Nhập nội dung thông báo…"></textarea></label>
+   <label>Liên kết (không bắt buộc)<input name="href" maxlength="180" placeholder="VD: baiviet.html?id=90"></label>
+   <button class="btn btn-gold" type="submit">Gửi thông báo</button>
+   <div id="broadcast-status" class="comment-status"></div>
+  </form>
+ </section>
+ <section class="section panel">
+  <div class="section-head"><div><div class="eyebrow">Audit trail</div><h2>Nhật ký hoạt động</h2><p>IP chỉ hiện đầy đủ khi được thành viên đồng ý ghi nhận và người xem có quyền quản trị.</p></div></div>
+  <div class="admin-filters">
+   <label>Từ ngày<input type="date" id="filter-from"></label>
+   <label>Đến ngày<input type="date" id="filter-to"></label>
+   <label>UID / Email<input type="text" id="filter-user" placeholder="Tìm tài khoản…"></label>
+   <label>Loại hoạt động<select id="filter-event">
+    <option value="">Tất cả hoạt động</option><option value="login">Đăng nhập</option><option value="logout">Đăng xuất</option>
+    <option value="register">Tạo tài khoản</option><option value="comment_create">Đăng bình luận</option>
+    <option value="comment_delete">Xóa bình luận</option><option value="reaction_set">Thả cảm xúc</option><option value="reaction_remove">Gỡ cảm xúc</option>
+   </select></label>
+  </div>
+  <div class="admin-toolbar">
+   <label style="display:flex;align-items:center;gap:7px;font-size:11px;color:#526779"><input type="checkbox" id="include-ip" style="width:auto"> Hiển thị IP đầy đủ</label>
+   <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-blue" id="filter-submit" type="button">Lọc dữ liệu</button><button class="btn btn-outline" id="export-csv" type="button">Xuất CSV</button></div>
+  </div>
+  <div id="activity-status" class="comment-status"></div>
+  <div class="admin-table-wrap"><table class="admin-table"><thead><tr>
+   <th>THỜI GIAN</th><th>TÀI KHOẢN</th><th>UID</th><th>HOẠT ĐỘNG</th><th>BÀI VIẾT</th><th>IP</th><th>THIẾT BỊ / TRÌNH DUYỆT</th>
+  </tr></thead><tbody id="activity-table"><tr><td colspan="7">Chưa tải dữ liệu.</td></tr></tbody></table></div>
+ </section>
+</div>
+</main>
+<footer class="site-footer"><div class="footer-inner"><div><div class="footer-brand">12A7 · CLASS OF 2027</div><p>Giữ lại thanh xuân, viết tiếp hành trình.</p></div>
+<div><p>© 2026 Cổng thông tin lớp 12A7</p><p>Liên hệ: <a href="mailto:12a7.phanhieuttgdnngdtxtanbinh@gmail.com">12a7.phanhieuttgdnngdtxtanbinh@gmail.com</a></p></div></div></footer>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
+<script src="assets/app.js"></script>
+
+<script>
+(function(){
+ const A7=window.A7,$=A7.$,API=window.A7_API_BASE||location.origin;
+ const labels={login:'Đăng nhập',logout:'Đăng xuất',register:'Tạo tài khoản',comment_create:'Đăng bình luận',comment_delete:'Xóa bình luận',reaction_set:'Thả cảm xúc',reaction_remove:'Gỡ cảm xúc'};
+ let user=null,records=[];
+ async function api(path,options={}){
+  if(!user)throw new Error('Bạn chưa đăng nhập.');
+  const token=await user.getIdToken();
+  const response=await fetch(API+path,{...options,headers:{'Content-Type':'application/json','Authorization':'Bearer '+token,...(options.headers||{})}});
+  const data=await response.json().catch(()=>({}));
+  if(!response.ok)throw new Error(data.error||'API '+response.status);
+  return data;
+ }
+ function fmt(value){return new Date(Number(value)||Date.now()).toLocaleString('vi-VN');}
+ function queryUrl(){
+  const p=new URLSearchParams();
+  if($('#filter-from').value)p.set('from',String(new Date($('#filter-from').value+'T00:00:00').getTime()));
+  if($('#filter-to').value)p.set('to',String(new Date($('#filter-to').value+'T23:59:59').getTime()));
+  if($('#filter-user').value.trim())p.set('user',$('#filter-user').value.trim());
+  if($('#filter-event').value)p.set('event',$('#filter-event').value);
+  if($('#include-ip').checked)p.set('includeIp','1');
+  p.set('limit','2000');
+  return '/api/activity?'+p.toString();
+ }
+ function renderTable(data){
+  records=data.records||[];
+  const body=$('#activity-table');
+  if(!records.length){body.innerHTML='<tr><td colspan="7">Không có dữ liệu phù hợp.</td></tr>';return;}
+  body.innerHTML=records.map(r=>`<tr>
+   <td>${A7.esc(fmt(r.createdAt))}</td><td>${A7.esc(r.displayName||r.email||'Tài khoản')}</td>
+   <td>${A7.esc(r.uid||'')}</td><td>${A7.esc(labels[r.event]||r.event||'')}</td>
+   <td>${A7.esc(r.postKey||'')}${r.reaction?' · '+A7.esc(r.reaction):''}</td>
+   <td>${A7.esc(r.ip||r.ipMasked||'Không ghi nhận')}</td>
+   <td>${A7.esc(r.userAgent||'')}</td>
+  </tr>`).join('');
+  $('#activity-status').textContent=`Đã tải ${records.length} sự kiện.`;
+ }
+ async function loadRecords(){
+  $('#activity-status').textContent='Đang tải nhật ký…';
+  try{renderTable(await api(queryUrl()));}
+  catch(error){$('#activity-status').textContent='Không tải được dữ liệu: '+error.message;}
+ }
+ function csvCell(v){return '"'+String(v==null?'':v).replace(/"/g,'""')+'"';}
+ function exportCsv(){
+  if(!records.length){$('#activity-status').textContent='Không có dữ liệu để xuất.';return;}
+  const columns=['createdAt','email','displayName','uid','event','postKey','commentId','reaction','ip','ipMasked','userAgent'];
+  const rows=[columns.map(csvCell).join(',')];
+  records.forEach(r=>rows.push(columns.map(k=>csvCell(k==='createdAt'?fmt(r[k]):r[k])).join(',')));
+  const blob=new Blob(['\uFEFF'+rows.join('\r\n')],{type:'text/csv;charset=utf-8;'});
+  const url=URL.createObjectURL(blob),a=document.createElement('a');
+  a.href=url;a.download='12A7_activity_report_'+new Date().toISOString().slice(0,10)+'.csv';a.click();URL.revokeObjectURL(url);
+ }
+ async function checkStaff(){
+  try{
+   const result=await api('/api/staff/me');
+   if(!result.isStaff){$('#staff-denied').innerHTML='<div class="admin-error">Tài khoản hiện tại không có quyền truy cập trang quản trị hoạt động.</div>';return;}
+   $('#staff-denied').hidden=true;$('#staff-console').hidden=false;
+   loadRecords();
+  }catch(error){$('#staff-denied').innerHTML='<div class="admin-error">Không kiểm tra được quyền quản trị: '+A7.esc(error.message)+'</div>';}
+ }
+ $('#filter-submit').addEventListener('click',loadRecords);
+ $('#export-csv').addEventListener('click',exportCsv);
+ $('#broadcast-form').addEventListener('submit',async event=>{
+  event.preventDefault();const form=event.currentTarget,button=form.querySelector('button[type=submit]');
+  button.disabled=true;button.textContent='Đang gửi…';$('#broadcast-status').textContent='';
+  try{
+   const result=await api('/api/notifications/broadcast',{method:'POST',body:JSON.stringify({
+    title:form.elements.title.value.trim(),message:form.elements.message.value.trim(),href:form.elements.href.value.trim()
+   })});
+   $('#broadcast-status').textContent=`Đã gửi thông báo đến ${result.sent} tài khoản.`;
+   form.reset();
+  }catch(error){$('#broadcast-status').textContent='Gửi thông báo thất bại: '+error.message;}
+  finally{button.disabled=false;button.textContent='Gửi thông báo';}
+ });
+ firebase.auth().onAuthStateChanged(value=>{
+  user=value&&!value.isAnonymous?value:null;
+  if(!user){$('#staff-denied').innerHTML='<div class="empty-state">Vui lòng đăng nhập bằng tài khoản GVCN/Admin để truy cập.</div>';$('#staff-console').hidden=true;}
+  else checkStaff();
+ });
+})();
+</script>
+</body></html>
