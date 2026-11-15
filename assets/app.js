@@ -81,6 +81,82 @@
   let firebaseAuth = null;
   let currentAuthUser = null;
 
+  const A7_API_BASE = String(window.A7_API_BASE_URL || window.location.origin).replace(/\/+$/, '');
+  window.A7_API_BASE = A7_API_BASE;
+  let a7NotificationRef = null;
+  let a7NotificationHandler = null;
+
+  async function a7SendActivity(eventName, details = {}, userOverride = null){
+    const user = userOverride || currentAuthUser || (firebaseAuth && firebaseAuth.currentUser);
+    if(!user || user.isAnonymous) return null;
+    const token = await user.getIdToken();
+    const response = await fetch(A7_API_BASE + '/api/activity', {
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':'Bearer ' + token},
+      body:JSON.stringify({event:eventName,details})
+    });
+    if(response.status === 404){
+      throw new Error('API 404: hostname hiện tại chưa chạy Node.js Member API. Kiểm tra Render Web Service và api-config.js.');
+    }
+    const data = await response.json().catch(()=>({}));
+    if(!response.ok) throw new Error(data.error || ('API ' + response.status));
+    return data;
+  }
+  window.A7Activity = {log:(eventName, details)=>a7SendActivity(eventName, details)};
+
+  function stopA7NotificationListener(){
+    if(a7NotificationRef && a7NotificationHandler) a7NotificationRef.off('value', a7NotificationHandler);
+    a7NotificationRef = null;
+    a7NotificationHandler = null;
+  }
+
+  function ensureA7NotificationMenuLink(){
+    const nav = $('.nav-inner');
+    if(!nav) return null;
+    let link = nav.querySelector('.nav-notification-link');
+    if(!link){
+      link = document.createElement('a');
+      link.className = 'nav-link nav-notification-link';
+      link.href = 'thongbao.html';
+      link.title = 'Trung tâm thông báo';
+      link.setAttribute('aria-label','Trung tâm thông báo');
+      link.innerHTML = `
+        <svg class="nav-bell-icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"></path>
+        </svg>
+        <span>Thông báo</span><b class="nav-bell-badge" id="a7-nav-bell-count" hidden>0</b>`;
+      nav.appendChild(link);
+    }
+    return link;
+  }
+
+  function updateA7NotificationCount(count){
+    const badge = $('#a7-nav-bell-count');
+    const link = $('.nav-notification-link');
+    if(!badge || !link) return;
+    const value = Number(count || 0);
+    badge.textContent = value > 99 ? '99+' : String(value);
+    badge.hidden = value < 1;
+    link.setAttribute('aria-label', value ? `${value} thông báo chưa đọc` : 'Trung tâm thông báo');
+  }
+
+  function attachA7NotificationListener(user){
+    stopA7NotificationListener();
+    updateA7NotificationCount(0);
+    if(!user || user.isAnonymous || !window.firebase || !firebase.database) return;
+    try{
+      a7NotificationRef = firebase.database().ref('notifications/' + user.uid);
+      a7NotificationHandler = snapshot => {
+        let unread = 0;
+        snapshot.forEach(child => { if(!(child.val() || {}).readAt) unread++; });
+        updateA7NotificationCount(unread);
+      };
+      a7NotificationRef.on('value', a7NotificationHandler, error => {
+        console.warn('Không đọc được số thông báo ở menu:', error);
+      });
+    }catch(error){ console.warn('Không thể bật chuông thông báo:', error); }
+  }
+
   function firebaseErrorMessage(error){
     const code = error && error.code ? error.code : '';
     const messages = {
@@ -137,10 +213,12 @@
         .catch(error => console.error('Không thiết lập được lưu phiên đăng nhập:', error));
       firebaseAuth.onAuthStateChanged(user => {
         currentAuthUser = user || null;
+        ensureA7NotificationMenuLink();
         renderAccountHeader(currentAuthUser);
+        attachA7NotificationListener(currentAuthUser);
         window.A7Auth = {
           auth: firebaseAuth,
-          currentUser: currentAuthUser,
+          get currentUser(){ return currentAuthUser; },
           signOut: () => firebaseAuth.signOut()
         };
         window.dispatchEvent(new CustomEvent('a7-auth-state-changed', {detail:{user:currentAuthUser}}));
@@ -238,6 +316,7 @@
         logoutButton.disabled = true;
         try{
           if(!firebaseAuth) throw new Error('Firebase Authentication chưa sẵn sàng.');
+          try{ await a7SendActivity('logout', {}); }catch(logError){ console.warn('Không ghi được nhật ký đăng xuất:', logError); }
           await firebaseAuth.signOut();
           showToast('Bạn đã đăng xuất.');
         }catch(error){
@@ -283,10 +362,14 @@
         if(mode === 'register'){
           const credential = await firebaseAuth.createUserWithEmailAndPassword(email, password);
           if(name) await credential.user.updateProfile({displayName:name});
+          currentAuthUser = credential.user;
+          try{ await a7SendActivity('register', {}, credential.user); }catch(logError){ console.warn('Không ghi được nhật ký đăng ký:', logError); }
           showAuthStatus('Tạo tài khoản thành công. Bạn đã đăng nhập vào Cổng thông tin 12A7.', 'success');
           showToast('Chào mừng bạn đến với 12A7!');
         }else{
-          await firebaseAuth.signInWithEmailAndPassword(email, password);
+          const credential = await firebaseAuth.signInWithEmailAndPassword(email, password);
+          currentAuthUser = credential.user;
+          try{ await a7SendActivity('login', {}, credential.user); }catch(logError){ console.warn('Không ghi được nhật ký đăng nhập:', logError); }
           showAuthStatus('Đăng nhập thành công.', 'success');
           showToast('Đăng nhập thành công!');
         }
@@ -313,8 +396,12 @@
     });
   }
   function mount(){
-    injectAuth();setActiveNav();initializeFirebaseAuth();
+    injectAuth();
+    ensureA7NotificationMenuLink();
+    setActiveNav();
+    initializeFirebaseAuth();
     window.A7={SHEET_ID,TSV_BAOBAI,TSV_PHONGTRAO,GIDS,$,esc,parseCell,linkify,parseTSV,fetchTSV,loadGViz,showToast,FIREBASE_CONFIG};
+    window.A7_API_BASE = A7_API_BASE;
   }
   // app.js được nạp ở cuối body, nên DOM của trang đã sẵn sàng cho các script trang chạy tiếp theo.
   mount();

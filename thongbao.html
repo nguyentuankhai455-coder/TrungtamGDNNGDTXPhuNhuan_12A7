@@ -97,6 +97,7 @@
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
+<script src="api-config.js"></script>
 <script src="assets/app.js"></script>
 
 <script>
@@ -118,6 +119,7 @@
    'Content-Type':'application/json','Authorization':'Bearer '+token,...(options.headers||{})
   }});
   const data=await response.json().catch(()=>({}));
+  if(response.status===404)throw new Error('API 404: địa chỉ đang gọi chưa chạy Node.js Member API. Kiểm tra api-config.js và Render Web Service.');
   if(!response.ok)throw new Error(data.error||'API '+response.status);
   return data;
  }

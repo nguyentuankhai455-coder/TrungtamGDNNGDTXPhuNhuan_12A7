@@ -43,6 +43,21 @@
 }
 </style>
 
+
+<style id="a7-comment-account-style">
+  .comment-account-hint{
+    padding:10px 13px;
+    border:1px solid #dce8ef;
+    border-radius:10px;
+    background:#f2f7fa;
+    color:#35546a;
+    font-size:12px;
+    line-height:1.5;
+  }
+  .comment-account-hint[hidden],
+  #fb-comment-name-wrap[hidden]{display:none!important}
+</style>
+
 </head><body>
 <div class="site-topline"></div>
 <header class="site-header">
@@ -83,7 +98,10 @@
   <div class="engagement-panel">
     <h3 class="engagement-title" style="font-size:16px">💬 Để lại bình luận</h3>
     <form class="comment-form" id="fb-comment-form">
-      <input name="name" id="fb-comment-name" maxlength="60" required placeholder="Tên của bạn">
+      <div id="fb-comment-name-wrap">
+        <input name="name" id="fb-comment-name" maxlength="60" required placeholder="Tên của bạn">
+      </div>
+      <div class="comment-account-hint" id="fb-comment-account-hint" hidden></div>
       <textarea name="content" id="fb-comment-content" maxlength="1000" required placeholder="Viết bình luận của bạn..."></textarea>
       <button class="btn btn-blue" id="fb-comment-submit" type="submit">Gửi bình luận ↗</button>
     </form>
@@ -287,31 +305,79 @@
   if(!REACTIONS[kind]||!fbCurrentUser||!fbPostRef)return;
   const ref=fbPostRef.child('reactions/'+fbCurrentUser.uid);
   try{
+   const before=await ref.once('value');
+   const wasSame=!!(before.val()&&before.val().type===kind);
    await ref.transaction(current=>{
     if(current&&current.type===kind)return null;
     return {type:kind,updatedAt:firebase.database.ServerValue.TIMESTAMP};
    });
+   if(window.A7Activity) window.A7Activity.log(wasSame?'reaction_remove':'reaction_set',{
+    postKey:fbPostKey,reaction:kind
+   }).catch(error=>console.warn('Không ghi được nhật ký cảm xúc:',error));
    showMessage('Đã cập nhật cảm xúc của bạn.','ok');
   }catch(error){console.error(error);showMessage('Không thể lưu cảm xúc. Hãy kiểm tra Firebase Rules.');}
+ }
+ function getCommentAccountName(user){
+  if(!user || user.isAnonymous)return '';
+  const displayName=String(user.displayName||'').trim();
+  if(displayName)return displayName.slice(0,60);
+  const email=String(user.email||'').trim();
+  if(email){
+   const accountName=email.split('@')[0].replace(/[._-]+/g,' ').trim();
+   return (accountName||email).slice(0,60);
+  }
+  return 'Thành viên 12A7';
+ }
+ function updateCommentIdentity(user){
+  const wrap=document.getElementById('fb-comment-name-wrap');
+  const input=document.getElementById('fb-comment-name');
+  const hint=document.getElementById('fb-comment-account-hint');
+  if(!wrap||!input||!hint)return;
+  const loggedIn=!!(user&&!user.isAnonymous);
+  if(loggedIn){
+   const accountName=getCommentAccountName(user);
+   wrap.hidden=true;
+   input.required=false;
+   input.value=accountName;
+   hint.textContent='Bạn đang bình luận bằng tài khoản: '+accountName;
+   hint.hidden=false;
+  }else{
+   wrap.hidden=false;
+   input.required=true;
+   input.value='';
+   hint.textContent='';
+   hint.hidden=true;
+  }
  }
  async function submitComment(event){
   event.preventDefault();
   const form=event.currentTarget;
-  const name=form.elements.name.value.trim();
+  const signedInUser=fbCurrentUser&&!fbCurrentUser.isAnonymous;
+  const name=signedInUser
+   ? getCommentAccountName(fbCurrentUser)
+   : (form.elements.name.value||'').trim();
   const content=form.elements.content.value.trim();
-  if(!name||!content){showMessage('Vui lòng nhập tên và nội dung bình luận.');return;}
+  if(!name||!content){
+   showMessage(signedInUser?'Không xác định được tên tài khoản. Vui lòng đăng xuất rồi đăng nhập lại.':'Vui lòng nhập tên và nội dung bình luận.');
+   return;
+  }
   if(name.length>60||content.length>1000){showMessage('Tên tối đa 60 ký tự và bình luận tối đa 1.000 ký tự.');return;}
   const button=form.querySelector('button[type=submit]');
   button.disabled=true;button.textContent='Đang gửi…';
   try{
    // Giữ nguyên schema bình luận cũ: {uid,name,content,createdAt}.
-   await fbCommentsRef.push().set({
+   const newCommentRef=fbCommentsRef.push();
+   await newCommentRef.set({
     uid:fbCurrentUser.uid,
     name:name,
     content:content,
     createdAt:firebase.database.ServerValue.TIMESTAMP
    });
+   if(window.A7Activity) window.A7Activity.log('comment_create',{
+    postKey:fbPostKey,commentId:newCommentRef.key
+   }).catch(error=>console.warn('Không ghi được nhật ký bình luận:',error));
    form.elements.content.value='';
+   if(!signedInUser)form.elements.name.value='';
    showMessage('Bình luận đã được gửi thành công!','ok');
   }catch(error){console.error(error);showMessage('Không thể gửi bình luận. Kiểm tra quyền ghi Firebase.');}
   finally{button.disabled=false;button.textContent='Gửi bình luận';}
@@ -319,7 +385,13 @@
  async function deleteComment(commentId){
   if(!fbIsAdmin||!commentId||!fbCommentsRef)return;
   if(!confirm('Bạn có chắc muốn xóa bình luận này?'))return;
-  try{await fbCommentsRef.child(commentId).remove();showMessage('Đã xóa bình luận.','ok');}
+  try{
+   await fbCommentsRef.child(commentId).remove();
+   if(window.A7Activity) window.A7Activity.log('comment_delete',{
+    postKey:fbPostKey,commentId:commentId
+   }).catch(error=>console.warn('Không ghi được nhật ký xóa bình luận:',error));
+   showMessage('Đã xóa bình luận.','ok');
+  }
   catch(error){console.error(error);showMessage('Không thể xóa bình luận. Tài khoản chưa có quyền Admin trong Rules.');}
  }
  async function adminLogin(){
@@ -351,6 +423,7 @@
    fbCommentsRef=fbPostRef.child('comments');
 
    fbCurrentUser=await ensureUser();
+   updateCommentIdentity(fbCurrentUser);
    await checkAdmin(fbCurrentUser);
 
    if(!fbListener){
@@ -370,7 +443,8 @@
     document.getElementById('fb-admin-login-btn').addEventListener('click',adminLogin);
     document.getElementById('fb-admin-logout').addEventListener('click',adminLogout);
     fbAuth.onAuthStateChanged(async user=>{
-     fbCurrentUser=user;
+     fbCurrentUser=user||null;
+     updateCommentIdentity(fbCurrentUser);
      if(user)await checkAdmin(user);
     });
    }
