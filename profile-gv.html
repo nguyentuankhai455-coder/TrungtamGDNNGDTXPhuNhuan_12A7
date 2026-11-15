@@ -7,6 +7,36 @@
 <title>Hồ sơ giáo viên | 12A7</title>
 <link rel="icon" href="logo.png">
 <link rel="stylesheet" href="assets/site.css?v=logo-fix-2">
+<style>
+/* Bố cục riêng cho hồ sơ giáo viên: tách ảnh và thông tin, tránh dồn chữ */
+#profile-container{padding:clamp(18px,2.8vw,32px);overflow:hidden}
+.teacher-profile-layout{display:grid;grid-template-columns:minmax(190px,260px) minmax(0,1fr);gap:clamp(22px,3vw,34px);align-items:start}
+.teacher-profile-photo{width:100%;aspect-ratio:1;border-radius:20px;overflow:hidden;background:#eaf1f5;display:grid;place-items:center;color:#a27c3f;font-size:48px;position:relative}
+.teacher-profile-photo img{display:block;width:100%;height:100%;object-fit:cover}
+.teacher-profile-info{min-width:0}
+.teacher-profile-info .eyebrow{margin-bottom:8px}
+.teacher-profile-info h2{margin:0;color:var(--navy);font-size:clamp(23px,2.2vw,30px);line-height:1.25;overflow-wrap:anywhere}
+.teacher-profile-subject{margin:7px 0 20px;color:var(--muted);font-size:14px}
+.teacher-profile-facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-bottom:18px}
+.teacher-profile-fact{min-width:0;padding:15px 16px;border:1px solid var(--line);border-radius:15px;background:#fff}
+.teacher-profile-fact-label,.teacher-message-label{display:block;margin:0 0 7px;color:#a27c3f;font-size:11px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase}
+.teacher-profile-fact p{margin:0;color:#627180;font-size:14px;line-height:1.75;overflow-wrap:anywhere}
+.teacher-message-card{padding:18px;border:1px solid var(--line);border-radius:17px;background:#fff}
+.teacher-message-sections{display:grid;gap:13px}.teacher-message-section-en{background:#fffdf8;border-left-color:#8c9cab}.teacher-message-section-en h3{color:#526779}
+.teacher-message-section{min-width:0;padding:16px 18px;border:1px solid #e3eaf0;border-left:4px solid var(--gold);border-radius:13px;background:#fbfcfd}
+.teacher-message-section h3{margin:0 0 10px;color:var(--navy);font-size:14px;line-height:1.5;letter-spacing:.15px}
+.teacher-message-copy{margin:0;color:#627180;font-size:14px;line-height:1.85;overflow-wrap:anywhere;white-space:normal}
+.teacher-message-copy + .teacher-message-copy{margin-top:9px}
+.teacher-message-copy strong{color:#29475e;font-weight:750}
+.teacher-message-empty{margin:0;color:var(--muted);font-size:14px;line-height:1.8}
+@media(max-width:760px){
+ .teacher-profile-layout{grid-template-columns:1fr;gap:20px}
+ .teacher-profile-photo{position:static;width:min(220px,70%);aspect-ratio:1;margin:0 auto}
+ .teacher-profile-facts{grid-template-columns:1fr}
+ .teacher-message-card{padding:14px}
+ .teacher-message-section{padding:14px}
+}
+</style>
 </head>
 <body>
 
@@ -65,13 +95,123 @@
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
-<script src="api-config.js"></script>
 <script src="assets/app.js"></script>
 
 
 <script>
 (function(){
  const A7=window.A7,id=new URLSearchParams(location.search).get('id');
+ const esc=(value)=>A7.esc(String(value??''));
+
+ // Các nhãn trong lời nhắn được tách thành từng đoạn để không dính thành một khối.
+ const detailLabels=[
+  'Họ và tên',
+  'Đơn vị công tác',
+  'Thời gian công tác',
+  'Vị trí đảm nhiệm',
+  'Đặc điểm nổi bật',
+  'Năng động, tươi trẻ và giàu năng lượng',
+  'Phương pháp tiếp cận hiện đại',
+  'Chuyên môn vững vàng, hệ thống kiến thức khoa học',
+  'Phương pháp truyền đạt mạch lạc, dễ hiểu',
+  'Phương pháp minh họa trực quan',
+  'Tích cực hệ thống hóa kiến thức',
+  'Tận tụy và tận tâm',
+  'Gần gũi và cởi mở',
+  'Nhiệt tình và nắm bắt nhanh',
+  'Gần gũi và động viên',
+  'Nhiệt tình và thân thiện',
+  'Đồng hành và động viên',
+  'Năng lực giảng dạy\\s*&\\s*Luyện thi xuất sắc',
+  'Nhiệt huyết trong hoạt động phong trào',
+  'Sát sao và nghiêm khắc',
+  'Tần suất nhắc nhở cao\\s*\\("Nói nhiều"\\)'
+ ];
+ const detailLabelRe=new RegExp('(?:^|\\s)(' + detailLabels.join('|') + ')\\s*:\\s*','giu');
+
+ // Nhận diện các cách đặt tên mục đang được dùng trong Google Sheets.
+ // Không bắt các chữ I/II/III nằm trong câu thông thường hoặc trong bản dịch tiếng Anh.
+ const viSectionRe=/(^|\s)(IV|III|II|I)\.\s*(THÔNG TIN CHUNG|PHONG CÁCH GIẢNG DẠY\s*&\s*NĂNG LỰC CHUYÊN MÔN|CHUYÊN MÔN\s*&\s*THẾ MẠNH(?:\s*\([^)]*\))?|TƯƠNG TÁC VỚI HỌC VIÊN|ĐẶC ĐIỂM PHONG CÁCH QUẢN LÝ(?:\s*\([^)]*\))?|ĐÁNH GIÁ TỔNG QUAN)(?=\s|$)/giu;
+ const enSectionRe=/(^|\s)(IV|III|II|I)\.\s*(GENERAL INFORMATION|TEACHING STYLE\s*&\s*PROFESSIONAL COMPETENCE|INTERACTION WITH STUDENTS|OVERALL ASSESSMENT)(?=\s|$)/giu;
+
+ function splitContentByHeadings(source, regex, language){
+  const matches=[...source.matchAll(regex)];
+  if(!matches.length) return null;
+  const sections=[];
+  matches.forEach((match,index)=>{
+   const headingStart=match.index+match[1].length;
+   const contentStart=match.index+match[0].length;
+   const next=matches[index+1];
+   const contentEnd=next?next.index+next[1].length:source.length;
+   const roman=match[2].toUpperCase();
+   const heading=match[3].replace(/\s+/g,' ').trim();
+   const body=source.slice(contentStart,contentEnd).trim();
+   sections.push({roman,heading,body,language,headingStart});
+  });
+  return sections;
+ }
+
+ function renderBody(raw){
+  const text=String(raw||'').replace(/\r\n?/g,'\n').replace(/\s+/g,' ').trim();
+  if(!text) return '<p class="teacher-message-empty">Chưa có nội dung được cập nhật.</p>';
+  const matches=[...text.matchAll(detailLabelRe)];
+  if(!matches.length) return `<p class="teacher-message-copy">${esc(text)}</p>`;
+  let html='',cursor=0;
+  matches.forEach((match,index)=>{
+   const labelStart=match.index+(match[0].length-match[0].trimStart().length);
+   const valueStart=match.index+match[0].length;
+   const end=index+1<matches.length?matches[index+1].index:text.length;
+   const label=match[1].replace(/\s+/g,' ');
+   const before=text.slice(cursor,labelStart).trim();
+   if(before) html+=`<p class="teacher-message-copy">${esc(before)}</p>`;
+   const value=text.slice(valueStart,end).trim();
+   html+=`<p class="teacher-message-copy"><strong>${esc(label)}:</strong> ${esc(value)}</p>`;
+   cursor=end;
+  });
+  const tail=text.slice(cursor).trim();
+  if(tail) html+=`<p class="teacher-message-copy">${esc(tail)}</p>`;
+  return html;
+ }
+
+ function sectionCard(title,body,extraClass=''){
+  return `<section class="teacher-message-section ${extraClass}"><h3>${esc(title)}</h3>${renderBody(body)}</section>`;
+ }
+
+ function renderQuote(raw){
+  const source=String(raw||'').replace(/\r\n?/g,'\n').replace(/\s+/g,' ').trim();
+  if(!source) return '<p class="teacher-message-empty">Chưa có lời nhắn được cập nhật.</p>';
+
+  // Một số hồ sơ có bản dịch tiếng Anh nối ngay sau phần tiếng Việt.
+  // Tách thành khối riêng để không làm mục IV bị kéo dài và lẫn nội dung.
+  const englishMatch=/\bENGLISH\s+VERSION\b/i.exec(source);
+  const vietnameseText=englishMatch?source.slice(0,englishMatch.index).trim():source;
+  const englishText=englishMatch?source.slice(englishMatch.index).replace(/^ENGLISH\s+VERSION\s*/i,'').trim():'';
+
+  let html='';
+  const viSections=splitContentByHeadings(vietnameseText,viSectionRe,'vi');
+  if(viSections){
+   viSections.forEach(section=>{
+    html+=sectionCard(`${section.roman}. ${section.heading}`,section.body);
+   });
+  }else{
+   // Không có tiêu đề I–IV: giữ nguyên nội dung, chỉ tách theo dòng nếu Sheet có xuống dòng.
+   const chunks=vietnameseText.split(/\n+/).map(x=>x.trim()).filter(Boolean);
+   chunks.forEach((chunk,index)=>{html+=`<section class="teacher-message-section">${renderBody(chunk)}</section>`;});
+  }
+
+  if(englishText){
+   const enSections=splitContentByHeadings(englishText,enSectionRe,'en');
+   if(enSections){
+    enSections.forEach(section=>{
+     html+=sectionCard(`ENGLISH VERSION · ${section.roman}. ${section.heading}`,section.body,'teacher-message-section-en');
+    });
+   }else{
+    html+=sectionCard('ENGLISH VERSION',englishText,'teacher-message-section-en');
+   }
+  }
+  return html||'<p class="teacher-message-empty">Chưa có lời nhắn được cập nhật.</p>';
+ }
+
  A7.loadGViz(A7.GIDS.teachers,(json,err)=>{
   const box=A7.$('#profile-container');
   if(err||!json||!json.table){box.innerHTML='<div class="empty-state">Không thể kết nối hồ sơ giáo viên.</div>';return;}
@@ -79,7 +219,23 @@
   (json.table.rows||[]).forEach(row=>{const c=row.c||[];if(A7.parseCell(c[6])===id)found=c;});
   if(!found){box.innerHTML='<div class="empty-state">Không tìm thấy hồ sơ giáo viên.</div>';return;}
   const [avatar,name,subject,role,unit,quote]=found.map(A7.parseCell);
-  box.innerHTML=`<div class="profile-layout"><div class="profile-photo">${avatar?`<img src="${A7.esc(avatar)}" alt="${A7.esc(name)}">`:'✦'}</div><div class="profile-info"><div class="eyebrow">12A7 · Teacher</div><h2>${A7.esc(name||'Chưa cập nhật')}</h2><p>${A7.esc(subject||'Bộ môn')}</p><div class="news-card"><b>Nhiệm vụ</b><p>${A7.esc(role||'Giáo viên')}</p><b>Đơn vị công tác</b><p>${A7.esc(unit||'TT GDNN – GDTX Tân Bình')}</p><b>Lời nhắn</b><p>${A7.esc(quote||'Chúc các em học tốt!')}</p></div></div></div>`;
+  box.innerHTML=`
+   <div class="teacher-profile-layout">
+    <div class="teacher-profile-photo">${avatar?`<img src="${esc(avatar)}" alt="${esc(name)}" onerror="this.parentElement.textContent='✦'">`:'✦'}</div>
+    <div class="teacher-profile-info">
+     <div class="eyebrow">12A7 · Teacher</div>
+     <h2>${esc(name||'Chưa cập nhật')}</h2>
+     <p class="teacher-profile-subject">${esc(subject||'Bộ môn')}</p>
+     <div class="teacher-profile-facts">
+      <section class="teacher-profile-fact"><span class="teacher-profile-fact-label">Nhiệm vụ</span><p>${esc(role||'Giáo viên')}</p></section>
+      <section class="teacher-profile-fact"><span class="teacher-profile-fact-label">Đơn vị công tác</span><p>${esc(unit||'TT GDNN – GDTX Tân Bình')}</p></section>
+     </div>
+     <section class="teacher-message-card">
+      <span class="teacher-message-label">Lời nhắn</span>
+      <div class="teacher-message-sections">${renderQuote(quote||'Chúc các em học tốt!')}</div>
+     </section>
+    </div>
+   </div>`;
  });
 })();
 </script>
