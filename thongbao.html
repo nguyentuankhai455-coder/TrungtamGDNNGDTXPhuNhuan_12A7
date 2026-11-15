@@ -20,6 +20,16 @@
 }
 </style>
 
+
+<style id="a7-sheet-notifications">
+.notification-sheet-meta{font-size:10px;letter-spacing:1px;font-weight:900;color:#9b783e;margin-bottom:5px}
+.notification-recipient{font-size:11px!important;color:#748391!important;margin:3px 0 9px!important}
+.notification-sheet-content{font-size:14px!important;line-height:1.75;white-space:pre-line;overflow-wrap:anywhere;color:#344a5c!important}
+.notification-read-label{font-size:11px;color:#287b58;font-weight:800}
+#notification-list .notification-item.unread{border-left:4px solid #caa052}
+#notification-list .notification-item{align-items:flex-start}
+</style>
+
 </head>
 <body>
 
@@ -50,38 +60,25 @@
 </div></nav>
 <main class="page-wrap">
 <section class="page-heading"><div class="section-kicker">Member center · 12A7</div><h1>Thông báo & hoạt động tài khoản</h1>
-<p>Nơi nhận thông báo từ GVCN/Admin và xem lại hoạt động tài khoản của bạn.</p></section>
+<p>Nhận thông báo từ GVCN/Admin và theo dõi trạng thái đã đọc của tài khoản.</p></section>
 
 <div id="member-login-required" class="panel empty-state">Vui lòng đăng nhập tài khoản 12A7 để xem thông báo và lịch sử hoạt động.</div>
 <div id="member-content" hidden>
  <section class="panel">
-  <div class="section-head"><div><div class="eyebrow">Notifications</div><h2>Thông báo của bạn</h2><p>Thông báo được đồng bộ theo thời gian thực từ Firebase.</p></div>
+  <div class="section-head"><div><div class="eyebrow">Notifications</div><h2>Thông báo của bạn</h2><p>Nội dung được lấy từ Google Sheets; Firebase lưu trạng thái đã đọc/chưa đọc riêng theo tài khoản.</p></div>
   <button class="btn btn-outline" type="button" id="mark-all-read">Đánh dấu tất cả đã đọc</button></div>
   <div id="notification-list" class="notification-list"><div class="loading-state">Đang tải thông báo…</div></div>
  </section>
 
  <section class="section member-page-grid">
+  <div class="panel"><div class="section-head"><div><div class="eyebrow">Account activity</div><h2>Hoạt động gần đây</h2><p>Nhật ký bình luận, cảm xúc và IP sẽ được kích hoạt ở giai đoạn máy chủ API.</p></div></div><div class="empty-state">Phần nhật ký hoạt động đang chờ kết nối máy chủ. Trung tâm thông báo từ Google Sheets vẫn hoạt động độc lập.</div></div>
   <div class="panel">
-   <div class="section-head"><div><div class="eyebrow">Account activity</div><h2>Hoạt động gần đây</h2><p>Nhật ký gắn với UID tài khoản đang đăng nhập.</p></div></div>
-   <div id="my-activity-list" class="activity-list"><div class="loading-state">Đang tải hoạt động…</div></div>
-  </div>
-  <div class="panel">
-   <div class="eyebrow">Privacy & transparency</div><h2 style="margin:5px 0 13px;color:var(--navy);font-size:18px">Thông tin ghi nhận hoạt động</h2>
+   <div class="eyebrow">Privacy & transparency</div>
+   <h2 style="margin:5px 0 13px;color:var(--navy);font-size:18px">Quyền riêng tư</h2>
    <div class="privacy-notice">
-    <h3>Minh bạch về nhật ký và địa chỉ IP</h3>
-    <p>Website ghi nhận UID, email/tên hiển thị từ Firebase, loại hoạt động, thời điểm, bài viết liên quan và thông tin trình duyệt để hỗ trợ an toàn tài khoản, kiểm duyệt tương tác và lập báo cáo cho GVCN/Admin.</p>
-    <ul>
-      <li>Địa chỉ IP chỉ được lưu khi bạn chủ động đồng ý.</li>
-      <li>Nếu không đồng ý, nhật ký vẫn ghi nhận hoạt động và thời gian nhưng không lưu IP.</li>
-      <li>IP đầy đủ chỉ được hiển thị cho GVCN/Admin được hệ thống cấp quyền.</li>
-      <li>Nhật ký dự kiến lưu tối đa 90 ngày rồi tự động xóa.</li>
-      <li>Nội dung mật khẩu và nội dung bình luận không được sao chép vào nhật ký.</li>
-    </ul>
-    <div id="privacy-consent-controls" class="privacy-actions">
-      <button class="btn btn-gold" id="privacy-accept" type="button">Đồng ý ghi nhận IP</button>
-      <button class="btn btn-outline" id="privacy-decline" type="button">Không đồng ý ghi IP</button>
-    </div>
-    <p class="privacy-status" id="privacy-status">Đang kiểm tra lựa chọn bảo mật…</p>
+    <h3>Thông báo được quản lý bằng Google Sheets</h3>
+    <p>Google Sheets lưu nội dung, người gửi và người nhận. Firebase chỉ lưu trạng thái đã đọc/chưa đọc theo UID tài khoản.</p>
+    <p>Địa chỉ IP chưa được thu thập ở giai đoạn này. Chức năng ghi nhận IP chỉ được bật khi máy chủ API được triển khai và có cơ chế thông báo/đồng ý phù hợp.</p>
    </div>
   </div>
  </section>
@@ -97,116 +94,195 @@
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
-<script src="api-config.js"></script>
 <script src="assets/app.js"></script>
+
 
 <script>
 (function(){
- const A7=window.A7;
- const $=A7.$;
- const API=window.A7_API_BASE||location.origin;
- const eventLabels={
-  login:'Đăng nhập',logout:'Đăng xuất',register:'Tạo tài khoản',
-  comment_create:'Đăng bình luận',comment_delete:'Xóa bình luận',
-  reaction_set:'Thả cảm xúc',reaction_remove:'Gỡ cảm xúc'
- };
- let db=null,notifRef=null,notifHandler=null,user=null;
+ const A7=window.A7, $=A7.$;
+ const SHEET_URL=A7.TSV_NOTIFICATIONS;
+ let user=null, db=null, readRef=null, readHandler=null, sheetItems=[];
+ let refreshTimer=null;
 
- async function api(path,options={}){
-  if(!user)throw new Error('Bạn chưa đăng nhập.');
-  const token=await user.getIdToken();
-  const response=await fetch(API+path,{...options,headers:{
-   'Content-Type':'application/json','Authorization':'Bearer '+token,...(options.headers||{})
-  }});
-  const data=await response.json().catch(()=>({}));
-  if(response.status===404)throw new Error('API 404: địa chỉ đang gọi chưa chạy Node.js Member API. Kiểm tra api-config.js và Render Web Service.');
-  if(!response.ok)throw new Error(data.error||'API '+response.status);
-  return data;
+ function normalize(value){
+  return String(value||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+   .replace(/đ/g,'d').replace(/Đ/g,'D').toLowerCase().trim().replace(/\s+/g,' ');
  }
- function time(value){return new Date(Number(value)||Date.now()).toLocaleString('vi-VN');}
- function renderNotifications(snapshot){
-  const box=$('#notification-list'),items=[];
-  snapshot.forEach(child=>items.push({id:child.key,...(child.val()||{})}));
-  items.sort((a,b)=>Number(b.createdAt||0)-Number(a.createdAt||0));
-  if(!items.length){box.innerHTML='<div class="empty-state">Bạn chưa có thông báo nào.</div>';return;}
-  box.innerHTML=items.map(item=>`
-   <article class="notification-item ${item.readAt?'':'unread'}">
-    <div class="notification-symbol">${item.type==='announcement'?'📢':'🔔'}</div>
-    <div class="notification-copy">
-     <h3>${A7.esc(item.title||'Thông báo 12A7')}</h3>
-     <p>${A7.esc(item.message||'')}</p><time>${A7.esc(time(item.createdAt))}</time>
-     <div class="notification-actions">
-      ${item.href?`<a class="text-link" href="${A7.esc(item.href)}">Mở nội dung →</a>`:''}
-      ${!item.readAt?`<button class="btn btn-outline" type="button" data-read="${A7.esc(item.id)}">Đánh dấu đã đọc</button>`:''}
-     </div>
-    </div>
-   </article>`).join('');
+ function recipientMatches(recipient){
+  const raw=String(recipient||'').trim();
+  if(!raw)return true;
+  const target=normalize(raw);
+  const allWords=['tat ca','ca lop','toan lop','12a7','hoc sinh 12a7','everyone','all','toan bo'];
+  if(allWords.some(word=>target.includes(normalize(word))))return true;
+  const identity=[user&&user.uid,user&&user.email,user&&user.displayName]
+    .filter(Boolean).map(normalize);
+  return raw.split(/[,;\n\r]+/).map(normalize).filter(Boolean)
+    .some(token=>identity.some(value=>value===token));
  }
- async function loadMyActivities(){
-  const box=$('#my-activity-list');
+ function makeId(serial,index){
+  return 'sheet_'+String(serial||index+1).replace(/[.#$[\]/]/g,'_').replace(/\s+/g,'_');
+ }
+ async function loadNotificationRows(){
+  let tsvError=null;
   try{
-   const data=await api('/api/activity/me?limit=100');
-   const records=data.records||[];
-   if(!records.length){box.innerHTML='<div class="empty-state">Chưa có hoạt động nào được ghi nhận.</div>';return;}
-   box.innerHTML=records.map(item=>`
-    <article class="member-activity-item"><span class="activity-dot"></span><div class="activity-copy">
-     <strong>${A7.esc(eventLabels[item.event]||item.event||'Hoạt động')}</strong>
-     <span>${A7.esc(item.postKey||'')} · ${A7.esc(time(item.createdAt))}</span>
-    </div></article>`).join('');
-  }catch(error){
-   box.innerHTML=`<div class="empty-state">Chưa kết nối được nhật ký hoạt động của máy chủ. ${A7.esc(error.message)}</div>`;
+   const rows=await A7.fetchTSV(SHEET_URL);
+   if(rows && rows.length>1)return rows;
+   tsvError=new Error('TSV không có dòng thông báo.');
+  }catch(error){tsvError=error;}
+
+  try{
+   return await new Promise((resolve,reject)=>{
+    A7.loadGViz('278890008',(json,error)=>{
+     if(error){reject(error);return;}
+     try{
+      const table=json&&json.table;
+      if(!table){reject(new Error('Google Sheets không trả về bảng dữ liệu.'));return;}
+      const cols=Array.isArray(table.cols)?table.cols:[];
+      const headers=cols.map(col=>String((col&&(col.label||col.id))||''));
+      const width=Math.max(4,headers.length);
+      const rows=[headers];
+      (table.rows||[]).forEach(record=>{
+       const cells=Array.isArray(record&&record.c)?record.c:[];
+       rows.push(Array.from({length:width},(_,i)=>A7.parseCell(cells[i]||{})));
+      });
+      if(rows.length<=1){reject(new Error('Tab thông báo chưa có dòng dữ liệu.'));return;}
+      resolve(rows);
+     }catch(parseError){reject(parseError);}
+    });
+   });
+  }catch(gvizError){
+   throw new Error('Không đọc được Google Sheets. TSV: '+(tsvError&&tsvError.message||'không rõ lỗi')+'; GViz: '+(gvizError&&gvizError.message||'không rõ lỗi'));
   }
  }
- async function loadPrivacy(){
+ async function loadSheet(){
+  $('#notification-list').innerHTML='<div class="loading-state">Đang tải thông báo từ Google Sheets…</div>';
   try{
-   const data=await api('/api/privacy/status');
-   const status=$('#privacy-status'),controls=$('#privacy-consent-controls');
-   status.textContent=data.ipAudit
-    ?'Bạn đã đồng ý ghi nhận IP. Có thể thu hồi lựa chọn bất cứ lúc nào.'
-    :'Bạn chưa đồng ý ghi nhận IP. Hệ thống vẫn lưu loại hoạt động và thời gian, không lưu IP.';
-   $('#privacy-accept').textContent=data.ipAudit?'Đã đồng ý ghi IP':'Đồng ý ghi nhận IP';
-   $('#privacy-decline').textContent=data.ipAudit?'Thu hồi đồng ý':'Không đồng ý ghi IP';
-  }catch(error){$('#privacy-status').textContent='Chưa kiểm tra được trạng thái đồng ý: '+error.message;}
+   const rows=await loadNotificationRows();
+   if(!rows.length)throw new Error('Sheet chưa có dữ liệu.');
+   const header=rows[0].map(normalize);
+   const hasHeader=header.some(v=>['so thu tu','stt','nguoi gui','nguoi nhan','noi dung'].includes(v));
+   const data=hasHeader?rows.slice(1):rows;
+
+   sheetItems=data.map((row,index)=>{
+    const serial=String(row[0]||'').trim();
+    const sender=String(row[1]||'').trim();
+    const recipient=String(row[2]||'').trim();
+    const content=String(row[3]||'').trim();
+    if(!serial&&!sender&&!recipient&&!content)return null;
+    if(!recipientMatches(recipient))return null;
+    return {
+     id:makeId(serial,index),
+     serial:serial||String(index+1),
+     sender:sender||'Ban quản trị 12A7',
+     recipient:recipient||'Toàn lớp 12A7',
+     content
+    };
+   }).filter(Boolean);
+   if(sheetItems.every(item=>/^\d+$/.test(item.serial))){
+    sheetItems.sort((a,b)=>Number(b.serial)-Number(a.serial));
+   }else{
+    sheetItems.reverse();
+   }
+
+   if(!sheetItems.length){
+    $('#notification-list').innerHTML='<div class="empty-state">Hiện chưa có thông báo dành cho tài khoản của bạn.</div>';
+    updateUnreadBadge();
+    return;
+   }
+   await renderNotifications();
+  }catch(error){
+   console.error('Google Sheets notification error:',error);
+   $('#notification-list').innerHTML='<div class="empty-state"><strong>Không tải được thông báo từ Google Sheets.</strong><br>Chi tiết: '+A7.esc(error&&error.message||error)+'<br>Hãy kiểm tra quyền xem công khai của trang tính và GID 278890008.</div>';
+  }
  }
- async function setPrivacy(value){
+ async function readSnapshot(){
+  return readRef ? await readRef.once('value') : null;
+ }
+ function renderList(readSnapshot){
+  const box=$('#notification-list');
+  box.innerHTML=sheetItems.map(item=>{
+   const read=!!(readSnapshot&&readSnapshot.child(item.id).child('readAt').exists());
+   return `<article class="notification-item ${read?'':'unread'}">
+    <div class="notification-symbol">🔔</div>
+    <div class="notification-copy">
+     <div class="notification-sheet-meta">THÔNG BÁO #${A7.esc(item.serial)}</div>
+     <h3>${A7.esc(item.sender)}</h3>
+     <p class="notification-recipient">Người nhận: ${A7.esc(item.recipient)}</p>
+     <p class="notification-sheet-content">${A7.esc(item.content)}</p>
+     <div class="notification-actions">
+      ${!read?`<button class="btn btn-outline" type="button" data-read="${A7.esc(item.id)}">Đánh dấu đã đọc</button>`:'<span class="notification-read-label">✓ Đã đọc</span>'}
+     </div>
+    </div>
+   </article>`;
+  }).join('');
+ }
+ async function updateUnreadBadge(){
+  const snap=await readSnapshot();
+  const unread=sheetItems.filter(item=>!(snap&&snap.child(item.id).child('readAt').exists())).length;
+  const badge=document.getElementById('a7-nav-bell-count');
+  if(badge){
+   badge.textContent=unread>99?'99+':String(unread);
+   badge.hidden=unread===0;
+  }
+ }
+ async function renderNotifications(){
+  const snap=await readSnapshot();
+  renderList(snap);
+  updateUnreadBadge();
+ }
+ async function markRead(id){
+  if(!user||!readRef)return;
   try{
-   const data=await api('/api/privacy/consent',{method:'POST',body:JSON.stringify({ipAudit:value})});
-   $('#privacy-status').textContent=data.ipAudit
-    ?'Đã ghi nhận lựa chọn đồng ý. Những hoạt động tiếp theo sẽ có IP.'
-    :'Đã ghi nhận lựa chọn không lưu IP. IP trước đây (nếu có) cũng được xóa khỏi nhật ký.';
-  }catch(error){$('#privacy-status').textContent='Không lưu được lựa chọn: '+error.message;}
+   await readRef.child(id+'/readAt').set(firebase.database.ServerValue.TIMESTAMP);
+   await renderNotifications();
+  }catch(error){
+   $('#member-page-alert').textContent='Không lưu được trạng thái đã đọc: '+error.message;
+  }
+ }
+ async function markAllRead(){
+  if(!readRef||!sheetItems.length)return;
+  try{
+   const snap=await readSnapshot();
+   const jobs=sheetItems
+    .filter(item=>!(snap&&snap.child(item.id).child('readAt').exists()))
+    .map(item=>readRef.child(item.id+'/readAt').set(firebase.database.ServerValue.TIMESTAMP));
+   await Promise.all(jobs);
+   await renderNotifications();
+  }catch(error){
+   $('#member-page-alert').textContent='Không thể đánh dấu tất cả đã đọc: '+error.message;
+  }
  }
  function attach(userValue){
-  if(notifRef&&notifHandler)notifRef.off('value',notifHandler);
-  notifRef=null;notifHandler=null;user=userValue;
+  if(readRef&&readHandler)readRef.off('value',readHandler);
+  if(refreshTimer)clearInterval(refreshTimer);
+  readRef=null;readHandler=null;refreshTimer=null;user=userValue||null;
   const isMember=!!(user&&!user.isAnonymous);
   $('#member-login-required').hidden=isMember;
   $('#member-content').hidden=!isMember;
   if(!isMember)return;
+
   db=firebase.database();
-  notifRef=db.ref('notifications/'+user.uid);
-  notifHandler=renderNotifications;
-  notifRef.on('value',notifHandler,error=>{$('#notification-list').innerHTML='<div class="empty-state">Không tải được thông báo: '+A7.esc(error.message)+'</div>';});
-  $('#member-page-alert').textContent='';
-  loadMyActivities();loadPrivacy();
+  readRef=db.ref('notifications/'+user.uid);
+  readHandler=()=>renderNotifications();
+  readRef.on('value',readHandler,error=>{
+   $('#notification-list').innerHTML='<div class="empty-state">Firebase không đọc được trạng thái thông báo: '+A7.esc(error.message)+'</div>';
+  });
+
+  loadSheet();
+  refreshTimer=setInterval(loadSheet,90000);
  }
- document.addEventListener('click',async e=>{
-  const read=e.target.closest('[data-read]');
-  if(read&&user){
-   try{await db.ref(`notifications/${user.uid}/${read.dataset.read}/readAt`).set(firebase.database.ServerValue.TIMESTAMP);}
-   catch(error){$('#member-page-alert').textContent='Không đánh dấu đã đọc được: '+error.message;}
-  }
+ document.addEventListener('click',event=>{
+  const button=event.target.closest('[data-read]');
+  if(button)markRead(button.dataset.read);
  });
- $('#mark-all-read').addEventListener('click',async()=>{
-  if(!user||!notifRef)return;
-  const snap=await notifRef.once('value'),updates={};
-  snap.forEach(child=>{if(!child.child('readAt').exists())updates[child.key+'/readAt']=firebase.database.ServerValue.TIMESTAMP;});
-  if(Object.keys(updates).length)await notifRef.update(updates);
- });
- $('#privacy-accept').addEventListener('click',()=>setPrivacy(true));
- $('#privacy-decline').addEventListener('click',()=>setPrivacy(false));
- if(!window.firebase||!firebase.auth){$('#member-login-required').textContent='Không tải được Firebase Authentication.';return;}
+ $('#mark-all-read').addEventListener('click',markAllRead);
+
+ if(!window.firebase||!firebase.auth||!firebase.database){
+  $('#member-login-required').textContent='Không tải được Firebase Authentication/Database SDK.';
+  return;
+ }
  firebase.auth().onAuthStateChanged(attach);
 })();
 </script>
+
 </body></html>
