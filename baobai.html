@@ -67,25 +67,50 @@
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
-<script src="api-config.js"></script>
 <script src="assets/app.js"></script>
 
 
 <script>
-(async function(){
- const A7=window.A7, body=A7.$('#baobai-body');
- try{
-  const rows=await A7.fetchTSV(A7.TSV_BAOBAI);
-  if(rows.length<=1){body.innerHTML='<tr><td colspan="3">Chưa có thông tin báo bài.</td></tr>';return;}
+(function(){
+ const A7=window.A7;
+ const body=A7 && A7.$('#baobai-body');
+ const GID_BAOBAI='1447199433';
+ if(!body)return;
+ if(!A7 || typeof A7.loadGViz!=='function'){
+  body.innerHTML='<tr><td colspan="3">Không tải được bộ kết nối Google Sheets. Vui lòng tải lại trang.</td></tr>';
+  return;
+ }
+
+ // Dùng GViz giống các trang Giáo viên/Góc xanh, không phụ thuộc URL TSV đã lỗi.
+ A7.loadGViz(GID_BAOBAI,(json,error)=>{
+  if(error || !json || !json.table || !Array.isArray(json.table.rows)){
+   console.error('Lỗi tải dữ liệu báo bài:',error);
+   body.innerHTML='<tr><td colspan="3">Không thể kết nối dữ liệu Báo bài. Kiểm tra quyền xem Google Sheets và thử tải lại trang.</td></tr>';
+   return;
+  }
+
+  const rows=json.table.rows;
+  if(!rows.length){
+   body.innerHTML='<tr><td colspan="3">Chưa có thông tin báo bài.</td></tr>';
+   return;
+  }
+
   let out='';
-  for(let i=rows.length-1;i>=1;i--){
-   const c=rows[i]||[],date=c[0]||'',subject=c[1]||'',content=c[2]||'';
+  // GViz đánh số dữ liệu từ 0; cộng 1 trong URL để giữ nguyên mã bài cũ trong Firebase.
+  for(let index=rows.length-1;index>=0;index--){
+   const cells=(rows[index] && rows[index].c) || [];
+   const date=A7.parseCell(cells[0]);
+   const subject=A7.parseCell(cells[1]);
+   const content=A7.parseCell(cells[2]);
    if(!date&&!subject&&!content)continue;
-   const short=content.replace(/\n/g,' · ');
-   out+=`<tr><td><b>${A7.esc(date||'Chưa cập nhật')}</b></td><td><a href="baiviet.html?type=baobai&row=${i}">${A7.esc(subject||'Chung')}</a></td><td><a href="baiviet.html?type=baobai&row=${i}">${A7.esc(short.slice(0,130)||'Xem chi tiết')}</a></td></tr>`;
+
+   const legacyRow=index+1;
+   const short=String(content||'').replace(/\r?\n/g,' · ');
+   const href=`baiviet.html?type=baobai&row=${legacyRow}`;
+   out+=`<tr><td><b>${A7.esc(date||'Chưa cập nhật')}</b></td><td><a href="${href}">${A7.esc(subject||'Chung')}</a></td><td><a href="${href}">${A7.esc(short.slice(0,130)||'Xem chi tiết')}</a></td></tr>`;
   }
   body.innerHTML=out||'<tr><td colspan="3">Chưa có thông tin báo bài.</td></tr>';
- }catch(e){console.error(e);body.innerHTML='<tr><td colspan="3">Không thể kết nối Google Sheets. Kiểm tra đường dẫn xuất bản TSV.</td></tr>';}
+ });
 })();
 </script>
 

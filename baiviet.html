@@ -43,21 +43,6 @@
 }
 </style>
 
-
-<style id="a7-comment-account-style">
-  .comment-account-hint{
-    padding:10px 13px;
-    border:1px solid #dce8ef;
-    border-radius:10px;
-    background:#f2f7fa;
-    color:#35546a;
-    font-size:12px;
-    line-height:1.5;
-  }
-  .comment-account-hint[hidden],
-  #fb-comment-name-wrap[hidden]{display:none!important}
-</style>
-
 </head><body>
 <div class="site-topline"></div>
 <header class="site-header">
@@ -98,10 +83,7 @@
   <div class="engagement-panel">
     <h3 class="engagement-title" style="font-size:16px">💬 Để lại bình luận</h3>
     <form class="comment-form" id="fb-comment-form">
-      <div id="fb-comment-name-wrap">
-        <input name="name" id="fb-comment-name" maxlength="60" required placeholder="Tên của bạn">
-      </div>
-      <div class="comment-account-hint" id="fb-comment-account-hint" hidden></div>
+      <input name="name" id="fb-comment-name" maxlength="60" required placeholder="Tên của bạn">
       <textarea name="content" id="fb-comment-content" maxlength="1000" required placeholder="Viết bình luận của bạn..."></textarea>
       <button class="btn btn-blue" id="fb-comment-submit" type="submit">Gửi bình luận ↗</button>
     </form>
@@ -317,50 +299,12 @@
    showMessage('Đã cập nhật cảm xúc của bạn.','ok');
   }catch(error){console.error(error);showMessage('Không thể lưu cảm xúc. Hãy kiểm tra Firebase Rules.');}
  }
- function getCommentAccountName(user){
-  if(!user || user.isAnonymous)return '';
-  const displayName=String(user.displayName||'').trim();
-  if(displayName)return displayName.slice(0,60);
-  const email=String(user.email||'').trim();
-  if(email){
-   const accountName=email.split('@')[0].replace(/[._-]+/g,' ').trim();
-   return (accountName||email).slice(0,60);
-  }
-  return 'Thành viên 12A7';
- }
- function updateCommentIdentity(user){
-  const wrap=document.getElementById('fb-comment-name-wrap');
-  const input=document.getElementById('fb-comment-name');
-  const hint=document.getElementById('fb-comment-account-hint');
-  if(!wrap||!input||!hint)return;
-  const loggedIn=!!(user&&!user.isAnonymous);
-  if(loggedIn){
-   const accountName=getCommentAccountName(user);
-   wrap.hidden=true;
-   input.required=false;
-   input.value=accountName;
-   hint.textContent='Bạn đang bình luận bằng tài khoản: '+accountName;
-   hint.hidden=false;
-  }else{
-   wrap.hidden=false;
-   input.required=true;
-   input.value='';
-   hint.textContent='';
-   hint.hidden=true;
-  }
- }
  async function submitComment(event){
   event.preventDefault();
   const form=event.currentTarget;
-  const signedInUser=fbCurrentUser&&!fbCurrentUser.isAnonymous;
-  const name=signedInUser
-   ? getCommentAccountName(fbCurrentUser)
-   : (form.elements.name.value||'').trim();
+  const name=form.elements.name.value.trim();
   const content=form.elements.content.value.trim();
-  if(!name||!content){
-   showMessage(signedInUser?'Không xác định được tên tài khoản. Vui lòng đăng xuất rồi đăng nhập lại.':'Vui lòng nhập tên và nội dung bình luận.');
-   return;
-  }
+  if(!name||!content){showMessage('Vui lòng nhập tên và nội dung bình luận.');return;}
   if(name.length>60||content.length>1000){showMessage('Tên tối đa 60 ký tự và bình luận tối đa 1.000 ký tự.');return;}
   const button=form.querySelector('button[type=submit]');
   button.disabled=true;button.textContent='Đang gửi…';
@@ -377,7 +321,6 @@
     postKey:fbPostKey,commentId:newCommentRef.key
    }).catch(error=>console.warn('Không ghi được nhật ký bình luận:',error));
    form.elements.content.value='';
-   if(!signedInUser)form.elements.name.value='';
    showMessage('Bình luận đã được gửi thành công!','ok');
   }catch(error){console.error(error);showMessage('Không thể gửi bình luận. Kiểm tra quyền ghi Firebase.');}
   finally{button.disabled=false;button.textContent='Gửi bình luận';}
@@ -423,7 +366,6 @@
    fbCommentsRef=fbPostRef.child('comments');
 
    fbCurrentUser=await ensureUser();
-   updateCommentIdentity(fbCurrentUser);
    await checkAdmin(fbCurrentUser);
 
    if(!fbListener){
@@ -443,8 +385,7 @@
     document.getElementById('fb-admin-login-btn').addEventListener('click',adminLogin);
     document.getElementById('fb-admin-logout').addEventListener('click',adminLogout);
     fbAuth.onAuthStateChanged(async user=>{
-     fbCurrentUser=user||null;
-     updateCommentIdentity(fbCurrentUser);
+     fbCurrentUser=user;
      if(user)await checkAdmin(user);
     });
    }
@@ -494,13 +435,29 @@
    renderArticle(found[3],found[1],found[2],'',found[4],images,videos);
   }catch(error){console.error(error);noArticle('Không thể đọc bài viết phong trào từ Google Sheets.');}
  }
- async function loadBaoBai(){
+ function loadBaoBai(){
   A7.$('#article-back').href='baobai.html';
-  try{
-   const rows=await A7.fetchTSV(A7.TSV_BAOBAI),row=rows[Number(rowIndex)]||[];
-   if(!row.length){noArticle('Không tìm thấy thông tin báo bài.');return;}
-   renderArticle(`Báo bài · ${row[1]||'Chung'}`,row[0],'Ban cán sự lớp','',row[2]||'');
-  }catch(error){noArticle('Không thể tải nội dung báo bài.');}
+  const legacyRow=Number(rowIndex);
+  if(!Number.isInteger(legacyRow)||legacyRow<1){
+   noArticle('Liên kết báo bài không hợp lệ.');
+   return;
+  }
+  // Danh sách vẫn dùng số dòng cũ (bắt đầu từ 1) để không đổi postKey/lượt tương tác Firebase.
+  A7.loadGViz('1447199433',(json,error)=>{
+   if(error||!json||!json.table||!Array.isArray(json.table.rows)){
+    console.error('Lỗi tải chi tiết báo bài:',error);
+    noArticle('Không thể kết nối dữ liệu Báo bài từ Google Sheets.');
+    return;
+   }
+   const row=(json.table.rows||[])[legacyRow-1];
+   if(!row){noArticle('Không tìm thấy thông tin báo bài.');return;}
+   const cells=row.c||[];
+   const date=A7.parseCell(cells[0]);
+   const subject=A7.parseCell(cells[1]);
+   const content=A7.parseCell(cells[2]);
+   if(!date&&!subject&&!content){noArticle('Dòng báo bài này hiện chưa có nội dung.');return;}
+   renderArticle(`Báo bài · ${subject||'Chung'}`,date,'Ban cán sự lớp','',content||'');
+  });
  }
  function loadNewsDetail(){
   A7.$('#article-back').href='index.html#tin-tuc';
