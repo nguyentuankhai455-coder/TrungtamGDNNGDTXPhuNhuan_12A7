@@ -3,6 +3,7 @@
   const SHEET_ID = '10WZAkfTsUhEsTRADxZ3JX869kLV_Sen45r4BeSrxDZY';
   const TSV_BAOBAI = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQzikJgQA99tZH8THj1ecKZBDbxH4GMM3snKPtovgaGdr_vVNv72F63qPl_epUs0rVSedCqx5elaJvB/pub?gid=1447199433&single=true&output=tsv';
   const TSV_PHONGTRAO = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQzikJgQA99tZH8THj1ecKZBDbxH4GMM3snKPtovgaGdr_vVNv72F63qPl_epUs0rVSedCqx5elaJvB/pub?gid=2104947705&single=true&output=tsv';
+  const TSV_NOTIFICATIONS = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQzikJgQA99tZH8THj1ecKZBDbxH4GMM3snKPtovgaGdr_vVNv72F63qPl_epUs0rVSedCqx5elaJvB/pub?gid=278890008&single=true&output=tsv';
   const GIDS = {docs:'782348969', teachers:'590362463', green:'940791294', gallery:'208030591'};
   const $ = (selector, root=document) => root.querySelector(selector);
 
@@ -104,11 +105,7 @@
   }
   window.A7Activity = {log:(eventName, details)=>a7SendActivity(eventName, details)};
 
-  function stopA7NotificationListener(){
-    if(a7NotificationRef && a7NotificationHandler) a7NotificationRef.off('value', a7NotificationHandler);
-    a7NotificationRef = null;
-    a7NotificationHandler = null;
-  }
+
 
   function ensureA7NotificationMenuLink(){
     const nav = $('.nav-inner');
@@ -140,21 +137,165 @@
     link.setAttribute('aria-label', value ? `${value} thông báo chưa đọc` : 'Trung tâm thông báo');
   }
 
+  let a7NotificationRefreshTimer = null;
+  let a7NotificationRefreshBusy = false;
+
+  function stopA7NotificationListener(){
+    if(a7NotificationRef && a7NotificationHandler){
+      a7NotificationRef.off('value', a7NotificationHandler);
+    }
+    a7NotificationRef = null;
+    a7NotificationHandler = null;
+    if(a7NotificationRefreshTimer){
+      clearInterval(a7NotificationRefreshTimer);
+      a7NotificationRefreshTimer = null;
+    }
+  }
+
+  function normalizeRecipientText(value){
+    return String(value || '')
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g,'')
+      .replace(/đ/g,'d').replace(/Đ/g,'D')
+      .toLowerCase().trim().replace(/\s+/g,' ');
+  }
+
+  function a7NotificationRecipientMatches(recipient, user){
+    const raw = String(recipient || '').trim();
+    if(!raw) return true; // Ô Người nhận để trống = gửi toàn lớp.
+    const generalTokens = [
+      'tat ca','ca lop','toan lop','12a7','hoc sinh 12a7',
+      'tat ca mn deu co the nhan thong bao','mọi người','everyone','all','toàn bộ'
+    ];
+    const normalized = normalizeRecipientText(raw);
+    if(generalTokens.some(token => normalized.includes(normalizeRecipientText(token)))) return true;
+
+    const identity = [
+      user && user.uid,
+      user && user.email,
+      user && user.displayName
+    ].filter(Boolean).map(normalizeRecipientText);
+
+    const targets = raw.split(/[,;\n\r]+/).map(normalizeRecipientText).filter(Boolean);
+    return targets.some(target => identity.some(value => value === target));
+  }
+
+  async function fetchA7NotificationRows(){
+    let tsvError = null;
+    try{
+      const rows = await fetchTSV(TSV_NOTIFICATIONS);
+      if(rows && rows.length > 1) return rows;
+      tsvError = new Error('TSV không có dòng thông báo.');
+    }catch(error){ tsvError = error; }
+
+    try{
+      return await new Promise((resolve,reject)=>{
+        loadGViz('278890008',(json,error)=>{
+          if(error){ reject(error); return; }
+          try{
+            const table = json && json.table;
+            if(!table){ reject(new Error('Google Sheets không trả về bảng dữ liệu.')); return; }
+            const cols = Array.isArray(table.cols) ? table.cols : [];
+            const headers = cols.map(col=>String((col && (col.label || col.id)) || ''));
+            const width = Math.max(4,headers.length);
+            const rows = [headers];
+            (table.rows || []).forEach(record=>{
+              const cells = Array.isArray(record && record.c) ? record.c : [];
+              rows.push(Array.from({length:width},(_,i)=>parseCell(cells[i] || {})));
+            });
+            if(rows.length <= 1){ reject(new Error('Tab thông báo chưa có dòng dữ liệu.')); return; }
+            resolve(rows);
+          }catch(parseError){ reject(parseError); }
+        });
+      });
+    }catch(gvizError){
+      throw new Error('Không đọc được Google Sheets. TSV: '+(tsvError && tsvError.message || 'không rõ lỗi')+'; GViz: '+(gvizError && gvizError.message || 'không rõ lỗi'));
+    }
+  }
+
+  async function getA7SheetNotifications(user){
+    const rows = await fetchA7NotificationRows();
+    if(!rows.length) return [];
+    const first = rows[0].map(normalizeRecipientText);
+    const hasHeader = first.some(v =>
+      ['so thu tu','stt','nguoi gui','nguoi nhan','noi dung'].includes(v)
+    );
+    const dataRows = hasHeader ? rows.slice(1) : rows;
+
+    const items = dataRows.map((row, index) => {
+      const serial = String(row[0] || '').trim();
+      const sender = String(row[1] || '').trim();
+      const recipient = String(row[2] || '').trim();
+      const content = String(row[3] || '').trim();
+      if(!serial && !sender && !recipient && !content) return null;
+      if(!a7NotificationRecipientMatches(recipient, user)) return null;
+
+      const stableId = (serial || String(index + 1))
+        .replace(/[.#$[\]/]/g,'_')
+        .replace(/\s+/g,'_');
+      return {
+        id:'sheet_' + stableId,
+        serial:serial || String(index + 1),
+        sender:sender || 'Ban quản trị 12A7',
+        recipient:recipient || 'Toàn lớp 12A7',
+        content
+      };
+    }).filter(Boolean);
+    if(items.every(item=>/^\d+$/.test(item.serial))){
+      items.sort((a,b)=>Number(b.serial)-Number(a.serial));
+    }else{
+      items.reverse();
+    }
+    return items;
+  }
+
+  async function refreshA7NotificationCount(user, stateSnapshot){
+    if(a7NotificationRefreshBusy || !user || user.isAnonymous) return;
+    a7NotificationRefreshBusy = true;
+    try{
+      const items = await getA7SheetNotifications(user);
+      let unread = 0;
+      for(const item of items){
+        const read = stateSnapshot && stateSnapshot.child(item.id).child('readAt').exists();
+        if(!read) unread++;
+      }
+      updateA7NotificationCount(unread);
+    }catch(error){
+      console.warn('Không đọc được Google Sheets thông báo:', error);
+      updateA7NotificationCount(0);
+    }finally{
+      a7NotificationRefreshBusy = false;
+    }
+  }
+
   function attachA7NotificationListener(user){
     stopA7NotificationListener();
     updateA7NotificationCount(0);
     if(!user || user.isAnonymous || !window.firebase || !firebase.database) return;
     try{
       a7NotificationRef = firebase.database().ref('notifications/' + user.uid);
-      a7NotificationHandler = snapshot => {
-        let unread = 0;
-        snapshot.forEach(child => { if(!(child.val() || {}).readAt) unread++; });
-        updateA7NotificationCount(unread);
-      };
+      a7NotificationHandler = snapshot => refreshA7NotificationCount(user, snapshot);
       a7NotificationRef.on('value', a7NotificationHandler, error => {
-        console.warn('Không đọc được số thông báo ở menu:', error);
+        console.warn('Không đọc được trạng thái đã đọc thông báo:', error);
       });
-    }catch(error){ console.warn('Không thể bật chuông thông báo:', error); }
+
+      // Sheet is the content source, so refresh unread count periodically and when the tab is revisited.
+      a7NotificationRefreshTimer = setInterval(async()=>{
+        if(document.visibilityState === 'visible' && a7NotificationRef){
+          const snapshot = await a7NotificationRef.once('value');
+          await refreshA7NotificationCount(user, snapshot);
+        }
+      }, 90000);
+
+      document.addEventListener('visibilitychange', async()=>{
+        if(document.visibilityState === 'visible' && a7NotificationRef){
+          const snapshot = await a7NotificationRef.once('value');
+          await refreshA7NotificationCount(user, snapshot);
+        }
+      }, {once:false});
+    }catch(error){
+      console.warn('Không thể bật chuông thông báo:', error);
+    }
   }
 
   function firebaseErrorMessage(error){
@@ -400,7 +541,7 @@
     ensureA7NotificationMenuLink();
     setActiveNav();
     initializeFirebaseAuth();
-    window.A7={SHEET_ID,TSV_BAOBAI,TSV_PHONGTRAO,GIDS,$,esc,parseCell,linkify,parseTSV,fetchTSV,loadGViz,showToast,FIREBASE_CONFIG};
+    window.A7={SHEET_ID,TSV_BAOBAI,TSV_PHONGTRAO,TSV_NOTIFICATIONS,GIDS,$,esc,parseCell,linkify,parseTSV,fetchTSV,loadGViz,showToast,FIREBASE_CONFIG};
     window.A7_API_BASE = A7_API_BASE;
   }
   // app.js được nạp ở cuối body, nên DOM của trang đã sẵn sàng cho các script trang chạy tiếp theo.
