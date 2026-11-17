@@ -424,16 +424,64 @@
   initEngagement();
  }
  function noArticle(message){A7.$('#article-detail').innerHTML=`<div class="empty-state">${esc(message)}</div>`;}
- async function loadMovement(){
+ function normalizeMovementHeader(value){
+  return String(value||'').trim().toLowerCase()
+   .normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/đ/g,'d')
+   .replace(/[^a-z0-9]+/g,' ').trim();
+ }
+ function movementColumn(headers,aliases,fallback){
+  const normalized=(headers||[]).map(normalizeMovementHeader);
+  for(const alias of aliases){
+   const key=normalizeMovementHeader(alias);
+   const exact=normalized.indexOf(key);
+   if(exact>=0)return exact;
+  }
+  for(const alias of aliases){
+   const key=normalizeMovementHeader(alias);
+   const found=normalized.findIndex(h=>h && h.includes(key));
+   if(found>=0)return found;
+  }
+  return fallback;
+ }
+ function loadMovement(){
   A7.$('#article-back').href='gocxanh.html';
-  try{
-   const rows=await A7.fetchTSV(A7.TSV_PHONGTRAO);
-   const found=rows.slice(1).find(row=>String(row[0]||'').trim()===String(id));
-   if(!found){noArticle('Không tìm thấy bài viết phong trào.');return;}
-   const images=String(found[5]||'').split(/[\n,]+/).map(v=>v.trim()).filter(v=>/^https?:\/\//i.test(v));
-   const videos=String(found[6]||'').split(/[\n,]+/).map(v=>v.trim()).filter(v=>/^https?:\/\//i.test(v));
-   renderArticle(found[3],found[1],found[2],'',found[4],images,videos);
-  }catch(error){console.error(error);noArticle('Không thể đọc bài viết phong trào từ Google Sheets.');}
+  // Dùng GViz giống trang Góc Xanh; không phụ thuộc endpoint TSV đang lỗi.
+  A7.loadGViz('2104947705',(json,error)=>{
+   if(error||!json||!json.table||!Array.isArray(json.table.rows)){
+    console.error('Không tải được dữ liệu Hoạt động Phong trào:',error);
+    noArticle('Không thể kết nối dữ liệu Hoạt động Phong trào. Vui lòng kiểm tra quyền truy cập Google Sheets và GID 2104947705.');
+    return;
+   }
+   const headers=(json.table.cols||[]).map(col=>col?(col.label||col.id||''):'');
+   const col={
+    uid:movementColumn(headers,['uid','ma bai viet','ma bai','ma hoat dong','id'],0),
+    date:movementColumn(headers,['ngay dang','ngay','thoi gian','date'],1),
+    author:movementColumn(headers,['tac gia','nguoi dang','author'],2),
+    title:movementColumn(headers,['tieu de','ten bai viet','title'],3),
+    detail:movementColumn(headers,['chi tiet','noi dung','content'],4),
+    image:movementColumn(headers,['hinh anh','anh','image'],5),
+    video:movementColumn(headers,['video','clip'],6)
+   };
+   const records=(json.table.rows||[]).map(item=>(item.c||[]).map(A7.parseCell));
+   const wanted=String(id||'').trim();
+   const found=records.find(row=>String(row[col.uid]||'').trim()===wanted);
+   if(!found){
+    console.warn('Không tìm thấy UID bài viết Góc Xanh:',wanted,{headers,columns:col,rowCount:records.length});
+    noArticle('Không tìm thấy bài viết phong trào này. Bài có thể đã bị xóa hoặc mã UID đã thay đổi.');
+    return;
+   }
+   const images=parseImageLinks(found[col.image]||'');
+   const videos=parseImageLinks(found[col.video]||'');
+   renderArticle(
+    found[col.title]||'Bài viết phong trào',
+    found[col.date]||'',
+    found[col.author]||'Ban Phong trào',
+    '',
+    found[col.detail]||'',
+    images,
+    videos
+   );
+  });
  }
  function loadBaoBai(){
   A7.$('#article-back').href='baobai.html';
